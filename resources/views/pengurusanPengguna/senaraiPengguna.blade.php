@@ -257,35 +257,24 @@
   margin-bottom: 0;
 }
 .frame9402-table {
-  width: max-content;
+  overflow: auto; 
+  height: auto; 
+  max-height: 850px;
   display: flex;
-  padding: 29px 0;
+  padding-bottom: 29px;
   position: relative;
-  box-shadow: 0px 3.439542055130005px 8.598855018615723px 8.598855018615723px rgba(0, 0, 0, 0.05000000074505806) ;
+  box-shadow: 0px 3.439542055130005px 8.598855018615723px 8.598855018615723px rgb(0 0 0 / 5%);
   box-sizing: content-box;
   align-items: center;
   border-color: transparent;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 48px;
+  margin-right: 48px;
   border-radius: 8.598855018615723px;
   margin-bottom: 0;
   flex-direction: column;
-  background-color: white;
-}
-.frame9402-frame9396 {
-  width: 1187px;
-  display: flex;
-  position: relative;
-  box-sizing: border-box;
-  align-items: center;
-  flex-shrink: 0;
-  border-color: transparent;
-  margin-left: 28px;
-  margin-right: 28px;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 13px;
-  flex-direction: column;
-  border-bottom: 2px solid #781E2A;
+  background-color: #FFFFFF;
+  width: max-content;
+  align-self: center;
 }
 .frame9402-frame93961 {
   display: flex;
@@ -293,9 +282,12 @@
   box-sizing: border-box;
   align-items: center;
   border-color: transparent;
-  margin-left: 41.36px;
   border-radius: 0px 0px 0px 0px;
-  margin-bottom: 25px; 
+  padding-top: 30px;
+  padding-bottom: 25px;
+  padding-left: 69.36px;
+  padding-right: 73px;
+  border-bottom: 2px solid #781E2A;
 }
 .frame9402-text10 {
   color: #494949;
@@ -348,7 +340,7 @@
   font-family: Eina01-Bold;
   font-weight: 400;
   line-height: 25.477937698364258px;
-  margin-left: 137px;
+  margin-left: 145px;
   font-stretch: normal;
   text-decoration: none;
 }
@@ -410,19 +402,20 @@
   text-decoration: none;
 }
 .frame9402-frame8727 {
-  width: 78px;
+  width: auto;
   height: 30px;
   display: flex;
   opacity: 1;
   position: relative;
   box-sizing: border-box;
-  align-items: flex-start;
+  align-items: center;
   flex-shrink: 0;
   border-color: transparent;
-  margin-left: 137px;
+  margin-left: auto;
+  margin-right: 20px;
   border-radius: 0px 0px 0px 0px;
   margin-bottom: 0;
-  justify-content: center;
+  flex-direction: row;
 }
 .frame9402-rectangle828245 {
   width: 32px;
@@ -437,7 +430,7 @@
 .frame9402-rectangle828246 {
   width: 32px;
   height: 31px;
-  margin-left: 10px;
+  margin-left: 26px;
   position: relative;
   box-sizing: border-box;
   background-color: transparent;
@@ -491,7 +484,6 @@
           <th class="frame9402-text14"><span>Nama Pengguna</span></th>
           <th class="frame9402-text16"><span>Tindakan</span></th>
       </tr>
-      <tr class="frame9402-frame9396"></tr>
       @php
         $i = 1;
       @endphp

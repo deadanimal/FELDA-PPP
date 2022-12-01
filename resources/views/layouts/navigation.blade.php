@@ -22,7 +22,7 @@
             <a class="frame7279-frame7123" :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
                 <div class="frame7279-iconpermohonan">
                     <img
-                    src="/SVG/logout.SVG"
+                    src="/SVG/logout.svg"
                     alt="404Logout"
                     class="frame7279-vector"
                     />

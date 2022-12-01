@@ -57,9 +57,14 @@ Route::post('/pengurusanModul/simpanModul', [pengurusanModulController::class, '
 Route::get('/pengurusanModul/senaraiModul', [pengurusanModulController::class, 'senaraiModul']);
 Route::delete('/pengurusanModul/delete', [pengurusanModulController::class, 'deleteModul']);
 Route::post('/pengurusanModul/cariModul',  [pengurusanModulController::class, 'cariModul']);
+Route::get('/pengurusanModul/editModul/{id}', [pengurusanModulController::class, 'editModul']);
+Route::post('/pengurusanModul/kemaskiniModul',  [pengurusanModulController::class, 'kemaskiniModul']);
 
-Route::get('/pengurusanModul/ciptaProses', function () {
-    return view('/pengurusanModul/ciptaProses');
+Route::post('/pengurusanModul/ciptaProses',  [pengurusanModulController::class, 'ciptaProses']);
+
+
+Route::get('/pengurusanModul/senaraiProses', function () {
+    return view('/pengurusanModul/senaraiProses');
 });
 require __DIR__.'/auth.php';
 

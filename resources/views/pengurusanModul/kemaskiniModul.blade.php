@@ -71,7 +71,7 @@
 .frame9402-box {
   width: max-content;
   display: flex;
-  padding: 29px 0;
+  padding: 29px;
   position: relative;
   box-shadow: 0px 3.439542055130005px 8.598855018615723px 8.598855018615723px rgba(0, 0, 0, 0.05000000074505806) ;
   box-sizing: content-box;
@@ -135,39 +135,32 @@
   font-size: 18px;
   padding-left:10px;
 }
-.frame9402-b-u-t-t-o-n-c-a-r-i-a-n {
+.frame9403-frame7445 {
+    width: 157px;
+  height: 44px;
   display: flex;
-  opacity: 0.50;
-  position: relative;
-  box-sizing: border-box;
-  align-items: flex-start;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-  flex-direction: column;
-  cursor:pointer;
-}
-.frame9402-frame7294 {
-  width: 76px;
-  height: 42px;
-  display: flex;
-  padding: 12px 10px;
-  position: relative;
+  max-width: 157px;
   box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
   box-sizing: border-box;
-  align-items: flex-start;
+  align-items: center;
+  align-self: center;
+  padding-top: 0px;
   border-color: transparent;
-  margin-right: 0;
+  padding-left: 20px;
   border-radius: 8.598855018615723px;
-  margin-bottom: 0;
+  padding-right: 20px;
   flex-direction: column;
+  padding-bottom: 0px;
+  justify-content: center;
   background-color: #A2335D;
+  margin-left:auto;
+  margin-right: auto;
+  margin-top: 20px;
+  cursor: pointer;
 }
-.frame9402-frame7293 {
-  height: 20px;
-  display: flex;
-  position: absolute;
+.frame9403-frame7293 {
+display: flex;
+  position: relative;
   box-sizing: border-box;
   align-items: center;
   border-color: transparent;
@@ -175,50 +168,31 @@
   border-radius: 0px 0px 0px 0px;
   margin-bottom: 0;
 }
-.frame9402-text06 {
-  color: white;
-  width: 39px;
+.frame9403-text21 {
+  color: #FFFFFF;
+  width: 91px;
   height: auto;
   font-size: 16px;
   align-self: auto;
+  font-style: SemiBold;
   text-align: left;
-  font-family: Eina01-SemiBold;
-  font-weight: 400;
+  font-family: Poppins;
+  font-weight: 600;
   line-height: 34.39542007446289px;
   font-stretch: normal;
   margin-right: 2px;
   margin-bottom: 0;
   text-decoration: none;
 }
-.frame9402-frame {
-  display: flex;
-  position: relative;
-  box-sizing: border-box;
-  align-items: flex-start;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-}
-.frame9402-layer31 {
-  display: flex;
-  position: relative;
-  box-sizing: border-box;
-  align-items: flex-start;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-}
-.frame9402-shape {
-  width: 15px;
-  height: 16px;
+.frame9403-group7527 {
+  width: 24px;
+  height: 24px;
   position: relative;
   box-sizing: border-box;
   border-color: transparent;
   margin-right: 0;
   margin-bottom: 0;
-}
+}   
 </style>
 <div class="frame9402-frame9402">
     <div class="frame9402-frame9281">
@@ -230,29 +204,21 @@
         </div>
     </div>
     <div class="frame9402-box">
-        <span class="frame9403-text02"><span>Kemaskini Modul</span></span>
-        <form action="/pengurusanModul/simpanModul" method="POST" class="frame9402-frame9278">
+        <span class="frame9403-text02" style="margin-bottom: 20px;"><span>KEMASKINI MODUL</span></span>
+        <form action="/pengurusanModul/kemaskiniModul" method="POST" class="frame9402-frame9278">
             @csrf
+            <input type="hidden" name="id" value="{{$modul->id}}">
             <div class="frame9402-frame7301">
                 <div class="frame9402-frame7188">
                     <span class="frame9402-text04"><span>Nama Modul: </span></span>
-                    <input type="text" class="frame9402-kotaknama" name="namaModul" id="namaModul" onkeyup="changeTheColorOfButton()"/>
+                    <input type="text" class="frame9402-kotaknama" name="namaModul" id="namaModul" value="{{$modul->nama}}" onkeyup="changeTheColorOfButton()"/>
                 </div>
             </div>
-            <button type="submit" class="frame9402-b-u-t-t-o-n-c-a-r-i-a-n" id="buttonKemaskini" disabled onclick="changeTheColorOfButtonDaftar()">
-                <div class="frame9402-frame7294">
-                    <div class="frame9402-frame7293">
-                        <span class="frame9402-text06"><span>Kemaskini</span></span>
-                        <div class="frame9402-frame">
-                            <div class="frame9402-layer31">
-                            <img
-                                src="/SVG/find.svg"
-                                class="frame9402-shape"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <button type="submit" id="buttonKemaskini" class="frame9403-frame7445">
+              <div class="frame9403-frame7293">
+                <span class="frame9403-text21"><span>Kemaskini</span></span>
+                <img src="/SVG/kemaskini.svg" class="frame9403-group7527">
+              </div>
             </button>
         </form>
     </div>

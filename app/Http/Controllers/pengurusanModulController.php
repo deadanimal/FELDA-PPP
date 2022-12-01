@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Modul;
+use App\Models\Proses;
 use Illuminate\Http\Request;
 use Alert;
 
@@ -58,6 +59,43 @@ class PengurusanModulController extends Controller
         $bilangan= count(Modul::all());
         return view('pengurusanModul.senaraiModul', compact('modul','bilangan'));
     
+    }
+
+    public function editModul(Request $request)
+    {
+        $idModul = (int)$request->route('id');
+        $modul = Modul::find($idModul); 
+        return view('pengurusanModul.kemaskiniModul', compact('modul'));
+    }
+
+    public function kemaskiniModul(Request $request)
+    {
+        $idModul = $request->id;
+        $moduls = Modul::find($idModul); 
+        $moduls->nama = $request->namaModul;
+        $moduls->dikemaskiniOleh = Auth::user()->id;
+        $moduls->save();
+        Alert::success('Kemaskini Modul berjaya.', 'Kemaskini modul telah berjaya.');   
+        $modul = Modul::all();
+        $bilangan= count(Modul::all());
+
+        return view('/pengurusanModul/senaraiModul', compact('modul', 'bilangan'));
+    }
+
+    public function ciptaProses(Request $request)
+    {
+        $proses = new Proses;
+        $proses->nama = $request->namaProses;
+        $proses->status = 1;
+        $proses->modul = $request->modulId;
+        $proses->save();
+        Alert::success('Cipta proses berjaya.', 'Cipta proses telah berjaya.');   
+        $modul = Modul::find($request->modulId);
+        $proses = Proses::where('modul', '=', $request->modulId);
+        // $modul= Modul::where('nama', $modul->nama)->get();
+        // return view("pengurusanModul.ciptaProses", compact('modul'));
+
+        return view('pengurusanModul.ciptaProses', compact('modul','proses'));
     }
 
     /**

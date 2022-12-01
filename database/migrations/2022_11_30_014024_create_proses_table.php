@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('proses', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('content');
+            $table->bigInteger('status');
             $table->timestamps();
             $table->foreignId('modul')->references('id')->on('moduls')->onUpdate('cascade')->onDelete('cascade');
         });
