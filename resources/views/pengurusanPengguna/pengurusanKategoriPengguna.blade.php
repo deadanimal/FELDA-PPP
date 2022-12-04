@@ -446,7 +446,7 @@
       <div class="frame9402-frame7301">
           <div class="frame9402-frame7188">
               <span class="frame9402-text04"><span>Nama Kategori Pengguna</span></span>
-              <input type="text" class="frame9402-kotaknama" name="namaKategori" id="namaKategori" onkeyup="changeTheColorOfButton()"/>
+              <input type="text" class="frame9402-kotaknama" name="kategoriPengguna" id="namaKategori" onkeyup="changeTheColorOfButton()"/>
           </div>
       </div>
       <button type="submit" class="frame9402-frame7294" id="buttonTambah" disabled onclick="changeTheColorOfButtonDaftar()">

@@ -152,7 +152,7 @@ class pengurusanPenggunaController extends Controller
     public function tambahKategoriPengguna(Request $request)
     {
         $kategoriPengguna = new KategoriPengguna;
-        $kategoriPengguna->nama = $request->namaKategori;
+        $kategoriPengguna->nama = $request->kategoriPengguna;
         $kategoriPengguna->save();
         Alert::success('Tambah Kategori pengguna berjaya.', 'Kategori pengguna berjaya ditambah.');   
         

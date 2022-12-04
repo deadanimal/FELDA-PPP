@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\pengurusanPenggunaController;
 use App\Http\Controllers\pengurusanModulController;
+use App\Http\Controllers\pengurusanBorangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +70,7 @@ Route::get('/pengurusanModul/senaraiBorang/{prosesId}',  [pengurusanModulControl
 Route::put('/pengurusanModul/kemaskiniBorang',  [pengurusanModulController::class, 'kemaskiniBorang']);
 Route::delete('/pengurusanBorang/delete',  [pengurusanModulController::class, 'deleteBorang']);
 
+Route::get('/pengurusanBorang/isiBorang/{borangId}',  [pengurusanBorangController::class, 'isiBorang']);
 
 require __DIR__.'/auth.php';
 

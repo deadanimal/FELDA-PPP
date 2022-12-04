@@ -505,8 +505,8 @@ display: flex;
       </div>
     </div>
 
-    {{-- senarai proses --}}
-    <table style="overflow: auto; height: inherit; width:100%;">
+    {{-- senarai borang --}}
+    <table style="overflow: auto; height: auto; max-height: 750px; width:100%;">
       @if ($borangs != null)
         @php
           $i = 1;
@@ -530,9 +530,9 @@ display: flex;
               @endif
               </select></td>
             <td class="frame9402-frame8727" id="tindakan">
-              {{-- <a href="/pengurusanModul/Borang/{{$borang->id}}" class="frame9402-rectangle828245">
+              <a href="/pengurusanBorang/isiBorang/{{$borang->id}}" class="frame9402-rectangle828245">
                 <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 556 502"><path d="M88.7 223.8L0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z"/></svg>
-              </a> --}}
+              </a>
               {{-- <a href='' onclick="this.href='/pengurusanModul/kemaskiniProses/{{$proses->id}}/'+document.getElementById('nama').value" class="frame9402-rectangle8282452">                
               </a> --}}
               <form method="Post" action="/pengurusanModul/kemaskiniBorang">
@@ -564,8 +564,8 @@ display: flex;
             $i++;
           @endphp
         @endforeach 
-      @else
-        <tr class="frame9402-input" style="background-color: #FFFFFF;"><h2 class="frame9402-text01" style="color:black;"> Tiada Proses </h2></tr>
+      @elseif($borangs == null)
+        <tr class="frame9402-input" style="background-color: #FFFFFF;"><td><h2 class="frame9402-text01" style="color:black;"> Tiada Borang </h2><td></tr>
       @endif
     </table>
 
