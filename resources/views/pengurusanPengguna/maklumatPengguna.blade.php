@@ -505,7 +505,7 @@ display: flex;
       var wilayahid= $(this).val();
       if (wilayahid) {
         $.ajax({
-          url: '/getRancangan/'+wilayahid,
+          url: window.location.href+'/getRancangan/'+wilayahid,
         type: "GET",
         dataType: "json",
         success: function(data){
