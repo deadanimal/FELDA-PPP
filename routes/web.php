@@ -41,8 +41,6 @@ Route::put('/pengurusanPengguna/kemaskiniKategoriPengguna',[pengurusanPenggunaCo
 Route::get('/pengurusanPengguna/editKategoriPengguna/{id}',[pengurusanPenggunaController::class, 'editKategoriPengguna']);
 Route::delete('/pengurusanPengguna/deleteKategoriPengguna',[pengurusanPenggunaController::class, 'deleteKategoriPengguna']);
 
-
-// Route::get('/pengurusanPengguna/maklumatPengguna',  [pengurusanPenggunaController::class, 'maklumatPengguna']);
 Route::get('/pengurusanPengguna/maklumatPengguna',  [pengurusanPenggunaController::class, 'maklumatPengguna']);
 Route::get('/pengurusanPengguna/senaraiPengguna',  [pengurusanPenggunaController::class, 'senaraiPengguna']);
 Route::post('/pengurusanPengguna/cariPengguna',  [pengurusanPenggunaController::class, 'cariPengguna']);
@@ -52,6 +50,7 @@ Route::post('/auditTrail/auditPengguna', [pengurusanPenggunaController::class, '
 Route::post('/auditTrail/auditTarikh', [pengurusanPenggunaController::class, 'auditTarikh']);
 Route::post('/auditTrail/auditTindakan', [pengurusanPenggunaController::class, 'auditTindakan']);
 
+// pengurusan modul
 Route::get('/pengurusanModul/ciptaModul', [pengurusanModulController::class, 'create']);
 Route::post('/pengurusanModul/simpanModul', [pengurusanModulController::class, 'store']);
 Route::get('/pengurusanModul/senaraiModul', [pengurusanModulController::class, 'senaraiModul']);
@@ -61,11 +60,16 @@ Route::get('/pengurusanModul/editModul/{id}', [pengurusanModulController::class,
 Route::post('/pengurusanModul/kemaskiniModul',  [pengurusanModulController::class, 'kemaskiniModul']);
 
 Route::post('/pengurusanModul/ciptaProses',  [pengurusanModulController::class, 'ciptaProses']);
+Route::get('/pengurusanModul/senaraiProses/{modulId}', [pengurusanModulController::class, 'senaraiProses']);
+Route::put('/pengurusanModul/kemaskiniProses',  [pengurusanModulController::class, 'kemaskiniProses']);
+Route::delete('/pengurusanProses/delete',  [pengurusanModulController::class, 'deleteProses']);
+
+Route::post('/pengurusanModul/ciptaBorang',  [pengurusanModulController::class, 'ciptaBorang']);
+Route::get('/pengurusanModul/senaraiBorang/{prosesId}',  [pengurusanModulController::class, 'senaraiBorang']);
+Route::put('/pengurusanModul/kemaskiniBorang',  [pengurusanModulController::class, 'kemaskiniBorang']);
+Route::delete('/pengurusanBorang/delete',  [pengurusanModulController::class, 'deleteBorang']);
 
 
-Route::get('/pengurusanModul/senaraiProses', function () {
-    return view('/pengurusanModul/senaraiProses');
-});
 require __DIR__.'/auth.php';
 
 Auth::routes();

@@ -182,9 +182,9 @@
 }
 .frame9403-frame7445 {
     width: auto;
-  height: 44px;
+  height: 50px;
   display: flex;
-  max-width: 157px;
+  max-width: 250px;
   box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
   box-sizing: border-box;
   padding-top: 0px;
@@ -212,7 +212,7 @@ display: flex;
 }
 .frame9403-text21 {
   color: #FFFFFF;
-  width: 70px;
+  width: auto;
   height: auto;
   font-size: 16px;
   align-self: auto;
@@ -220,9 +220,8 @@ display: flex;
   text-align: left;
   font-family: Poppins;
   font-weight: 600;
-  line-height: 34.39542007446289px;
   font-stretch: normal;
-  margin-right: 2px;
+  margin-right: 10px;
   margin-bottom: 0;
   text-decoration: none;
 }
@@ -289,7 +288,7 @@ display: flex;
     background-color: #fff;
     border-radius: 8px;
   }
-  .frame9402-kotaknamaProses {
+  .frame9402-kotaknamaBorang {
   width: 299px;
   height: 50px;
   position: relative;
@@ -342,7 +341,6 @@ display: flex;
 }
   .frame9402-text30 {
   color: #494949;
-  width: 10%;
   height: auto;
   font-size: 17px;
   margin-left: auto;
@@ -480,27 +478,27 @@ display: flex;
   <div class="frame9402-box">
     <div class="frame9402-frame9282">
         <div class="frame9402-frame7188">
-            <span class="frame9402-text05"><span>{{$modul->nama}}</span></span>
+            <span class="frame9402-text05"><span>{{$proses->nama}}</span></span>
             <button class="frame9403-frame7445"  onclick="openForm()">
                 <div class="frame9403-frame7293">
-                <span class="frame9403-text21"><span>Tambah</span></span>
+                <span class="frame9403-text21"><span>Tambah Borang</span></span>
                 <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
                 </div>
             </button>
         </div>
     </div>
 
-    {{-- popup form Tambah proses --}}
+    {{-- popup form Tambah Borang --}}
     <div class="loginPopup">
       <div class="formPopup" id="popupForm">
-        <form action="/pengurusanModul/ciptaProses" method="POST" class="formContainer">
+        <form action="/pengurusanModul/ciptaBorang" method="POST" class="formContainer">
           @csrf
-          <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA PROSES</h2>
-          <label for="namaProses" class="frame9402-text04">
-            <strong>Nama Proses</strong>
+          <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA Borang</h2>
+          <label for="namaBorang" class="frame9402-text04">
+            <strong>Nama Borang</strong>
           </label>
-          <input type="text" class="frame9402-kotaknamaProses" id="namaProses" placeholder="Nama Proses" name="namaProses" required>
-          <input type="hidden" value="{{$modul->id}}" name="modulId">
+          <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama borang" name="namaBorang" required>
+          <input type="hidden" value="{{$proses->id}}" name="prosesId">
           <button type="submit" class="btn">Tambah</button>
           <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
         </form>
@@ -509,42 +507,42 @@ display: flex;
 
     {{-- senarai proses --}}
     <table style="overflow: auto; height: inherit; width:100%;">
-      @if ($prosess != null)
+      @if ($borangs != null)
         @php
           $i = 1;
         @endphp
-        @foreach ($prosess as $proses)
+        @foreach ($borangs as $borang)
           @if ($i == 1 || $i% 2 == 1)
             <tr class="frame9402-input">
           @else
             <tr class="frame9402-input" style="background-color: rgba(162, 50, 93, 0.08);"> 
           @endif
-            <td class="frame9402-text30">Nama Proses:</td>
-            <td class="frame9402-text31"><input type="text" id="nama{{$i}}" class="frame9402-kotaknama" value="{{$proses->nama}}"></td>
+            <td class="frame9402-text30">Nama Borang:</td>
+            <td class="frame9402-text31"><input type="text" id="nama{{$i}}" class="frame9402-kotaknama" value="{{$borang->namaBorang}}"></td>
             <td class="frame9402-text32">
               <select name="status" id="status{{$i}}" class="frame9403-kotaknama3">
-              @if ($proses->status == 1)
+              @if ($borang->status == 1)
                 <option value="1" selected>Active</option>
-                <option value="2">Disabled</option>
+                <option value="2">Disable</option>
               @else
                 <option value="1">Active</option>
-                <option value="2" selected>Disabled</option>
+                <option value="2" selected>Disable</option>
               @endif
               </select></td>
             <td class="frame9402-frame8727" id="tindakan">
-              <a href="/pengurusanModul/senaraiBorang/{{$proses->id}}" class="frame9402-rectangle828245">
+              {{-- <a href="/pengurusanModul/Borang/{{$borang->id}}" class="frame9402-rectangle828245">
                 <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 556 502"><path d="M88.7 223.8L0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z"/></svg>
-              </a>
+              </a> --}}
               {{-- <a href='' onclick="this.href='/pengurusanModul/kemaskiniProses/{{$proses->id}}/'+document.getElementById('nama').value" class="frame9402-rectangle8282452">                
               </a> --}}
-              <form method="Post" action="/pengurusanModul/kemaskiniProses">
+              <form method="Post" action="/pengurusanModul/kemaskiniBorang">
                 @csrf
                 @method('PUT')
 
                 <input type="hidden" name="namaupdate" id="namaupdate{{$i}}" >
                 <input type="hidden" name="statusUpdate" id="statusUpdate{{$i}}" >
                 <input type="hidden" name="prosesId" id="prosesId" value="{{$proses->id}}">
-                <input type="hidden" name="modulID" id="modulID" value="{{$modul->id}}">
+                <input type="hidden" name="borangId" id="borangID" value="{{$borang->id}}">
                 <button class="frame9402-rectangle828246" type="submit" onclick="save({{$i}})">                
                   <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 548 612"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
                 </button>
@@ -553,11 +551,11 @@ display: flex;
                 <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 548 612"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
               </a> --}}
               
-              <form method="post" action="/pengurusanProses/delete">
+              <form method="post" action="/pengurusanBorang/delete">
                 @csrf
                 @method('DELETE')
-                <input type="hidden" value="{{$modul->id}}" name="modulId">
-                <input type="hidden" name="prosesId" value="{{$proses->id}}"/>
+                <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                <input type="hidden" name="borangId" value="{{$borang->id}}"/>
                 <button class="frame9402-rectangle828246"><img src="/SVG/bin.svg"/></button>
               </form>
             </td>

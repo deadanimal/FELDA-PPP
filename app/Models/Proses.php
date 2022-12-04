@@ -12,6 +12,10 @@ class Proses extends Model implements Auditable
     use HasFactory;
 
     public function modul() {
-        return $this->belongsTo(Modul::class, 'mdoul');
+        return $this->belongsTo(Modul::class, 'modul');
+    }
+    
+    public function borang() {
+        return $this->hasMany(Borang::class, 'borang');
     }
 }

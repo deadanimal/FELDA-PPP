@@ -55,11 +55,6 @@
             </div>
         </button>
         <div class="dropdown-container">
-            <div class="frame9275-log-audit">
-                <a href="/pengurusanPengguna/maklumatPengguna" class="frame9275-frame7272" onclick="changedot(this)">
-                    <span class="frame9275-text"><span>Maklumat Pengguna</span></span>
-                </a>
-            </div>
             @if (Auth::user()->kategoripengguna == 1)
             <div class="frame9275-log-audit">
                 <a href="/pengurusanPengguna/senaraiPengguna" class="frame9275-frame7272" onclick="changedot(this)">

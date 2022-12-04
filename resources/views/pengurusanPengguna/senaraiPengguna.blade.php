@@ -285,7 +285,7 @@
   border-radius: 0px 0px 0px 0px;
   padding-top: 30px;
   padding-bottom: 25px;
-  padding-left: 69.36px;
+  padding-left: 43.36px;
   padding-right: 73px;
   border-bottom: 2px solid #781E2A;
 }

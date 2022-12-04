@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Modul;
 use App\Models\Proses;
+use App\Models\Borang;
 use Illuminate\Http\Request;
 use Alert;
 
@@ -84,18 +85,115 @@ class PengurusanModulController extends Controller
 
     public function ciptaProses(Request $request)
     {
-        $proses = new Proses;
-        $proses->nama = $request->namaProses;
-        $proses->status = 1;
-        $proses->modul = $request->modulId;
-        $proses->save();
+        $prosess = new Proses;
+        $prosess->nama = $request->namaProses;
+        $prosess->status = 1;
+        $prosess->modul = $request->modulId;
+        $prosess->save();
         Alert::success('Cipta proses berjaya.', 'Cipta proses telah berjaya.');   
         $modul = Modul::find($request->modulId);
-        $proses = Proses::where('modul', '=', $request->modulId);
-        // $modul= Modul::where('nama', $modul->nama)->get();
-        // return view("pengurusanModul.ciptaProses", compact('modul'));
+        $prosess = Proses::where('modul', $request->modulId)->orderBy("updated_at")->get();
 
-        return view('pengurusanModul.ciptaProses', compact('modul','proses'));
+        return view('pengurusanModul.senaraiProses', compact('modul','prosess'));
+    }
+
+    public function senaraiProses(Request $request)
+    {
+        $idModul = (int)$request->route('modulId');
+        $prosess = Proses::where('modul', $idModul)->orderBy("updated_at")->get();
+        $modul = Modul::find($request->modulId);
+        return view('pengurusanModul.senaraiProses', compact('modul','prosess'));
+    
+    }
+
+    public function kemaskiniProses(Request $request)
+    {
+        $prosesId = $request->prosesId;
+        $proses = Proses::find($prosesId);
+        $proses->nama = $request->namaupdate;
+        $proses->status = $request->statusUpdate;
+
+        $proses->save();
+        Alert::success('Kemaskini Proses berjaya.', 'Kemaskini Proses telah berjaya.');   
+
+        
+        $prosess = Proses::where('modul', $request->modulID)->orderBy("updated_at")->get();
+        $modul = Modul::find($request->modulID);
+
+        return view('pengurusanModul.senaraiProses', compact('modul','prosess'));
+    
+    }
+
+    public function deleteProses(Request $request)
+    {
+        $prosesId = $request->prosesId;
+        $proses = Proses::find($prosesId); 
+        $proses->delete();
+        Alert::success('Padam Proses Berjaya.', 'Padam proses telah berjaya.');   
+
+        $prosess = Proses::where('modul', $request->modulID)->orderBy("updated_at")->get();
+        $modul = Modul::find($request->modulId);
+
+        return view('pengurusanModul.senaraiProses', compact('modul','prosess'));
+    
+    
+    }
+
+    public function ciptaBorang(Request $request)
+    {
+        $borang = new Borang;
+        $borang->namaBorang = $request->namaBorang;
+        $borang->status = 1;
+        $borang->proses = $request->prosesId;
+        $borang->save();
+        Alert::success('Cipta Borang berjaya.', 'Cipta borang telah berjaya.');   
+        
+        $proses = Proses::find($request->prosesId);
+        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at")->get();
+
+        return view('pengurusanModul.senaraiBorang', compact('borangs','proses'));
+    }
+
+    public function senaraiBorang(Request $request)
+    {
+        $idProses = (int)$request->route('prosesId');
+        $borangs = Borang::where('proses', $idProses)->orderBy("updated_at")->get();
+        $proses = Proses::find($idProses);
+        return view('pengurusanModul.senaraiBorang', compact('borangs','proses'));
+    
+    }
+
+    public function kemaskiniBorang(Request $request)
+    {
+        $borangId = $request->borangId;
+        $borang = Borang::find($borangId);
+        $borang->namaBorang = $request->namaupdate;
+        $borang->status = $request->statusUpdate;
+
+        $borang->save();
+        Alert::success('Kemaskini Borang berjaya.', 'Kemaskini borang telah berjaya.');   
+
+        
+        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at")->get();
+        $proses = Proses::find($request->prosesId);
+
+        return view('pengurusanModul.senaraiBorang', compact('borangs','proses'));
+    
+    }
+
+    public function deleteBorang(Request $request)
+    {
+        $borangId = $request->borangId;
+        $borang = Borang::find($borangId); 
+        $borang->delete();
+        Alert::success('Padam Borang Berjaya.', 'Padam borang telah berjaya.');   
+
+        $borangs= Borang::where('proses', $request->prosesId)->orderBy("updated_at")->get();
+        $proses = Proses::find($request->prosesId);
+
+        return view('pengurusanModul.senaraiBorang', compact('borangs','proses'));
+    
+    
     }
 
     /**

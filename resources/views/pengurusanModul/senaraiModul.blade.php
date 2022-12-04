@@ -545,6 +545,7 @@
     </table>
   </div>
 </div>
+
 <script>
   function changeTheColorOfButton() {
     var button = document.getElementById("buttonCari");
