@@ -354,7 +354,7 @@ display: flex;
 }
 .frame9402-text31 {
   color: #494949;
-  width: 30%;
+  width: 40%%;
   height: auto;
   font-size: 17px;
   align-self: auto;
@@ -488,37 +488,57 @@ display: flex;
         </div>
     </div>
 
-    
-    <table style="overflow: scroll; height: 750px; width:100%;" id="borangField">
-        <tr class="frame9402-input" id="row">
-            <td class="frame9402-text31">Nama Medan:
-                <input type="text" name="nama" class="frame9402-kotaknama" placeholder="Nama Medan">
-            </td>
+    <form action="/pengurusanBorang/simpanMedanBorang" method="POST" style="width: 100%;">    
+      @csrf
+      <input type="hidden" name="borangId" value="{{$borang->id}}">
+      <table style="overflow: scroll; max-height: 750px; width:100%;" id="borangField">
+        @if ($borang->context != null)
+          @php
+            $contexts = json_decode($borang->context);
+          @endphp
+          @foreach($contexts as $context)
+          <tr class="frame9402-input" id="row">
+            <td class="frame9402-text31">Nama Medan:<input type="text" name="nama[]" class="frame9402-kotaknama" value="{{$context->nama}}"></td>
             <td class="frame9402-text30">Jenis Data:
-                <select name="datatype" class="frame9403-kotaknama3">
-                    <option value="string">String</option>
-                    <option value="integer">Integer</option>
-                </select>
+              <select name="datatype[]" class="frame9403-kotaknama3">
+                @if ($context->datatype == "string" )
+                  <option value="string" selected>String</option>
+                  <option value="integer">Integer</option>
+                @else
+                  <option value="string">String</option>
+                  <option value="integer"selected>Integer</option>
+                @endif
+              </select>
             </td>
             <td class="frame9402-text32"> Pilihan:
-            <select name="pilihan" class="frame9403-kotaknama3">
-                <option value="required">Mandatori</option>
-                <option value="optional">Pilihan</option>
-            </select></td>
-            <td class="frame9402-frame8727" id="tindakan">
-                <button class="frame9402-rectangle828246" id="DeleteRow"><img src="/SVG/bin.svg"/></button>
+              <select name="pilihan[]" class="frame9403-kotaknama3">
+                @if ($context->pilihan == "required" )
+                  <option value="required" selected>Mandatori</option>
+                  <option value="optional">Pilihan</option>
+                @else
+                  <option value="required">Mandatori</option>
+                  <option value="optional" selected>Pilihan</option>
+                @endif
+              </select>
             </td>
-        </tr>
-    </table>
-    <button type="submit" class="frame9403-frame7445" disabled>
-      <div class="frame9403-frame7293">
-        <span class="frame9403-text21"><span>Hantar</span></span>
-        <img
-        src="/SVG/kemaskini.svg"
-        class="frame9403-group7527"
-        />
-      </div>
-    </button>
+            <td class="frame9402-frame8727" id="tindakan">
+              <button class="frame9402-rectangle828246" id="DeleteRow"><img src="/SVG/bin.svg"/></button>
+            </td>
+          </tr>
+          @endforeach
+        @endif
+        
+      </table>
+      <button type="submit" class="frame9403-frame7445">
+        <div class="frame9403-frame7293">
+          <span class="frame9403-text21"><span>Hantar</span></span>
+          <img
+          src="/SVG/kemaskini.svg"
+          class="frame9403-group7527"
+          />
+        </div>
+      </button>
+    </form>
   </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -526,15 +546,15 @@ display: flex;
 $("#rowAdder").click(function () {
             newRowAdd =
             '<tr class="frame9402-input" id="row">'+
-                '<td class="frame9402-text31">Nama Medan:<input type="text" name="nama" class="frame9402-kotaknama" placeholder="Nama Medan"></td>'+
+                '<td class="frame9402-text31">Nama Medan:<input type="text" name="nama[]" class="frame9402-kotaknama" placeholder="Nama Medan"></td>'+
                 '<td class="frame9402-text30">Jenis Data:'+
-                    '<select name="datatype" class="frame9403-kotaknama3">'+
+                    '<select name="datatype[]" class="frame9403-kotaknama3">'+
                         '<option value="string">String</option>'+
                         '<option value="integer">Integer</option>'+
                     '</select>'+
                 '</td>'+
                 '<td class="frame9402-text32"> Pilihan:'+
-                '<select name="pilihan" class="frame9403-kotaknama3">'+
+                '<select name="pilihan[]" class="frame9403-kotaknama3">'+
                     '<option value="required">Mandatori</option>'+
                     '<option value="optional">Pilihan</option>'+
                 '</select></td>'+
@@ -545,9 +565,11 @@ $("#rowAdder").click(function () {
             $('#borangField').append(newRowAdd);
         });
  
-        $("body").on("click", "#DeleteRow", function () {
-            $(this).parents("#row").remove();
-        })
+$("body").on("click", "#DeleteRow", function () {
+  $(this).parents("#row").remove();
+});
+$("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
+
 </script>
 
 <script>

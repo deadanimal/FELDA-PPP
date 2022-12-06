@@ -57,7 +57,7 @@ class pengurusanPenggunaController extends Controller
         $user->save();
         Alert::success('Daftar pengguna berjaya.', 'Pendaftaran pengguna berjaya.');   
         
-        return redirect("/pengurusanPengguna/maklumatPengguna");
+        return redirect("/pengurusanPengguna/senaraiPengguna");
     }
 
     public function maklumatPengguna()
