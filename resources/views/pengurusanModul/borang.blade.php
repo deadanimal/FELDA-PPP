@@ -339,6 +339,7 @@ display: flex;
   margin-bottom: 20px;
   background-color: rgba(162, 50, 93, 0.20000000298023224);
   cursor: grabbing;
+  user-select: none;
 }
   .frame9402-text30 {
   color: #494949;
@@ -539,54 +540,6 @@ display: flex;
   .openButton:hover {
     opacity: 1;
   }
-  .draggable-table {
-	position: relative;
-  width: 60%;
-  height: 50%;
-  border-collapse: collapse;
-  background: white;  
-  -webkit-box-shadow: 0px 0px 10px 8px rgba(0, 0, 0, 0.1);
-          box-shadow: 0px 0px 10px 8px rgba(0, 0, 0, 0.1);  
-  }
-  .draggable-table__drag {
-      font-size: .95em;
-      font-weight: lighter;
-      text-transform: capitalize;    
-      position: relative;
-      width: 100%;
-      text-indent: 50px;    
-      border: 1px solid #f1f1f1;
-      z-index: 10;
-      cursor: grabbing;
-      -webkit-box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05);
-              box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05); 
-    
-      opacity: 1;
-  }
-  tbody {
-    
-    tr {
-      cursor: grabbing;
-      
-      td {
-        font-size: .95em;
-        font-weight: lighter;
-        text-transform: capitalize;
-        text-indent: 50px;
-        padding: 10px;  
-        user-select: none;
-        border-top: 1px solid whitesmoke;
-      }
-    }
-
-    tr.is-dragging {
-        background: #f1c40f;
-
-        td {
-            color: #ffe683;
-        }
-    }    
-  }
 </style>
 
 <div class="frame9402-frame9402">
@@ -635,7 +588,7 @@ display: flex;
       @csrf
       <input type="hidden" name="borangId" value="{{$borang->id}}">
       <table style="overflow: scroll; max-height: 750px; width:100%;" id="borangField" class="draggable-table">
-        <tbody>
+        <tbody class="row_drag">
         @if ($borang->context != null)
           @php
             $contexts = json_decode($borang->context);
@@ -670,11 +623,6 @@ display: flex;
             </td>
           </tr>
           @endforeach
-
-        @elseif($borang->borangPdf != null)
-          
-        @else
-
         @endif
         </tbody>
       </table>
@@ -727,161 +675,17 @@ function closeForm() {
   document.getElementById("popupForm").style.display = "none";
 }
 </script>
-<script>
-(function() {
-  "use strict";
-  
-  const table = document.getElementById('table');
-  const tbody = table.querySelector('tbody');
-  
-  var currRow = null,
-      dragElem = null,
-      mouseDownX = 0,
-      mouseDownY = 0,         
-      mouseX = 0,
-      mouseY = 0,      
-      mouseDrag = false;  
-  
-  function init() {
-    bindMouse();
-  }
-  
-  function bindMouse() {
-    document.addEventListener('mousedown', (event) => {
-      if(event.button != 0) return true;
-      
-      let target = getTargetRow(event.target);
-      if(target) {
-        currRow = target;
-        addDraggableRow(target);
-        currRow.classList.add('is-dragging');
-
-
-        let coords = getMouseCoords(event);
-        mouseDownX = coords.x;
-        mouseDownY = coords.y;      
-
-        mouseDrag = true;   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script type="text/javascript">
+  $( ".row_drag" ).sortable({
+      delay: 120,
+      stop: function() {
+          var selectedRow = new Array();
+          $('.row_drag>tr').each(function() {
+              selectedRow.push($(this).attr("id"));
+          });
       }
-    });
-    
-    document.addEventListener('mousemove', (event) => {
-      if(!mouseDrag) return;
-      
-      let coords = getMouseCoords(event);
-      mouseX = coords.x - mouseDownX;
-      mouseY = coords.y - mouseDownY;  
-      
-      moveRow(mouseX, mouseY);
-    });
-    
-    document.addEventListener('mouseup', (event) => {
-      if(!mouseDrag) return;
-      
-      currRow.classList.remove('is-dragging');
-      table.removeChild(dragElem);
-      
-      dragElem = null;
-      mouseDrag = false;
-    });    
-  }
-  
-  
-  function swapRow(row, index) {
-     let currIndex = Array.from(tbody.children).indexOf(currRow),
-         row1 = currIndex > index ? currRow : row,
-         row2 = currIndex > index ? row : currRow;
-         
-     tbody.insertBefore(row1, row2);
-  }
-    
-  function moveRow(x, y) {
-    dragElem.style.transform = "translate3d(" + x + "px, " + y + "px, 0)";
-    
-    let	dPos = dragElem.getBoundingClientRect(),
-        currStartY = dPos.y, currEndY = currStartY + dPos.height,
-        rows = getRows();
-
-    for(var i = 0; i < rows.length; i++) {
-      let rowElem = rows[i],
-          rowSize = rowElem.getBoundingClientRect(),
-          rowStartY = rowSize.y, rowEndY = rowStartY + rowSize.height;
-
-      if(currRow !== rowElem && isIntersecting(currStartY, currEndY, rowStartY, rowEndY)) {
-        if(Math.abs(currStartY - rowStartY) < rowSize.height / 2)
-          swapRow(rowElem, i);
-      }
-    }    
-  }
-  
-  function addDraggableRow(target) {    
-      dragElem = target.cloneNode(true);
-      dragElem.classList.add('draggable-table__drag');
-      dragElem.style.height = getStyle(target, 'height');
-      dragElem.style.background = getStyle(target, 'backgroundColor');     
-      for(var i = 0; i < target.children.length; i++) {
-        let oldTD = target.children[i],
-            newTD = dragElem.children[i];
-        newTD.style.width = getStyle(oldTD, 'width');
-        newTD.style.height = getStyle(oldTD, 'height');
-        newTD.style.padding = getStyle(oldTD, 'padding');
-        newTD.style.margin = getStyle(oldTD, 'margin');
-      }      
-      
-      table.appendChild(dragElem);
-
-    
-      let tPos = target.getBoundingClientRect(),
-          dPos = dragElem.getBoundingClientRect();
-      dragElem.style.bottom = ((dPos.y - tPos.y) - tPos.height) + "px";
-      dragElem.style.left = "-1px";    
-    
-      document.dispatchEvent(new MouseEvent('mousemove',
-        { view: window, cancelable: true, bubbles: true }
-      ));    
-  }  
-  
-  
-  
-  
-  
-
-  
-  function getRows() {
-    return table.querySelectorAll('tbody tr');
-  }    
-  
-  function getTargetRow(target) {
-      let elemName = target.tagName.toLowerCase();
-
-      if(elemName == 'tr') return target;
-      if(elemName == 'td') return target.closest('tr');     
-  }
-  
-  function getMouseCoords(event) {
-    return {
-        x: event.clientX,
-        y: event.clientY
-    };    
-  }  
-  
-  function getStyle(target, styleName) {
-    let compStyle = getComputedStyle(target),
-        style = compStyle[styleName];
-
-    return style ? style : null;
-  }  
-  
-  function isIntersecting(min0, max0, min1, max1) {
-      return Math.max(min0, max0) >= Math.min(min1, max1) &&
-             Math.min(min0, max0) <= Math.max(min1, max1);
-  }  
-  
-  
-  
-  init();
-  
-})();
+  });
 </script>
 
 @endsection
