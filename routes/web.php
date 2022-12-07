@@ -72,6 +72,7 @@ Route::delete('/pengurusanBorang/delete',  [pengurusanModulController::class, 'd
 
 Route::get('/pengurusanBorang/isiBorang/{borangId}',  [pengurusanBorangController::class, 'isiBorang']);
 Route::post('/pengurusanBorang/simpanMedanBorang',  [pengurusanBorangController::class, 'simpanMedanBorang']);
+Route::post('/pengurusanBorang/uploadBorang',  [pengurusanBorangController::class, 'uploadBorang']);
 
 require __DIR__.'/auth.php';
 

@@ -3,7 +3,7 @@
 @section('innercontent')
 <style>
 .frame9402-frame9402 {
-  width: 100vw;
+  width: 100%;
   display: flex;
   position: relative;
   box-sizing: border-box;
@@ -18,9 +18,9 @@
   padding: 58px 339px;
   position: relative;
   box-sizing: border-box;
-  align-items: center;
+  width: 100%;
+  margin-right: 0px;
   border-color: transparent;
-  margin-right: 0;
   border-radius: 0px 0px 0px 0px;
   margin-bottom: 32px;
   flex-direction: column;
@@ -71,7 +71,7 @@
   text-decoration: none;
 }
 .frame9402-box {
-  width: 1332.490px;
+  width: 100%;
   display: flex;
   padding-bottom: 50px;
   position: relative;
@@ -79,8 +79,6 @@
   box-sizing: content-box;
   align-items: center;
   border-color: transparent;
-  margin-left: auto;
-  margin-right: auto;
   border-radius: 8.598855018615723px;
   margin-bottom: 0;
   flex-direction: column;
@@ -385,7 +383,7 @@ display: flex;
   text-decoration: none;
 }
 .frame9402-frame8727 {
-  width: 10%;
+  width: 15%;
   display: flex;
   opacity: 1;
   position: relative;
@@ -394,12 +392,13 @@ display: flex;
   flex-shrink: 0;
   border-color: transparent;
   margin-left: auto;
+  margin-right: 10px;
   border-radius: 0px 0px 0px 0px;
   margin-bottom: 0;
   justify-content: center;
 }
 .frame9402-rectangle828246 {
-  width: 32px;
+  width: 35px;
   height: 30px;
   padding: 0px;
   margin-right: 7px;    
@@ -415,8 +414,7 @@ display: flex;
   height: 30px;
   position: relative;
   box-sizing: border-box;
-  margin-right: 15px;
-  margin-top: -1px;
+  margin-right: 10px;
 }
 .frame9402-rectangle8282452 {
   width: 32px;
@@ -509,7 +507,7 @@ display: flex;
 
     {{-- senarai proses --}}
     <table style="overflow: auto; height: auto; max-height: 750px; width:100%;">
-      @if ($prosess != null)
+      @if (!$prosess->isEmpty())
         @php
           $i = 1;
         @endphp
@@ -545,7 +543,7 @@ display: flex;
                 <input type="hidden" name="statusUpdate" id="statusUpdate{{$i}}" >
                 <input type="hidden" name="prosesId" id="prosesId" value="{{$proses->id}}">
                 <input type="hidden" name="modulID" id="modulID" value="{{$modul->id}}">
-                <button class="frame9402-rectangle828246" type="submit" onclick="save({{$i}})">                
+                <button class="frame9402-rectangle828246" type="submit" onclick="save({{$i}})" style="margin-top: 5px; margin-left:15px;">                
                   <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 548 612"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
                 </button>
               </form>

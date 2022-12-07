@@ -3,7 +3,7 @@
 @section('innercontent')
 <style>
 .frame9402-frame9402 {
-  width: 100vw;
+  width: 100%;
   display: flex;
   position: relative;
   box-sizing: border-box;
@@ -79,8 +79,6 @@
   box-sizing: content-box;
   align-items: center;
   border-color: transparent;
-  margin-left: auto;
-  margin-right: auto;
   border-radius: 8.598855018615723px;
   margin-bottom: 0;
   flex-direction: column;
@@ -181,7 +179,7 @@
   background-color: #FFFFFF;
 }
 .frame9403-frame7445 {
-    width: auto;
+  width: auto;
   height: 50px;
   display: flex;
   max-width: 250px;
@@ -254,18 +252,24 @@ display: flex;
 * {
     box-sizing: border-box;
   }
-  .openBtn {
+  .frame9403-frame74451 {
+      width: auto;
+    height: 50px;
     display: flex;
-    justify-content: left;
-  }
-  .openButton {
-    border: none;
-    border-radius: 5px;
-    background-color: #1c87c9;
-    color: white;
-    padding: 14px 20px;
+    max-width: 250px;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
+    box-sizing: border-box;
+    padding-top: 0px;
+    border-color: transparent;
+    padding-left: 20px;
+    border-radius: 8.598855018615723px;
+    padding-right: 20px;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #A2335D;
     cursor: pointer;
-    position: fixed;
+    margin-left: auto;
+    margin-right: 30px;
   }
   .loginPopup {
     position: relative;
@@ -289,15 +293,11 @@ display: flex;
     border-radius: 8px;
   }
   .frame9402-kotaknamaBorang {
-  width: 299px;
+  width: auto;
   height: 50px;
   position: relative;
   box-sizing: content-box;
-  border-color: rgba(140, 38, 60, 1);
-  border-style: solid;
-  border-width: 0.865405261516571px;
   margin-right: 0;
-  border-radius: 3.461621046066284px;
   margin-top: 10px;
   margin-bottom: 30px;
   font-family: 'Eina01-SemiBold';
@@ -338,6 +338,7 @@ display: flex;
   border-radius: 0px 0px 0px 0px;
   margin-bottom: 20px;
   background-color: rgba(162, 50, 93, 0.20000000298023224);
+  cursor: grabbing;
 }
   .frame9402-text30 {
   color: #494949;
@@ -464,6 +465,128 @@ display: flex;
   background-color: lightsteelblue;
 }
 
+{
+    box-sizing: border-box;
+  }
+  .openBtn {
+    display: flex;
+    justify-content: left;
+  }
+  .openButton {
+    border: none;
+    border-radius: 5px;
+    background-color: #1c87c9;
+    color: white;
+    padding: 14px 20px;
+    cursor: pointer;
+    position: fixed;
+  }
+  .loginPopup {
+    position: relative;
+    text-align: center;
+    width: 100%;
+  }
+  .formPopup {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%, 5%);
+    border: 4px solid #781E2A;
+    border-radius: 8px;
+    z-index: 9;
+  }
+  .formContainer {
+    max-width: 550px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+  }
+  .frame9402-kotaknamaBorang {
+  width: 40%%;
+  height: auto;
+  align-self: auto;
+  text-align: left;
+  font-family: Eina01-Bold;
+  font-weight: 400;
+  line-height: 15.477937698364258px;
+  font-stretch: normal;
+  margin-bottom: 0;
+  margin-left: 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  font-family: 'Eina01-SemiBold';
+  font-size: 18px;
+  padding-left:10px;
+}
+  .formContainer .btn {
+    padding: 12px 20px;
+    border: none;
+    background-color: #8ebf42;
+    color: #fff;
+    font-family: Poppins;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 15px;
+    opacity: 0.8;
+  }
+  .formContainer .cancel {
+    background-color: #cc0000;
+  }
+  .formContainer .btn:hover,
+  .openButton:hover {
+    opacity: 1;
+  }
+  .draggable-table {
+	position: relative;
+  width: 60%;
+  height: 50%;
+  border-collapse: collapse;
+  background: white;  
+  -webkit-box-shadow: 0px 0px 10px 8px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 0px 10px 8px rgba(0, 0, 0, 0.1);  
+  }
+  .draggable-table__drag {
+      font-size: .95em;
+      font-weight: lighter;
+      text-transform: capitalize;    
+      position: relative;
+      width: 100%;
+      text-indent: 50px;    
+      border: 1px solid #f1f1f1;
+      z-index: 10;
+      cursor: grabbing;
+      -webkit-box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05);
+              box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.05); 
+    
+      opacity: 1;
+  }
+  tbody {
+    
+    tr {
+      cursor: grabbing;
+      
+      td {
+        font-size: .95em;
+        font-weight: lighter;
+        text-transform: capitalize;
+        text-indent: 50px;
+        padding: 10px;  
+        user-select: none;
+        border-top: 1px solid whitesmoke;
+      }
+    }
+
+    tr.is-dragging {
+        background: #f1c40f;
+
+        td {
+            color: #ffe683;
+        }
+    }    
+  }
 </style>
 
 <div class="frame9402-frame9402">
@@ -479,7 +602,13 @@ display: flex;
     <div class="frame9402-frame9282">
         <div class="frame9402-frame7188">
             <span class="frame9402-text05"><span>{{$borang->namaBorang}}</span></span>
-            <button class="frame9403-frame7445" type="button" id="rowAdder">
+            {{-- <button class="frame9403-frame7445"  onclick="openForm()">
+              <div class="frame9403-frame7293">
+              <span class="frame9403-text21"><span>Muat Naik Borang</span></span>
+              <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+              </div>
+            </button> --}}
+            <button class="frame9403-frame74451" type="button" id="rowAdder">
                 <div class="frame9403-frame7293">
                 <span class="frame9403-text21"><span>Tambah</span></span>
                 <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
@@ -488,10 +617,25 @@ display: flex;
         </div>
     </div>
 
+    {{-- upload Borang --}}
+    {{-- <div class="borangPopup">
+      <div class="formPopup" id="popupForm">
+        <form action="/pengurusanBorang/uploadBorang" method="POST" enctype="multipart/form-data" class="formContainer">
+          @csrf
+          <h2 class="frame9402-text01" style="margin-top: 0px;">Muat Naik Borang</h2>
+          <input class="frame9402-kotaknamaBorang" type="file" name="borangPdf" accept=".pdf,.doc" required/>
+          <input type="hidden" value="{{$borang->id}}" name="borangId">
+          <button type="submit" class="btn">Simpan</button>
+          <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
+        </form>
+      </div>
+    </div> --}}
+
     <form action="/pengurusanBorang/simpanMedanBorang" method="POST" style="width: 100%;">    
       @csrf
       <input type="hidden" name="borangId" value="{{$borang->id}}">
-      <table style="overflow: scroll; max-height: 750px; width:100%;" id="borangField">
+      <table style="overflow: scroll; max-height: 750px; width:100%;" id="borangField" class="draggable-table">
+        <tbody>
         @if ($borang->context != null)
           @php
             $contexts = json_decode($borang->context);
@@ -526,12 +670,17 @@ display: flex;
             </td>
           </tr>
           @endforeach
+
+        @elseif($borang->borangPdf != null)
+          
+        @else
+
         @endif
-        
+        </tbody>
       </table>
       <button type="submit" class="frame9403-frame7445">
         <div class="frame9403-frame7293">
-          <span class="frame9403-text21"><span>Hantar</span></span>
+          <span class="frame9403-text21"><span>Simpan</span></span>
           <img
           src="/SVG/kemaskini.svg"
           class="frame9403-group7527"
@@ -569,9 +718,7 @@ $("body").on("click", "#DeleteRow", function () {
   $(this).parents("#row").remove();
 });
 $("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
-
 </script>
-
 <script>
 function openForm() {
   document.getElementById("popupForm").style.display = "block";
@@ -579,9 +726,162 @@ function openForm() {
 function closeForm() {
   document.getElementById("popupForm").style.display = "none";
 }
-
-
 </script>
+<script>
+(function() {
+  "use strict";
+  
+  const table = document.getElementById('table');
+  const tbody = table.querySelector('tbody');
+  
+  var currRow = null,
+      dragElem = null,
+      mouseDownX = 0,
+      mouseDownY = 0,         
+      mouseX = 0,
+      mouseY = 0,      
+      mouseDrag = false;  
+  
+  function init() {
+    bindMouse();
+  }
+  
+  function bindMouse() {
+    document.addEventListener('mousedown', (event) => {
+      if(event.button != 0) return true;
+      
+      let target = getTargetRow(event.target);
+      if(target) {
+        currRow = target;
+        addDraggableRow(target);
+        currRow.classList.add('is-dragging');
 
+
+        let coords = getMouseCoords(event);
+        mouseDownX = coords.x;
+        mouseDownY = coords.y;      
+
+        mouseDrag = true;   
+      }
+    });
+    
+    document.addEventListener('mousemove', (event) => {
+      if(!mouseDrag) return;
+      
+      let coords = getMouseCoords(event);
+      mouseX = coords.x - mouseDownX;
+      mouseY = coords.y - mouseDownY;  
+      
+      moveRow(mouseX, mouseY);
+    });
+    
+    document.addEventListener('mouseup', (event) => {
+      if(!mouseDrag) return;
+      
+      currRow.classList.remove('is-dragging');
+      table.removeChild(dragElem);
+      
+      dragElem = null;
+      mouseDrag = false;
+    });    
+  }
+  
+  
+  function swapRow(row, index) {
+     let currIndex = Array.from(tbody.children).indexOf(currRow),
+         row1 = currIndex > index ? currRow : row,
+         row2 = currIndex > index ? row : currRow;
+         
+     tbody.insertBefore(row1, row2);
+  }
+    
+  function moveRow(x, y) {
+    dragElem.style.transform = "translate3d(" + x + "px, " + y + "px, 0)";
+    
+    let	dPos = dragElem.getBoundingClientRect(),
+        currStartY = dPos.y, currEndY = currStartY + dPos.height,
+        rows = getRows();
+
+    for(var i = 0; i < rows.length; i++) {
+      let rowElem = rows[i],
+          rowSize = rowElem.getBoundingClientRect(),
+          rowStartY = rowSize.y, rowEndY = rowStartY + rowSize.height;
+
+      if(currRow !== rowElem && isIntersecting(currStartY, currEndY, rowStartY, rowEndY)) {
+        if(Math.abs(currStartY - rowStartY) < rowSize.height / 2)
+          swapRow(rowElem, i);
+      }
+    }    
+  }
+  
+  function addDraggableRow(target) {    
+      dragElem = target.cloneNode(true);
+      dragElem.classList.add('draggable-table__drag');
+      dragElem.style.height = getStyle(target, 'height');
+      dragElem.style.background = getStyle(target, 'backgroundColor');     
+      for(var i = 0; i < target.children.length; i++) {
+        let oldTD = target.children[i],
+            newTD = dragElem.children[i];
+        newTD.style.width = getStyle(oldTD, 'width');
+        newTD.style.height = getStyle(oldTD, 'height');
+        newTD.style.padding = getStyle(oldTD, 'padding');
+        newTD.style.margin = getStyle(oldTD, 'margin');
+      }      
+      
+      table.appendChild(dragElem);
+
+    
+      let tPos = target.getBoundingClientRect(),
+          dPos = dragElem.getBoundingClientRect();
+      dragElem.style.bottom = ((dPos.y - tPos.y) - tPos.height) + "px";
+      dragElem.style.left = "-1px";    
+    
+      document.dispatchEvent(new MouseEvent('mousemove',
+        { view: window, cancelable: true, bubbles: true }
+      ));    
+  }  
+  
+  
+  
+  
+  
+
+  
+  function getRows() {
+    return table.querySelectorAll('tbody tr');
+  }    
+  
+  function getTargetRow(target) {
+      let elemName = target.tagName.toLowerCase();
+
+      if(elemName == 'tr') return target;
+      if(elemName == 'td') return target.closest('tr');     
+  }
+  
+  function getMouseCoords(event) {
+    return {
+        x: event.clientX,
+        y: event.clientY
+    };    
+  }  
+  
+  function getStyle(target, styleName) {
+    let compStyle = getComputedStyle(target),
+        style = compStyle[styleName];
+
+    return style ? style : null;
+  }  
+  
+  function isIntersecting(min0, max0, min1, max1) {
+      return Math.max(min0, max0) >= Math.min(min1, max1) &&
+             Math.min(min0, max0) <= Math.max(min1, max1);
+  }  
+  
+  
+  
+  init();
+  
+})();
+</script>
 
 @endsection

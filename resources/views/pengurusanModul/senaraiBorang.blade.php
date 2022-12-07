@@ -3,7 +3,7 @@
 @section('innercontent')
 <style>
 .frame9402-frame9402 {
-  width: 100vw;
+  width: 100%;
   display: flex;
   position: relative;
   box-sizing: border-box;
@@ -71,7 +71,7 @@
   text-decoration: none;
 }
 .frame9402-box {
-  width: 1332.490px;
+  width: 100%;
   display: flex;
   padding-bottom: 50px;
   position: relative;
@@ -79,8 +79,6 @@
   box-sizing: content-box;
   align-items: center;
   border-color: transparent;
-  margin-left: auto;
-  margin-right: auto;
   border-radius: 8.598855018615723px;
   margin-bottom: 0;
   flex-direction: column;
@@ -383,7 +381,7 @@ display: flex;
   text-decoration: none;
 }
 .frame9402-frame8727 {
-  width: 10%;
+  width: 20%;
   display: flex;
   opacity: 1;
   position: relative;
@@ -397,9 +395,10 @@ display: flex;
   justify-content: center;
 }
 .frame9402-rectangle828246 {
-  width: 32px;
+  width: 35px;
   height: 30px;
   padding: 0px;
+  margin-top: 2px;
   margin-right: 7px;    
   margin-left: 7px;
   position: relative;
@@ -414,7 +413,6 @@ display: flex;
   position: relative;
   box-sizing: border-box;
   margin-right: 15px;
-  margin-top: -1px;
 }
 .frame9402-rectangle8282452 {
   width: 32px;
@@ -507,7 +505,7 @@ display: flex;
 
     {{-- senarai borang --}}
     <table style="overflow: auto; height: auto; max-height: 750px; width:100%;">
-      @if ($borangs != null)
+      @if (!$borangs->isEmpty())
         @php
           $i = 1;
         @endphp
@@ -543,7 +541,7 @@ display: flex;
                 <input type="hidden" name="statusUpdate" id="statusUpdate{{$i}}" >
                 <input type="hidden" name="prosesId" id="prosesId" value="{{$proses->id}}">
                 <input type="hidden" name="borangId" id="borangID" value="{{$borang->id}}">
-                <button class="frame9402-rectangle828246" type="submit" onclick="save({{$i}})">                
+                <button class="frame9402-rectangle828246" type="submit" onclick="save({{$i}})" style="margin-top: 5px;">                
                   <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 548 612"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
                 </button>
               </form>
@@ -564,8 +562,8 @@ display: flex;
             $i++;
           @endphp
         @endforeach 
-      @elseif($borangs == null)
-        <tr class="frame9402-input" style="background-color: #FFFFFF;"><td><h2 class="frame9402-text01" style="color:black;"> Tiada Borang </h2><td></tr>
+      @else
+        <tr class="frame9402-input" style="background-color: #FFFFFF;"><h2 class="frame9402-text01" style="color:black;"> Tiada Borang </h2></tr>
       @endif
     </table>
 

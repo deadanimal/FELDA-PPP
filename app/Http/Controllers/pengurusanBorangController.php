@@ -22,6 +22,17 @@ class pengurusanBorangController extends Controller
     
     }
 
+    public function uploadBorang(Request $request)
+    {
+        $borang = Borang::find($request->borangId);
+        $borang->borangPdf =  $request->file('borangPdf')->store('felda-ppp/uploads');
+        $borang->save();
+
+        Alert::success('Muat Naik Borang berjaya.', 'Muat naik borang anda berjaya.');   
+
+        return view('pengurusanModul.borang', compact('borang'));
+    }
+
     public function simpanMedanBorang(Request $request)
     {
         $borang = Borang::find($request->borangId);
@@ -40,10 +51,9 @@ class pengurusanBorangController extends Controller
         $borang->context = json_encode($data);
         $borang->save();
 
-        return view('pengurusanModul.borang', compact('borang'));
-        
-        $borangs = PDF::loadview();
+        Alert::success('Simpan Meadan Borang berjaya.', 'Simpan medan borang telah berjaya.');   
 
+        return view('pengurusanModul.borang', compact('borang'));
     
     }
 

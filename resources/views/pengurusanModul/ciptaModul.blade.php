@@ -3,7 +3,7 @@
 @section('innercontent')
 <style>
 .frame9402-frame9402 {
-  width: 100vw;
+  width: 100%;
   display: flex;
   position: relative;
   box-sizing: border-box;

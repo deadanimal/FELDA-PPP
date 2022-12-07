@@ -26,18 +26,16 @@ class PengurusanModulController extends Controller
         $modul->diciptaOleh = $request->userid;
         $modul->dikemaskiniOleh = Auth::user()->id;
         $modul->save();
-        Alert::success('Cipta Modul berjaya.', 'Cipta modul telah berjaya.');   
-        $modul = Modul::where('nama', '=', $request->namaModul);
-        $proses = Proses::where('modul', '=', $modul->id);
+        Alert::success('Cipta Modul berjaya.', 'Cipta modul telah berjaya.'); 
         // $modul= Modul::where('nama', $modul->nama)->get();
         // return view("pengurusanModul.ciptaProses", compact('modul'));
+        return redirect('/pengurusanModul/senaraiModul');
 
-        return view('pengurusanModul.ciptaProses', compact('modul','proses'));
     }
 
     public function senaraiModul()
     {
-        $modul = Modul::all();
+        $modul = Modul::orderBy("updated_at", "DESC")->get();
         $bilangan= count($modul);
         return view('pengurusanModul.senaraiModul', compact('modul','bilangan'));
     }
@@ -92,7 +90,7 @@ class PengurusanModulController extends Controller
         $prosess->save();
         Alert::success('Cipta proses berjaya.', 'Cipta proses telah berjaya.');   
         $modul = Modul::find($request->modulId);
-        $prosess = Proses::where('modul', $request->modulId)->orderBy("updated_at")->get();
+        $prosess = Proses::where('modul', $request->modulId)->orderBy("updated_at", "DESC")->get();
 
         return view('pengurusanModul.senaraiProses', compact('modul','prosess'));
     }
@@ -100,8 +98,9 @@ class PengurusanModulController extends Controller
     public function senaraiProses(Request $request)
     {
         $idModul = (int)$request->route('modulId');
-        $prosess = Proses::where('modul', $idModul)->orderBy("updated_at")->get();
+        $prosess = Proses::where('modul', $idModul)->orderBy("updated_at", "DESC")->get();
         $modul = Modul::find($request->modulId);
+        // dd($prosess);
         return view('pengurusanModul.senaraiProses', compact('modul','prosess'));
     
     }
@@ -117,7 +116,7 @@ class PengurusanModulController extends Controller
         Alert::success('Kemaskini Proses berjaya.', 'Kemaskini Proses telah berjaya.');   
 
         
-        $prosess = Proses::where('modul', $request->modulID)->orderBy("updated_at")->get();
+        $prosess = Proses::where('modul', $request->modulID)->orderBy("updated_at", "DESC")->get();
         $modul = Modul::find($request->modulID);
 
         return view('pengurusanModul.senaraiProses', compact('modul','prosess'));
@@ -131,7 +130,7 @@ class PengurusanModulController extends Controller
         $proses->delete();
         Alert::success('Padam Proses Berjaya.', 'Padam proses telah berjaya.');   
 
-        $prosess = Proses::where('modul', $request->modulID)->orderBy("updated_at")->get();
+        $prosess = Proses::where('modul', $request->modulID)->orderBy("updated_at", "DESC")->get();
         $modul = Modul::find($request->modulId);
 
         return view('pengurusanModul.senaraiProses', compact('modul','prosess'));
@@ -149,7 +148,7 @@ class PengurusanModulController extends Controller
         Alert::success('Cipta Borang berjaya.', 'Cipta borang telah berjaya.');   
         
         $proses = Proses::find($request->prosesId);
-        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at")->get();
+        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
 
         return view('pengurusanModul.senaraiBorang', compact('borangs','proses'));
     }
@@ -157,7 +156,7 @@ class PengurusanModulController extends Controller
     public function senaraiBorang(Request $request)
     {
         $idProses = (int)$request->route('prosesId');
-        $borangs = Borang::where('proses', $idProses)->orderBy("updated_at")->get();
+        $borangs = Borang::where('proses', $idProses)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($idProses);
         return view('pengurusanModul.senaraiBorang', compact('borangs','proses'));
     
@@ -174,7 +173,7 @@ class PengurusanModulController extends Controller
         Alert::success('Kemaskini Borang berjaya.', 'Kemaskini borang telah berjaya.');   
 
         
-        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at")->get();
+        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($request->prosesId);
 
         return view('pengurusanModul.senaraiBorang', compact('borangs','proses'));
@@ -188,7 +187,7 @@ class PengurusanModulController extends Controller
         $borang->delete();
         Alert::success('Padam Borang Berjaya.', 'Padam borang telah berjaya.');   
 
-        $borangs= Borang::where('proses', $request->prosesId)->orderBy("updated_at")->get();
+        $borangs= Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($request->prosesId);
 
         return view('pengurusanModul.senaraiBorang', compact('borangs','proses'));

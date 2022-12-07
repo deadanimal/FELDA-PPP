@@ -3,7 +3,7 @@
 @section('innercontent')
 <style>
 .frame9402-frame9402 {
-  width: 100vw;
+  width: 100%;
   display: flex;
   position: relative;
   box-sizing: border-box;
@@ -458,7 +458,6 @@
   box-sizing: border-box;
   border-color: transparent;
   margin-left: 20px;
-    margin-top: -1px;
 }
 .frame9402-rectangle828246 {
   width: 32px;
