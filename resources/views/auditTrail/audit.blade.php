@@ -6,15 +6,14 @@
   width: 100%;
   display: flex;
   padding-top: 0px;
-  padding-right: 48px;
   padding-bottom: 67px;
-  padding-left: 48px;
   position: relative;
   max-width: 1336px;
   box-sizing: border-box;
   align-items: center;
   border-color: transparent;
-  margin-right: 0;
+  margin-right: auto;
+  margin-left: auto;
   border-radius: 0px 0px 0px 0px;
   flex-direction: column;
   justify-content: center;
@@ -676,7 +675,7 @@
                     <input type="date" name="tarikh" id="tarikh" class="frame9404-kotaknama">
                 </div>
             </div>
-            <button type="submit" class="frame9404-b-u-t-t-o-n-c-a-r-i-a-n2" id="buttonTarikh">
+            <button type="submit" class="frame9404-b-u-t-t-o-n-c-a-r-i-a-n2" id="buttonTarikh" style="opacity:1;">
                 <div class="frame9404-frame72942">
                     <div class="frame9404-frame7293">
                         <span class="frame9404-text07"><span>Cari</span></span>
@@ -793,16 +792,5 @@ function changeTheColorOfButton1() {
         element.disabled = true;
     }
 }
-function changeTheColorOfButton2() {
-    var element = document.getElementById("buttonTarikh");
-    if (document.getElementById("tarikh").value !== "dd/mm/yyyy") {
-        element.style.opacity = "1";
-        element.disabled = false;
-    } else {
-        element.style.opacity = "0.5";
-        element.disabled = true;
-    }
-}
-
 </script>
 @endsection

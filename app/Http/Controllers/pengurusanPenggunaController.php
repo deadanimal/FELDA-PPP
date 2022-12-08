@@ -182,7 +182,7 @@ class pengurusanPenggunaController extends Controller
         $id = $request->kategoriId;
         $kategoriPengguna = KategoriPengguna::find($id);
         $kategoriPengguna->delete();
-        Alert::success('Tambah Kategori pengguna berjaya.', 'Kategori pengguna berjaya ditambah.');   
+        Alert::success('Padam Kategori pengguna berjaya.', 'Kategori pengguna berjaya dipadam.');   
     
         return redirect('/pengurusanPengguna/senaraiKategoriPengguna');
     }
