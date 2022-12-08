@@ -44,12 +44,19 @@
                 <label for="kategoriPengguna" class="frame9403-text04">
                     <span>Kategori Pengguna</span>
                 </label>
-                <select name="kategoripengguna" name="kategoriPengguna" class="frame9403-kotaknama3" required>
-                  <option value="" selected disabled>Pilih Kategori</option>
+                <select name="kategoripengguna" name="kategoriPengguna" class="frame9403-kotaknama3" style="width:417px">                  <option value="" selected disabled>Pilih Kategori</option>
                   @foreach ($kategoriPengguna as $kategoriPenggunas)
                     <option value="{{ $kategoriPenggunas->id }}">{{ $kategoriPenggunas->nama }}</option>
                   @endforeach
                 </select>
+                <a href="/pengurusanPengguna/senaraiKategoriPengguna" class="frame9402-frame7445" title="Tambah Kategori Pengguna">
+                  <div class="frame9402-frame72931">
+                    <img
+                        src="/SVG/daftar.svg"
+                        class="frame9402-group7527"
+                    />
+                  </div>
+                </a>
             </div>
         </div>
         <div class="frame9403-frame9281">
@@ -106,6 +113,33 @@
   </form>
 </div>
 <style>
+.frame9402-frame7445 {
+  display: flex;
+  padding: 5px 5px;
+  position: relative;
+  align-self: flex-end;
+  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
+  box-sizing: border-box;
+  align-items: flex-end;
+  border-color: transparent;
+  border-radius: 8.598855018615723px;
+  margin-right: -15px;
+  margin-left: auto;
+  margin-bottom:5px;
+  flex-direction: column;
+  background-color: #A2335D;
+  text-decoration: none;
+}
+.frame9402-frame72931 {
+  display: flex;
+  position: relative;
+  box-sizing: border-box;
+  align-items: center;
+  border-color: transparent;
+  margin-right: 0;
+  border-radius: 0px 0px 0px 0px;
+  margin-bottom: 0;
+}
   .frame9403-frame9403 {
     width: 100%;
     height:100%;
