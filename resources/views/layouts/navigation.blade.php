@@ -42,7 +42,13 @@
                 <span class="frame7279-text08"><span>LAMAN UTAMA</span></span>
             </div>
         </a>
+        @if (Request::is('pengurusanPengguna/*'))
+        <button class="frame7279-dropdown active" id="pengurusanPengguna" onclick="changebutton()">
+
+        @else
         <button class="frame7279-dropdown" id="pengurusanPengguna" onclick="changebutton()">
+
+        @endif
             <div class="frame7279-frame7262">
                 <img
                 src="/SVG/menu.svg"
@@ -54,7 +60,13 @@
                 </span>
             </div>
         </button>
-        <div class="dropdown-container">
+        <div class="dropdown-container" 
+        @if (Request::is('pengurusanPengguna/*'))
+        style="display:block"
+
+        @else
+        style="display:none"
+        @endif>
             @if (Auth::user()->kategoripengguna == 1)
             <div class="frame9275-log-audit">
                 <a href="/pengurusanPengguna/senaraiPengguna" class="frame9275-frame7272" onclick="changedot(this)">
@@ -76,7 +88,11 @@
                 </a>
             </div> --}}
         </div>
-        <button class="frame7279-dropdown" id="komuniti" onclick="changebutton()">
+        @if (Request::is('pengurusanModul/*'))
+            <button class="frame7279-dropdown active" id="komuniti" onclick="changebutton()">
+        @else
+            <button class="frame7279-dropdown" id="komuniti" onclick="changebutton()">
+        @endif
             <div class="frame7279-frame7262">
                 <img
                 src="/SVG/menu.svg"
@@ -86,7 +102,13 @@
                 <span class="frame7279-text08"><span>PENGURUSAN MODUL</span></span>
             </div>
         </button>
-        <div class="dropdown-container">
+        <div class="dropdown-container"
+        @if (Request::is('pengurusanModul/*'))
+        style="display:block"
+
+        @else
+        style="display:none"
+        @endif>
             <div class="frame9275-log-audit">
                 <a href="/pengurusanModul/ciptaModul" class="frame9275-frame7272" onclick="changedot(this)">
                     <span class="frame9275-text"><span>Cipta Modul</span></span>
@@ -583,23 +605,4 @@ function changedot(element){
         dotdrop.className = 'frame9275-frame7272';
     };
 }
-jQuery(function($){
-    var current = window.location.href;
-    console.log(current);
-    //remove the active class from list item. 
-    $('frame7279-lsemakan-w-t-d').removeClass('active');
-
-    if(current != '/'){
-        $('frame7279-lsemakan-w-t-d').each(function(){
-            var $this = $(this);
-            // if the current path is like this link, make it active
-            if(current.indexOf($this.attr('href')) !== -1 && $this.attr('href') != '/'){
-                $this.addClass('active');
-            }
-        })
-    }else{
-            console.log('home');
-        $('frame7279-lsemakan-w-t-d').addClass('active');
-    }
-});
 </script>
