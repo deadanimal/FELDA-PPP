@@ -360,6 +360,49 @@ display: flex;
   margin-right: 0;
   margin-bottom: 0;
 }   
+.frame9402-frame7445 {
+  display: flex;
+  padding: 5px 5px;
+  position: relative;
+  align-self: flex-end;
+  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
+  box-sizing: border-box;
+  align-items: flex-end;
+  border-color: transparent;
+  border-radius: 8.598855018615723px;
+  margin-right: -15px;
+  margin-left: auto;
+  margin-bottom:5px;
+  flex-direction: column;
+  background-color: #A2335D;
+  text-decoration: none;
+}
+.frame9402-frame72931 {
+  display: flex;
+  position: relative;
+  box-sizing: border-box;
+  align-items: center;
+  border-color: transparent;
+  margin-right: 0;
+  border-radius: 0px 0px 0px 0px;
+  margin-bottom: 0;
+}
+.frame9402-text08 {
+  color: white;
+  width: auto;
+  height: auto;
+  font-size: 16px;
+  align-self: auto;
+  font-style: SemiBold;
+  text-align: left;
+  font-family: Poppins;
+  font-weight: 600;
+  line-height: 34.39542007446289px;
+  font-stretch: normal;
+  margin-right: 2px;
+  margin-bottom: 0;
+  text-decoration: none;
+}
 </style>
 <div class="frame9403-frame9403">
   <div class="frame9403-frame9401">
@@ -404,14 +447,23 @@ display: flex;
             <label for="kategoriPengguna" class="frame9403-text04">
                 <span>Kategori Pengguna</span>
             </label>
-            <select name="kategoripengguna" name="kategoriPengguna" class="frame9403-kotaknama3">
+            <select name="kategoripengguna" name="kategoriPengguna" class="frame9403-kotaknama3" style="width:417px">
               <option value="{{$user->kategoripengguna}}" selected style="display:none">{{$user->kategori->nama}}</option>
               @foreach ($kategoriPengguna as $kategoriPenggunas)
                 <option value="{{ $kategoriPenggunas->id }}">{{ $kategoriPenggunas->nama }}</option>
               @endforeach
             </select>
+            <a href="/pengurusanPengguna/senaraiKategoriPengguna" class="frame9402-frame7445" title="Tambah Kategori Pengguna">
+              <div class="frame9402-frame72931">
+                <img
+                    src="/SVG/daftar.svg"
+                    class="frame9402-group7527"
+                />
+              </div>
+            </a>
           </div>
         </div>
+         
         <div class="frame9403-frame9281">
           <div class="frame9403-group71881">
             <span class="frame9403-text04"><span> Kata Laluan</span></span>

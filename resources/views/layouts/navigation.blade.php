@@ -424,9 +424,9 @@
     text-decoration: none;
     }
     .frame7279-lsemakan-w-t-d {
-    width: 388px;
+    width: auto;
     display: flex;
-    padding: 21px 42px;
+    padding: 20px 5px;
     position: relative;
     box-sizing: border-box;
     align-items: flex-start;
@@ -441,7 +441,7 @@
     }
     .frame7279-dropdown {
     display: flex;
-    padding: 17px 42px;
+    padding: 20px 2px;
     position: relative;
     box-sizing: border-box;
     align-items: flex-start;
@@ -457,12 +457,11 @@
     width:100%;
     background-image:url('/SVG/arrow.svg');
     background-repeat: no-repeat;
-    background-position:90% center;
+    background-position:95% center;
     }
     .dropdown-container {
     display: none;
     background-color: rgba(0, 52, 120, 0);
-    padding-left: 8px;
     }
     .frame7279-vector03 {
     width: 11px;
@@ -478,7 +477,7 @@
     color: white;
     background-image: url('/SVG/arrowdown.svg');
     background-repeat: no-repeat;
-    background-position:90% center;
+    background-position:95% center;
     }
 
     .changeimg {
@@ -500,7 +499,7 @@
 
     .frame9275-log-audit {
     display: flex;
-    padding: 24px 44px;
+    padding: 20px 0px;
     position: relative;
     box-sizing: border-box;
     align-items: flex-start;
@@ -517,7 +516,7 @@
   box-sizing: border-box;
   align-items: flex-start;
   border-color: transparent;
-  margin-left: -10px;
+  margin-left: 10px;
   border-radius: 0px 0px 0px 0px;
   margin-bottom: 0;
     background-color: rgba(255, 255, 255, 0);
@@ -570,6 +569,7 @@ function changebutton() {
                 dropdownContent.style.display = "block";
             }
         });
+
     }
 }
 
@@ -583,4 +583,23 @@ function changedot(element){
         dotdrop.className = 'frame9275-frame7272';
     };
 }
+jQuery(function($){
+    var current = window.location.href;
+    console.log(current);
+    //remove the active class from list item. 
+    $('frame7279-lsemakan-w-t-d').removeClass('active');
+
+    if(current != '/'){
+        $('frame7279-lsemakan-w-t-d').each(function(){
+            var $this = $(this);
+            // if the current path is like this link, make it active
+            if(current.indexOf($this.attr('href')) !== -1 && $this.attr('href') != '/'){
+                $this.addClass('active');
+            }
+        })
+    }else{
+            console.log('home');
+        $('frame7279-lsemakan-w-t-d').addClass('active');
+    }
+});
 </script>

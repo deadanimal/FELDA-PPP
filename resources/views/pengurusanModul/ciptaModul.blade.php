@@ -305,6 +305,5 @@
         button.disabled = true;
       }
     }
-  
   </script>
 @endsection

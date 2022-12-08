@@ -62,29 +62,29 @@
     </div>
 </body>
 <style>
-body, html {
+html {
   background: url("/Image/background.JPG");
   background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
   font-family: 'Poppins';
-  
+  min-height: 100%;
+}
+body{
+  margin:10%;
+  align-items: center;
 }
 .log-masuk-log-masuk {
-  width: 100%;
-  height: 1117px;
   display: flex;
   position: relative;
-  max-width: 1728px;
   box-sizing: border-box;
   align-items: center;
   flex-shrink: 0;
-  border-color: rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.47);
   border-style: solid;
   border-width: 0px;
   border-radius: 0px 0px 0px 0px;
   flex-direction: column;
   justify-content: center;
+  margin:auto;
   background-color: rgba(255, 255, 255, 0);
 }
 .log-masuk-logmasuk1 {
