@@ -78,7 +78,7 @@ class pengurusanPenggunaController extends Controller
     public function cariPengguna(Request $request)
     {
         $idPengguna= $request->idPengguna;
-        $user = User::where('idPengguna', 'LIKE', "%{$idPengguna}%") ->orWhere('nama', 'LIKE', "%{$idPengguna}%") ->get();
+        $user = User::where('idPengguna', 'LIKE', "%{$idPengguna}%") ->orWhere('nama', 'LIKE', "%{$idPengguna}%")->orWhere('nama', 'LIKE', "%{$idPengguna}%")  ->get();
         $bilangan= count(User::all())-1;
         return view('pengurusanPengguna.senaraiPengguna', compact('user','bilangan'));
     }
@@ -88,9 +88,7 @@ class pengurusanPenggunaController extends Controller
         $penggunaId = $request->penggunaId;
         $user = User::find($penggunaId); 
         $user->delete();
-        Alert::success('Padam pengguna berjaya.', 'Padam pengguna telah berjaya.');   
-
-        return redirect('/pengurusanPengguna/senaraiPengguna');
+        return redirect('/pengurusanPengguna/senaraiPengguna')->with('Padam pengguna berjaya.', 'Padam pengguna telah berjaya.');;
     
     }
 
@@ -185,6 +183,7 @@ class pengurusanPenggunaController extends Controller
         Alert::success('Padam Kategori pengguna berjaya.', 'Kategori pengguna berjaya dipadam.');   
     
         return redirect('/pengurusanPengguna/senaraiKategoriPengguna');
+
     }
 
     public function auditTrail()

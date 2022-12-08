@@ -502,11 +502,11 @@
             <a href="/pengurusanPengguna/edit/{{$pengguna->id}}" class="frame9402-rectangle828245">
           
             </a>
-            <form method="post" action="/pengurusanPengguna/delete" id="delete">
+            <form method="post" action="/pengurusanPengguna/delete">
               @csrf
               @method('DELETE')
               <input type="hidden" name="penggunaId" value="{{$pengguna->id}}"/>
-              <button class="frame9402-rectangle828246">
+              <button class="frame9402-rectangle828246" type="submit">
             </form>
           </td>
         </tr>
@@ -529,5 +529,35 @@
       button.disabled = true;
     }
   }
+</script>    
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+      //the confirm class that is being used in the delete button
+      $('.frame9402-rectangle828246').click(function(event) {
+
+          //This will choose the closest form to the button
+          var form =  $(this).closest("form");
+
+          //don't let the form submit yet
+          event.preventDefault();
+
+          //configure sweetalert alert as you wish
+          Swal.fire({
+              title: 'Padam Pengguna',
+              text: "Anda Pasti Mahu Padam Pengguna?",
+              cancelButtonText: "Tidak",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Ya'
+          }).then((result) => {
+              
+              //in case of deletion confirm then make the form submit
+              if (result.isConfirmed) {
+                  form.submit();
+              }
+          })
+      });
 </script>
 @endsection
