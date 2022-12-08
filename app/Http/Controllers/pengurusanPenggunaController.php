@@ -197,7 +197,7 @@ class pengurusanPenggunaController extends Controller
     {
         $idpengguna = $request->idPengguna;
         $audits = Audit::leftJoin('users as usr','usr.id', '=', 'user_id')
-        ->select('*','audits.created_at')->where('usr.idPengguna','=',$idpengguna)->orderBy("updated_at", "DESC")->get();
+        ->select('*','audits.created_at')->where('usr.idPengguna','=',$idpengguna)->get();
         return view('auditTrail.audit', compact('audits'));
     }
 
@@ -205,7 +205,7 @@ class pengurusanPenggunaController extends Controller
     {
         $tarikh = $request->tarikh;
         $audits = Audit::leftJoin('users as usr','usr.id', '=', 'user_id')
-        ->select('*','audits.created_at')->where('audits.created_at','LIKE', "%{$tarikh}%")->orderBy("updated_at", "DESC")->get();
+        ->select('*','audits.created_at')->where('audits.created_at','LIKE', "%{$tarikh}%")->get();
         return view('auditTrail.audit', compact('audits'));
     }
 
@@ -226,7 +226,7 @@ class pengurusanPenggunaController extends Controller
         }
 
         $audits = Audit::leftJoin('users as usr','usr.id', '=', 'user_id')
-        ->select('*','audits.created_at')->where('audits.event','=',$event)->orderBy("updated_at", "DESC")->get();
+        ->select('*','audits.created_at')->where('audits.event','=',$event)->get();
         return view('auditTrail.audit', compact('audits'));
     }
 }

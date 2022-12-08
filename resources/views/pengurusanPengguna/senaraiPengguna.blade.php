@@ -495,7 +495,7 @@
         @endif
           <td class="frame9402-text18" id="bilangan">{{$i}}</td>
           <td class="frame9402-text19">{{$pengguna->idPengguna}}</td>
-          <td class="frame9402-text20">{{$pengguna->nama}}</td>
+          <td class="frame9402-text20"><a href="/pengurusanPengguna/edit/{{$pengguna->id}}">{{$pengguna->nama}}</a></td>
           <td class="frame9402-frame8727" id="tindakan">
             <a href="/pengurusanPengguna/edit/{{$pengguna->id}}" class="frame9402-rectangle828245">
           

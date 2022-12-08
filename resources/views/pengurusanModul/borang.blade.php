@@ -83,6 +83,7 @@
   margin-bottom: 0;
   flex-direction: column;
   background-color: white;
+  align-self: center;
 }
 .frame9402-frame9282 {
   display: flex;

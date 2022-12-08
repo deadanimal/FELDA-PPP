@@ -3,7 +3,7 @@
 @section('innercontent')
 <style>
 .frame9404-frame9404 {
-  width: 1336px;
+  width: 100%;
   display: flex;
   padding-top: 0px;
   padding-right: 48px;
@@ -18,6 +18,7 @@
   border-radius: 0px 0px 0px 0px;
   flex-direction: column;
   justify-content: center;
+  align-self: center;
 }
 .frame9404-frame9398 {
   display: flex;
@@ -672,10 +673,10 @@
                 <div class="frame9404-frame7188">
                     <span class="frame9404-text02"><span>Tarikh</span></span>
                     
-                    <input type="date" name="tarikh" id="tarikh" class="frame9404-kotaknama" onkeyup="changeTheColorOfButton2()">
+                    <input type="date" name="tarikh" id="tarikh" class="frame9404-kotaknama">
                 </div>
             </div>
-            <button type="submit" class="frame9404-b-u-t-t-o-n-c-a-r-i-a-n2" id="buttonTarikh" disabled>
+            <button type="submit" class="frame9404-b-u-t-t-o-n-c-a-r-i-a-n2" id="buttonTarikh">
                 <div class="frame9404-frame72942">
                     <div class="frame9404-frame7293">
                         <span class="frame9404-text07"><span>Cari</span></span>
