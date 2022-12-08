@@ -439,6 +439,8 @@
   background: url("/SVG/bin.svg")
 }
 </style>
+<link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <div class="frame9402-frame9402">
   <div class="frame9402-frame9281">
     <span class="frame9402-text"><span>{{$bilangan}}</span></span>
@@ -500,7 +502,7 @@
             <a href="/pengurusanPengguna/edit/{{$pengguna->id}}" class="frame9402-rectangle828245">
           
             </a>
-            <form method="post" action="/pengurusanPengguna/delete">
+            <form method="post" action="/pengurusanPengguna/delete" id="delete">
               @csrf
               @method('DELETE')
               <input type="hidden" name="penggunaId" value="{{$pengguna->id}}"/>
@@ -527,6 +529,5 @@
       button.disabled = true;
     }
   }
-
 </script>
 @endsection

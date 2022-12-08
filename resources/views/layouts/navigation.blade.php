@@ -42,11 +42,13 @@
                 <span class="frame7279-text08"><span>LAMAN UTAMA</span></span>
             </div>
         </a>
+    @if (Auth::user()->kategoripengguna == 1)
+
         @if (Request::is('pengurusanPengguna/*'))
-        <button class="frame7279-dropdown active" id="pengurusanPengguna" onclick="changebutton()">
+            <button class="frame7279-dropdown active" id="pengurusanPengguna" onclick="changebutton()">
 
         @else
-        <button class="frame7279-dropdown" id="pengurusanPengguna" onclick="changebutton()">
+            <button class="frame7279-dropdown" id="pengurusanPengguna" onclick="changebutton()">
 
         @endif
             <div class="frame7279-frame7262">
@@ -62,12 +64,11 @@
         </button>
         <div class="dropdown-container" 
         @if (Request::is('pengurusanPengguna/*'))
-        style="display:block"
+            style="display:block"
 
         @else
-        style="display:none"
+            style="display:none"
         @endif>
-            @if (Auth::user()->kategoripengguna == 1)
             <div class="frame9275-log-audit">
                 <a href="/pengurusanPengguna/senaraiPengguna" class="frame9275-frame7272" onclick="changedot(this)">
                     <div class="frame9275-group7679"></div>
@@ -80,7 +81,6 @@
                     <span class="frame9275-text"><span>Pengurusan Kategori Pengguna</span></span>
                 </a>
             </div>
-            @endif
             {{-- <div class="frame9275-log-audit">
                 <a class="frame9275-frame7272" onclick="changedot(this)">
                     <div class="frame9275-group7679"></div>
@@ -104,10 +104,10 @@
         </button>
         <div class="dropdown-container"
         @if (Request::is('pengurusanModul/*'))
-        style="display:block"
+            style="display:block"
 
         @else
-        style="display:none"
+            style="display:none"
         @endif>
             <div class="frame9275-log-audit">
                 <a href="/pengurusanModul/ciptaModul" class="frame9275-frame7272" onclick="changedot(this)">
@@ -210,6 +210,7 @@
                 </a>
             </div>
         </div> --}}
+    @endif
         <a href="/auditTrail/audit" class="frame7279-lsemakan-w-t-d">
             <div class="frame7279-frame7262">
                 <img
@@ -576,23 +577,19 @@
 //         });
 //     }
 // }
-
-function changebutton() {
-    var dropdown = document.getElementsByClassName("frame7279-dropdown");
+var dropdown = document.getElementsByClassName("frame7279-dropdown");
     var i;
+for (i = 0; i < dropdown.length; i++) {
+    dropdown[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var dropdownContent = this.nextElementSibling;
+        if (dropdownContent.style.display === "block") {
+            dropdownContent.style.display = "none";
+        } else {
+            dropdownContent.style.display = "block";
+        }
+    });
 
-    for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
-        });
-
-    }
 }
 
 function changedot(element){
