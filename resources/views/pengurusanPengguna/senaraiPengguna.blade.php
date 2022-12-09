@@ -479,7 +479,16 @@
               <span class="frame9402-text04"><span>ID Pengguna /</span><br><span> Nama Pengguna</span></span>
               <input type="text" class="frame9402-kotaknama" name="idPengguna" id="idPengguna" onkeyup="changeTheColorOfButton()"/>
           </div>
+          <div class="frame9402-frame7188 mt-3">
+            <span class="frame9402-text04"><span>Wilayah</span></span>
+            <input type="text" class="frame9402-kotaknama" name="wilayah" id="idPengguna" onkeyup="changeTheColorOfButton()"/>
+        </div>
+        <div class="frame9402-frame7188 mt-3">
+          <span class="frame9402-text04"><span>Rancangan</span></span>
+          <input type="text" class="frame9402-kotaknama" name="rancangan" id="idPengguna" onkeyup="changeTheColorOfButton()"/>
+      </div>  
       </div>
+      
       <button type="submit" class="frame9402-b-u-t-t-o-n-c-a-r-i-a-n" id="buttonCari" disabled onclick="changeTheColorOfButtonDaftar()">
         <div class="frame9402-frame7294">
           <div class="frame9402-frame7293">
@@ -511,6 +520,8 @@
           <th class="frame9402-text10"><span>Bil.</span></th>
           <th class="frame9402-text12"><span>No. Pengguna</span></th>
           <th class="frame9402-text14"><span>Nama Pengguna</span></th>
+          <th><span>Wilayah</span></th>
+          <th><span>Rancangan</span></th>
           <th class="frame9402-text16"><span>Tindakan</span></th>
       </tr>
       @php
@@ -525,6 +536,8 @@
           <td class="frame9402-text18" id="bilangan">{{$i}}</td>
           <td class="frame9402-text19">{{$pengguna->idPengguna}}</td>
           <td class="frame9402-text20"><a href="/pengurusanPengguna/edit/{{$pengguna->id}}" style="text-decoration: none; color:#494949;">{{$pengguna->nama}}</a></td>
+          <td class="frame9402-text19">{{$pengguna->wilayah_id->nama}}</td>
+          <td class="frame9402-text19">{{$pengguna->rancangan_id->nama}}</td>
           <td class="frame9402-frame8727" id="tindakan">
             <a href="/pengurusanPengguna/edit/{{$pengguna->id}}" class="frame9402-rectangle828245 hovertext" data-hover="Edit">
           

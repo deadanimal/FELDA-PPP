@@ -25,8 +25,9 @@ class pengurusanPenggunaController extends Controller
     public function create()
     {
         $wilayah = Wilayah::all()->pluck('nama','id');
+        $rancangan = Rancangan::all();
         $kategoriPengguna = KategoriPengguna::all();
-        return view('pengurusanPengguna.daftarPengguna', compact('wilayah', 'kategoriPengguna'));
+        return view('pengurusanPengguna.daftarPengguna', compact('wilayah', 'kategoriPengguna', 'rancangan'));
 
     }
 
@@ -67,8 +68,9 @@ class pengurusanPenggunaController extends Controller
     public function maklumatPengguna()
     {
         $wilayah = Wilayah::all()->pluck('nama','id');;
+        $rancangan = Rancangan::all();
         $kategoriPengguna = KategoriPengguna::all();
-        return view('pengurusanPengguna.maklumatPengguna', compact('kategoriPengguna', 'wilayah'));
+        return view('pengurusanPengguna.maklumatPengguna', compact('kategoriPengguna', 'wilayah', 'rancangan'));
     }
 
     public function senaraiPengguna()
@@ -82,7 +84,9 @@ class pengurusanPenggunaController extends Controller
     public function cariPengguna(Request $request)
     {
         $idPengguna= $request->idPengguna;
-        $user = User::where('idPengguna', 'LIKE', "%{$idPengguna}%") ->orWhere('nama', 'LIKE', "%{$idPengguna}%")->orWhere('nama', 'LIKE', "%{$idPengguna}%")  ->get();
+        $user = User::where('idPengguna', 'LIKE', "%{$idPengguna}%")
+        ->orWhere('nama', 'LIKE', "%{$idPengguna}%")->get();
+
         $bilangan= count(User::all())-1;
         return view('pengurusanPengguna.senaraiPengguna', compact('user','bilangan'));
     }

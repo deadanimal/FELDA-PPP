@@ -96,6 +96,9 @@
             <label for="rancangan" class="frame9403-text04">Rancangan</label>
             <select name="rancangan" id="rancangan" class="frame9403-kotaknama3" required>
               <option value="" selected disabled>Pilih Rancangan</option>
+              @foreach ($rancangan as $rancang)
+                <option value="{{$rancang->id}}">{{$rancang->nama}}</option>
+              @endforeach              
             </select>
           </div>
         </div>

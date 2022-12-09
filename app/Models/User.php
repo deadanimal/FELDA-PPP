@@ -60,5 +60,7 @@ class User extends Authenticatable implements Auditable
     public function modul() {
         return $this->hasMany(Modul::class);
     }
+  
+    
 
 }
