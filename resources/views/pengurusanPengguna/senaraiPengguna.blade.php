@@ -526,7 +526,7 @@
           <td class="frame9402-text19">{{$pengguna->idPengguna}}</td>
           <td class="frame9402-text20"><a href="/pengurusanPengguna/edit/{{$pengguna->id}}" style="text-decoration: none; color:#494949;">{{$pengguna->nama}}</a></td>
           <td class="frame9402-frame8727" id="tindakan">
-            <a href="/pengurusanPengguna/edit/{{$pengguna->id}}" class="frame9402-rectangle828245" class="hovertext" data-hover="Edit">
+            <a href="/pengurusanPengguna/edit/{{$pengguna->id}}" class="frame9402-rectangle828245 hovertext" data-hover="Edit">
           
             </a>
             <form method="post" action="/pengurusanPengguna/delete">
