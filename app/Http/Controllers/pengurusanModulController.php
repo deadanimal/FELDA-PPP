@@ -78,7 +78,7 @@ class PengurusanModulController extends Controller
         $modul = Modul::find($idModul);
 
         $modulBaru = new Modul;
-        $modulBaru->nama = $modul->nama;
+        $modulBaru->nama = $modul->nama." Copy ".date("Y-m-d H:i:s");;
         $modulBaru->diciptaOleh = Auth::user()->id;
         $modulBaru->dikemaskiniOleh = Auth::user()->id;
         $modulBaru->save();
