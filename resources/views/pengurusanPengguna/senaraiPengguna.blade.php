@@ -2,6 +2,33 @@
 
 @section('innercontent')
 <style>
+  .hovertext {
+  position: relative;
+  border-bottom: 1px dotted black;
+}
+
+.hovertext:before {
+  content: attr(data-hover);
+  visibility: hidden;
+  opacity: 0;
+  width: 140px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 0;
+  transition: opacity 1s ease-in-out;
+
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 110%;
+}
+
+.hovertext:hover:before {
+  opacity: 1;
+  visibility: visible;
+}
 .frame9402-frame9402 {
   width: 100%;
   display: flex;
@@ -499,14 +526,14 @@
           <td class="frame9402-text19">{{$pengguna->idPengguna}}</td>
           <td class="frame9402-text20"><a href="/pengurusanPengguna/edit/{{$pengguna->id}}" style="text-decoration: none; color:#494949;">{{$pengguna->nama}}</a></td>
           <td class="frame9402-frame8727" id="tindakan">
-            <a href="/pengurusanPengguna/edit/{{$pengguna->id}}" class="frame9402-rectangle828245" data-toggle="tooltip" data-placement="top" title="Edit">>
+            <a href="/pengurusanPengguna/edit/{{$pengguna->id}}" class="frame9402-rectangle828245" class="hovertext" data-hover="Edit">
           
             </a>
             <form method="post" action="/pengurusanPengguna/delete">
               @csrf
               @method('DELETE')
-              <input type="hidden" name="penggunaId" value="{{$pengguna->id}}" data-toggle="tooltip" data-placement="top" title="Delete">/>
-              <button class="frame9402-rectangle828246" type="submit">
+              <input type="hidden" name="penggunaId" value="{{$pengguna->id}}"/>
+              <button class="frame9402-rectangle828246 hovertext" data-hover="Delete" type="submit">
             </form>
           </td>
         </tr>
