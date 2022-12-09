@@ -499,13 +499,13 @@
           <td class="frame9402-text19">{{$pengguna->idPengguna}}</td>
           <td class="frame9402-text20"><a href="/pengurusanPengguna/edit/{{$pengguna->id}}" style="text-decoration: none; color:#494949;">{{$pengguna->nama}}</a></td>
           <td class="frame9402-frame8727" id="tindakan">
-            <a href="/pengurusanPengguna/edit/{{$pengguna->id}}" class="frame9402-rectangle828245">
+            <a href="/pengurusanPengguna/edit/{{$pengguna->id}}" class="frame9402-rectangle828245" data-toggle="tooltip" data-placement="top" title="Edit">>
           
             </a>
             <form method="post" action="/pengurusanPengguna/delete">
               @csrf
               @method('DELETE')
-              <input type="hidden" name="penggunaId" value="{{$pengguna->id}}"/>
+              <input type="hidden" name="penggunaId" value="{{$pengguna->id}}" data-toggle="tooltip" data-placement="top" title="Delete">/>
               <button class="frame9402-rectangle828246" type="submit">
             </form>
           </td>
