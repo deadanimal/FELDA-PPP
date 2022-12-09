@@ -504,6 +504,7 @@
       <tr class="frame9402-frame93961">
           <th class="frame9402-text10"><span>Bil.</span></th>
           <th class="frame9402-text12"><span>Nama Modul</span></th>
+          <th class="frame9402-text12"><span>Status Modul</span></th>
           <th class="frame9402-text14"><span>Dicipta oleh</span></th>
           <th class="frame9402-text15"><span>Dikemaskini oleh</span></th>
           <th class="frame9402-text16"><span>Tindakan</span></th>
@@ -519,6 +520,7 @@
         @endif
           <td class="frame9402-text18" id="bilangan">{{$i}}</td>
           <td class="frame9402-text19">{{$moduls->nama}}</td>
+          <td class="frame9402-text19">{{$moduls->status}}</td>
           <td class="frame9402-text21">{{$moduls->userDiciptaOleh->nama}}</td>
           <td class="frame9402-text20">{{$moduls->userDikemaskiniOleh->nama}}</td>
           <td class="frame9402-frame8727" id="tindakan">
@@ -528,6 +530,9 @@
             <a href="/pengurusanModul/editModul/{{$moduls->id}}" class="frame9402-rectangle828245"  onclick="openForm()"">
               <img src="/SVG/pencil.svg"/>
             </a>
+            <a href="/pengurusanModul/copyModul/{{$moduls->id}}" class="frame9402-rectangle828245">
+              <img src="/SVG/copy.svg"/>
+            </a>            
             <form method="post" action="/pengurusanModul/delete">
               @csrf
               @method('DELETE')

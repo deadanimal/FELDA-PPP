@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
 use App\Http\Controllers\Controller;
+use App\Mail\ResetPassword;
+
 use App\Models\User;
 use App\Models\Wilayah;
 use App\Models\KategoriPengguna;
@@ -138,6 +142,21 @@ class pengurusanPenggunaController extends Controller
         Alert::success('Kemaskini pengguna berjaya.', 'Kemaskini pengguna telah berjaya.');   
         
         return redirect("/pengurusanPengguna/senaraiPengguna");
+    }
+
+    public function forgotPengguna(Request $request) {
+        return view('auth.forgot');
+    }
+
+    public function forgotPenggunaClicked(Request $request) {
+        $user = User::where('email',$request->email)->first();
+        $new_password = Hash::make('Saya<3FeldaPPP');
+        $user->password = $new_password;
+        $user->save();
+
+        Mail::to($user->email)->send(new ResetPassword('Saya<3FeldaPPP'));
+        Alert::success('Kemaskini pengguna berjaya.', 'Kemaskini pengguna telah berjaya.');   
+        return back();
     }
 
     public function senaraiKategoriPengguna(Request $request)

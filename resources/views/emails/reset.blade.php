@@ -1,0 +1,1 @@
+Kata laluan baru anda adalah: {{$katalaluan}}

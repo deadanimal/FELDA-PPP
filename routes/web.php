@@ -24,6 +24,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+
+Route::get('/forgot',  [pengurusanPenggunaController::class, 'forgotPengguna']);
+Route::post('/forgot',  [pengurusanPenggunaController::class, 'forgotPenggunaClicked']);
+
 //for js wilayah and rancangan
 Route::get('/getRancangan/{id}',  [pengurusanPenggunaController::class, 'getRancangan']);
 
@@ -58,6 +62,7 @@ Route::get('/pengurusanModul/senaraiModul', [pengurusanModulController::class, '
 Route::delete('/pengurusanModul/delete', [pengurusanModulController::class, 'deleteModul']);
 Route::post('/pengurusanModul/cariModul',  [pengurusanModulController::class, 'cariModul']);
 Route::get('/pengurusanModul/editModul/{id}', [pengurusanModulController::class, 'editModul']);
+Route::get('/pengurusanModul/copyModul/{id}', [pengurusanModulController::class, 'copyModul']);
 Route::post('/pengurusanModul/kemaskiniModul',  [pengurusanModulController::class, 'kemaskiniModul']);
 
 Route::post('/pengurusanModul/ciptaProses',  [pengurusanModulController::class, 'ciptaProses']);
