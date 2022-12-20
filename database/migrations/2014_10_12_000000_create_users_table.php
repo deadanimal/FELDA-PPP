@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('nokadpengenalan')->unique();
             $table->string('password');
             $table->string('notelefon')->nullable();
+            $table->tinyInteger('status')->default('1');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -126,7 +126,7 @@
   font-size: 17px;
   align-self: auto;
   text-align: left;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: normal;
   font-stretch: normal;
@@ -140,7 +140,7 @@
   font-size: 23px;
   align-self: auto;
   text-align: left;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: normal;
   font-stretch: normal;
@@ -154,7 +154,7 @@
   font-size: 23px;
   align-self: auto;
   text-align: left;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: normal;
   font-stretch: normal;
@@ -173,7 +173,7 @@
   margin-right: 0;
   border-radius: 3.461621046066284px;
   margin-bottom: 0;
-  font-family: 'Eina01-SemiBold';
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-size: 18px;
   padding-left:10px;
   box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2);
@@ -198,6 +198,7 @@
   align-self: flex-end;
   margin-left: auto;
   margin-right: 30px;
+  margin-bottom: 20px;
 }
 .frame9403-frame7293 {
 display: flex;
@@ -215,9 +216,8 @@ display: flex;
   height: auto;
   font-size: 16px;
   align-self: auto;
-  font-style: SemiBold;
   text-align: left;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   font-stretch: normal;
   margin-right: 10px;
@@ -247,7 +247,7 @@ display: flex;
     background-color:#FFFFFF;
     background-position:99% center;
     display:block;
-    font-family: 'Eina01-SemiBold';
+    font-family: 'Eina01-SemiBold', sans-serif;
     font-size: 17.3081px;
   }
 * {
@@ -270,7 +270,7 @@ display: flex;
     background-color: #A2335D;
     cursor: pointer;
     margin-left: auto;
-    margin-right: 30px;
+    margin-right: 10px;
   }
   .loginPopup {
     position: relative;
@@ -301,7 +301,7 @@ display: flex;
   margin-right: 0;
   margin-top: 10px;
   margin-bottom: 30px;
-  font-family: 'Eina01-SemiBold';
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-size: 18px;
   padding-left:10px;
 }
@@ -310,7 +310,7 @@ display: flex;
     border: none;
     background-color: #8ebf42;
     color: #fff;
-    font-family: Poppins;
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     cursor: pointer;
     width: 100%;
@@ -339,7 +339,7 @@ display: flex;
   border-radius: 0px 0px 0px 0px;
   margin-bottom: 20px;
   background-color: rgba(162, 50, 93, 0.20000000298023224);
-  cursor: grabbing;
+  cursor: grab;
   user-select: none;
 }
   .frame9402-text30 {
@@ -348,7 +348,7 @@ display: flex;
   height: auto;
   font-size: 17px;
   margin-left: auto;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 15.477937698364258px;
   font-stretch: normal;
@@ -362,7 +362,7 @@ display: flex;
   font-size: 17px;
   align-self: auto;
   text-align: left;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 15.477937698364258px;
   font-stretch: normal;
@@ -376,7 +376,7 @@ display: flex;
   height: auto;
   font-size: 17px;
   align-items: center;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 15.477937698364258px;
   font-stretch: normal;
@@ -509,7 +509,6 @@ display: flex;
   height: auto;
   align-self: auto;
   text-align: left;
-  font-family: Eina01-Bold;
   font-weight: 400;
   line-height: 15.477937698364258px;
   font-stretch: normal;
@@ -518,7 +517,7 @@ display: flex;
   text-decoration: none;
   margin-top: 10px;
   margin-bottom: 30px;
-  font-family: 'Eina01-SemiBold';
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-size: 18px;
   padding-left:10px;
 }
@@ -527,7 +526,7 @@ display: flex;
     border: none;
     background-color: #8ebf42;
     color: #fff;
-    font-family: Poppins;
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     cursor: pointer;
     width: 100%;
@@ -542,26 +541,25 @@ display: flex;
     opacity: 1;
   }
 </style>
+<div class="container-fluid">
 
-<div class="frame9402-frame9402">
-  <div class="frame9402-frame9281">
-      <div class="frame9403-frame9401">
-          <span class="frame9403-text"><span>PROGRAM PEMBAGUNAN PENEROKA</span></span>
-          <span class="frame9403-text02" style="font-size: 40px;">
-            <span>(IMS PPP)</span>
-          </span>
-      </div>
+  <div class="header">
+    <h1 class="header-title">
+        Borang {{$borang->namaBorang}}
+    </h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/moduls">Modul </a></li>
+        <li class="breadcrumb-item"><a href="/moduls/{{$modul->id}}/proses">{{$modul->nama}}</a></li>
+        <li class="breadcrumb-item"><a href="/moduls/{{$modul->id}}/{{$proses->id}}/borang">{{$proses->nama}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{$borang->namaBorang}}</li>
+      </ol>
+    </nav>
   </div>
-  <div class="frame9402-box">
-    <div class="frame9402-frame9282">
-        <div class="frame9402-frame7188">
-            <span class="frame9402-text05"><span>{{$borang->namaBorang}}</span></span>
-            {{-- <button class="frame9403-frame7445"  onclick="openForm()">
-              <div class="frame9403-frame7293">
-              <span class="frame9403-text21"><span>Muat Naik Borang</span></span>
-              <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-              </div>
-            </button> --}}
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
             <button class="frame9403-frame74451" type="button" id="rowAdder">
                 <div class="frame9403-frame7293">
                 <span class="frame9403-text21"><span>Tambah</span></span>
@@ -569,8 +567,59 @@ display: flex;
                 </div>
             </button>
         </div>
-    </div>
-
+        <form action="/moduls/borang_field/update" method="POST" style="width: 100%;">    
+          @csrf
+          <input type="hidden" name="borangId" value="{{$borang->id}}">
+          <table style="overflow: scroll; max-height: 750px; width:100%;" id="borangField" class="draggable-table">
+            <tbody class="row_drag">
+            @if ($borang->context != null)
+              @php
+                $contexts = json_decode($borang->context);
+              @endphp
+              @foreach($contexts as $context)
+              <tr class="frame9402-input" id="row">
+                <td class="frame9402-text31">Nama Medan:<input type="text" name="nama[]" class="frame9402-kotaknama" value="{{$context->nama}}"></td>
+                <td class="frame9402-text30">Jenis Data:
+                  <select name="datatype[]" class="frame9403-kotaknama3">
+                    @if ($context->datatype == "string" )
+                      <option value="string" selected>String</option>
+                      <option value="integer">Integer</option>
+                    @else
+                      <option value="string">String</option>
+                      <option value="integer"selected>Integer</option>
+                    @endif
+                  </select>
+                </td>
+                <td class="frame9402-text32"> Pilihan:
+                  <select name="pilihan[]" class="frame9403-kotaknama3">
+                    @if ($context->pilihan == "required" )
+                      <option value="required" selected>Mandatori</option>
+                      <option value="optional">Pilihan</option>
+                    @else
+                      <option value="required">Mandatori</option>
+                      <option value="optional" selected>Pilihan</option>
+                    @endif
+                  </select>
+                </td>
+                <td class="frame9402-frame8727" id="tindakan">
+                  <button class="frame9402-rectangle828246" id="DeleteRow"><img src="/SVG/bin.svg"/></button>
+                </td>
+              </tr>
+              @endforeach
+            @endif
+            </tbody>
+          </table>
+          <button type="submit" class="frame9403-frame7445">
+            <div class="frame9403-frame7293">
+              <span class="frame9403-text21"><span>Simpan</span></span>
+              <img
+              src="/SVG/kemaskini.svg"
+              class="frame9403-group7527"
+              />
+            </div>
+          </button>
+        </form>
+      </div>
     {{-- upload Borang --}}
     {{-- <div class="borangPopup">
       <div class="formPopup" id="popupForm">
@@ -584,59 +633,7 @@ display: flex;
         </form>
       </div>
     </div> --}}
-
-    <form action="/pengurusanBorang/simpanMedanBorang" method="POST" style="width: 100%;">    
-      @csrf
-      <input type="hidden" name="borangId" value="{{$borang->id}}">
-      <table style="overflow: scroll; max-height: 750px; width:100%;" id="borangField" class="draggable-table">
-        <tbody class="row_drag">
-        @if ($borang->context != null)
-          @php
-            $contexts = json_decode($borang->context);
-          @endphp
-          @foreach($contexts as $context)
-          <tr class="frame9402-input" id="row">
-            <td class="frame9402-text31">Nama Medan:<input type="text" name="nama[]" class="frame9402-kotaknama" value="{{$context->nama}}"></td>
-            <td class="frame9402-text30">Jenis Data:
-              <select name="datatype[]" class="frame9403-kotaknama3">
-                @if ($context->datatype == "string" )
-                  <option value="string" selected>String</option>
-                  <option value="integer">Integer</option>
-                @else
-                  <option value="string">String</option>
-                  <option value="integer"selected>Integer</option>
-                @endif
-              </select>
-            </td>
-            <td class="frame9402-text32"> Pilihan:
-              <select name="pilihan[]" class="frame9403-kotaknama3">
-                @if ($context->pilihan == "required" )
-                  <option value="required" selected>Mandatori</option>
-                  <option value="optional">Pilihan</option>
-                @else
-                  <option value="required">Mandatori</option>
-                  <option value="optional" selected>Pilihan</option>
-                @endif
-              </select>
-            </td>
-            <td class="frame9402-frame8727" id="tindakan">
-              <button class="frame9402-rectangle828246" id="DeleteRow"><img src="/SVG/bin.svg"/></button>
-            </td>
-          </tr>
-          @endforeach
-        @endif
-        </tbody>
-      </table>
-      <button type="submit" class="frame9403-frame7445">
-        <div class="frame9403-frame7293">
-          <span class="frame9403-text21"><span>Simpan</span></span>
-          <img
-          src="/SVG/kemaskini.svg"
-          class="frame9403-group7527"
-          />
-        </div>
-      </button>
-    </form>
+    </div>
   </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -667,6 +664,7 @@ $("body").on("click", "#DeleteRow", function () {
   $(this).parents("#row").remove();
 });
 $("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
+
 </script>
 <script>
 function openForm() {

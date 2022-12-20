@@ -1,223 +1,102 @@
 @extends('layouts.guest')
 
 @section('innercontent')
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<div class="container-fluid">
+
+  <div class="header">
+    <h1 class="header-title">
+        Senarai Kategori Pengguna
+    </h1>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <button class="btn float-end frame9402-frame7445" onclick="openForm()">
+            <div class="frame9402-frame72931">
+              <span class="frame9402-text08"><span>Tambah</span></span>
+              <img
+                  src="/SVG/daftar.svg"
+                  class="frame9402-group7527"
+              />
+            </div>
+          </a>
+        </div>
+        
+        {{-- popup form Tambah proses --}}
+        <div class="loginPopup">
+          <div class="formPopup" id="popupForm">
+            <form action="/user-categories" method="POST" class="formContainer">
+              @csrf
+              <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA KATEGORI PENGGUNA</h2>
+              <label for="namaProses" class="frame9402-text04">
+                <strong>Nama Kategori Pengguna</strong>
+              </label>
+              <input type="text" class="frame9402-kotaknamaProses" id="namaProses" placeholder="Sila Masuk Kategori Pengguna" name="namaKategoriPengguna" required>
+              <button type="submit" class="btn">Tambah</button>
+              <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row d-flex justify-content-center">
+            <table class="table table-bordered category-datatable">
+              <thead class="text-white bg-primary">
+                <tr>
+                  <th>Bil.</th>
+                  <th scope="col">Nama Kategori Pengguna</th>
+                  <th scope="col">Tindakan</th>
+                </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <style>
-.frame9402-frame9402 {
-  width: 100%;
-  display: flex;
+.frame9402-rectangle828245 {
+  width: 32px;
+  height: 31px;
   position: relative;
   box-sizing: border-box;
-  flex-shrink: 0;
-  border-color: transparent;
-  border-radius: 0px 0px 0px 0px;
-  margin: 0;
-  flex-direction: column;
+  background-color: transparent;
+  border: none;
+  cursor:pointer;
+  background: url("/SVG/pencil.svg")
 }
-.frame9402-frame9281 {
-  display: flex;
-  padding: 58px 339px;
-  position: relative;
-  box-sizing: border-box;
-  align-items: center;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 32px;
-  flex-direction: column;
-  background-color: #F1F1F1;
-}
-.frame9402-text {
+.frame9402-text01 {
   color: #781E2A;
-  width: auto;
-  height: auto;
-  font-size: 40px;
-  align-self: auto;
-  font-style: SemiBold;
-  text-align: center;
-  font-family: Poppins;
-  font-weight: 600;
-  line-height: 12.976823806762695px;
-  font-stretch: normal;
-  margin-right: 0;
-  margin-bottom: 38px;
-  text-decoration: none;
-  padding-bottom:15px;
-  padding-top:50px;
-}
-.frame9402-text02 {
-  color: #781E2A;
-  width: 368px;
   height: auto;
   font-size: 25px;
   align-self: auto;
-  font-style: SemiBold;
   text-align: center;
-  font-family: Poppins;
-  font-weight: 600;
-  line-height: 12.976823806762695px;
-  font-stretch: normal;
-  margin-right: 0;
-  margin-bottom: 38px;
-  text-decoration: none;
-}
-.frame9402-frame9278 {
-  display: flex;
-  position: relative;
-  box-sizing: border-box;
-  align-items: center;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-}
-.frame9402-frame7301 {
-  display: flex;
-  position: relative;
-  box-sizing: border-box;
-  align-items: flex-start;
-  border-color: transparent;
-  margin-right: 17px;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-  flex-direction: column;
-}
-.frame9402-frame7188 {
-  display: flex;
-  position: relative;
-  box-sizing: border-box;
-  align-items: center;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-}
-.frame9402-text04 {
-  color: black;
-  height: auto;
-  font-size: 17.30810546875px;
-  align-self: auto;
-  font-style: ☞;
-  text-align: left;
-  font-family: Eina01-Bold;
-  font-weight: 400;
+  font-family: 'Eina01-SemiBold', sans-serif;
+  font-weight: 800;
   line-height: normal;
   font-stretch: normal;
-  margin-right: 17px;
-  margin-bottom: 0;
-  text-decoration: none;
-}
-.frame9402-kotaknama {
-  width: 399px;
-  height: 50px;
-  position: relative;
-  box-sizing: content-box;
-  border-color: rgba(140, 38, 60, 1);
-  border-style: solid;
-  border-width: 0.865405261516571px;
-  margin-right: 0;
-  border-radius: 3.461621046066284px;
-  margin-bottom: 0;
-  font-family: 'Eina01-SemiBold';
-  font-size: 18px;
-  padding-left:10px;
-}
-.frame9402-b-u-t-t-o-n-c-a-r-i-a-n {
-  display: flex;
-  opacity: 0.50;
-  position: relative;
-  box-sizing: border-box;
-  align-items: flex-start;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-  flex-direction: column;
-  cursor:pointer;
-}
-.frame9402-frame7294 {
-  width: 100px;
-  height: 42px;
-  display: flex;
-  padding: 12px 10px;
-  position: relative;
-  box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
-  box-sizing: border-box;
-  align-items: flex-start;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 8.598855018615723px;
-  margin-bottom: 0;
-  flex-direction: column;
-  background-color: #A2335D;
-}
-.frame9402-frame7293 {
-  height: 20px;
-  display: flex;
-  position: absolute;
-  box-sizing: border-box;
-  align-items: center;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-  padding-bottom: 10px;
-}
-.frame9402-text06 {
-  color: white;
-  width: auto;
-  height: auto;
-  font-size: 16px;
-  align-self: auto;
-  text-align: left;
-  font-family: Eina01-SemiBold;
-  font-weight: 400;
-  line-height: 34.39542007446289px;
-  font-stretch: normal;
-  margin-right: 2px;
-  margin-bottom: 0;
-  text-decoration: none;
-}
-.frame9402-frame {
-  display: flex;
-  position: relative;
-  box-sizing: border-box;
-  align-items: flex-start;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-}
-.frame9402-layer31 {
-  display: flex;
-  position: relative;
-  box-sizing: border-box;
-  align-items: flex-start;
-  border-color: transparent;
-  margin-right: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-}
-.frame9402-shape {
-  width: 15px;
-  height: 16px;
-  position: relative;
-  box-sizing: border-box;
-  border-color: transparent;
-  margin-right: 0;
   margin-bottom: 0;
 }
 .frame9402-frame7445 {
   display: flex;
-  padding: 10px 21px;
+  padding: 5px 11px;
   position: relative;
   align-self: flex-end;
   box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
   box-sizing: border-box;
   align-items: flex-start;
   border-color: transparent;
-  margin-right: 49px;
   border-radius: 8.598855018615723px;
-  margin-bottom: 32px;
   flex-direction: column;
   background-color: #A2335D;
   text-decoration: none;
@@ -234,13 +113,12 @@
 }
 .frame9402-text08 {
   color: white;
-  width: 57px;
   height: auto;
+  padding-right: 5px;
   font-size: 16px;
   align-self: auto;
-  font-style: SemiBold;
   text-align: left;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   line-height: 34.39542007446289px;
   font-stretch: normal;
@@ -257,173 +135,6 @@
   margin-right: 0;
   margin-bottom: 0;
 }
-.frame9402-table {
-  width: max-content;
-  display: flex;
-  margin-top: 29px;
-  position: relative;
-  box-shadow: 0px 3.439542055130005px 8.598855018615723px 8.598855018615723px rgba(0, 0, 0, 0.05000000074505806) ;
-  box-sizing: content-box;
-  align-items: center;
-  border-color: transparent;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8.598855018615723px;
-  margin-bottom: 0;
-  flex-direction: column;
-  background-color: white;
-}
-
-.frame9402-frame93961 {
-  width: 100%;
-  display: flex;
-  position: relative;
-  box-sizing: border-box;
-  align-items: center;
-  border-color: transparent;
-  padding-top: 30px;
-  padding-left: 41.36px;
-  border-radius: 0px 0px 0px 0px;
-  padding-bottom: 25px; 
-  border-bottom: 3px solid #781E2A;
-}
-.frame9402-text10 {
-  color: #494949;
-  width: 32.57px;
-  font-size: 16px;
-  align-self: auto;
-  text-align: center;
-  font-family: Eina01-Bold;
-  font-weight: 400;
-  line-height: 15.477937698364258px;
-  font-stretch: normal;
-  margin-bottom: 0;
-  text-decoration: none;;
-}
-.frame9402-text12 {
-  color: #494949;
-  width: 250px;
-  font-size: 16px;
-  align-self: auto;
-  text-align: left;
-  font-family: Eina01-Bold;
-  font-weight: 400;
-  line-height: 25.477937698364258px;
-  font-stretch: normal;
-  margin-left: 31.06px;
-  margin-bottom: 0;
-  text-decoration: none;
-}
-.frame9402-text14 {
-  color: #494949;
-  width: 481px;
-  font-size: 17.197710037231445px;
-  align-self: auto;
-  font-style: ☞;
-  text-align: left;
-  font-family: Eina01-Bold;
-  font-weight: 400;
-  line-height: 25.477937698364258px;
-  font-stretch: normal;
-  margin-left: 32px;
-  margin-bottom: 0;
-  text-decoration: none;
-}
-.frame9402-text16 {
-  color: #494949;
-  width: 78px;
-  font-size: 17.197710037231445px;
-  align-self: center;
-  text-align: center;
-  font-family: Eina01-Bold;
-  font-weight: 400;
-  line-height: 25.477937698364258px;
-  margin-left: 137px;
-  font-stretch: normal;
-  text-decoration: none;
-}
-.frame9402-input {
-  width: 100%;
-  display: flex;
-  padding: 5px 49px;
-  position: relative;
-  box-sizing: border-box;
-  align-items: center;
-  flex-shrink: 0;
-  border-color: transparent;
-  margin-left: 0;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 10px;
-  background-color: rgba(162, 50, 93, 0.20000000298023224);
-}
-.frame9402-text18 {
-  color: #494949;
-  width: 21px;
-  font-size: 16px;
-  align-self: center;
-  text-align: center;
-  font-family: Eina01-SemiBold;
-  font-weight: 400;
-  line-height: 15.477937698364258px;
-  font-stretch: normal;
-  margin-bottom: 0;
-  text-decoration: none;
-}
-.frame9402-text19 {
-  color: #494949;
-  width: 250px;
-  height: auto;
-  font-size: 16px;
-  align-self: auto;
-  text-align: left;
-  font-family: Eina01-SemiBold;
-  font-weight: 400;
-  line-height: 15.477937698364258px;
-  font-stretch: normal;
-  margin-left: 35px;
-  margin-bottom: 0;
-  text-decoration: none;
-}
-.frame9402-text20 {
-  color: #494949;
-  width: 481px;
-  height: auto;
-  font-size: 16px;
-  align-self: auto;
-  text-align: left;
-  font-family: Eina01-SemiBold;
-  font-weight: 400;
-  line-height: 15.477937698364258px;
-  font-stretch: normal;
-  margin-left: 32px;
-  margin-bottom: 0;
-  text-decoration: none;
-}
-.frame9402-frame8727 {
-  width: 78px;
-  height: 30px;
-  display: flex;
-  opacity: 1;
-  position: relative;
-  box-sizing: border-box;
-  align-items: flex-start;
-  flex-shrink: 0;
-  border-color: transparent;
-  margin-left: 137px;
-  border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
-  justify-content: center;
-}
-.frame9402-rectangle828245 {
-  width: 32px;
-  height: 31px;
-  position: relative;
-  box-sizing: border-box;
-  background-color: transparent;
-  border: none;
-  cursor:pointer;
-  background: url("/SVG/pencil.svg")
-}
 .frame9402-rectangle828246 {
   width: 32px;
   height: 31px;
@@ -435,81 +146,153 @@
   cursor:pointer;
   background: url("/SVG/bin.svg")
 }
-
-</style>
-
-<div class="frame9402-frame9402">
-  <div class="frame9402-frame9281">
-    <span class="frame9402-text"><span>PENGURUSAN KATEGORI PENGGUNA</span></span>
-    <form action="/pengurusanPengguna/tambahKategoriPengguna" method="POST" class="frame9402-frame9278">
-      @csrf
-      <div class="frame9402-frame7301">
-          <div class="frame9402-frame7188">
-              <span class="frame9402-text04"><span>Nama Kategori Pengguna</span></span>
-              <input type="text" class="frame9402-kotaknama" name="kategoriPengguna" id="namaKategori" onkeyup="changeTheColorOfButton()"/>
-          </div>
-      </div>
-      <button type="submit" class="frame9402-frame7294" id="buttonTambah" disabled onclick="changeTheColorOfButtonDaftar()">
-        <div class="frame9402-frame7293">
-          <span class="frame9402-text06"><span>Tambah</span></span>
-          <div class="frame9402-frame">
-            <div class="frame9402-layer31">
-              <img
-                src="/SVG/daftar.svg"
-                class="frame9402-shape"
-                />
-            </div>
-          </div>
-        </div>
-      </button>
-    </form>
-  </div>
-    <table class="frame9402-table" style="overflow: auto; height: 850px;">
-      <tr class="frame9402-frame93961" style="position: sticky; top: 0; z-index: 1; background-color:white;">
-        <th class="frame9402-text10"><span>Bil.</span></th>
-        <th class="frame9402-text14"><span>Nama Kategori Pengguna</span></th>
-        <th class="frame9402-text16"><span>Tindakan</span></th>
-      </tr>
-      @php
-        $i = 1;
-      @endphp
-      @foreach ($kategoriPenggunas as $kategoriPengguna)
-        @if ($i == 1 || $i% 2 == 1)
-          <tr class="frame9402-input">
-        @else
-          <tr class="frame9402-input" style="background-color: rgba(162, 50, 93, 0.08);"> 
-        @endif
-            <td class="frame9402-text18" id="bilangan">{{$i}}</td>
-            <td class="frame9402-text20">{{$kategoriPengguna->nama}}</td>
-            <td class="frame9402-frame8727" id="tindakan">
-              {{-- <a class="frame9402-rectangle828245" href="/pengurusanPengguna/editKategoriPengguna/{{$kategoriPengguna->id}}"></a> --}}
-              @if ($kategoriPengguna->id != 1 )
-                <form method="post" action="/pengurusanPengguna/deleteKategoriPengguna">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" name="kategoriId" value="{{$kategoriPengguna->id}}"/>
-                <button type="submit" class="frame9402-rectangle828246">
-              </form>
-              @endif
-            </td>
-          </tr>
-        @php
-          $i++;
-        @endphp
-      @endforeach
-    </table>
-  </div>
-</div>
-<script>
-  function changeTheColorOfButton() {
-    var button = document.getElementById("buttonTambah");
-    if (document.getElementById("namaKategori").value !== "") {
-      button.style.opacity = "1";
-      button.disabled = false;
-    } else {
-      button.style.opacity = "0.5";
-      button.disabled = true;
-    }
+.loginPopup {
+    position: relative;
+    text-align: center;
+    width: 100%;
   }
+  .formPopup {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%, 5%);
+    border: 4px solid #781E2A;
+    border-radius: 8px;
+    z-index: 9;
+  }
+  .formContainer {
+    max-width: 550px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+  }
+  .frame9402-kotaknamaProses {
+  width: 303px;
+  height: 50px;
+  position: relative;
+  box-sizing: content-box;
+  border-color: rgba(140, 38, 60, 1);
+  border-style: solid;
+  border-width: 0.865405261516571px;
+  margin-right: 0;
+  border-radius: 3.461621046066284px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  font-family: 'Eina01-SemiBold', sans-serif;
+  font-size: 18px;
+  padding-left:10px;
+}
+.frame9402-text04 {
+  color: black;
+  height: auto;
+  font-size: 17.30810546875px;
+  align-self: auto;
+  text-align: left;
+  font-family: 'Eina01-SemiBold', sans-serif;
+  line-height: normal;
+  font-stretch: normal;
+  margin-bottom: 0;
+  text-decoration: none;
+}
+  .formContainer .btn {
+    padding: 12px 20px;
+    border: none;
+    background-color: #8ebf42;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 15px;
+    opacity: 0.8;
+  }
+  .formContainer .cancel {
+    background-color: #cc0000;
+  }
+  .formContainer .btn:hover,
+  .openButton:hover {
+    opacity: 1;
+  }
+</style>
+<script type="text/javascript">
+  $('.category-datatable').DataTable({
+              processing: true,
+              serverSide: true,
+              responsive: true,
+              language: {
+                  "search": "Carian:",
+                  "lengthMenu": "Tunjuk _MENU_ Kategori Pengguna",
+                  "info": "Tunjuk _START_ ke _END_ dari _TOTAL_ Kategori Pengguna",
+                  "paginate": {
+                      "first": "Pertama",
+                      "last": "Akhir",
+                      "next": "Seterusnya",
+                      "previous": "Sebelum"
+                  },
+                  "zeroRecords": "Carian tidak dijumpai",
+                  "infoEmpty": "Tiada maklumat",
+                  "infoFiltered": "(carian dari _MAX_ jumlah rekod)"
+
+
+
+              },
+              ajax: "/user-categories",
+              columns: [{
+                      data: 'DT_RowIndex',
+                      name: 'DT_RowIndex',
+                      className: "text-center"
+                  },
+                  {
+                      data: 'nama',
+                      name: 'nama'
+                  },
+                  {
+                      data: 'tindakan',
+                      name: 'tindakan',
+                      className: "d-flex justify-content-center"
+                  },                    
+
+              ]
+          });
+</script>
+<script>
+  function openForm() {
+    document.getElementById("popupForm").style.display = "block";
+  }
+  function closeForm() {
+    document.getElementById("popupForm").style.display = "none";
+  }
+</script>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script>
+  //the confirm class that is being used in the delete button
+  $("#delete").click(function(event) {
+
+      //This will choose the closest form to the button
+      var form =  $(this).closest("form");
+
+      //don't let the form submit yet
+      event.preventDefault();
+
+      //configure sweetalert alert as you wish
+      Swal.fire({
+          title: 'Padam Pengguna',
+          text: "Anda Pasti Mahu Padam Pengguna?",
+          cancelButtonText: "Tidak",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya'
+      }).then((result) => {
+          
+          //in case of deletion confirm then make the form submit
+          if (result.isConfirmed) {
+              form.submit();
+          }
+      })
+  });
 </script>
 @endsection

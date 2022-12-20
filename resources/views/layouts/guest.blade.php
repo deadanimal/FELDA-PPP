@@ -1,171 +1,72 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com"> 
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,600;0,700;1,500;1,900&display=swap" rel="stylesheet">
-        <link href="//db.onlinewebfonts.com/c/2d57f676e3d6955778fb8acac0176b9a?family=Eina01-Bold" rel="stylesheet" type="text/css"/>
-        <link href="//db.onlinewebfonts.com/c/032d6b2c34344e22d2cbca6b7050d642?family=Eina01-SemiBold" rel="stylesheet" type="text/css"/>
-        <style>
-.container {
-  display: grid; 
-  min-width:100%;
-  grid-template-columns: max-content; 
-  grid-template-rows: 100%; 
-  height: 1331px;
-  gap: 0px 0px; 
-  margin:0;
-  grid-template-areas: 
-    "navbar content"; 
-}
+<html lang="en">
 
-.header { 
-    grid-area: header;
-    min-width: 100%; 
-    background-size: cover;
-    background-image: url("/Image/header.png");
-    background-repeat: no-repeat;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="Responsive Bootstrap 4 Admin &amp; Dashboard Template">
+	<meta name="author" content="Bootlab">
 
-    }
+	<title>Felda - Program Pembangunan Peneroka</title>
 
-.navbar { 
-    grid-area: navbar;
-    left: 0; 
-}
+	<!-- PICK ONE OF THE STYLES BELOW -->
+    <link href="{{ URL::asset('css/modern.css') }}" rel="stylesheet">
 
-.content { 
-    grid-area: content;
-    right: 0; 
-    margin:0;
-    justify-content:center;
-}
+	@yield('styles')
+	<!-- END SETTINGS -->
+</head>
 
-.footer { 
-    grid-area: footer; 
-    background-size: cover;
-    background-image: url("/Image/footer.png");
-    background-repeat: no-repeat;
-    min-width:100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-            body {
-               margin: 0;
-                min-width:max-content;
-                min-height:100%;
-                display: grid; 
-                grid-template-columns: 100%; 
-                grid-template-rows: max-content max-content 46px; 
-                gap: 0px 0px; 
-                grid-template-areas: 
-                    "header"
-                    "container"
-                    "footer"; 
-            }
-            .frame9396-frame9274 {
-            
-            display: flex;
-            align-self: flex-start;
-            box-sizing: border-box;
-            border-color: transparent;
-            border-radius: 0px 0px 0px 0px;
-            padding: 35px 90px 34px 88px;
-            min-width:100%;
-            gap:34px;
-            }
-            .frame9396-logo1 {
-            width: 251px;
-            height: 137px;
-            position: relative;
-            box-sizing: border-box;
-            border-color: transparent;
-            margin-bottom: 0;
-            }
-            .frame9396-frame9273 {
-            display: flex;
-            position: relative;
-            box-sizing: border-box;
-            align-items: center;
-            border-color: transparent;
-            margin-right: 0;
-            border-radius: 0px 0px 0px 0px;
-            margin-bottom: 0;
-            flex-direction: column;
-            }
-            .header-text {
-            color: #FFFFFF;
-            width: 975px;
-            height: auto;
-            font-size: 40px;
-            align-self: auto;
-            font-style: SemiBold;
-            text-align: center;
-            font-family: Poppins;
-            font-weight: 600;
-            line-height: 116.99999570846558%;
-            font-stretch: normal;
-            margin-right: 0;
-            margin-bottom: 9px;
-            text-decoration: none;
-            }
-            .frame9396-line9 {
-            width: 741px;
-            height: 0px;
-            opacity: 0.50;
-            position: relative;
-            box-sizing: border-box;
-            margin-right: 0;
-            margin-bottom: 9px;
-            }
-            .frame9396-text2 {
-            color: #FFFFFF;
-            width: 975px;
-            height: auto;
-            font-size: 25px;
-            align-self: auto;
-            font-style: SemiBold;
-            text-align: center;
-            font-family: Poppins;
-            font-weight: 600;
-            line-height: normal;
-            font-stretch: normal;
-            margin-right: 0;
-            margin-bottom: 0;
-            text-decoration: none;
-            }
-            .footer-text {
-            color: #FFFFFF;
-            height: auto;
-            z-index: 1;
-            font-size: 14px;
-            align-self: auto;
-            text-align: right;
-            font-family: Eina01-Bold;
-            font-weight: 400;
-            line-height: normal;
-            margin-left: 3%;
-            font-stretch: normal;
-            text-decoration: none;
-            }
-        </style>
-    </head>
-    <script>
-        var isFluid = JSON.parse(localStorage.getItem('isFluid'));
-        if (isFluid) {
-          var container = document.querySelector('[data-layout]');
-          container.classList.remove('container');
-          container.classList.add('container-fluid');
-        }
-      </script>
 <body>
     @include('sweetalert::alert')
+    <script src="/js/app.js"></script>
+	<link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<div class="wrapper">
+        @include('layouts.navigation')
+        <div class="main">
+			<nav class="navbar navbar-expand navbar-theme">
+				<a class="sidebar-toggle d-flex me-2">
+					<i class="hamburger align-self-center"></i>
+				</a>
+
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item dropdown ms-lg-2">
+							<a class="nav-link dropdown-toggle position-relative" href="#" id="userDropdown" data-bs-toggle="dropdown">
+								<i class="align-middle fas fa-cog"></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+								<a class="dropdown-item" href="/users/info"><i class="align-middle me-1 fas fa-fw fa-user"></i>Kemaskini</a>
+								<div class="dropdown-divider"></div>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+								    <a class="dropdown-item" :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" style="cursor: pointer;"><i class="align-middle me-1 fas fa-fw fa-arrow-alt-circle-right"></i>Log Keluar</a>
+                                </form>
+                            </div>
+						</li>
+					</ul>
+				</div>
+
+			</nav>
+            <main class="content">
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+                    @font-face{
+                        font-family:'Eina01-SemiBold';
+                        src: url('/fonts/Eina01-SemiBold.ttf');
+                    }
+                </style>
+                @yield('innercontent')
+
+			</main>
+    </div>
+
+</body>
+
+{{-- </html>
+<body>
+    
     <header class="header">
         <div class="frame9396-frame9274">
             <img
@@ -189,7 +90,7 @@
         </div>
 
         <div class="content">
-            @yield('innercontent')
+            
         </div>
     </div>
     <footer class="footer">
@@ -198,4 +99,4 @@
         </span>
     </footer>
 </body>
-</html>
+</html> --}}

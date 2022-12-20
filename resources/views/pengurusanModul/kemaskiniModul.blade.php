@@ -45,7 +45,7 @@
   font-size: 30px;
   align-self: auto;
   text-align: left;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   line-height: 12.976823806762695px;
   font-stretch: normal;
@@ -59,8 +59,8 @@
   font-size: 25px;
   align-self: auto;
   font-style: Medium;
-  text-align: left;
-  font-family: Poppins;
+  text-align: left;  
+  font-family: 'Poppins', sans-serif;
   font-weight: 500;
   line-height: normal;
   font-stretch: normal;
@@ -112,7 +112,7 @@
   align-self: auto;
   font-style: ☞;
   text-align: left;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: normal;
   font-stretch: normal;
@@ -131,7 +131,7 @@
   margin-right: 0;
   border-radius: 3.461621046066284px;
   margin-bottom: 0;
-  font-family: 'Eina01-SemiBold';
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-size: 18px;
   padding-left:10px;
 }
@@ -194,34 +194,30 @@ display: flex;
   margin-bottom: 0;
 }   
 </style>
-<div class="frame9402-frame9402">
-    <div class="frame9402-frame9281">
-        <div class="frame9403-frame9401">
-            <span class="frame9403-text"><span>PROGRAM PEMBAGUNAN PENEROKA</span></span>
-            <span class="frame9403-text02" style="font-size: 40px;">
-              <span>(IMS PPP)</span>
-            </span>
-        </div>
-    </div>
-    <div class="frame9402-box">
-        <span class="frame9403-text02" style="margin-bottom: 20px;"><span>KEMASKINI MODUL</span></span>
-        <form action="/pengurusanModul/kemaskiniModul" method="POST" class="frame9402-frame9278">
-            @csrf
-            <input type="hidden" name="id" value="{{$modul->id}}">
-            <div class="frame9402-frame7301">
-                <div class="frame9402-frame7188">
-                    <span class="frame9402-text04"><span>Nama Modul: </span></span>
-                    <input type="text" class="frame9402-kotaknama" name="namaModul" id="namaModul" value="{{$modul->nama}}" onkeyup="changeTheColorOfButton()"/>
-                </div>
+<div class="container-fluid">
+  <div class="header">
+    <h1 class="header-title">
+        KEMASKINI MODUL
+    </h1>
+  </div>
+  <div class="frame9402-box">
+    <form action="/moduls/{{$modul->id}}" method="POST" class="frame9402-frame9278">
+        @csrf
+        @method('PUT')
+        <div class="frame9402-frame7301">
+            <div class="frame9402-frame7188">
+                <span class="frame9402-text04"><span>Nama Modul: </span></span>
+                <input type="text" class="frame9402-kotaknama" name="namaModul" id="namaModul" value="{{$modul->nama}}" onkeyup="changeTheColorOfButton()"/>
             </div>
-            <button type="submit" id="buttonKemaskini" class="frame9403-frame7445">
-              <div class="frame9403-frame7293">
-                <span class="frame9403-text21"><span>Kemaskini</span></span>
-                <img src="/SVG/kemaskini.svg" class="frame9403-group7527">
-              </div>
-            </button>
-        </form>
-    </div>
+        </div>
+        <button type="submit" id="buttonKemaskini" class="frame9403-frame7445">
+          <div class="frame9403-frame7293">
+            <span class="frame9403-text21"><span>Kemaskini</span></span>
+            <img src="/SVG/kemaskini.svg" class="frame9403-group7527">
+          </div>
+        </button>
+    </form>
+  </div>
 </div>
 <script>
     function changeTheColorOfButton() {

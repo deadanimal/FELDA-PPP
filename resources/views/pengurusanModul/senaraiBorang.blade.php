@@ -47,7 +47,7 @@
   font-size: 30px;
   align-self: auto;
   text-align: left;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   line-height: 12.976823806762695px;
   font-stretch: normal;
@@ -62,7 +62,7 @@
   align-self: auto;
   font-style: Medium;
   text-align: left;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-weight: 500;
   line-height: normal;
   font-stretch: normal;
@@ -125,7 +125,7 @@
   font-size: 17px;
   align-self: auto;
   text-align: left;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: normal;
   font-stretch: normal;
@@ -138,8 +138,8 @@
   height: auto;
   font-size: 23px;
   align-self: auto;
-  text-align: left;
-  font-family: Eina01-Bold;
+  text-align: center;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: normal;
   font-stretch: normal;
@@ -153,7 +153,7 @@
   font-size: 23px;
   align-self: auto;
   text-align: left;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: normal;
   font-stretch: normal;
@@ -172,7 +172,7 @@
   margin-right: 0;
   border-radius: 3.461621046066284px;
   margin-bottom: 0;
-  font-family: 'Eina01-SemiBold';
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-size: 18px;
   padding-left:10px;
   box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2);
@@ -196,7 +196,7 @@
   cursor: pointer;
   align-self: flex-end;
   margin-left: auto;
-  margin-right: 30px;
+  margin-right: 10px;
 }
 .frame9403-frame7293 {
 display: flex;
@@ -214,9 +214,8 @@ display: flex;
   height: auto;
   font-size: 16px;
   align-self: auto;
-  font-style: SemiBold;
   text-align: left;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   font-stretch: normal;
   margin-right: 10px;
@@ -246,7 +245,7 @@ display: flex;
     background-color:#FFFFFF;
     background-position:99% center;
     display:block;
-    font-family: 'Eina01-SemiBold';
+    font-family: 'Eina01-SemiBold', sans-serif;
     font-size: 17.3081px;
   }
 * {
@@ -298,7 +297,7 @@ display: flex;
   border-radius: 3.461621046066284px;
   margin-top: 10px;
   margin-bottom: 30px;
-  font-family: 'Eina01-SemiBold';
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-size: 18px;
   padding-left:10px;
 }
@@ -307,7 +306,7 @@ display: flex;
     border: none;
     background-color: #8ebf42;
     color: #fff;
-    font-family: Poppins;
+    font-family: 'Poppins', sans-serif;
     font-weight: 600;
     cursor: pointer;
     width: 100%;
@@ -343,7 +342,7 @@ display: flex;
   font-size: 17px;
   margin-left: auto;
   text-align: right;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 15.477937698364258px;
   font-stretch: normal;
@@ -358,7 +357,7 @@ display: flex;
   font-size: 17px;
   align-self: auto;
   text-align: left;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 15.477937698364258px;
   font-stretch: normal;
@@ -371,7 +370,7 @@ display: flex;
   height: auto;
   font-size: 17px;
   align-items: center;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 15.477937698364258px;
   font-stretch: normal;
@@ -398,9 +397,7 @@ display: flex;
   width: 35px;
   height: 30px;
   padding: 0px;
-  margin-top: 2px;
-  margin-right: 7px;    
-  margin-left: 7px;
+  margin-top: -5px;
   position: relative;
   box-sizing: border-box;
   background-color: transparent;
@@ -412,7 +409,7 @@ display: flex;
   height: 30px;
   position: relative;
   box-sizing: border-box;
-  margin-right: 15px;
+  margin-right: 10px;
 }
 .frame9402-rectangle8282452 {
   width: 32px;
@@ -463,110 +460,115 @@ display: flex;
 }
 
 </style>
+<div class="container-fluid">
 
-<div class="frame9402-frame9402">
-  <div class="frame9402-frame9281">
-      <div class="frame9403-frame9401">
-          <span class="frame9403-text"><span>PROGRAM PEMBAGUNAN PENEROKA</span></span>
-          <span class="frame9403-text02" style="font-size: 40px;">
-            <span>(IMS PPP)</span>
-          </span>
-      </div>
+  <div class="header">
+    <h1 class="header-title">
+        Proses {{$proses->nama}}
+    </h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/moduls">Modul </a></li>
+        <li class="breadcrumb-item"><a href="/moduls/{{$modul->id}}/proses">{{$modul->nama}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{$proses->nama}}</li>
+      </ol>
+    </nav>
   </div>
-  <div class="frame9402-box">
-    <div class="frame9402-frame9282">
-        <div class="frame9402-frame7188">
-            <span class="frame9402-text05"><span>{{$proses->nama}}</span></span>
-            <button class="frame9403-frame7445"  onclick="openForm()">
-                <div class="frame9403-frame7293">
-                <span class="frame9403-text21"><span>Tambah Borang</span></span>
-                <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                </div>
-            </button>
+  
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <button class="frame9403-frame7445"  onclick="openForm()">
+            <div class="frame9403-frame7293">
+            <span class="frame9403-text21"><span>Tambah Borang</span></span>
+            <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+            </div>
+          </button>
         </div>
-    </div>
 
-    {{-- popup form Tambah Borang --}}
-    <div class="loginPopup">
-      <div class="formPopup" id="popupForm">
-        <form action="/pengurusanModul/ciptaBorang" method="POST" class="formContainer">
-          @csrf
-          <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA Borang</h2>
-          <label for="namaBorang" class="frame9402-text04">
-            <strong>Nama Borang</strong>
-          </label>
-          <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama borang" name="namaBorang" required>
-          <input type="hidden" value="{{$proses->id}}" name="prosesId">
-          <button type="submit" class="btn">Tambah</button>
-          <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
-        </form>
+        {{-- popup form Tambah Borang --}}
+        <div class="loginPopup">
+          <div class="formPopup" id="popupForm">
+            <form action="/moduls/borang/add" method="POST" class="formContainer">
+              @csrf
+              <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA Borang</h2>
+              <label for="namaBorang" class="frame9402-text04">
+                <strong>Nama Borang</strong>
+              </label>
+              <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama borang" name="namaBorang" required>
+              <input type="hidden" value="{{$proses->id}}" name="prosesId">
+              <button type="submit" class="btn">Tambah</button>
+              <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
+            </form>
+          </div>
+        </div>
+
+        {{-- senarai borang --}}
+        <table style="overflow: auto; height: auto; max-height: 750px; width:100%;">
+          @if (!$borangs->isEmpty())
+            @php
+              $i = 1;
+            @endphp
+            @foreach ($borangs as $borang)
+              @if ($i == 1 || $i% 2 == 1)
+                <tr class="frame9402-input">
+              @else
+                <tr class="frame9402-input" style="background-color: rgba(162, 50, 93, 0.08);"> 
+              @endif
+                <td class="frame9402-text30">Nama Borang:</td>
+                <td class="frame9402-text31"><input type="text" id="nama{{$i}}" class="frame9402-kotaknama" value="{{$borang->namaBorang}}"></td>
+                <td class="frame9402-text32">
+                  <select name="status" id="status{{$i}}" class="frame9403-kotaknama3">
+                  @if ($borang->status == 1)
+                    <option value="1" selected>Active</option>
+                    <option value="2">Disable</option>
+                  @else
+                    <option value="1">Active</option>
+                    <option value="2" selected>Disable</option>
+                  @endif
+                  </select></td>
+                <td class="frame9402-frame8727" id="tindakan">
+                  <a href="/moduls/{{$modul->id}}/{{$proses->id}}/borang/{{$borang->id}}" class="frame9402-rectangle828245">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 556 502"><path d="M88.7 223.8L0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z"/></svg>
+                  </a>
+                  {{-- <a href='' onclick="this.href='/pengurusanModul/kemaskiniProses/{{$proses->id}}/'+document.getElementById('nama').value" class="frame9402-rectangle8282452">                
+                  </a> --}}
+                  <form method="Post" action="/moduls/borang/update">
+                    @csrf
+                    @method('PUT')
+
+                    <input type="hidden" name="namaupdate" id="namaupdate{{$i}}" >
+                    <input type="hidden" name="statusUpdate" id="statusUpdate{{$i}}" >
+                    <input type="hidden" name="prosesId" id="prosesId" value="{{$proses->id}}">
+                    <input type="hidden" name="borangId" id="borangID" value="{{$borang->id}}">
+                    <button class="frame9402-rectangle828245" type="submit" onclick="save({{$i}})" style="margin-left:10px;padding: 0px;background-color: transparent;border-color: transparent;" title="Simpan">                
+                      <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 548 612"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
+                    </button>
+                  </form>
+                  {{-- <a href="/pengurusanModul/kemaskiniProses/{{$proses->id}}/{{}}" class="frame9402-rectangle8282452" id="kemaskini">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 548 612"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
+                  </a> --}}
+                  
+                  <form method="post" action="/moduls/borang/delete">
+                    @csrf
+                    @method('DELETE')
+                    <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                    <input type="hidden" name="borangId" value="{{$borang->id}}"/>
+                    <button class="frame9402-rectangle828246"style="margin-left: 10px" title="Padam"><img src="/SVG/bin.svg"/></button>
+                  </form>
+                </td>
+              </tr>
+              @php
+                $i++;
+              @endphp
+            @endforeach 
+          @else
+            <tr class="frame9402-input" style="background-color: #FFFFFF;"><h2 class="frame9402-text01" style="color:black;"> Tiada Borang </h2></tr>
+          @endif
+        </table>
       </div>
     </div>
-
-    {{-- senarai borang --}}
-    <table style="overflow: auto; height: auto; max-height: 750px; width:100%;">
-      @if (!$borangs->isEmpty())
-        @php
-          $i = 1;
-        @endphp
-        @foreach ($borangs as $borang)
-          @if ($i == 1 || $i% 2 == 1)
-            <tr class="frame9402-input">
-          @else
-            <tr class="frame9402-input" style="background-color: rgba(162, 50, 93, 0.08);"> 
-          @endif
-            <td class="frame9402-text30">Nama Borang:</td>
-            <td class="frame9402-text31"><input type="text" id="nama{{$i}}" class="frame9402-kotaknama" value="{{$borang->namaBorang}}"></td>
-            <td class="frame9402-text32">
-              <select name="status" id="status{{$i}}" class="frame9403-kotaknama3">
-              @if ($borang->status == 1)
-                <option value="1" selected>Active</option>
-                <option value="2">Disable</option>
-              @else
-                <option value="1">Active</option>
-                <option value="2" selected>Disable</option>
-              @endif
-              </select></td>
-            <td class="frame9402-frame8727" id="tindakan">
-              <a href="/pengurusanBorang/isiBorang/{{$borang->id}}" class="frame9402-rectangle828245">
-                <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 556 502"><path d="M88.7 223.8L0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z"/></svg>
-              </a>
-              {{-- <a href='' onclick="this.href='/pengurusanModul/kemaskiniProses/{{$proses->id}}/'+document.getElementById('nama').value" class="frame9402-rectangle8282452">                
-              </a> --}}
-              <form method="Post" action="/pengurusanModul/kemaskiniBorang">
-                @csrf
-                @method('PUT')
-
-                <input type="hidden" name="namaupdate" id="namaupdate{{$i}}" >
-                <input type="hidden" name="statusUpdate" id="statusUpdate{{$i}}" >
-                <input type="hidden" name="prosesId" id="prosesId" value="{{$proses->id}}">
-                <input type="hidden" name="borangId" id="borangID" value="{{$borang->id}}">
-                <button class="frame9402-rectangle828246" type="submit" onclick="save({{$i}})" style="margin-top: 5px;">                
-                  <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 548 612"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
-                </button>
-              </form>
-              {{-- <a href="/pengurusanModul/kemaskiniProses/{{$proses->id}}/{{}}" class="frame9402-rectangle8282452" id="kemaskini">
-                <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 548 612"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
-              </a> --}}
-              
-              <form method="post" action="/pengurusanBorang/delete">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                <input type="hidden" name="borangId" value="{{$borang->id}}"/>
-                <button class="frame9402-rectangle828246"><img src="/SVG/bin.svg"/></button>
-              </form>
-            </td>
-          </tr>
-          @php
-            $i++;
-          @endphp
-        @endforeach 
-      @else
-        <tr class="frame9402-input" style="background-color: #FFFFFF;"><h2 class="frame9402-text01" style="color:black;"> Tiada Borang </h2></tr>
-      @endif
-    </table>
-
   </div>
 </div>
 

@@ -36,7 +36,7 @@
   font-size: 30px;
   align-self: auto;
   text-align: left;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   line-height: 12.976823806762695px;
   font-stretch: normal;
@@ -52,7 +52,7 @@
   align-self: auto;
   font-style: Medium;
   text-align: left;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-weight: 500;
   line-height: normal;
   font-stretch: normal;
@@ -100,25 +100,23 @@
   font-size: 17.3081px;
   align-self: center;
   text-align: left;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: normal;
   font-stretch: normal;
   text-decoration: none;
 }
 .frame9403-kotaknama {
-  top: 0px;
-  left: 132px;
   width: 454px;
   height: 50px;
-  position: absolute;
+  position: relative;
   box-sizing: content-box;
   border-color: rgba(140, 38, 60, 1);
   border-style: solid;
   border-width: 0.865405261516571px;
   border-radius: 3.461621046066284px;
   color: #161616;
-  font-family: Eina01-SemiBold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-size: 17.3081px;
   padding-left:10px;
   box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)
@@ -137,10 +135,10 @@
   border-radius: 8.598855018615723px;
   padding-right: 20px;
   flex-direction: column;
-  padding-bottom: 0px;
+  margin-top: 20px;
   justify-content: center;
   background-color: #A2335D;
-  margin-left:1095px;
+  margin-left:20%;
   cursor: pointer;
 }
 .frame9403-frame7293 {
@@ -159,9 +157,8 @@ display: flex;
   height: auto;
   font-size: 16px;
   align-self: auto;
-  font-style: SemiBold;
   text-align: left;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   line-height: 34.39542007446289px;
   font-stretch: normal;
@@ -179,8 +176,6 @@ display: flex;
   margin-bottom: 0;
 }
 .frame9403-group71881 {
-  width: 586px;
-  height: 50.000030517578125px;
   display: flex;
   padding: 0;
   position: relative;
@@ -199,35 +194,33 @@ display: flex;
   background-color: transparent;
 }
 </style>
-<div class="frame9403-frame9403">
-    <div class="frame9403-frame9401">
-        <span class="frame9403-text"><span>KEMASKINI KATEGORI PENGGUNA</span></span>
-        <span class="frame9403-text02">
-          <span>Sila isikan maklumat berikut dengan betul.</span>
-        </span>
-    </div>
-    <form method="post" action="/pengurusanPengguna/kemaskiniKategoriPengguna" enctype="multipart/form-data">
+<div class="container-fluid">
+  <div class="header">
+    <h1 class="header-title">
+      KEMASKINI KATEGORI PENGGUNA
+    </h1>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title mb-0">Sila isikan maklumat anda berikut dengan betul.</h5>
+  </div>
+  <div class="card-body">
+    <form method="post" action="/user-categories" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <input type="hidden" value="{{$kategoriPengguna->id}}" name="kategoriId">
-  
-        <div class="frame9403-frame9330">
-            <div class="frame9403-frame9399">
-                <div class="frame9403-frame7301">
-                    <div class="frame9403-group71881">
-                        <span class="frame9403-text04"><span>Nama kategori </span></span>
-                        <input type="text" class="frame9403-kotaknama" value="{{$kategoriPengguna->nama}}" name="kategoriPengguna">
-                    </div>
-                </div>
-            </div>
+        <div class="frame9403-group71881">
+            <span class="frame9403-text04"><span>Nama kategori </span></span>
+            <input type="text" class="frame9403-kotaknama" value="{{$kategoriPengguna->nama}}" name="kategoriPengguna">
         </div>
         <button type="submit" class="frame9403-frame7445">
-            <div class="frame9403-frame7293">
-                <span class="frame9403-text21"><span>Kemaskini</span></span>
-                <img src="/SVG/kemaskini.svg" class="frame9403-group7527"/>
-            </div>
+          <div class="frame9403-frame7293">
+              <span class="frame9403-text21"><span>Kemaskini</span></span>
+              <img src="/SVG/kemaskini.svg" class="frame9403-group7527"/>
+          </div>
         </button>
     </form>
+  </div>
 </div>
 
 @endsection
