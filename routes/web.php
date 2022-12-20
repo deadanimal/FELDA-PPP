@@ -21,54 +21,6 @@ Route::post('/forgot',  [pengurusanPenggunaController::class, 'forgotPenggunaCli
 //for js wilayah and rancangan
 Route::get('/getRancangan/{id}',  [UserController::class, 'getRancangan']);
 
-//datatable pengurusan kategori pengguna
-
-// Route::get('/pengurusanPengguna/daftarPengguna',  [pengurusanPenggunaController::class, 'create']);
-// Route::post('/pengurusanPengguna/daftar',  [pengurusanPenggunaController::class, 'daftarPengguna']);
-// Route::delete('/pengurusanPengguna/delete',  [pengurusanPenggunaController::class, 'deletePengguna']);
-// Route::get('/pengurusanPengguna/edit/{id}',  [pengurusanPenggunaController::class, 'edit']);
-// Route::put('/pengurusanPengguna/kemaskini',  [pengurusanPenggunaController::class, 'kemaskiniPengguna']);
-// Route::put('/pengurusanPengguna/kemaskiniProfil',  [pengurusanPenggunaController::class, 'kemaskiniProfil']);
-
-// Route::get('/pengurusanPengguna/senaraiKategoriPengguna',[pengurusanPenggunaController::class, 'senaraiKategoriPengguna']);
-// Route::post('/pengurusanPengguna/tambahKategoriPengguna',[pengurusanPenggunaController::class, 'tambahKategoriPengguna']);
-// Route::put('/pengurusanPengguna/kemaskiniKategoriPengguna',[pengurusanPenggunaController::class, 'kemaskiniKategoriPengguna']);
-// Route::get('/pengurusanPengguna/editKategoriPengguna/{id}',[pengurusanPenggunaController::class, 'editKategoriPengguna']);
-// Route::delete('/pengurusanPengguna/deleteKategoriPengguna',[pengurusanPenggunaController::class, 'deleteKategoriPengguna']);
-
-// Route::get('/pengurusanPengguna/maklumatPengguna',  [pengurusanPenggunaController::class, 'maklumatPengguna']);
-// Route::get('/pengurusanPengguna/senaraiPengguna',  [pengurusanPenggunaController::class, 'senaraiPengguna']);
-// Route::post('/pengurusanPengguna/cariPengguna',  [pengurusanPenggunaController::class, 'cariPengguna']);
-
-// Route::get('/auditTrail/audit', [pengurusanPenggunaController::class, 'auditTrail']);
-// Route::post('/auditTrail/auditPengguna', [pengurusanPenggunaController::class, 'auditIdPengguna']);
-// Route::post('/auditTrail/auditTarikh', [pengurusanPenggunaController::class, 'auditTarikh']);
-// Route::post('/auditTrail/auditTindakan', [pengurusanPenggunaController::class, 'auditTindakan']);
-
-// pengurusan modul
-// Route::get('/pengurusanModul/ciptaModul', [pengurusanModulController::class, 'create']);
-// Route::post('/pengurusanModul/simpanModul', [pengurusanModulController::class, 'store']);
-// Route::get('/pengurusanModul/senaraiModul', [pengurusanModulController::class, 'senaraiModul']);
-// Route::delete('/pengurusanModul/delete', [pengurusanModulController::class, 'deleteModul']);
-// Route::post('/pengurusanModul/cariModul',  [pengurusanModulController::class, 'cariModul']);
-// Route::get('/pengurusanModul/editModul/{id}', [pengurusanModulController::class, 'editModul']);
-// Route::get('/pengurusanModul/copyModul/{id}', [pengurusanModulController::class, 'copyModul']);
-// Route::post('/pengurusanModul/kemaskiniModul',  [pengurusanModulController::class, 'kemaskiniModul']);
-
-// Route::post('/pengurusanModul/ciptaProses',  [pengurusanModulController::class, 'ciptaProses']);
-// Route::get('/pengurusanModul/senaraiProses/{modulId}', [pengurusanModulController::class, 'senaraiProses']);
-// Route::put('/pengurusanModul/kemaskiniProses',  [pengurusanModulController::class, 'kemaskiniProses']);
-// Route::delete('/pengurusanProses/delete',  [pengurusanModulController::class, 'deleteProses']);
-
-// Route::post('/pengurusanModul/ciptaBorang',  [pengurusanModulController::class, 'ciptaBorang']);
-// Route::get('/pengurusanModul/senaraiBorang/{prosesId}',  [pengurusanModulController::class, 'senaraiBorang']);
-// Route::put('/pengurusanModul/kemaskiniBorang',  [pengurusanModulController::class, 'kemaskiniBorang']);
-// Route::delete('/pengurusanBorang/delete',  [pengurusanModulController::class, 'deleteBorang']);
-
-// Route::get('/pengurusanBorang/isiBorang/{borangId}',  [pengurusanBorangController::class, 'isiBorang']);
-// Route::post('/pengurusanBorang/simpanMedanBorang',  [pengurusanBorangController::class, 'simpanMedanBorang']);
-// Route::post('/pengurusanBorang/uploadBorang',  [pengurusanBorangController::class, 'uploadBorang']);
-
 require __DIR__.'/auth.php';
 
 Auth::routes();
@@ -116,6 +68,4 @@ Route::delete('/moduls/borang/delete', [ModulController::class, 'borang_delete']
 Route::get('/moduls/{modul_id}/{proses_id}/borang/{borang_id}', [BorangController::class, 'borang_detail']);
 Route::post('/moduls/borang_field/update', [BorangController::class, 'borang_field_update']);
 
-// Route::get('/Borang/isiBorang/{borangId}',  [BorangController::class, 'borang_']);
-// Route::post('/Borang/simpanMedanBorang',  [BorangController::class, 'simpanMedanBorang']);
 // Route::post('/Borang/uploadBorang',  [BorangController::class, 'uploadBorang']);
