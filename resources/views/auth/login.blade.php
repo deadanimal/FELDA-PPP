@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 
 <body>
-    <div class="wrapper">
+    <div class="container-fluid">
         <div class="log-masuk-logmasuk1">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
@@ -488,7 +488,7 @@
         line-height: 100px;
         font-stretch: normal;
         margin-right: 0;
-        margin-bottom: 96px;
+        margin-bottom: 25%;
         text-decoration: none;
     }
 
