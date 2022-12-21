@@ -76,7 +76,7 @@ class ModulController extends Controller
                         <a href="'.$url3.'" class="frame9402-rectangle828245" style="margin-left: 15px;" title="Salinan">
                         <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A; width: 32px; height: 30px;" viewBox="0 0 556 502"><path d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z"/></svg>    
                         </a> 
-                        <a href="'.$url4.'" class="btn btn-xs frame9402-rectangle828246" title="Padam" ></a>';
+                        <a href="'.$url4.'" class="btn btn-xs frame9402-rectangle828246" title="Padam" id="deleting"></a>';
             })                  
             ->rawColumns(['tindakan','dikemaskiniOleh','diciptaOleh'])                          
             ->make(true);
@@ -87,7 +87,7 @@ class ModulController extends Controller
 
     public function modul_delete(Request $request)
     {
-        $idModul = $request->modulId;
+        $idModul = (int)$request->route('id');
         $modul = Modul::find($idModul);
         $modul->delete();
         Alert::success('Padam Modul Berjaya.', 'Padam modul telah berjaya.');
@@ -173,12 +173,12 @@ class ModulController extends Controller
 
     public function proses_delete(Request $request)
     {
-        $prosesId = (int)$request->route('proses_id');
+        $prosesId = $request->prosesId;
         $proses = Proses::find($prosesId);
         $proses->delete();
         Alert::success('Padam Proses Berjaya.', 'Padam proses telah berjaya.');
 
-        $prosess = Proses::where('modul', $request->modulID)->orderBy("updated_at", "DESC")->get();
+        $prosess = Proses::where('modul', $request->modulId)->orderBy("updated_at", "DESC")->get();
         $modul = Modul::find($request->modulId);
 
         return view('pengurusanModul.senaraiProses', compact('modul', 'prosess'));
@@ -192,11 +192,12 @@ class ModulController extends Controller
         $borang->proses = $request->prosesId;
         $borang->save();
         Alert::success('Cipta Borang berjaya.', 'Cipta borang telah berjaya.');
-
+        
+        $modul = Modul::find($request->modulId);
         $proses = Proses::find($request->prosesId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses'));
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul'));
     }
 
     public function borang_list(Request $request)
@@ -211,7 +212,7 @@ class ModulController extends Controller
 
     public function borang_update(Request $request)
     {
-        $borangId = (int)$request->route('borang_id');
+        $borangId = $request->borangId;
         $borang = Borang::find($borangId);
         $borang->namaBorang = $request->namaupdate;
         $borang->status = $request->statusUpdate;
@@ -219,23 +220,24 @@ class ModulController extends Controller
         $borang->save();
         Alert::success('Kemaskini Borang berjaya.', 'Kemaskini borang telah berjaya.');
 
-
+        $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($request->prosesId);
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses'));
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul'));
     }
 
     public function borang_delete(Request $request)
     {
-        $borangId = (int)$request->route('borang_id');
+        $borangId = $request->borangId;
         $borang = Borang::find($borangId);
         $borang->delete();
         Alert::success('Padam Borang Berjaya.', 'Padam borang telah berjaya.');
 
+        $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($request->prosesId);
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses'));
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul'));
     }
 }

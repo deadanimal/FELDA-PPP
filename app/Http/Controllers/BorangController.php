@@ -59,8 +59,11 @@ class BorangController extends Controller
         $borang->save();
 
         Alert::success('Simpan Meadan Borang berjaya.', 'Simpan medan borang telah berjaya.');   
+        
+        $modul = Modul::find($request->modulId);
+        $proses = Proses::find($request->prosesId);
 
-        return view('pengurusanModul.borang', compact('borang'));
+        return view('pengurusanModul.borang', compact('borang', 'modul', 'proses'));
     
     }
 

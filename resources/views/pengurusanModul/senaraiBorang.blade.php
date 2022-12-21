@@ -498,6 +498,7 @@ display: flex;
               </label>
               <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama borang" name="namaBorang" required>
               <input type="hidden" value="{{$proses->id}}" name="prosesId">
+              <input type="hidden" value="{{$modul->id}}" name="modulId">
               <button type="submit" class="btn">Tambah</button>
               <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
             </form>
@@ -540,6 +541,7 @@ display: flex;
 
                     <input type="hidden" name="namaupdate" id="namaupdate{{$i}}" >
                     <input type="hidden" name="statusUpdate" id="statusUpdate{{$i}}" >
+                    <input type="hidden" value="{{$modul->id}}" name="modulId">
                     <input type="hidden" name="prosesId" id="prosesId" value="{{$proses->id}}">
                     <input type="hidden" name="borangId" id="borangID" value="{{$borang->id}}">
                     <button class="frame9402-rectangle828245" type="submit" onclick="save({{$i}})" style="margin-left:10px;padding: 0px;background-color: transparent;border-color: transparent;" title="Simpan">                
@@ -554,6 +556,7 @@ display: flex;
                     @csrf
                     @method('DELETE')
                     <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                    <input type="hidden" value="{{$modul->id}}" name="modulId">
                     <input type="hidden" name="borangId" value="{{$borang->id}}"/>
                     <button class="frame9402-rectangle828246"style="margin-left: 10px" title="Padam"><img src="/SVG/bin.svg"/></button>
                   </form>

@@ -569,6 +569,8 @@ display: flex;
         </div>
         <form action="/moduls/borang_field/update" method="POST" style="width: 100%;">    
           @csrf
+          <input type="hidden" name="modulId" value="{{$modul->id}}">
+          <input type="hidden" name="prosesId" value="{{$proses->id}}"/>
           <input type="hidden" name="borangId" value="{{$borang->id}}">
           <table style="overflow: scroll; max-height: 750px; width:100%;" id="borangField" class="draggable-table">
             <tbody class="row_drag">
@@ -582,11 +584,11 @@ display: flex;
                 <td class="frame9402-text30">Jenis Data:
                   <select name="datatype[]" class="frame9403-kotaknama3">
                     @if ($context->datatype == "string" )
-                      <option value="string" selected>String</option>
-                      <option value="integer">Integer</option>
+                      <option value="string" selected>Abjad Angka</option>
+                      <option value="integer">Data Berangka</option>
                     @else
-                      <option value="string">String</option>
-                      <option value="integer"selected>Integer</option>
+                      <option value="string">Abjad Angka</option>
+                      <option value="integer"selected>Data Berangka</option>
                     @endif
                   </select>
                 </td>
@@ -644,8 +646,8 @@ $("#rowAdder").click(function () {
                 '<td class="frame9402-text31">Nama Medan:<input type="text" name="nama[]" class="frame9402-kotaknama" placeholder="Nama Medan"></td>'+
                 '<td class="frame9402-text30">Jenis Data:'+
                     '<select name="datatype[]" class="frame9403-kotaknama3">'+
-                        '<option value="string">String</option>'+
-                        '<option value="integer">Integer</option>'+
+                        '<option value="string">Abjad Angka</option>'+
+                        '<option value="integer">Data Berangka</option>'+
                     '</select>'+
                 '</td>'+
                 '<td class="frame9402-text32"> Pilihan:'+

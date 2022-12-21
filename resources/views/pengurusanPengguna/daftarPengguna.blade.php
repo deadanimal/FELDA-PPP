@@ -17,33 +17,33 @@
           @csrf
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="nama">Nama</label>
-                  <input type="text" class="form-control frame9403-kotaknama" maxlength="100" size="100" name="nama" id="nama">
+                  <label for="nama" style="font-family:'Poppins'">Nama</label>
+                  <input type="text" class="form-control frame9403-kotaknama" maxlength="100" size="100" name="nama" id="nama" required>
               </div>
               <div class="mb-3 col-md-6">
-                  <label for="idPengguna">ID Pengguna</label>
-                  <input type="text" class="form-control frame9403-kotaknama" maxlength="12" size="12" name="idPengguna" id="idPengguna">
+                  <label for="idPengguna" style="font-family:'Poppins'">ID Pengguna</label>
+                  <input type="text" class="form-control frame9403-kotaknama" maxlength="12" size="12" name="idPengguna" id="idPengguna" required>
               </div>
           </div>
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control frame9403-kotaknama" name="email" id="email">
+                  <label for="email" style="font-family:'Poppins'">Email</label>
+                  <input type="email" class="form-control frame9403-kotaknama" name="email" id="email" required>
               </div>
               <div class="mb-3 col-md-6">
-                  <label for="noTelefon">No. Telefon</label>
+                  <label for="noTelefon" style="font-family:'Poppins'">No. Telefon</label>
                   <input type="text" class="form-control frame9403-kotaknama" id="noTelefon" name="noTelefon" 
-                   data-mask="000-000 0000" autocomplete="off"  maxlength="11" size="11" required>
+                   maxlength="11" size="11" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="E.g: 01234567891" required>
               </div>
           </div>
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="nokadpengenalan">No. Kad Pengenalan</label>
+                  <label for="nokadpengenalan" style="font-family:'Poppins'">No. Kad Pengenalan</label>
                   <input type="text" class="form-control frame9403-kotaknama" id="nokadpengenalan" name="nokadpengenalan" maxlength="12"
-                  size="12" data-mask="000000-00-0000" data-reverse="true" required>
+                  size="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="E.g: 750922140122" required>
               </div>
               <div class="mb-3 col-md-6">
-                  <label for="wilayah">Peringkat</label>
+                  <label for="wilayah" style="font-family:'Poppins'">Peringkat</label>
                   <select name="wilayah" id="wilayah" class="form-control frame9403-kotaknama3 ">
                     <option value="" selected disabled>Pilih Peringkat</option>
                     @foreach ($wilayah as $key => $value)
@@ -54,7 +54,7 @@
           </div>
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="inputLastName">Kategori Pengguna</label>
+                  <label for="inputLastName" style="font-family:'Poppins'">Kategori Pengguna</label>
                   <div style="display: flex; flex-direction: row;">
                     <select name="kategoripengguna" name="kategoriPengguna" class="form-control frame9403-kotaknama3" style="width: 408px">
                         <option value="" selected disabled>Kategori Pengguna</option>
@@ -62,7 +62,7 @@
                             <option value="{{ $kategoriPenggunas->id }}">{{ $kategoriPenggunas->nama }}</option>
                         @endforeach
                     </select>
-                    <a href="/pengurusanPengguna/senaraiKategoriPengguna" class="frame9402-frame7445" title="Tambah Kategori Pengguna">
+                    <a href="/user-categories" class="frame9402-frame7445" title="Tambah Kategori Pengguna">
                       <div class="frame9402-frame72931">
                         <img
                             src="/SVG/daftar.svg"
@@ -73,7 +73,7 @@
                   </div>
               </div>
               <div class="mb-3 col-md-6">
-                <label for="rancangan">Rancangan</label>
+                <label for="rancangan" style="font-family:'Poppins'">Rancangan</label>
                 <select name="rancangan" id="rancangan" class="form-control frame9403-kotaknama3 " required>
                   <option value="" selected disabled>Pilih Rancangan</option>
                 </select>
@@ -81,9 +81,9 @@
           </div>
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="passcode">Kata Laluan</label>
+                  <label for="passcode" style="font-family:'Poppins'">Kata Laluan</label>
                   <div style="display: flex; flex-direction: row; align-items: center;">
-                    <input type="password" id="passcode" class="form-control frame9403-kotaknama" name="password" minlength="8">
+                    <input type="password" id="passcode" class="form-control frame9403-kotaknama" name="password" minlength="8" value="ppp@felda" required>
                     <i class="far fa-eye" onclick="showPassFunction()" id="iconPass" style="margin-left: 10px"></i>
                   </div>
               </div>

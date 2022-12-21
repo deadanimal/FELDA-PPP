@@ -33,12 +33,12 @@
   margin-top: 47px;
 }
 .frame9404-text {
-  color: #781E2A;
+  color: #FFFFFF;
   height: auto;
   font-size: 30px;
   align-self: auto;
   text-align: left;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   line-height: 12.976823806762695px;
   font-stretch: normal;
@@ -55,7 +55,7 @@
   border-color: transparent;
   margin-right: 0;
   border-radius: 0px 0px 0px 0px;
-  margin-bottom: 117px;
+  margin: 10px;
   flex-direction: column;
 }
 .frame9404-frame9278 {
@@ -100,7 +100,7 @@
   align-self: auto;
   font-style: ☞;
   text-align: left;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: normal;
   font-stretch: normal;
@@ -209,7 +209,7 @@
   font-size: 16px;
   align-self: auto;
   text-align: left;
-  font-family: Eina01-SemiBold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 100;
   line-height: 34.39542007446289px;
   font-stretch: normal;
@@ -324,7 +324,7 @@
   align-self: auto;
   font-style: Bold;
   text-align: left;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
   line-height: 18px;
   font-stretch: normal;
@@ -338,7 +338,7 @@
   font-size: 12px;
   align-self: center;
   text-align: center;
-  font-family: Poppins;
+  font-family: 'Poppins', sans-serif;
   font-weight: 600;
   line-height: 18px;
   font-stretch: normal;
@@ -420,7 +420,7 @@
   font-size: 16px;
   align-self: auto;
   text-align: center;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 25.477937698364258px;
   font-stretch: normal;
@@ -434,7 +434,7 @@
   font-size: 16px;
   align-self: auto;
   text-align: left;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 25.477937698364258px;
   font-stretch: normal;
@@ -450,7 +450,7 @@
   align-self: auto;
   font-style: ☞;
   text-align: left;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 25.477937698364258px;
   font-stretch: normal;
@@ -465,7 +465,7 @@
   font-size: 17.197710037231445px;
   align-self: auto;
   text-align: center;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 25.477937698364258px;
   font-stretch: normal;
@@ -480,7 +480,7 @@
   font-size: 16px;
   align-self: auto;
   text-align: left;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 25.477937698364258px;
   font-stretch: normal;
@@ -495,7 +495,7 @@
   font-size: 16px;
   align-self: auto;
   text-align: center;
-  font-family: Eina01-Bold;
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 25.477937698364258px;
   font-stretch: normal;
@@ -534,7 +534,7 @@
   font-size: 16px;
   align-self: auto;
   text-align: center;
-  font-family: 'Eina01-SemiBold';
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 25.477937698364258px;
   font-stretch: normal;
@@ -548,7 +548,7 @@
   font-size: 16px;
   align-self: auto;
   text-align: left;
-  font-family: 'Eina01-SemiBold';
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 25.477937698364258px;
   font-stretch: normal;
@@ -563,7 +563,7 @@
   font-size: 16px;
   align-self: auto;
   text-align: left;
-  font-family: 'Eina01-SemiBold';
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 25.477937698364258px;
   font-stretch: normal;
@@ -578,7 +578,7 @@
   font-size: 16px;
   align-self: auto;
   text-align: center;
-  font-family: 'Eina01-SemiBold';
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 25.477937698364258px;
   font-stretch: normal;
@@ -593,7 +593,7 @@
   font-size: 16px;
   align-self: auto;
   text-align: left;
-  font-family: 'Eina01-SemiBold';
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 25.477937698364258px;
   font-stretch: normal;
@@ -608,7 +608,7 @@
   font-size: 16px;
   align-self: auto;
   text-align: center;
-  font-family: 'Eina01-SemiBold';
+  font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 25.477937698364258px;
   font-stretch: normal;
@@ -619,9 +619,10 @@
 </style>
 
 <div class="frame9404-frame9404">
-    <div class="frame9404-frame9398">
-        <span class="frame9404-text"><span>Audit Trail</span></span>
-    </div>
+  <div class="frame9404-frame9398">
+      <span class="frame9404-text"><span>Audit Trail</span></span>
+  </div>
+  <div class="card">
     <div class="frame9404-frame93981">
         <form action="/auditTrail/auditPengguna" method="POST" class="frame9404-frame9278">
           @csrf  
@@ -688,86 +689,87 @@
             </button>
         </form>
     </div>
-    <table class="frame9404-table" style="overflow: auto; height: 850px;">
-        <tr class="frame9404-frame93982" style="position: sticky; top: 0; z-index: 1; background-color:white;">
-            <th class="frame9404-text20"><span>Bil.</span></th>
-            <th class="frame9404-text22"><span>ID Pengguna</span></th>
-            <th class="frame9404-text24"><span>Nama Pengguna</span></th>
-            <th class="frame9404-text26"><span>Tindakan</span></th>
-            <th class="frame9404-text28"><span>Keterangan</span></th>
-            <th class="frame9404-text30"><span>Tarikh Tindakan</span></th>
-        </tr>
-        @php
-        $i = 1;
-        @endphp
-        @foreach ($audits as $audit)
-        {{-- @dd($audit->new_values)   --}}
-          @if ($i == 1 || $i% 2 == 1)
-            <tr class="frame9404-input">
-          @else
-            <tr class="frame9404-input" style="background-color: rgba(162, 50, 93, 0.08);"> 
-          @endif
-            <td class="frame9404-text21">{{$i}}</td>
-            <td class="frame9404-text23">{{$audit->user->idPengguna??""}}</td>
-            <td class="frame9404-text25">{{$audit->user->nama??""}}</td>
-            <td class="frame9404-text27">
+  </div>
+  <table class="frame9404-table" style="overflow: auto; height: 850px;">
+      <tr class="frame9404-frame93982" style="position: sticky; top: 0; z-index: 1; background-color:white;">
+          <th class="frame9404-text20"><span>Bil.</span></th>
+          <th class="frame9404-text22"><span>ID Pengguna</span></th>
+          <th class="frame9404-text24"><span>Nama Pengguna</span></th>
+          <th class="frame9404-text26"><span>Tindakan</span></th>
+          <th class="frame9404-text28"><span>Keterangan</span></th>
+          <th class="frame9404-text30"><span>Tarikh Tindakan</span></th>
+      </tr>
+      @php
+      $i = 1;
+      @endphp
+      @foreach ($audits as $audit)
+      {{-- @dd($audit->new_values)   --}}
+        @if ($i == 1 || $i% 2 == 1)
+          <tr class="frame9404-input">
+        @else
+          <tr class="frame9404-input" style="background-color: rgba(162, 50, 93, 0.08);"> 
+        @endif
+          <td class="frame9404-text21">{{$i}}</td>
+          <td class="frame9404-text23">{{$audit->user->idPengguna??""}}</td>
+          <td class="frame9404-text25">{{$audit->user->nama??""}}</td>
+          <td class="frame9404-text27">
 
-            @if ($audit->event == "created")
-              <span>Cipta</span>
-              </td>
-              <td class="frame9404-text29"> 
-              @if($audit->auditable_type== "App\Models\User")
-                    Nama: {{$audit->new_values['nama'] }}<br> 
-                    ID Pengguna: {{$audit->new_values['idPengguna']}}<br>
-              @elseif($audit->auditable_type=="App\Models\Modul")
-                  Nama Modul: {{$audit->new_values['nama'] }}<br> 
-              @endif
-              </td> 
-            @elseif($audit->event == "updated")
-              <span>Kemaskini</span>
-              </td>
-              <td class="frame9404-text29">
-                @if($audit->auditable_type== "App\Models\User")
-                  Nama: {{$audit->auditable->nama??""}}<br> 
-                  ID Pengguna: {{$audit->auditable->idPengguna??""}}<br>
-                @elseif($audit->auditable_type=="App\Models\Modul")
-                  Nama Modul: {{$audit->new_values['nama'] }}<br> 
-                @endif
-                
-              </td>
-            @elseif($audit->event == "deleted")
-              <span>Padam</span>
-              </td>
-              <td class="frame9404-text29">
-              @if($audit->auditable_type== "App\Models\User")
-                    Nama: {{$audit->old_values['nama'] }}<br> 
-                    ID Pengguna: {{$audit->old_values['idPengguna']}}<br>
-              @elseif($audit->auditable_type=="App\Models\Modul")
-                  Nama Modul: {{$audit->old_values['nama'] }}<br> 
-              @endif
-              </td>
-            @endif
-{{-- 
-            @if({{$audit->auditable}}!= null)
-            <td class="frame9404-text29"> 
-              Nama: {{$audit->auditable->nama}}<br> 
-              ID Pengguna: {{$audit->auditable->idPengguna}}<br>
-              Kategori: {{$audit->auditable->kategori->nama}}<br>
+          @if ($audit->event == "created")
+            <span>Cipta</span>
             </td>
-            @elseif({{$audit->auditable_type}}=="App\Models\Modul")
             <td class="frame9404-text29"> 
-              Nama Modul: {{$audit->new_values->nama}}<br> 
-              ID Pengguna: {{$audit->auditable->idPengguna}}<br>
-              Kategori: {{$audit->auditable->kategori->nama}}<br>
-            </td> --}}
-            <td class="frame9404-text31">{{$audit->created_at}}</td>
-          </tr>
+            @if($audit->auditable_type== "App\Models\User")
+                  Nama: {{$audit->new_values['nama'] }}<br> 
+                  ID Pengguna: {{$audit->new_values['idPengguna']}}<br>
+            @elseif($audit->auditable_type=="App\Models\Modul")
+                Nama Modul: {{$audit->new_values['nama'] }}<br> 
+            @endif
+            </td> 
+          @elseif($audit->event == "updated")
+            <span>Kemaskini</span>
+            </td>
+            <td class="frame9404-text29">
+              @if($audit->auditable_type== "App\Models\User")
+                Nama: {{$audit->auditable->nama??""}}<br> 
+                ID Pengguna: {{$audit->auditable->idPengguna??""}}<br>
+              @elseif($audit->auditable_type=="App\Models\Modul")
+                Nama Modul: {{$audit->new_values['nama'] }}<br> 
+              @endif
+              
+            </td>
+          @elseif($audit->event == "deleted")
+            <span>Padam</span>
+            </td>
+            <td class="frame9404-text29">
+            @if($audit->auditable_type== "App\Models\User")
+                  Nama: {{$audit->old_values['nama'] }}<br> 
+                  ID Pengguna: {{$audit->old_values['idPengguna']}}<br>
+            @elseif($audit->auditable_type=="App\Models\Modul")
+                Nama Modul: {{$audit->old_values['nama'] }}<br> 
+            @endif
+            </td>
+          @endif
+{{-- 
+          @if({{$audit->auditable}}!= null)
+          <td class="frame9404-text29"> 
+            Nama: {{$audit->auditable->nama}}<br> 
+            ID Pengguna: {{$audit->auditable->idPengguna}}<br>
+            Kategori: {{$audit->auditable->kategori->nama}}<br>
+          </td>
+          @elseif({{$audit->auditable_type}}=="App\Models\Modul")
+          <td class="frame9404-text29"> 
+            Nama Modul: {{$audit->new_values->nama}}<br> 
+            ID Pengguna: {{$audit->auditable->idPengguna}}<br>
+            Kategori: {{$audit->auditable->kategori->nama}}<br>
+          </td> --}}
+          <td class="frame9404-text31">{{$audit->created_at}}</td>
+        </tr>
 
-          @php
-          $i++;
-          @endphp
-        @endforeach
-    </table>
+        @php
+        $i++;
+        @endphp
+      @endforeach
+  </table>
 </div>
 <script>
 function changeTheColorOfButton() {
