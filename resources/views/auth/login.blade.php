@@ -30,15 +30,14 @@
                     <div class="log-masuk-frame4">
                         <div class="log-masuk-frame121">
                             <span class="log-masuk-text06">Kata Laluan</span>
-                            <label>
+                            <label style="display:flex;">
                                 <input class="log-masuk-rectangle461" type="password" name="password" id="passcode"
                                     placeholder="**************" />
-                                <i class="far fa-eye" onclick="showPassFunction()" style="cursor: pointer;color: #fff;"
+                                <i class="far fa-eye" onclick="showPassFunction()" style="cursor: pointer;color: #fff; text-align:center; align-items: center;display: flex;"
                                     id="iconPass"></i>
                             </label>
                         </div>
                         <x-input-error :messages="$errors->get('idPengguna')" class="mt-2" />
-                          <a href="/forgot">Lupa kata laluan?</a>
                     </div>
                     <div class="log-masuk-frame5">
                         <input id="remember_me" type="checkbox" class="log-masuk-rectangle828081" name="remember">
@@ -47,9 +46,9 @@
                     <button class="log-masuk-button6">
                         {{ __('Daftar Masuk') }}
                     </button>
-                    <button class="log-masuk-button7">
+                    <a class="log-masuk-button7" href="/forgot">
                         Set Semula
-                    </button>
+                    </a>
     
                 </div>
             </form>
@@ -115,9 +114,8 @@
         box-shadow: 0px 4px 24px -4px rgba(0, 0, 0, 0.25);
         box-sizing: border-box;
         align-items: flex-start;
-        margin-right: 137px;
         border-radius: 15px;
-        max-height: 559px;
+        max-height: 100%;
         max-width: 560px;
         margin-bottom: 0;
         flex-direction: column;
@@ -271,7 +269,7 @@
         background-color: rgba(255, 255, 255, 0);
         border-style: solid;
         border-width: 1px;
-        margin-right: 0;
+        margin-right: 10px;
         border-radius: 5px;
         margin-bottom: 0;
         padding-left: 20px;
@@ -441,6 +439,7 @@
         font-weight: 700;
         line-height: normal;
         font-size: 15px;
+        text-decoration: none;
     }
 
     .log-masuk-button7:hover {
@@ -469,7 +468,7 @@
         box-sizing: border-box;
         align-items: flex-start;
         border-color: transparent;
-        margin-right: 0;
+        margin-left: 10%;
         border-radius: 0px 0px 0px 0px;
         margin-bottom: 0;
         flex-direction: column;

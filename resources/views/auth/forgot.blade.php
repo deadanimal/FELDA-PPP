@@ -26,7 +26,7 @@
                     </div>
   
                     <button class="log-masuk-button6">
-                        {{ __('Daftar Masuk') }}
+                        {{ __('Hantar') }}
                     </button>
                 </div>
             </form>

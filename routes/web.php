@@ -15,8 +15,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 
-Route::get('/forgot',  [pengurusanPenggunaController::class, 'forgotPengguna']);
-Route::post('/forgot',  [pengurusanPenggunaController::class, 'forgotPenggunaClicked']);
+Route::get('/forgot',  [UserController::class, 'forgotPengguna']);
+Route::post('/forgot',  [UserController::class, 'forgotPenggunaClicked']);
 
 //for js wilayah and rancangan
 Route::get('/getRancangan/{id}',  [UserController::class, 'getRancangan']);
