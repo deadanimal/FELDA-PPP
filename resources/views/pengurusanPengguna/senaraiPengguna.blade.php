@@ -19,6 +19,10 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
+          <div class="frame9402-frame9281">
+            <span class="frame9402-text"><span>{{$bilangan}}</span></span>
+            <span class="frame9402-text02"><span>JUMLAH PENGGUNA</span></span>
+          </div>
           <a href="/users/add" class="btn float-end frame9402-frame7445">
             <div class="frame9402-frame72931">
               <span class="frame9402-text08"><span>Daftar</span></span>
@@ -31,7 +35,7 @@
         </div>
         <div class="card-body">
           <div class="row d-flex justify-content-center">
-            <table class="table table-bordered user-datatable">
+            <table class="table table-bordered table-striped user-datatable">
               <thead class="text-white bg-primary">
                 <tr>
                     <th>Bil.</th>
@@ -54,7 +58,50 @@
   </div>
 </div>
 <style>
-
+.frame9402-frame9281 {
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    align-items: center;
+    border-color: transparent;
+    margin-right: 0;
+    border-radius: 0px 0px 0px 0px;
+    flex-direction: column;
+    background-color: #F1F1F1;
+    margin-bottom: 20px;
+  }
+  .frame9402-text {
+    color: #781E2A;
+    width: 383px;
+    height: auto;
+    font-size: 80px;
+    align-self: auto;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 12.976823806762695px;
+    font-stretch: normal;
+    margin-right: 0;
+    margin-bottom: 38px;
+    text-decoration: none;
+    padding-bottom:15px;
+    padding-top:50px;
+  }
+  .frame9402-text02 {
+    color: #781E2A;
+    width: 368px;
+    height: auto;
+    font-size: 25px;
+    align-self: auto;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 12.976823806762695px;
+    font-stretch: normal;
+    margin-right: 0;
+    margin-bottom: 38px;
+    text-decoration: none;
+  }
 .frame9402-frame7445 {
   display: flex;
   padding: 5px 11px;
@@ -179,96 +226,6 @@
               ]
           });
   </script>
-{{-- <div class="frame9402-frame9402">
-  <div class="frame9402-frame9281">
-    <span class="frame9402-text"><span>{{$bilangan}}</span></span>
-    <span class="frame9402-text02"><span>JUMLAH PENGGUNA</span></span>
-    <form action="/pengurusanPengguna/cariPengguna" method="POST" class="frame9402-frame9278">
-      @csrf
-      <div class="frame9402-frame7301">
-          <div class="frame9402-frame7188">
-              <span class="frame9402-text04"><span>ID Pengguna /</span><br><span> Nama Pengguna</span></span>
-              <input type="text" class="frame9402-kotaknama" name="idPengguna" id="idPengguna" onkeyup="changeTheColorOfButton()"/>
-          </div>
-          <div class="frame9402-frame7188 mt-3">
-            <span class="frame9402-text04"><span>Wilayah</span></span>
-            <input type="text" class="frame9402-kotaknama" name="wilayah" id="idPengguna" onkeyup="changeTheColorOfButton()"/>
-        </div>
-        <div class="frame9402-frame7188 mt-3">
-          <span class="frame9402-text04"><span>Rancangan</span></span>
-          <input type="text" class="frame9402-kotaknama" name="rancangan" id="idPengguna" onkeyup="changeTheColorOfButton()"/>
-      </div>  
-      </div>
-      
-      <button type="submit" class="frame9402-b-u-t-t-o-n-c-a-r-i-a-n" id="buttonCari" disabled onclick="changeTheColorOfButtonDaftar()">
-        <div class="frame9402-frame7294">
-          <div class="frame9402-frame7293">
-            <span class="frame9402-text06"><span>Cari</span></span>
-            <div class="frame9402-frame">
-              <div class="frame9402-layer31">
-                <img
-                  src="/SVG/find.svg"
-                  class="frame9402-shape"
-                  />
-              </div>
-            </div>
-          </div>
-        </div>
-      </button>
-    </form>
-  </div>
-    <a href="/pengurusanPengguna/daftarPengguna" class="frame9402-frame7445">
-      <div class="frame9402-frame72931">
-        <span class="frame9402-text08"><span>Daftar</span></span>
-        <img
-            src="/SVG/daftar.svg"
-            class="frame9402-group7527"
-        />
-      </div>
-    </a>
-    <table class="frame9402-table">
-      <tr class="frame9402-frame93961">
-          <th class="frame9402-text10"><span>Bil.</span></th>
-          <th class="frame9402-text12"><span>No. Pengguna</span></th>
-          <th class="frame9402-text14"><span>Nama Pengguna</span></th>
-          <th><span>Wilayah</span></th>
-          <th><span>Rancangan</span></th>
-          <th class="frame9402-text16"><span>Tindakan</span></th>
-      </tr>
-      @php
-        $i = 1;
-      @endphp
-      @foreach ($user as $pengguna)
-        @if ($i == 1 || $i% 2 == 1)
-          <tr class="frame9402-input">
-        @else
-          <tr class="frame9402-input" style="background-color: rgba(162, 50, 93, 0.08);"> 
-        @endif
-          <td class="frame9402-text18" id="bilangan">{{$i}}</td>
-          <td class="frame9402-text19">{{$pengguna->idPengguna}}</td>
-          <td class="frame9402-text20"><a href="/pengurusanPengguna/edit/{{$pengguna->id}}" style="text-decoration: none; color:#494949;">{{$pengguna->nama}}</a></td>
-          <td class="frame9402-text19">{{$pengguna->wilayah_id->nama}}</td>
-          <td class="frame9402-text19">{{$pengguna->rancangan_id->nama}}</td>
-          <td class="frame9402-frame8727" id="tindakan">
-            <a href="/pengurusanPengguna/edit/{{$pengguna->id}}" class="frame9402-rectangle828245 hovertext" data-hover="Edit">
-          
-            </a>
-            <form method="post" action="/pengurusanPengguna/delete">
-              @csrf
-              @method('DELETE')
-              <input type="hidden" name="penggunaId" value="{{$pengguna->id}}"/>
-              <button class="frame9402-rectangle828246 hovertext" data-hover="Delete" type="submit">
-            </form>
-          </td>
-        </tr>
-        @php
-          $i++;
-        @endphp
-      @endforeach
-      
-    </table>
-  </div>
-</div>   --}}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
       //the confirm class that is being used in the delete button

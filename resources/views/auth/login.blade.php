@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 
 <body>
-    <div class="log-masuk-log-masuk">
+    <div class="wrapper">
         <div class="log-masuk-logmasuk1">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
@@ -69,7 +69,7 @@
 </body>
 <style>
     html {
-        background: url("/Image/background.JPG");
+        background: url("/Image/background.jpeg");
         background-repeat: no-repeat;
         background-size: cover;
         font-family: 'Poppins';
@@ -119,7 +119,7 @@
         max-width: 560px;
         margin-bottom: 0;
         flex-direction: column;
-        background: linear-gradient(181.36deg, rgba(225, 225, 225, 0.51) -24.18%, rgba(241, 241, 241, 0) 105.9%);
+        background: linear-gradient(181.36deg, rgba(225, 225, 225, 0.61) -24.18%, rgba(241, 241, 241, 0) 105.9%);
         backdrop-filter: blur(5px);
         border-image-source: linear-gradient(210.57deg, rgba(255, 255, 255, 0.47) 6.66%, rgba(255, 255, 255, 0) 93.17%);
 
@@ -251,7 +251,6 @@
         border-color: rgba(255, 255, 255, 1);
         background-color: rgba(255, 255, 255, 0);
         border-style: solid;
-        border-width: 1px;
         margin-right: 0;
         border-radius: 5px;
         margin-bottom: 0;
@@ -268,7 +267,6 @@
         border-color: rgba(255, 255, 255, 1);
         background-color: rgba(255, 255, 255, 0);
         border-style: solid;
-        border-width: 1px;
         margin-right: 10px;
         border-radius: 5px;
         margin-bottom: 0;
@@ -375,7 +373,7 @@
         width: 366px;
         height: 49px;
         display: flex;
-        opacity: 0.50;
+        opacity: 0.70;
         padding: 11px 109px;
         position: relative;
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -420,7 +418,7 @@
         width: 366px;
         height: 49px;
         display: flex;
-        opacity: 0.50;
+        opacity: 0.70;
         padding: 11px 128px;
         position: relative;
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);

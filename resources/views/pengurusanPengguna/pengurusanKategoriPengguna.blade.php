@@ -46,7 +46,7 @@
 
         <div class="card-body">
           <div class="row d-flex justify-content-center">
-            <table class="table table-bordered category-datatable">
+            <table class="table table-bordered table-striped category-datatable">
               <thead class="text-white bg-primary">
                 <tr>
                   <th>Bil.</th>

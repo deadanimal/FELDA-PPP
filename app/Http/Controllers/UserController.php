@@ -131,7 +131,10 @@ class UserController extends Controller
                 ->rawColumns(['tindakan', 'rancangan', 'wilayah'])                          
                 ->make(true);
             }
-        return view('pengurusanPengguna.senaraiPengguna', compact('user'));
+
+        $bilangan = count($user);
+
+        return view('pengurusanPengguna.senaraiPengguna', compact('user', 'bilangan'));
     }
 
     public function user_delete(Request $request)

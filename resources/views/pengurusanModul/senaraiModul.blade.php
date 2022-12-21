@@ -16,8 +16,8 @@
     </div>
     <div class="card-body" style="width: auto;">
       <div class="row d-flex justify-content-center">
-        <table class="table table-bordered modul-datatable">
-          <thead class="text-white bg-primary">
+        <table class="table table-bordered w-100 modul-datatable">
+          <thead class="text-white bg-primary w-100">
             <tr>
                 <th>Bil.</th>
                 <th scope="col">Nama Modul</th>
