@@ -488,7 +488,7 @@
         line-height: 100px;
         font-stretch: normal;
         margin-right: 0;
-        margin-bottom: 25%;
+        margin-bottom: 15%;
         text-decoration: none;
     }
 
