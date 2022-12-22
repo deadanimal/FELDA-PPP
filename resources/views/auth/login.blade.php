@@ -5,82 +5,88 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,600;0,700;1,500;1,900&display=swap"
     rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+<link href="css/modern.css" rel="stylesheet">
 
-<body>
-    <div class="container-fluid">
-        <div class="log-masuk-logmasuk1">
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-                <div class="log-masuk-logbox">
-                    <div class="log-masuk-frame9398">
-                        <span class="log-masuk-text">Daftar Masuk</span>
-                        <span class="log-masuk-text02">
-                            Sila masukkan alamat ID Pengguna dan kata laluan
-                        </span>
-                    </div>
-                    <div class="log-masuk-frame9">
-                        <div class="log-masuk-frame12">
-                            <span class="log-masuk-text04">E-mel</span>
-                            <label>
-                                <input class="log-masuk-rectangle46" type="email" name="email"
-                                    placeholder="eg:aliabu@gmail.com" />
-                            </label>
+<body style="background-color: rgba(0, 0, 0, 0)" >
+    <main class="main h-100 w-100 d-flex align-items-center justify-content-center">
+		<div class="container h-100 d-flex align-items-center justify-content-center">
+			<div class="row h-100 d-flex align-items-center justify-content-center">
+					<div class="d-table-cell align-middle">
+                        <div class="log-masuk-logmasuk1">
+                            <form method="POST" action="{{ route('login') }}">
+                                @csrf
+                                <div class="log-masuk-logbox">
+                                    <div class="log-masuk-frame9398">
+                                        <span class="log-masuk-text">Daftar Masuk</span>
+                                        <span class="log-masuk-text02">
+                                            Sila masukkan alamat ID Pengguna dan kata laluan
+                                        </span>
+                                    </div>
+                                    <div class="log-masuk-frame9">
+                                        <div class="log-masuk-frame12">
+                                            <span class="log-masuk-text04">E-mel</span>
+                                            <label>
+                                                <input class="log-masuk-rectangle46" type="email" name="email"
+                                                    placeholder="eg:aliabu@gmail.com" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="log-masuk-frame4">
+                                        <div class="log-masuk-frame121">
+                                            <span class="log-masuk-text06">Kata Laluan</span>
+                                            <label style="flex-direction:col; display:flex">
+                                                <input class="log-masuk-rectangle461" type="password" name="password" id="passcode"
+                                                    placeholder="**************" />
+                                                <i class="far fa-eye" onclick="showPassFunction()" style="cursor: pointer;color: #fff;align-items: center;display: flex;padding-left: 2%;"
+                                                    id="iconPass"></i>
+                                            </label>
+                                        </div>
+                                        <x-input-error :messages="$errors->get('idPengguna')" class="mt-2" />
+                                    </div>
+                                    <div class="log-masuk-frame5">
+                                        <input id="remember_me" type="checkbox" class="log-masuk-rectangle828081" name="remember">
+                                        <span class="log-masuk-text08">{{ __('Ingati Saya') }}</span>
+                                    </div>
+                                    <button class="log-masuk-button6">
+                                        {{ __('Daftar Masuk') }}
+                                    </button>
+                                    <a class="log-masuk-button7" href="/forgot">
+                                        Set Semula
+                                    </a>
+                    
+                                </div>
+                            </form>
+                            <div class="log-masuk-logwelcome">
+                                <div class="log-masuk-text14">
+                                    Selamat
+                                    <br />
+                                    Datang ke
+                                </div>
+                                <span class="log-masuk-text19">
+                                    Sistem Pengurusan Maklumat
+                                    <br />
+                                    Program Pembangunan Peneroka (IMS PPP)
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <div class="log-masuk-frame4">
-                        <div class="log-masuk-frame121">
-                            <span class="log-masuk-text06">Kata Laluan</span>
-                            <label style="display:flex;">
-                                <input class="log-masuk-rectangle461" type="password" name="password" id="passcode"
-                                    placeholder="**************" />
-                                <i class="far fa-eye" onclick="showPassFunction()" style="cursor: pointer;color: #fff; text-align:center; align-items: center;display: flex;"
-                                    id="iconPass"></i>
-                            </label>
-                        </div>
-                        <x-input-error :messages="$errors->get('idPengguna')" class="mt-2" />
-                    </div>
-                    <div class="log-masuk-frame5">
-                        <input id="remember_me" type="checkbox" class="log-masuk-rectangle828081" name="remember">
-                        <span class="log-masuk-text08">{{ __('Ingati Saya') }}</span>
-                    </div>
-                    <button class="log-masuk-button6">
-                        {{ __('Daftar Masuk') }}
-                    </button>
-                    <a class="log-masuk-button7" href="/forgot">
-                        Set Semula
-                    </a>
-    
                 </div>
-            </form>
-            <div class="log-masuk-logwelcome">
-                <div class="log-masuk-text14">
-                    Selamat
-                    <br />
-                    Datang ke
-                </div>
-                <span class="log-masuk-text19">
-                    Sistem Pengurusan Maklumat
-                    <br />
-                    Program Pembangunan Peneroka (IMS PPP)
-                </span>
             </div>
         </div>
-    </div>
+    </main>
 </body>
 <style>
+    @font-face{
+        font-family:'Eina01-SemiBold';
+        src: url('/fonts/Eina01-SemiBold.ttf');
+    }
     html {
         background: url("/Image/background.jpeg");
         background-repeat: no-repeat;
         background-size: cover;
-        font-family: 'Poppins';
+        font-family: 'Poppins', sans-serif;
         min-height: 100%;
     }
-
-    body {
-        margin: 10%;
-        align-items: center;
-    }
-
     .log-masuk-log-masuk {
         display: flex;
         position: relative;
@@ -115,7 +121,7 @@
         box-sizing: border-box;
         align-items: flex-start;
         border-radius: 15px;
-        max-height: 100%;
+        max-height: 559px;
         max-width: 560px;
         margin-bottom: 0;
         flex-direction: column;
@@ -145,13 +151,14 @@
         font-size: 35px;
         align-self: auto;
         text-align: left;
-        font-family: 'Poppins';
+        font-family: 'Poppins', sans-serif;
         font-weight: 600;
         line-height: 27px;
         font-stretch: normal;
         margin-right: 0;
         margin-bottom: 10px;
         text-decoration: none;
+        text-shadow: -1px 0px 0px black, 1px 0px 0px black, 0px -1px 0px black, 0px 1px 0px black;
     }
 
     .log-masuk-text02 {
@@ -168,6 +175,7 @@
         margin-right: 0;
         margin-bottom: 0;
         text-decoration: none;
+        text-shadow: -1px 0px 0px black, 1px 0px 0px black, 0px -1px 0px black, 0px 1px 0px black;
     }
 
     .log-masuk-frame9 {
@@ -224,7 +232,7 @@
         font-size: 15px;
         align-self: auto;
         text-align: left;
-        font-family: 'Poppins';
+        font-family: 'Poppins', sans-serif;
         font-weight: 600;
         line-height: normal;
         font-stretch: normal;
@@ -236,7 +244,7 @@
     ::placeholder {
         color: #FFFFFF;
         font-size: 16px;
-        font-family: 'Poppins';
+        font-family: 'Poppins', sans-serif;
         font-style: italic;
         font-weight: 500;
         opacity: 0.5;
@@ -267,7 +275,7 @@
         border-color: rgba(255, 255, 255, 1);
         background-color: rgba(255, 255, 255, 0);
         border-style: solid;
-        margin-right: 10px;
+        margin-right: 0;
         border-radius: 5px;
         margin-bottom: 0;
         padding-left: 20px;
@@ -320,7 +328,7 @@
         font-size: 15px;
         align-self: auto;
         text-align: left;
-        font-family: 'Poppins';
+        font-family: 'Poppins', sans-serif;
         font-weight: 600;
         line-height: normal;
         font-stretch: normal;
@@ -360,7 +368,7 @@
         align-self: auto;
         font-style: Medium;
         text-align: left;
-        font-family: 'Poppins';
+        font-family: 'Poppins', sans-serif;
         font-weight: 500;
         line-height: normal;
         font-stretch: normal;
@@ -381,6 +389,7 @@
         align-items: center;
         flex-shrink: 0;
         border-color: transparent;
+        font-family: 'Eina01-SemiBold', sans-serif;
         margin-right: 0;
         border-radius: 10px;
         margin-bottom: 24px;
@@ -405,7 +414,7 @@
         align-self: auto;
         font-style: Bold;
         text-align: center;
-        font-family: 'Poppins';
+        font-family: 'Poppins', sans-serif;
         font-weight: 700;
         line-height: normal;
         font-stretch: normal;
@@ -438,10 +447,13 @@
         line-height: normal;
         font-size: 15px;
         text-decoration: none;
+        font-family: 'Eina01-SemiBold', sans-serif;
     }
 
     .log-masuk-button7:hover {
         opacity: 1;
+        color: #781E2A;
+        text-decoration: none;
     }
 
     .log-masuk-text12 {
@@ -450,7 +462,7 @@
         font-size: 15px;
         align-self: auto;
         text-align: center;
-        font-family: 'Poppins';
+        font-family: 'Poppins', sans-serif;
         font-weight: 600px;
         line-height: normal;
         font-stretch: normal;
@@ -466,7 +478,7 @@
         box-sizing: border-box;
         align-items: flex-start;
         border-color: transparent;
-        margin-left: 10%;
+        margin-left: 5%;
         border-radius: 0px 0px 0px 0px;
         margin-bottom: 0;
         flex-direction: column;
@@ -483,12 +495,12 @@
         align-self: auto;
         font-style: Bold;
         text-align: left;
-        font-family: 'Poppins';
+        font-family: 'Poppins', sans-serif;
         font-weight: 900;
         line-height: 100px;
         font-stretch: normal;
         margin-right: 0;
-        margin-bottom: 15%;
+        margin-bottom: 96px;
         text-decoration: none;
     }
 
@@ -498,7 +510,7 @@
         font-size: 40px;
         align-self: auto;
         text-align: left;
-        font-family: 'Poppins';
+        font-family: 'Poppins', sans-serif;
         font-weight: 600;
         line-height: 60px;
         font-stretch: normal;
