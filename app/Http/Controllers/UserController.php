@@ -144,8 +144,8 @@ class UserController extends Controller
                                 <p> ID Pengguna: '.$user->idPengguna.'<p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                                <a href="href="'.$url2.'" class="btn btn-primary">Ya</a>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>
+                                <a href="href="'.$url2.'" class="btn btn-danger">Ya</a>
                             </div>
                             </div>
                         </div>
@@ -244,8 +244,8 @@ class UserController extends Controller
                                 <p>Anda Pasti Mahu Padam Ketegori Pengguna '.$kategoriPengguna->nama.'?<p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                                <a href="'.$url1.'" class="btn btn-primary">Ya</a>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>
+                                <a href="'.$url1.'" class="btn btn-danger">Ya</a>
                             </div>
                             </div>
                         </div>

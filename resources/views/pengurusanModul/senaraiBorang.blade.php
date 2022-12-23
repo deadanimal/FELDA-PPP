@@ -112,14 +112,14 @@
                           <p>Anda Pasti Mahu Padam Borang {{$borang->nama}}?<p>
                       </div>
                       <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>      
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
                           <form method="post" action="/moduls/borang/delete">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" value="{{$proses->id}}" name="prosesId">
                             <input type="hidden" value="{{$modul->id}}" name="modulId">
                             <input type="hidden" name="borangId" value="{{$borang->id}}"/>
-                            <button class="btn btn-primary">Ya</button>
+                            <button class="btn btn-danger">Ya</button>
                           </form>
                       </div>
                       </div>
