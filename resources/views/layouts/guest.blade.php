@@ -20,9 +20,7 @@
 <body>
     @include('sweetalert::alert')
     <script src="/js/app.js"></script>
-	<link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<div class="wrapper" >
+    <div class="wrapper" >
         @include('layouts.navigation')
         <div class="main">
 			<nav class="navbar navbar-expand navbar-theme">

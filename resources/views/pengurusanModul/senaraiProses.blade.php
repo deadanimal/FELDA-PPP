@@ -1,6 +1,9 @@
 @extends('layouts.guest')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 @section('innercontent')
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <div class="container-fluid">
 
   <div class="header">
@@ -60,11 +63,11 @@
                 <td class="frame9402-text32">
                   <select name="status" id="status{{$i}}" class="frame9403-kotaknama3">
                   @if ($proses->status == 1)
-                    <option value="1" selected>Active</option>
-                    <option value="2">Disabled</option>
+                    <option value="1" selected>Aktif</option>
+                    <option value="2">Tidak Aktif</option>
                   @else
-                    <option value="1">Active</option>
-                    <option value="2" selected>Disabled</option>
+                    <option value="1">Aktif</option>
+                    <option value="2" selected>Tidak Aktif</option>
                   @endif
                   </select></td>
                 <td class="frame9402-frame8727" id="tindakan">
@@ -82,20 +85,40 @@
                     <input type="hidden" name="prosesId" id="prosesId" value="{{$proses->id}}">
                     <input type="hidden" name="modulID" id="modulID" value="{{$modul->id}}">
                     <button class="frame9402-rectangle828245" type="submit" onclick="save({{$i}})" style="margin-left:10px;padding: 0px;background-color: transparent;border-color: transparent;" title="Simpan">                
-                      <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 530 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;margin-top: 5px;" viewBox="0 0 530 512" width="31px"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
                     </button>
                   </form>
                   {{-- <a href="/pengurusanModul/kemaskiniProses/{{$proses->id}}/{{}}" class="frame9402-rectangle8282452" id="kemaskini">
                     <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 548 612"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
                   </a> --}}
-                  
-                  <form method="post" action="/moduls/proses/delete">
-                    @csrf
-                    @method('DELETE')
-                    <input type="hidden" value="{{$modul->id}}" name="modulId">
-                    <input type="hidden" name="prosesId" value="{{$proses->id}}"/>
-                    <button class="frame9402-rectangle828246" style="margin-left: 5px" title="Padam"><img src="/SVG/bin.svg"/></button>
-                  </form>
+                  <button type="button" class="frame9402-rectangle828246" style="margin-left: 5px" data-toggle="modal" data-target="#exampleModal{{$i}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal{{$i}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Padam Proses {{$proses->nama}}</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <p >Anda Pasti Mahu Padam Proses {{$proses->nama}}?<p>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>
+                          <form method="post" action="/moduls/proses/delete">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" value="{{$modul->id}}" name="modulId">
+                            <input type="hidden" name="prosesId" value="{{$proses->id}}"/>
+                            <button class="btn btn-danger">Ya</button>
+                          </form>
+                      </div>
+                      </div>
+                  </div>
+                  </div>
                 </td>
               </tr>
               @php
@@ -463,34 +486,5 @@ function closeForm() {
 
 </script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>
-      //the confirm class that is being used in the delete button
-      $('.frame9402-rectangle828246').click(function(event) {
-
-          //This will choose the closest form to the button
-          var form =  $(this).closest("form");
-
-          //don't let the form submit yet
-          event.preventDefault();
-
-          //configure sweetalert alert as you wish
-          Swal.fire({
-              title: 'Padam Proses',
-              text: "Anda Pasti Mahu Padam Proses?",
-              cancelButtonText: "Tidak",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Ya'
-          }).then((result) => {
-              
-              //in case of deletion confirm then make the form submit
-              if (result.isConfirmed) {
-                  form.submit();
-              }
-          })
-      });
-</script>
 
 @endsection

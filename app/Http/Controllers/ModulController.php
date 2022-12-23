@@ -25,16 +25,19 @@ class ModulController extends Controller
         try {
             $modul = new Modul;
             $modul->nama = $request->namaModul;
+            $modul->status = $request->status;
             $modul->diciptaOleh = $request->userid;
             $modul->dikemaskiniOleh = Auth::user()->id;
             $modul->save();
-            Alert::success('Cipta Modul berjaya.', 'Cipta modul telah berjaya.');
             // $modul= Modul::where('nama', $modul->nama)->get();
             // return view("pengurusanModul.ciptaProses", compact('modul'));
+            Alert::success('Cipta Modul berjaya.', 'Modul telah berjaya dicipta.');
+
             return redirect('/moduls');
 
         } catch (\Illuminate\Database\QueryException $e) {
-            Alert::error('Ciptaan modul tidak berjaya.', 'Modul tidak dicipta');
+            Alert::error('Ciptaan modul tidak berjaya', 'Modul tidak berjaya dicipta.');
+
             return back();
             //var_dump($e->errorInfo);
         }
@@ -75,8 +78,29 @@ class ModulController extends Controller
                         </a>
                         <a href="'.$url3.'" class="frame9402-rectangle828245" style="margin-left: 15px;" title="Salinan">
                         <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A; width: 32px; height: 30px;" viewBox="0 0 556 502"><path d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z"/></svg>    
-                        </a> 
-                        <a href="'.$url4.'" class="btn btn-xs frame9402-rectangle828246" title="Padam" id="deleting"></a>';
+                        </a>
+                        <button type="button" class="btn btn-primary frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModal'.$modul->id.'" title="Padam"></button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal'.$modul->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Padam Modul '.$modul->nama.'</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Anda Pasti Mahu Padam Modul '.$modul->nama.'?<p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                <a href="'.$url4.'" class="btn btn-primary">Ya</a>
+                            </div>
+                            </div>
+                        </div>
+                        </div>';
             })                  
             ->rawColumns(['tindakan','dikemaskiniOleh','diciptaOleh'])                          
             ->make(true);

@@ -1,6 +1,9 @@
 @extends('layouts.guest')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 @section('innercontent')
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <div class="container-fluid">
   <div class="header">
     <h1 class="header-title">
@@ -183,35 +186,38 @@
               ]
           });
   </script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>
-      //the confirm class that is being used in the delete button
-      $('#deleting').click(function(event) {
-
-          //This will choose the closest form to the button
-          var form =  $(this).closest("form");
-
-          //don't let the form submit yet
-          event.preventDefault();
-
-          //configure sweetalert alert as you wish
-          Swal.fire({
-              title: 'Padam Proses',
-              text: "Anda Pasti Mahu Padam Proses?",
-              cancelButtonText: "Tidak",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Ya'
-          }).then((result) => {
-              
-              //in case of deletion confirm then make the form submit
-              if (result.isConfirmed) {
-                  form.submit();
-              }
-          })
-      });
-</script>
   
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+{{-- <script type="text/javascript" src='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.js'></script>
+<link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.css' />
+<link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.css' />
+<script>
+  function confirmation(ev) {
+    ev.preventDefault();
+    var urlToRedirect = ev.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i tag and not a tag causing the href to be empty
+    console.log(urlToRedirect); // verify if this is the right URL
+    swal({
+          title: 'Anda Pasti Mahu Padam Modul?',
+          showCancelButton: true,
+          showConfirmButton: true,
+          confirmButtonText: 'Ya',
+          cancelButtonText: 'Tidak',
+          confirmButtonClass: 'btn btn-success',
+          cancelButtonClass: 'btn btn-danger',
+          type: 'warning',
+          buttonsStyling: true
+      }).then(function (yes) {
+          // Called if you click Yes.
+          if (yes) {
+            window.location.href = urlToRedirect;
+          }
+      },
+      function (no) {
+          // Called if you click No.
+          if (no == 'cancel') {
+              swal('Tidak Di Padam', '', 'error');
+          }
+      });
+    }
+</script> --}}
 @endsection

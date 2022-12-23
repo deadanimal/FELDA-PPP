@@ -722,7 +722,11 @@
                   Nama: {{$audit->new_values['nama'] }}<br> 
                   ID Pengguna: {{$audit->new_values['idPengguna']}}<br>
             @elseif($audit->auditable_type=="App\Models\Modul")
-                Nama Modul: {{$audit->new_values['nama'] }}<br> 
+                Nama Modul: {{$audit->new_values['nama'] }}<br>
+            @elseif($audit->auditable_type=="App\Models\Proses")
+                Nama Proses: {{$audit->new_values['nama'] }}<br> 
+            @elseif($audit->auditable_type=="App\Models\Borang")
+                Nama Borang: {{$audit->new_values['nama'] }}<br>  
             @endif
             </td> 
           @elseif($audit->event == "updated")
@@ -733,7 +737,21 @@
                 Nama: {{$audit->auditable->nama??""}}<br> 
                 ID Pengguna: {{$audit->auditable->idPengguna??""}}<br>
               @elseif($audit->auditable_type=="App\Models\Modul")
-                Nama Modul: {{$audit->new_values['nama'] }}<br> 
+                Nama Modul: {{$audit->new_values['nama'] }}<br>
+              @elseif($audit->auditable_type=="App\Models\Proses")
+                @if (array_key_exists('nama', $audit->new_values))
+                  Nama Proses: {{$audit->new_values['nama']}}<br> 
+                @else
+                  Proses Status:
+                  @if($audit->new_values['status'] == "1")
+                    Aktif
+                  @else
+                    Tidak Aktif
+                  @endif
+                  <br> 
+                @endif
+              @elseif($audit->auditable_type=="App\Models\Borang")
+                Nama Borang: {{$audit->new_values['nama'] }}<br> 
               @endif
               
             </td>
@@ -742,10 +760,14 @@
             </td>
             <td class="frame9404-text29">
             @if($audit->auditable_type== "App\Models\User")
-                  Nama: {{$audit->old_values['nama'] }}<br> 
-                  ID Pengguna: {{$audit->old_values['idPengguna']}}<br>
+                Nama: {{$audit->old_values['nama'] }}<br> 
+                ID Pengguna: {{$audit->old_values['idPengguna']}}<br>
             @elseif($audit->auditable_type=="App\Models\Modul")
-                Nama Modul: {{$audit->old_values['nama'] }}<br> 
+                Nama Modul: {{$audit->old_values['nama'] }}<br>
+            @elseif($audit->auditable_type=="App\Models\Proses")
+                Nama Proses: {{$audit->old_values['nama'] }}<br> 
+            @elseif($audit->auditable_type=="App\Models\Borang")
+                Nama Borang: {{$audit->old_values['nama'] }}<br> 
             @endif
             </td>
           @endif

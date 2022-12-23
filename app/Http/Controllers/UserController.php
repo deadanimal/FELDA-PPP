@@ -126,7 +126,30 @@ class UserController extends Controller
                     $url = '/users/'.$user->id;
                     $url2 = '/users/'.$user->id.'/delete';
                     return '<a href="'.$url.'" class="btn btn-xs btn-primary frame9402-rectangle828245" title="Kemaskini"></a> 
-                    <a href="'.$url2.'" class="btn btn-xs frame9402-rectangle828246" title="Padam" ></a>';
+                    <button type="button" class="btn btn-primary frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModal'.$user->id.'" title="Padam"></button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal'.$user->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Padam Pengguna '.$user->nama.'</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Anda Pasti Mahu Padam Pengguna? <p>
+                                <p> Nama: '.$user->nama.'<p>
+                                <p> ID Pengguna: '.$user->idPengguna.'<p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                <a href="href="'.$url2.'" class="btn btn-primary">Ya</a>
+                            </div>
+                            </div>
+                        </div>
+                        </div>';
                 })                  
                 ->rawColumns(['tindakan', 'rancangan', 'wilayah'])                          
                 ->make(true);
@@ -143,7 +166,9 @@ class UserController extends Controller
         $user = User::find($id);
         $user->status = 0; 
         $user->save();
-        return redirect('/users')->with('Padam pengguna berjaya.', 'Padam pengguna telah berjaya.');;
+        Alert::success('Padam pengguna berjaya.', 'Padam pengguna telah berjaya.');   
+
+        return redirect('/users');
     
     }
 
@@ -187,7 +212,7 @@ class UserController extends Controller
         $user->save();
 
         Mail::to($user->email)->send(new ResetPassword('Saya<3FeldaPPP'));
-        Alert::success('Kemaskini pengguna berjaya.', 'Kemaskini pengguna telah berjaya.');   
+        Alert::success('Lupa Kata Laluan', 'Sila Semak E-mel Anda');   
         return back();
     }
 
@@ -203,7 +228,28 @@ class UserController extends Controller
                     $url = '/user-categories/'.$kategoriPengguna->id;
                     $url1 = '/user-categories/'.$kategoriPengguna->id.'/delete';
                     return '<a href="'.$url.'" class="btn btn-xs btn-primary frame9402-rectangle828245" title="Kemaskini"></a>
-                    <a href="'.$url1.'" class="btn btn-xs frame9402-rectangle828246" title="Padam" ></a>';
+                    <button type="button" class="btn btn-primary frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModal'.$kategoriPengguna->id.'" title="Padam"></button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal'.$kategoriPengguna->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Padam Ketegori Pengguna '.$kategoriPengguna->nama.'</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Anda Pasti Mahu Padam Ketegori Pengguna '.$kategoriPengguna->nama.'?<p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                                <a href="'.$url1.'" class="btn btn-primary">Ya</a>
+                            </div>
+                            </div>
+                        </div>
+                        </div>';
                 })                  
                 ->rawColumns(['tindakan'])                          
                 ->make(true);
@@ -266,6 +312,7 @@ class UserController extends Controller
             })                          
             ->make(true);
         }
+
         return view('auditTrail.audit', compact('audits'));
     }
 

@@ -24,8 +24,8 @@
                 </div>
                 <div class="frame9402-frame7188">
                     <span class="frame9402-text04"><span>Status Modul: </span></span>
-                    <select name="staus" class="frame9403-kotaknama3">
-                        <option value="pending" selected>Pending</option>
+                    <select name="status" class="frame9403-kotaknama3">
+                        <option value="pending">Pending</option>
                         <option value="active">Active</option>
                         <option value="go-live">Go-live</option>
                     </select>
