@@ -43,14 +43,14 @@
           </div>
         </div>
 
-        <div class="card-body" >
+        <div class="card-body">
           <div class="row d-flex justify-content-center">
-            <table class="table table-bordered table-striped category-datatable">
-              <thead class="text-white bg-primary">
+            <table class="table table-bordered table-striped w-100 category-datatable">
+              <thead class="text-white bg-primary w-100">
                 <tr>
                   <th>Bil.</th>
                   <th scope="col">Nama Kategori Pengguna</th>
-                  <th scope="col">Tindakan</th>
+                  <th scope="col" style="width: 100%">Tindakan</th>
                 </tr>
               </thead>
               <tbody>
@@ -249,7 +249,7 @@
                   {
                       data: 'tindakan',
                       name: 'tindakan',
-                      className: "d-flex justify-content-center"
+                      className: "text-center col-sm-auto w-25"
                   },                    
 
               ]
