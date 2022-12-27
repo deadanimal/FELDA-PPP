@@ -43,7 +43,7 @@
           </div>
         </div>
 
-        <div class="card-body">
+        <div class="card-body" >
           <div class="row d-flex justify-content-center">
             <table class="table table-bordered table-striped category-datatable">
               <thead class="text-white bg-primary">

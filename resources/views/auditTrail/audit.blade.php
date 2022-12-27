@@ -13,7 +13,7 @@
   <div class="card" style="width: auto;">
     <div class="card-body" style="width: auto;">
       <div class="row d-flex justify-content-center">
-        <table class="table table-bordered w-100 audit-datatable">
+        <table class="table table-bordered table-striped  w-100 audit-datatable">
           <thead class="text-white bg-primary w-100">
             <tr>
               <th>Bil.</th>
