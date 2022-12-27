@@ -145,7 +145,7 @@ class UserController extends Controller
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>
-                                <a href="href="'.$url2.'" class="btn btn-danger">Ya</a>
+                                <a href="'.$url2.'" class="btn btn-danger">Ya</a>
                             </div>
                             </div>
                         </div>
@@ -299,17 +299,117 @@ class UserController extends Controller
     public function user_audit(Request $request)
     {
         $audits = Audit::orderBy("updated_at", "DESC")->get();
+        foreach ($audits as $key => $a) {
+            if ($a->event == "updated") {
+                $a['event'] = "Kemaskini";
+
+                if($a->auditable_type== "App\Models\User"){
+                    $var = preg_split("#/#", $a->url); 
+                    if(array_key_exists('status', $a->new_values)){
+                        $a['event'] = "Padam";
+                        $user = User::find($var[4]);
+                        $a->setAttribute('value', "Nama: ".$user->nama."<br>ID Pengguna:".$user->idPengguna);
+                    }
+                    elseif($var[3]=="forgot"){
+                        $a->setAttribute('value', "Lupa Kata Laluan");
+
+                    }
+                    elseif($var[3]=="logout"){
+                        $a->setAttribute('value', "Log Keluar");
+
+                    }
+                    elseif($var[3]=="login"){
+                        $a->setAttribute('value', "Log Masuk");
+
+                    }
+                }
+                elseif ($a->auditable_type== "App\Models\Modul") {
+                    $a->setAttribute('value', $a->new_values);
+                }
+                elseif ($a->auditable_type== "App\Models\Proses") {
+                    if (array_key_exists('nama', $a->new_values)){
+                        $a->setAttribute('value', "Nama Proses: ".$a->new_values['nama']);
+                    }else{
+                        if($a->new_values['status'] == "1"){
+                            $a->setAttribute('value', "Proses Status: Aktif");
+                        }else{
+                            $a->setAttribute('value', "Proses Status: Tidak Aktif");
+                        }
+                    }
+
+                }
+                elseif ($a->auditable_type== "App\Models\Borang") {
+                    if (array_key_exists('nama', $a->new_values)){
+                        $a->setAttribute('value', "Nama Borang: ".$a->new_values['Nama']);
+                    }else{
+                        if($a->new_values['status'] == "1"){
+                            $a->setAttribute('value', "Proses Status: Aktif");
+                        }else{
+                            $a->setAttribute('value', "Proses Status: Tidak Aktif");
+                        }
+                    }
+                }
+                elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
+                    $a->setAttribute('value', "Kategori Pengguna: ".$a->new_values['nama']);
+                }
+            }
+            elseif($a->event == "created"){
+                $a['event'] = "Cipta";
+                if($a->auditable_type== "App\Models\User"){
+                    $a->setAttribute('value', "Nama: ".$a->new_values['nama']."<br>ID Pengguna:".$a->new_values['idPengguna']);
+                }
+                elseif ($a->auditable_type== "App\Models\Modul") {
+                    $a->setAttribute('value', "Nama Modul: ".$a->new_values['nama']);
+                }
+                elseif ($a->auditable_type== "App\Models\Proses") {
+                    $a->setAttribute('value', "Nama Proses: ".$a->new_values['nama']);
+                }
+                elseif ($a->auditable_type== "App\Models\Borang") {
+                    $a->setAttribute('value', "Nama Borang: ".$a->new_values['nama']);
+                }
+                elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
+                    $a->setAttribute('value', "Nama Kategori Pengguna: ".$a->new_values['nama']);
+                }
+            }
+            elseif($a->event == "deleted"){
+                $a['event'] = "Padam";
+                if ($a->auditable_type== "App\Models\Modul") {
+                    $a->setAttribute('value', 'Nama Modul: '.$a->old_values['nama']);
+                }
+                elseif ($a->auditable_type== "App\Models\Proses") {
+                    $a->setAttribute('value', 'Nama Proses: '.$a->old_values['nama']);
+                }
+                elseif ($a->auditable_type== "App\Models\Borang") {
+                    $a->setAttribute('value', 'Nama Borang: '.$a->old_values['nama']);
+                }
+                elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
+                    $a->setAttribute('value', "Nama Kategori Pengguna: ".$a->old_values['nama']);
+                }
+            }
+        }
         if($request->ajax()) {
             return DataTables::collection($audits)
+            ->editColumn('created_at', function (Audit $audits) {
+                return $audits->created_at; // no formatting, just returned $user->created_at; 
+            })
             ->addIndexColumn()
-            ->addColumn('user', function (Audit $audits) {
+            ->addColumn('userNama', function (Audit $audits) {
                 if($audits->user) {
-                    $html_ = $user->wilayah_id->nama;
+                    $html_ = $audits->user->nama;
                 } else {
                     $html_ = '-';
                 }
                 return $html_;
-            })                          
+            })  
+            ->addColumn('userid', function (Audit $audits) {
+                if($audits->user) {
+                    $html_ = $audits->user->idPengguna;
+                } else {
+                    $html_ = '-';
+                }
+                return $html_;
+            }) 
+            ->rawColumns(['userNama', 'userid', 'value'])                                                 
             ->make(true);
         }
 
