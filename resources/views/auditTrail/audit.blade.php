@@ -13,20 +13,20 @@
   <div class="card" style="width: auto;">
     <div class="card-body" style="width: auto;">
       <div class="row d-flex justify-content-center">
-        <form action="/auditDates" method="GET" class="row input-daterange" style="margin-bottom: 10px;" enctype="multipart/form-data">
+        <form action="/auditDates" method="GET" class="row input-daterange" style="margin-bottom: 10px;">
           @csrf
           <div class="col-md-4">
-              <input type="date" name="from_date" id="from_date" class="form-control" placeholder="Dari Tarikh" value="{{$from_date ?? ""}}"/>
+            <input type="date" name="from_date" id="from_date" class="form-control" placeholder="Dari Tarikh" value="{{$from_date ?? ""}}"/>
           </div>
           <div class="col-md-4">
-              <input type="date" name="to_date" id="to_date" class="form-control" placeholder="Hingga Tarikh" value="{{$to_date ?? ""}}"/>
+            <input type="date" name="to_date" id="to_date" class="form-control" placeholder="Hingga Tarikh" value="{{$to_date ?? ""}}"/>
           </div>
           <div class="col-md-4">
-              <button type="submit" name="filter" id="filter" class="btn btn-primary">Filter</button>
-              <a name="refresh" class="btn btn-default" href="/audit">Refresh</a>
+            <button type="submit" name="filter" id="filter" class="btn btn-primary">Filter</button>
+            <a name="refresh" class="btn btn-default" href="/audit">Refresh</a>
           </div>
         </form>
-        <table class="table table-bordered table-striped  w-100 audit-datatable">
+        <table class="table table-bordered table-striped  w-100 audit-datatable" id="example">
           <thead class="text-white bg-primary w-100">
             <tr>
               <th>Bil.</th>
@@ -101,5 +101,5 @@
 
       ]
   });
-  </script>
+  </script>>
 @endsection

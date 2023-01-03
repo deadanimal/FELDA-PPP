@@ -427,7 +427,7 @@ class UserController extends Controller
 
         return view('auditTrail.audit');
     }
-
+ 
     public function user_auditDate(Request $request)
     {
         $from_date = $request->from_date;
