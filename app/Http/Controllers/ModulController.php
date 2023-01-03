@@ -147,6 +147,7 @@ class ModulController extends Controller
         $idModul = (int)$request->route('id');
         $moduls = Modul::find($idModul);
         $moduls->nama = $request->namaModul;
+        $moduls->status = $request->status;
         $moduls->dikemaskiniOleh = Auth::user()->id;
         $moduls->save();
         Alert::success('Kemaskini Modul berjaya.', 'Kemaskini modul telah berjaya.');

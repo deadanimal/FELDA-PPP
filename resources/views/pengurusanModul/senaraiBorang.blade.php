@@ -67,11 +67,11 @@
                 <td class="frame9402-text32">
                   <select name="status" id="status{{$i}}" class="frame9403-kotaknama3">
                   @if ($borang->status == 1)
-                    <option value="1" selected>Active</option>
-                    <option value="2">Disable</option>
+                    <option value="1" selected>Aktif</option>
+                    <option value="2">Tidak Aktif</option>
                   @else
-                    <option value="1">Active</option>
-                    <option value="2" selected>Disable</option>
+                    <option value="1">Aktif</option>
+                    <option value="2" selected>Tidak Aktif</option>
                   @endif
                   </select></td>
                 <td class="frame9402-frame8727" id="tindakan">

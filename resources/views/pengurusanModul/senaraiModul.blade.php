@@ -138,8 +138,8 @@
               responsive: true,
               language: {
                   "search": "Carian:",
-                  "lengthMenu": "Tunjuk _MENU_ Pengguna",
-                  "info": "Tunjuk _START_ ke _END_ dari _TOTAL_ Pengguna",
+                  "lengthMenu": "Tunjuk _MENU_ Modul",
+                  "info": "Tunjuk _START_ ke _END_ dari _TOTAL_ Modul",
                   "paginate": {
                       "first": "Pertama",
                       "last": "Akhir",

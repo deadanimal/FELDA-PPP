@@ -90,7 +90,7 @@
   box-sizing: border-box;
   align-items: flex-start;
   border-color: transparent;
-  margin-right: 17px;
+  margin-right: 10px;
   border-radius: 0px 0px 0px 0px;
   margin-bottom: 0;
   flex-direction: column;
@@ -103,7 +103,7 @@
   border-color: transparent;
   margin-right: 0;
   border-radius: 0px 0px 0px 0px;
-  margin-bottom: 0;
+  padding-bottom: 20px;
 }
 .frame9402-text04 {
   color: black;
@@ -192,7 +192,23 @@ display: flex;
   border-color: transparent;
   margin-right: 0;
   margin-bottom: 0;
-}   
+}
+.frame9403-kotaknama3 {
+        top: 0px;
+        width: 300px;
+        height: 50px;
+        box-sizing: content-box;
+        border-color: rgba(140, 38, 60, 1);
+        border-style: solid;
+        border-width: 0.865405261516571px;
+        border-radius: 3.461621046066284px;
+        background:url('/SVG/arrow2.svg') no-repeat;
+        background-position:99% center;
+        display:block;
+        font-family: 'Eina01-SemiBold', sans-serif;
+        font-size: 17.3081px;
+        box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)
+    }   
 </style>
 <div class="container-fluid">
   <div class="header">
@@ -201,7 +217,7 @@ display: flex;
     </h1>
   </div>
   <div class="frame9402-box">
-    <form action="/moduls/{{$modul->id}}" method="POST" class="frame9402-frame9278">
+    <form action="/moduls/{{$modul->id}}" method="POST" class="frame9402-frame9278" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="frame9402-frame7301">
@@ -210,6 +226,26 @@ display: flex;
                 <input type="text" class="frame9402-kotaknama" name="namaModul" id="namaModul" value="{{$modul->nama}}" onkeyup="changeTheColorOfButton()"/>
             </div>
         </div>
+        <div class="frame9402-frame7188">
+          <span class="frame9402-text04"><span>Status Modul: </span></span>
+          <select name="status" class="frame9403-kotaknama3">
+            @if ($modul->status == "Pending"){
+              <option value="Pending" selected>Pending</option>
+              <option value="Active">Active</option>
+              <option value="Go-live">Go-live</option>
+            }  
+            @elseif($modul->status == "Active"){
+              <option value="Pending">Pending</option>
+              <option value="Active" selected>Active</option>
+              <option value="Go-live">Go-live</option>
+            }
+            @else
+              <option value="Pending">Pending</option>
+              <option value="Active">Active</option>
+              <option value="Go-live"selected>Go-live</option>
+            @endif
+          </select>
+      </div>
         <button type="submit" id="buttonKemaskini" class="frame9403-frame7445">
           <div class="frame9403-frame7293">
             <span class="frame9403-text21"><span>Kemaskini</span></span>

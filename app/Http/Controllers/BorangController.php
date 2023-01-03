@@ -11,6 +11,7 @@ use App\Models\Modul;
 use App\Models\Proses;
 use Illuminate\Http\Request;
 use Alert;
+use Artisan;
 
 class BorangController extends Controller
 {
@@ -43,6 +44,7 @@ class BorangController extends Controller
     public function borang_field_update(Request $request)
     {
         $borang = Borang::find($request->borangId);
+        $context_copy = json_decode($borang->context);
         $namas = $request->nama;
         $datatypes = $request->datatype;
         $pilihans = $request->pilihan;
@@ -54,12 +56,11 @@ class BorangController extends Controller
                 'pilihan' => $pilihans[$x],
             ];
         }
-
         $borang->context = json_encode($data);
         $borang->save();
-
-        Alert::success('Simpan Meadan Borang berjaya.', 'Simpan medan borang telah berjaya.');   
         
+        Alert::success('Simpan Meadan Borang berjaya.', 'Simpan medan borang telah berjaya.');   
+
         $modul = Modul::find($request->modulId);
         $proses = Proses::find($request->prosesId);
 

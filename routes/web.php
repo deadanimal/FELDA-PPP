@@ -45,6 +45,7 @@ Route::put('/user-categories',[UserController::class, 'category_update']);
 Route::get('/user-categories/{id}/delete',[UserController::class, 'category_delete']);
 
 Route::get('/audit', [UserController::class, 'user_audit']);
+Route::get('/auditDates', [UserController::class, 'user_auditDate']);
 
 
 Route::get('/moduls', [ModulController::class, 'modul_list']);
@@ -68,4 +69,6 @@ Route::delete('/moduls/borang/delete', [ModulController::class, 'borang_delete']
 Route::get('/moduls/{modul_id}/{proses_id}/borang/{borang_id}', [BorangController::class, 'borang_detail']);
 Route::post('/moduls/borang_field/update', [BorangController::class, 'borang_field_update']);
 
-// Route::post('/Borang/uploadBorang',  [BorangController::class, 'uploadBorang']);
+Route::get('/userView', function () {
+    return view('userView.viewBorang');
+});// Route::post('/Borang/uploadBorang',  [BorangController::class, 'uploadBorang']);
