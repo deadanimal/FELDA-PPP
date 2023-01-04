@@ -23,7 +23,7 @@
               <div class="mb-3 col-md-6">
                   <label for="idPengguna" style="font-family:'Poppins'">ID Pengguna</label>
                   <input type="text" class="form-control frame9403-kotaknama" maxlength="12" size="12" name="idPengguna" id="idPengguna" value=""
-                  @if(Auth::user()->kategoripengguna != "4"){
+                  @if(Auth::user()->kategoripengguna != "1"){
                     readonly
                   }
                   @endif>
