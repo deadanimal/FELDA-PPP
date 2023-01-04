@@ -41,7 +41,6 @@ class UserController extends Controller
     {
         $request->validate([
             'email' => ['required', 'string', 'email', 'unique:users'],
-            'idPengguna' => ['required', 'string', 'unique:users'],
             'nama' => ['required', 'string'],
             'nokadpengenalan' => ['required', 'string', 'unique:users'],
             'password' => ['required'],
@@ -51,7 +50,6 @@ class UserController extends Controller
         ]);
         $user = new User;
         $user->email = $request->email;
-        $user->idPengguna = $request->idPengguna;
         $user->nama = $request->nama;
         $user->notelefon = $request->noTelefon;
         $user->nokadpengenalan = $request->nokadpengenalan;
@@ -80,7 +78,9 @@ class UserController extends Controller
     {
         $user = User::find($request->id);
         $user->email = $request->email;
-        $user->idPengguna = $request->idPengguna;
+        if($request->idPengguna != ""){
+            $user->idPengguna = $request->idPengguna;
+        }
         $user->nama = $request->nama;
         $user->notelefon = $request->noTelefon;
         $user->nokadpengenalan = $request->nokadpengenalan;
@@ -523,7 +523,7 @@ class UserController extends Controller
                 }
             }
         }
-        
+
         if($request->ajax()) {
             return DataTables::collection($audits)
             ->editColumn('created_at', function (Audit $audits) {

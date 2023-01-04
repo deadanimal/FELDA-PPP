@@ -29,8 +29,7 @@
                         <div class="mb-3 col-md-6">
                             <label for="idPengguna">ID Pengguna</label>
                             <input type="text" class="form-control frame9403-kotaknama" maxlength="12" size="12"
-                            value="{{ Auth::user()->idPengguna }}" name="idPengguna" id="idPengguna"
-                            @if (Auth::user()->kategoripengguna != 1) readonly @endif>
+                            value="{{ Auth::user()->idPengguna }}" name="idPengguna" id="idPengguna" required>
                         </div>
                     </div>
                     <div class="row">
