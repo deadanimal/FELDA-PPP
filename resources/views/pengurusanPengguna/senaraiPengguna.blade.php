@@ -35,7 +35,7 @@
               <thead class="text-white bg-primary w-100">
                 <tr>
                     <th>Bil.</th>
-                    <th scope="col">No. Pengguna</th>
+                    <th scope="col">ID Pengguna</th>
                     <th scope="col">Nama Pengguna</th>
                     <th scope="col">Wilayah</th>
                     <th scope="col">Rancangan</th>

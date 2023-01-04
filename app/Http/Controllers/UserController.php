@@ -368,7 +368,7 @@ class UserController extends Controller
             elseif($a->event == "created"){
                 $a['event'] = "Cipta";
                 if($a->auditable_type== "App\Models\User"){
-                    $a->setAttribute('value', "Nama: ".$a->new_values['nama']."<br>ID Pengguna:".$a->new_values['idPengguna']);
+                    $a->setAttribute('value', "Pengguna Nama: ".$a->new_values['nama']);
                 }
                 elseif ($a->auditable_type== "App\Models\Modul") {
                     $a->setAttribute('value', "Nama Modul: ".$a->new_values['nama']);

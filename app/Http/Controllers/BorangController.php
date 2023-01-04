@@ -59,7 +59,6 @@ class BorangController extends Controller
         $borang->context = json_encode($data);
         $borang->save();
         
-        
 
         Alert::success('Simpan Meadan Borang berjaya.', 'Simpan medan borang telah berjaya.');   
 

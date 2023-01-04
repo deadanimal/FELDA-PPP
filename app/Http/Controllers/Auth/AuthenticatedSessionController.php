@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Alert;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,11 +30,17 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        return redirect('/dashboard');
+        $user = User::where('email', $request->email)->first();
+        
+        if($user->status) {
+            $request->authenticate();
+            $request->session()->regenerate();
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+        else{
+            Alert::error('Pengguna Tidak Ada', 'Anda tidak dapat masuk ke sistem');
+            return back();
+        }
     }
 
     /**
