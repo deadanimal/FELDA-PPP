@@ -9,10 +9,9 @@ use App\Http\Controllers\BorangController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 
 Route::get('/forgot',  [UserController::class, 'forgotPengguna']);
@@ -23,12 +22,13 @@ Route::get('/getRancangan/{id}',  [UserController::class, 'getRancangan']);
 
 require __DIR__.'/auth.php';
 
-Auth::routes();
-
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route::get('',  [WebsiteController::class, 'home']);
-
+Route::middleware(['auth'])->group(function () {
+Route::get('/dashboard', function () {
+        return view('dashboard');
+    });
 Route::get('/users/info',  [UserController::class, 'user_info']);
 Route::put('/users/update',  [UserController::class, 'user_info_update']);
 Route::get('/users',  [UserController::class, 'user_list']);
@@ -68,6 +68,7 @@ Route::delete('/moduls/borang/delete', [ModulController::class, 'borang_delete']
 
 Route::get('/moduls/{modul_id}/{proses_id}/borang/{borang_id}', [BorangController::class, 'borang_detail']);
 Route::post('/moduls/borang_field/update', [BorangController::class, 'borang_field_update']);
+});
 
 Route::get('/userView', function () {
     return view('userView.viewBorang');

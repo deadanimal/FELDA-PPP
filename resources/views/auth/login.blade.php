@@ -13,7 +13,7 @@
 			<div class="row h-100 d-flex align-items-center justify-content-center">
 					<div class="d-table-cell align-middle">
                         <div class="log-masuk-logmasuk1">
-                            <form method="POST" action="{{ route('login') }}">
+                            <form method="POST" action="/login">
                                 @csrf
                                 <div class="log-masuk-logbox">
                                     <div class="log-masuk-frame9398">
@@ -22,6 +22,16 @@
                                             Sila masukkan alamat ID Pengguna dan kata laluan
                                         </span>
                                     </div>
+                                    @if(session()->has('message'))
+                                    <div class="alert alert-danger alert-outline-coloured alert-dismissible" role="alert">
+                                        <div class="alert-icon">
+                                            <i class="far fa-fw fa-bell"></i>
+                                        </div>
+                                        <div class="alert-message">
+                                            <strong>{{session('message')}}</strong>
+                                        </div>
+                                    </div>
+                                    @endif
                                     <div class="log-masuk-frame9">
                                         <div class="log-masuk-frame12">
                                             <span class="log-masuk-text04">E-mel</span>

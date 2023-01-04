@@ -31,14 +31,14 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $user = User::where('email', $request->email)->first();
-        
-        if($user->status) {
+
+        if($user->status == "1") {
             $request->authenticate();
             $request->session()->regenerate();
             return redirect()->intended(RouteServiceProvider::HOME);
         }
         else{
-            Alert::error('Pengguna Tidak Ada', 'Anda tidak dapat masuk ke sistem');
+            session()->flash('message','Anda tidak dapat masuk ke sistem');
             return back();
         }
     }
