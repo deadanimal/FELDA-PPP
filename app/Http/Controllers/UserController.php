@@ -377,7 +377,7 @@ class UserController extends Controller
                     $a->setAttribute('value', "Nama Proses: ".$a->new_values['nama']);
                 }
                 elseif ($a->auditable_type== "App\Models\Borang") {
-                    $a->setAttribute('value', "Nama Borang: ".$a->new_values['nama']);
+                    $a->setAttribute('value', "Nama Borang: ".$a->new_values['namaBorang']);
                 }
                 elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
                     $a->setAttribute('value', "Nama Kategori Pengguna: ".$a->new_values['nama']);
