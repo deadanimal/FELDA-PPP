@@ -14,8 +14,9 @@ use App\Models\Wilayah;
 use App\Models\Modul;
 use App\Models\KategoriPengguna;
 use App\Models\Rancangan;
+use App\Models\Audit;
+
 use App\Providers\RouteServiceProvider;
-use OwenIt\Auditing\Models\Audit;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -60,6 +61,12 @@ class UserController extends Controller
         $user->status = 1;
 
         $user->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta pengguna".$user->nama;
+        $audit->save();
+
         Alert::success('Daftar pengguna berjaya.', 'Pendaftaran pengguna berjaya.');   
         
         return redirect("/users");
@@ -91,6 +98,12 @@ class UserController extends Controller
         $user->wilayah = $request->wilayah;
         $user->rancangan = $request->rancangan;
         $user->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Profil ".$user->nama;
+        $audit->save();
+
         Alert::success('Kemaskini Profil berjaya.', 'Kemaskini Profil telah berjaya.');   
         
         return redirect("/users/info");
@@ -167,6 +180,11 @@ class UserController extends Controller
         $user = User::find($id);
         $user->status = 0; 
         $user->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam pengguna".$user->nama;
+        $audit->save();
         Alert::success('Padam pengguna berjaya.', 'Padam pengguna telah berjaya.');   
 
         return redirect('/users');
@@ -197,6 +215,12 @@ class UserController extends Controller
         $user->wilayah = $request->wilayah;
         $user->rancangan = $request->rancangan;
         $user->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Pengguna".$user->nama;
+        $audit->save();
+
         Alert::success('Kemaskini pengguna berjaya.', 'Kemaskini pengguna telah berjaya.');   
         
         return redirect("/users");
@@ -263,6 +287,12 @@ class UserController extends Controller
         $kategoriPengguna = new KategoriPengguna;
         $kategoriPengguna->nama = $request->namaKategoriPengguna;
         $kategoriPengguna->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Tambah Kategori Pengguna ".$kategoriPengguna->nama;
+        $audit->save();
+
         Alert::success('Tambah Kategori pengguna berjaya.', 'Kategori pengguna berjaya ditambah.');   
         
         return redirect('/user-categories');
@@ -281,6 +311,12 @@ class UserController extends Controller
         $kategoriPengguna = KategoriPengguna::find($id);
         $kategoriPengguna->nama = $request->kategoriPengguna;
         $kategoriPengguna->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Kategori Pengguna ".$kategoriPengguna->nama;
+        $audit->save();
+
         Alert::success('Kemaskini Kategori pengguna berjaya.', 'Kategori pengguna berjaya dikemaskini.');   
     
         return redirect('/user-categories');
@@ -290,7 +326,14 @@ class UserController extends Controller
     {
         $id = (int)$request->route('id');
         $kategoriPengguna = KategoriPengguna::find($id);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Kategori Pengguna ".$kategoriPengguna->nama;
+        $audit->save();
+
         $kategoriPengguna->delete();
+
         Alert::success('Padam Kategori pengguna berjaya.', 'Kategori pengguna berjaya dipadam.');   
     
         return redirect('/user-categories');
@@ -300,277 +343,155 @@ class UserController extends Controller
     public function user_audit(Request $request)
     {
         $audits = Audit::orderBy("updated_at", "DESC")->get();
-        foreach ($audits as $key => $a) {
-            if ($a->event == "updated") {
-                $a['event'] = "Kemaskini";
+        
 
-                if($a->auditable_type== "App\Models\User"){
-                    $var = preg_split("#/#", $a->url); 
-                    if(array_key_exists('status', $a->new_values)){
-                        $a['event'] = "Padam";
-                        $user = User::find($var[4]);
-                        $a->setAttribute('value', "Nama: ".$user->nama."<br>ID Pengguna:".$user->idPengguna);
-                    }
-                    elseif($var[3]=="forgot"){
-                        $a->setAttribute('value', "Lupa Kata Laluan");
-
-                    }
-                    elseif($var[3]=="logout"){
-                        $a->setAttribute('value', "Log Keluar");
-
-                    }
-                    elseif($var[3]=="login"){
-                        $a->setAttribute('value', "Log Masuk");
-
-                    }
-                }
-                elseif ($a->auditable_type== "App\Models\Modul") {
-                    $var = preg_split("#/#", $a->url);
-                    $modul = Modul::find($var[4]); 
-                    $a->setAttribute('value', "Modul: ".$modul->nama."<br>Status:".$modul->status);
-                    
-                }
-                elseif ($a->auditable_type== "App\Models\Proses") {
-                    if (array_key_exists('nama', $a->new_values)){
-                        $a->setAttribute('value', "Nama Proses: ".$a->new_values['nama']);
-                    }else{
-                        if($a->new_values['status'] == "1"){
-                            $a->setAttribute('value', "Proses Status: Aktif");
-                        }else{
-                            $a->setAttribute('value', "Proses Status: Tidak Aktif");
-                        }
-                    }
-
-                }
-                elseif ($a->auditable_type== "App\Models\Borang") {
-                    if (array_key_exists('nama', $a->new_values)){
-                        $a->setAttribute('value', "Nama Borang: ".$a->new_values['Nama']);
-                    }
-                    else{
-                        if (array_key_exists('status', $a->new_values)){
-                            if($a->new_values['status'] == "1"){
-                                $a->setAttribute('value', "Proses Status: Aktif");
-                            }else{
-                                $a->setAttribute('value', "Proses Status: Tidak Aktif");
-                            }
-                        }
-                        else{
-                            $a->setAttribute('value', "Kemaskini Isi Borang");
-
-                        }
-
-                    }
-                }
-                elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
-                    $a->setAttribute('value', "Kategori Pengguna: ".$a->new_values['nama']);
-                }
-            }
-            elseif($a->event == "created"){
-                $a['event'] = "Cipta";
-                if($a->auditable_type== "App\Models\User"){
-                    $a->setAttribute('value', "Pengguna Nama: ".$a->new_values['nama']);
-                }
-                elseif ($a->auditable_type== "App\Models\Modul") {
-                    $a->setAttribute('value', "Nama Modul: ".$a->new_values['nama']);
-                }
-                elseif ($a->auditable_type== "App\Models\Proses") {
-                    $a->setAttribute('value', "Nama Proses: ".$a->new_values['nama']);
-                }
-                elseif ($a->auditable_type== "App\Models\Borang") {
-                    $a->setAttribute('value', "Nama Borang: ".$a->new_values['namaBorang']);
-                }
-                elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
-                    $a->setAttribute('value', "Nama Kategori Pengguna: ".$a->new_values['nama']);
-                }
-            }
-            elseif($a->event == "deleted"){
-                $a['event'] = "Padam";
-                if ($a->auditable_type== "App\Models\Modul") {
-                    $a->setAttribute('value', 'Nama Modul: '.$a->old_values['nama']);
-                }
-                elseif ($a->auditable_type== "App\Models\Proses") {
-                    $a->setAttribute('value', 'Nama Proses: '.$a->old_values['nama']);
-                }
-                elseif ($a->auditable_type== "App\Models\Borang") {
-                    $a->setAttribute('value', 'Nama Borang: '.$a->old_values['nama']);
-                }
-                elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
-                    $a->setAttribute('value', "Nama Kategori Pengguna: ".$a->old_values['nama']);
-                }
-            }
-        }
-        if($request->ajax()) {
-            return DataTables::collection($audits)
-            ->editColumn('created_at', function (Audit $audits) {
-                return $audits->created_at; // no formatting, just returned $user->created_at; 
-            })
-            ->addIndexColumn()
-            ->addColumn('userNama', function (Audit $audits) {
-                if($audits->user) {
-                    $html_ = $audits->user->nama;
-                } else {
-                    $html_ = '-';
-                }
-                return $html_;
-            })  
-            ->addColumn('userid', function (Audit $audits) {
-                if($audits->user) {
-                    $html_ = $audits->user->idPengguna;
-                } else {
-                    $html_ = '-';
-                }
-                return $html_;
-            }) 
-            ->rawColumns(['userNama', 'userid', 'value'])                                                 
-            ->make(true);
-        }
-
-        return view('auditTrail.audit');
-    }
- 
-    public function user_auditDate(Request $request)
-    {
-        $from_date = $request->from_date;
-        $to_date = $request->to_date;
-
-        $audits = Audit::whereBetween('created_at', [$from_date, $to_date])
-           ->orderBy("created_at", "DESC")->get();
-        foreach ($audits as $key => $a) {
-            if ($a->event == "updated") {
-                $a['event'] = "Kemaskini";
-
-                if($a->auditable_type== "App\Models\User"){
-                    $var = preg_split("#/#", $a->url); 
-                    if(array_key_exists('status', $a->new_values)){
-                        $a['event'] = "Padam";
-                        $user = User::find($var[4]);
-                        $a->setAttribute('value', "Nama: ".$user->nama."<br>ID Pengguna:".$user->idPengguna);
-                    }
-                    elseif($var[3]=="forgot"){
-                        $a->setAttribute('value', "Lupa Kata Laluan");
-
-                    }
-                    elseif($var[3]=="logout"){
-                        $a->setAttribute('value', "Log Keluar");
-
-                    }
-                    elseif($var[3]=="login"){
-                        $a->setAttribute('value', "Log Masuk");
-
-                    }
-                }
-                elseif ($a->auditable_type== "App\Models\Modul") {
-                    $a->setAttribute('value', $a->new_values);
-                }
-                elseif ($a->auditable_type== "App\Models\Proses") {
-                    if (array_key_exists('nama', $a->new_values)){
-                        $a->setAttribute('value', "Nama Proses: ".$a->new_values['nama']);
-                    }else{
-                        if($a->new_values['status'] == "1"){
-                            $a->setAttribute('value', "Proses Status: Aktif");
-                        }else{
-                            $a->setAttribute('value', "Proses Status: Tidak Aktif");
-                        }
-                    }
-
-                }
-                elseif ($a->auditable_type== "App\Models\Borang") {
-                    if (array_key_exists('nama', $a->new_values)){
-                        $a->setAttribute('value', "Nama Borang: ".$a->new_values['Nama']);
-                    }else{
-                        if($a->new_values['status'] == "1"){
-                            $a->setAttribute('value', "Proses Status: Aktif");
-                        }else{
-                            $a->setAttribute('value', "Proses Status: Tidak Aktif");
-                        }
-                    }
-                }
-                elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
-                    $a->setAttribute('value', "Kategori Pengguna: ".$a->new_values['nama']);
-                }
-            }
-            elseif($a->event == "created"){
-                $a['event'] = "Cipta";
-                if($a->auditable_type== "App\Models\User"){
-                    $a->setAttribute('value', "Nama: ".$a->new_values['nama']."<br>ID Pengguna:".$a->new_values['idPengguna']);
-                }
-                elseif ($a->auditable_type== "App\Models\Modul") {
-                    $a->setAttribute('value', "Nama Modul: ".$a->new_values['nama']);
-                }
-                elseif ($a->auditable_type== "App\Models\Proses") {
-                    $a->setAttribute('value', "Nama Proses: ".$a->new_values['nama']);
-                }
-                elseif ($a->auditable_type== "App\Models\Borang") {
-                    $a->setAttribute('value', "Nama Borang: ".$a->new_values['nama']);
-                }
-                elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
-                    $a->setAttribute('value', "Nama Kategori Pengguna: ".$a->new_values['nama']);
-                }
-            }
-            elseif($a->event == "deleted"){
-                $a['event'] = "Padam";
-                if ($a->auditable_type== "App\Models\Modul") {
-                    $a->setAttribute('value', 'Nama Modul: '.$a->old_values['nama']);
-                }
-                elseif ($a->auditable_type== "App\Models\Proses") {
-                    $a->setAttribute('value', 'Nama Proses: '.$a->old_values['nama']);
-                }
-                elseif ($a->auditable_type== "App\Models\Borang") {
-                    $a->setAttribute('value', 'Nama Borang: '.$a->old_values['nama']);
-                }
-                elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
-                    $a->setAttribute('value', "Nama Kategori Pengguna: ".$a->old_values['nama']);
-                }
-            }
-        }
-
-        if($request->ajax()) {
-            return DataTables::collection($audits)
-            ->editColumn('created_at', function (Audit $audits) {
-                return $audits->created_at; 
-            })
-            ->addIndexColumn()
-            ->addColumn('userNama', function (Audit $audits) {
-                if($audits->user) {
-                    $html_ = $audits->user->nama;
-                } else {
-                    $html_ = '-';
-                }
-                return $html_;
-            })  
-            ->addColumn('userid', function (Audit $audits) {
-                if($audits->user) {
-                    $html_ = $audits->user->idPengguna;
-                } else {
-                    $html_ = '-';
-                }
-                return $html_;
-            }) 
-            ->rawColumns(['userNama', 'userid', 'value'])                                                 
-            ->make(true);
-        }
-
-        return view('auditTrail.auditDate', compact('from_date', 'to_date'));
-    }
-
-    public function auditTindakan(Request $request)
-    {
-        $tindakan = $request->tindakan;
-        if($tindakan == "cipta" || $tindakan == "Cipta"){
-            $event="created";
-        }elseif($tindakan == "kemaskini" || $tindakan == "Kemaskini"){
-            $event="updated";
-        }
-        elseif($tindakan == "padam" || $tindakan == "Padam"){
-            $event="deleted";
-        }
-        else{
-            Alert::error('Tindakan Tidak Ada.', 'Sila masukkan tindakan dengan betul');   
-            return redirect("/auditTrail/audit");
-        }
-
-        $audits = Audit::leftJoin('users as usr','usr.id', '=', 'user_id')
-        ->select('*','audits.created_at')->where('audits.event','=',$event)->get();
         return view('auditTrail.audit', compact('audits'));
     }
+ 
+    // public function user_auditDate(Request $request)
+    // {
+    //     $from_date = $request->from_date;
+    //     $to_date = $request->to_date;
+
+    //     $audits = Audit::whereBetween('created_at', [$from_date , $to_date])
+    //        ->orderBy("created_at", "DESC")->get();
+           
+    //        foreach ($audits as $key => $a) {
+    //         if ($a->event == "updated") {
+    //             $a['event'] = "Kemaskini";
+
+    //             if($a->auditable_type== "App\Models\User"){
+    //                 $var = preg_split("#/#", $a->url); 
+    //                 if(array_key_exists('status', $a->new_values)){
+    //                     $a['event'] = "Padam";
+    //                     $user = User::find($var[4]);
+    //                     $a->setAttribute('value', "Nama: ".$user->nama."<br>ID Pengguna:".$user->idPengguna);
+    //                 }
+    //                 elseif($var[3]=="forgot"){
+    //                     $a->setAttribute('value', "Lupa Kata Laluan");
+
+    //                 }
+    //                 elseif($var[3]=="logout"){
+    //                     $a->setAttribute('value', "Log Keluar");
+
+    //                 }
+    //                 elseif($var[3]=="login"){
+    //                     $a->setAttribute('value', "Log Masuk");
+
+    //                 }
+    //                 elseif(array_key_exists('kategoripengguna', $a->new_values) || array_key_exists('wilayah', $a->new_values) ||
+    //                  array_key_exists('rancangan', $a->new_values) || array_key_exists('password', $a->new_values)||
+    //                  array_key_exists('email', $a->new_values) || array_key_exists('nokadpengenalan', $a->new_values)||
+    //                  array_key_exists('notelefon', $a->new_values) || array_key_exists('idPengguna', $a->new_values) || 
+    //                  array_key_exists('nama', $a->new_values)){
+    //                     $user = User::find($var[4]);
+    //                     $a->setAttribute('value', "Nama: ".$user->nama."<br>ID Pengguna:".$user->idPengguna);
+
+    //                 }
+
+    //             }
+    //             elseif ($a->auditable_type== "App\Models\Modul") {
+    //                 $var = preg_split("#/#", $a->url);
+    //                 $modul = Modul::find($var[4]); 
+    //                 $a->setAttribute('value', "Modul: ".$modul->nama."<br>Status:".$modul->status);
+                    
+    //             }
+    //             elseif ($a->auditable_type== "App\Models\Proses") {
+    //                 if (array_key_exists('nama', $a->new_values)){
+    //                     $a->setAttribute('value', "Nama Proses: ".$a->new_values['nama']);
+    //                 }else{
+    //                     if($a->new_values['status'] == "1"){
+    //                         $a->setAttribute('value', "Proses Status: Aktif");
+    //                     }else{
+    //                         $a->setAttribute('value', "Proses Status: Tidak Aktif");
+    //                     }
+    //                 }
+
+    //             }
+    //             elseif ($a->auditable_type== "App\Models\Borang") {
+    //                 if (array_key_exists('nama', $a->new_values)){
+    //                     $a->setAttribute('value', "Nama Borang: ".$a->new_values['Nama']);
+    //                 }
+    //                 else{
+    //                     if (array_key_exists('status', $a->new_values)){
+    //                         if($a->new_values['status'] == "1"){
+    //                             $a->setAttribute('value', "Proses Status: Aktif");
+    //                         }else{
+    //                             $a->setAttribute('value', "Proses Status: Tidak Aktif");
+    //                         }
+    //                     }
+    //                     else{
+    //                         $a->setAttribute('value', "Kemaskini Isi Borang");
+
+    //                     }
+
+    //                 }
+    //             }
+    //             elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
+    //                 $a->setAttribute('value', "Kategori Pengguna: ".$a->new_values['nama']);
+    //             }
+    //         }
+    //         elseif($a->event == "created"){
+    //             $a['event'] = "Cipta";
+    //             if($a->auditable_type== "App\Models\User"){
+    //                 $a->setAttribute('value', "Nama Pengguna: ".$a->new_values['nama']);
+    //             }
+    //             elseif ($a->auditable_type== "App\Models\Modul") {
+    //                 $a->setAttribute('value', "Nama Modul: ".$a->new_values['nama']);
+    //             }
+    //             elseif ($a->auditable_type== "App\Models\Proses") {
+    //                 $a->setAttribute('value', "Nama Proses: ".$a->new_values['nama']);
+    //             }
+    //             elseif ($a->auditable_type== "App\Models\Borang") {
+    //                 $a->setAttribute('value', "Nama Borang: ".$a->new_values['namaBorang']);
+    //             }
+    //             elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
+    //                 $a->setAttribute('value', "Nama Kategori Pengguna: ".$a->new_values['nama']);
+    //             }
+    //         }
+    //         elseif($a->event == "deleted"){
+    //             $a['event'] = "Padam";
+    //             if ($a->auditable_type== "App\Models\Modul") {
+    //                 $a->setAttribute('value', 'Nama Modul: '.$a->old_values['nama']);
+    //             }
+    //             elseif ($a->auditable_type== "App\Models\Proses") {
+    //                 $a->setAttribute('value', 'Nama Proses: '.$a->old_values['nama']);
+    //             }
+    //             elseif ($a->auditable_type== "App\Models\Borang") {
+    //                 $a->setAttribute('value', 'Nama Borang: '.$a->old_values['nama']);
+    //             }
+    //             elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
+    //                 $a->setAttribute('value', "Nama Kategori Pengguna: ".$a->old_values['nama']);
+    //             }
+    //         }
+    //     }
+    //     if($request->ajax()) {
+    //         return DataTables::collection($audits)
+    //         ->editColumn('created_at', function (Audit $audits) {
+    //             return $audits->created_at; // no formatting, just returned $user->created_at; 
+    //         })
+    //         ->addIndexColumn()
+    //         ->addColumn('userNama', function (Audit $audits) {
+    //             if($audits->user) {
+    //                 $html_ = $audits->user->nama;
+    //             } else {
+    //                 $html_ = '-';
+    //             }
+    //             return $html_;
+    //         })  
+    //         ->addColumn('userid', function (Audit $audits) {
+    //             if($audits->user) {
+    //                 $html_ = $audits->user->idPengguna;
+    //             } else {
+    //                 $html_ = '-';
+    //             }
+    //             return $html_;
+    //         }) 
+    //         ->rawColumns(['userNama', 'userid', 'value'])                                                 
+    //         ->make(true);
+    //     }
+
+    //     return view('auditTrail.auditDate', compact('from_date', 'to_date'));
+    // }
+
 }

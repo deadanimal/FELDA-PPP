@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Modul;
 use App\Models\Proses;
 use App\Models\Borang;
+use App\Models\Audit;
+
 use Illuminate\Http\Request;
 use Alert;
 use DataTables;
@@ -31,6 +33,12 @@ class ModulController extends Controller
             $modul->save();
             // $modul= Modul::where('nama', $modul->nama)->get();
             // return view("pengurusanModul.ciptaProses", compact('modul'));
+
+            $audit = new Audit;
+            $audit->user_id = Auth::user()->id;
+            $audit->action = "Cipta Modul ".$modul->nama;
+            $audit->save();
+
             Alert::success('Cipta Modul berjaya.', 'Modul telah berjaya dicipta.');
 
             return redirect('/moduls');
@@ -113,6 +121,12 @@ class ModulController extends Controller
     {
         $idModul = (int)$request->route('id');
         $modul = Modul::find($idModul);
+        
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Modul ".$modul->nama;
+        $audit->save();
+
         $modul->delete();
         Alert::success('Padam Modul Berjaya.', 'Padam modul telah berjaya.');
 
@@ -137,6 +151,11 @@ class ModulController extends Controller
         $modulBaru->dikemaskiniOleh = Auth::user()->id;
         $modulBaru->save();
 
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Membuat salinan modul ".$modul->nama;
+        $audit->save();
+
         Alert::success('Copy Modul berjaya.', 'Copy modul telah berjaya.');
 
         return back();
@@ -150,6 +169,12 @@ class ModulController extends Controller
         $moduls->status = $request->status;
         $moduls->dikemaskiniOleh = Auth::user()->id;
         $moduls->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Modul ".$modul->nama;
+        $audit->save();
+
         Alert::success('Kemaskini Modul berjaya.', 'Kemaskini modul telah berjaya.');
         $modul = Modul::all();
         $bilangan = count(Modul::all());
@@ -164,6 +189,12 @@ class ModulController extends Controller
         $prosess->status = 1;
         $prosess->modul = $request->modulId;
         $prosess->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Proses ".$prosess->nama;
+        $audit->save();
+
         Alert::success('Cipta proses berjaya.', 'Cipta proses telah berjaya.');
         $modul = Modul::find($request->modulId);
         $prosess = Proses::where('modul', $request->modulId)->orderBy("updated_at", "DESC")->get();
@@ -185,10 +216,14 @@ class ModulController extends Controller
         $proses = Proses::find($prosesId);
         $proses->nama = $request->namaupdate;
         $proses->status = $request->statusUpdate;
-
         $proses->save();
-        Alert::success('Kemaskini Proses berjaya.', 'Kemaskini Proses telah berjaya.');
 
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Proses ".$prosess->nama;
+        $audit->save();
+
+        Alert::success('Kemaskini Proses berjaya.', 'Kemaskini Proses telah berjaya.');
 
         $prosess = Proses::where('modul', $request->modulID)->orderBy("updated_at", "DESC")->get();
         $modul = Modul::find($request->modulID);
@@ -200,6 +235,12 @@ class ModulController extends Controller
     {
         $prosesId = $request->prosesId;
         $proses = Proses::find($prosesId);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Proses ".$prosess->nama;
+        $audit->save();
+
         $proses->delete();
         Alert::success('Padam Proses Berjaya.', 'Padam proses telah berjaya.');
 
@@ -216,6 +257,12 @@ class ModulController extends Controller
         $borang->status = 1;
         $borang->proses = $request->prosesId;
         $borang->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Borang ".$borang->namaBorang;
+        $audit->save();
+
         Alert::success('Cipta Borang berjaya.', 'Cipta borang telah berjaya.');
         
         $modul = Modul::find($request->modulId);
@@ -241,8 +288,13 @@ class ModulController extends Controller
         $borang = Borang::find($borangId);
         $borang->namaBorang = $request->namaupdate;
         $borang->status = $request->statusUpdate;
-
         $borang->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Borang ".$borang->namaBorang;
+        $audit->save();
+
         Alert::success('Kemaskini Borang berjaya.', 'Kemaskini borang telah berjaya.');
 
         $modul = Modul::find($request->modulId);
@@ -256,6 +308,12 @@ class ModulController extends Controller
     {
         $borangId = $request->borangId;
         $borang = Borang::find($borangId);
+        
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Borang ".$borang->namaBorang;
+        $audit->save();
+
         $borang->delete();
         Alert::success('Padam Borang Berjaya.', 'Padam borang telah berjaya.');
 

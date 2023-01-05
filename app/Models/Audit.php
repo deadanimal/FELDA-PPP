@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class KategoriPengguna extends Model
+class Audit extends Model
 {
     use HasFactory;
-    
+
+    protected $table = 'Audits';
+
+
     public function user() {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

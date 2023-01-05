@@ -7,13 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use OwenIt\Auditing\Contracts\Auditable;
 // use Laratrust\Traits\LaratrustUserTrait;
 
-class User extends Authenticatable implements Auditable
+class User extends Authenticatable
 {
     // use LaratrustUserTrait;
-    use \OwenIt\Auditing\Auditable;
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -59,6 +57,9 @@ class User extends Authenticatable implements Auditable
     }
     public function modul() {
         return $this->hasMany(Modul::class);
+    }
+    public function audit() {
+        return $this->hasMany(Audit::class);
     }
   
     

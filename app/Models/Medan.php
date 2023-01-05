@@ -5,15 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Proses extends Model
+class Medan extends Model
 {
     use HasFactory;
 
-    public function modul() {
-        return $this->belongsTo(Modul::class, 'modul');
+    public function borang() {
+        return $this->belongsTo(Borang::class, 'borang_id');
     }
     
-    public function borang() {
-        return $this->hasMany(Borang::class, 'borang');
-    }
 }

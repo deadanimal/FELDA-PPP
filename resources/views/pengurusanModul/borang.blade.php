@@ -125,7 +125,7 @@
   height: auto;
   font-size: 17px;
   align-self: auto;
-  text-align: left;
+  text-align: end;
   font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: normal;
@@ -235,8 +235,8 @@ display: flex;
 }
 .frame9403-kotaknama3 {
     top: 0px;
-    width: 50%;
-    height: 50px;
+    width: fit-content;
+    height: fit-content;
     position: relative;
     box-sizing: content-box;
     border-color: rgba(140, 38, 60, 1);
@@ -504,8 +504,7 @@ display: flex;
     background-color: #fff;
     border-radius: 8px;
   }
-  .frame9402-kotaknamaBorang {
-  width: 40%%;
+  .frame9402-kotaknamaMedan {
   height: auto;
   align-self: auto;
   text-align: left;
@@ -560,14 +559,88 @@ display: flex;
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-            <button class="frame9403-frame74451" type="button" id="rowAdder">
-                <div class="frame9403-frame7293">
-                <span class="frame9403-text21"><span>Tambah</span></span>
-                <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                </div>
+            <button class="frame9403-frame7445"  onclick="openForm()">
+              <div class="frame9403-frame7293">
+              <span class="frame9403-text21"><span>Tambah Borang</span></span>
+              <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+              </div>
             </button>
         </div>
-        <form action="/moduls/borang_field/update" method="POST" style="width: 100%;">    
+
+        {{-- popup form Tambah Medan --}}
+        <div class="divPopup">
+          <div class="formPopup" id="popupForm">
+            <form action="/moduls/borang_field/add" method="PUT" class="formContainer">
+              @csrf
+              <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA MEDAN</h2>
+              <table>
+                <tr>
+                  <td class="frame9402-text04"><p class="text-xs-center">Nama Medan</p></td>
+                  <td><input type="text" class="frame9402-kotaknamaMedan" placeholder="Nama Medan" name="nama" required></td>
+                </tr>
+                <tr>
+                  <td class="frame9402-text04"><p class="text-xs-center">Jenis Data</p></td>
+                  <td>
+                    <select name="datatype" class="frame9402-kotaknamaMedan">
+                      <option value="string">Abjad Angka</option>
+                      <option value="integer">Data Berangka</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="frame9402-text04"><p class="text-xs-center">Jenis Data</p></td>
+                  <td>
+                    <select name="pilihan" class="frame9402-kotaknamaMedan">
+                      <option value="required">Mandatori</option>
+                      <option value="optional">Pilihan</option>
+                    </select>
+                  </td>
+                </tr>
+              </table>
+              <input type="hidden" value="{{$proses->id}}" name="prosesId">
+              <input type="hidden" value="{{$modul->id}}" name="modulId">
+              <input type="hidden" value="{{$borang->id}}" name="borangId">
+
+              <button type="submit" class="btn">Tambah</button>
+              <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
+            </form>
+          </div>
+        </div>
+        @foreach($medans as $medan)
+          <tr class="frame9402-input" id="row">
+            <td class="frame9402-text31">Nama Medan:<input type="text" name="nama[]" class="frame9402-kotaknama" value="{{$medan->nama}}"></td>
+            <td class="frame9402-text30">Jenis Data:
+              <select name="datatype[]" class="frame9403-kotaknama3">
+                @if ($medan->datatype == "string" )
+                  <option value="string" selected>Abjad Angka</option>
+                  <option value="integer">Data Berangka</option>
+                @else
+                  <option value="string">Abjad Angka</option>
+                  <option value="integer"selected>Data Berangka</option>
+                @endif
+              </select>
+            </td>
+            <td class="frame9402-text32"> Pilihan:
+              <select name="pilihan[]" class="frame9403-kotaknama3">
+                @if ($medan->pilihan == "required" )
+                  <option value="required" selected>Mandatori</option>
+                  <option value="optional">Pilihan</option>
+                @else
+                  <option value="required">Mandatori</option>
+                  <option value="optional" selected>Pilihan</option>
+                @endif
+              </select>
+            </td>
+            <form action="/moduls/borang_field/delete" method="DELETE">
+              <td class="frame9402-frame8727" id="tindakan">
+                <button class="frame9402-rectangle828246"><img src="/SVG/bin.svg"/></button>
+              </td>
+            </form>
+            
+          </tr>
+        @endforeach
+
+        {{-- <form action="/moduls/borang_field/update" method="POST" style="width: 100%;">    
           @csrf
           <input type="hidden" name="modulId" value="{{$modul->id}}">
           <input type="hidden" name="prosesId" value="{{$proses->id}}"/>
@@ -620,7 +693,7 @@ display: flex;
               />
             </div>
           </button>
-        </form>
+        </form> --}}
       </div>
     {{-- upload Borang --}}
     {{-- <div class="borangPopup">

@@ -33,7 +33,7 @@
         </div>
 
         {{-- popup form Tambah Borang --}}
-        <div class="loginPopup">
+        <div class="divPopup">
           <div class="formPopup" id="popupForm">
             <form action="/moduls/borang/add" method="POST" class="formContainer">
               @csrf
@@ -427,7 +427,7 @@ function closeForm() {
       cursor: pointer;
       position: fixed;
     }
-    .loginPopup {
+    .divPopup {
       position: relative;
       text-align: center;
       width: 100%;
