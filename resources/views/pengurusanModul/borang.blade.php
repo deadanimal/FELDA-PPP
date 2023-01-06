@@ -236,7 +236,7 @@ display: flex;
 .frame9403-kotaknama3 {
     top: 0px;
     width: fit-content;
-    height: fit-content;
+    height: 45px;
     position: relative;
     box-sizing: content-box;
     border-color: rgba(140, 38, 60, 1);
@@ -249,6 +249,7 @@ display: flex;
     display:block;
     font-family: 'Eina01-SemiBold', sans-serif;
     font-size: 17.3081px;
+    text-align: center;
   }
 * {
     box-sizing: border-box;
@@ -339,8 +340,6 @@ display: flex;
   border-radius: 0px 0px 0px 0px;
   margin-bottom: 20px;
   background-color: rgba(162, 50, 93, 0.20000000298023224);
-  cursor: grab;
-  user-select: none;
 }
   .frame9402-text30 {
   color: #494949;
@@ -354,10 +353,11 @@ display: flex;
   font-stretch: normal;
   margin-bottom: 0;
   text-decoration: none;
+  margin-left: 3%;
 }
 .frame9402-text31 {
   color: #494949;
-  width: 40%%;
+  width: 40%;
   height: auto;
   font-size: 17px;
   align-self: auto;
@@ -559,44 +559,66 @@ display: flex;
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-            <button class="frame9403-frame7445"  onclick="openForm()">
-              <div class="frame9403-frame7293">
-              <span class="frame9403-text21"><span>Tambah Borang</span></span>
-              <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-              </div>
-            </button>
+          <table class="table table-borderless">
+            <tr>
+              <td>
+                <form action="/viewBorang" method="GET">
+                  <button type="submit" class="frame9403-frame7445" style="margin-left: 0px; margin-right:auto;">
+                    <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                    <input type="hidden" value="{{$modul->id}}" name="modulId">
+                    <input type="hidden" value="{{$borang->id}}" name="borangId">
+                    <div class="frame9403-frame7293">
+                    <span class="frame9403-text21"><span>Papar Borang</span></span>
+                    </div>
+                  </button>
+                </form>
+              </td>
+              <td>
+                <button class="frame9403-frame7445"  onclick="openForm()">
+                  <div class="frame9403-frame7293">
+                  <span class="frame9403-text21"><span>Tambah Borang</span></span>
+                  <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                  </div>
+                </button>
+              </td>
+            </tr>
+          </table>
         </div>
 
         {{-- popup form Tambah Medan --}}
         <div class="divPopup">
           <div class="formPopup" id="popupForm">
-            <form action="/moduls/borang_field/add" method="PUT" class="formContainer">
+            <form action="/moduls/borang_field/add" method="POST" class="formContainer">
               @csrf
               <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA MEDAN</h2>
-              <table>
+              <table class="table">
                 <tr>
-                  <td class="frame9402-text04"><p class="text-xs-center">Nama Medan</p></td>
-                  <td><input type="text" class="frame9402-kotaknamaMedan" placeholder="Nama Medan" name="nama" required></td>
+                  <td class="frame9402-text04"><p class="text-xs-center" style="margin: auto;">Nama Medan</p></td>
+                  <td><input type="text" class="frame9402-kotaknama" placeholder="Nama Medan" name="nama" required></td>
                 </tr>
                 <tr>
-                  <td class="frame9402-text04"><p class="text-xs-center">Jenis Data</p></td>
+                  <td class="frame9402-text04"><p class="text-xs-center"  style="margin: auto;">Jenis Data</p></td>
                   <td>
-                    <select name="datatype" class="frame9402-kotaknamaMedan">
+                    <select name="datatype" class="frame9403-kotaknama3">
                       <option value="string">Abjad Angka</option>
                       <option value="integer">Data Berangka</option>
                     </select>
                   </td>
                 </tr>
                 <tr>
-                  <td class="frame9402-text04"><p class="text-xs-center">Jenis Data</p></td>
+                  <td class="frame9402-text04"><p class="text-xs-center"  style="margin: auto;">Pilihan</p></td>
                   <td>
-                    <select name="pilihan" class="frame9402-kotaknamaMedan">
+                    <select name="pilihan" class="frame9403-kotaknama3">
                       <option value="required">Mandatori</option>
                       <option value="optional">Pilihan</option>
                     </select>
                   </td>
                 </tr>
               </table>
+              @php
+              $count = count($medans);
+              @endphp
+              <input type="hidden" value="{{$count = $count+1}}" name="sequence">
               <input type="hidden" value="{{$proses->id}}" name="prosesId">
               <input type="hidden" value="{{$modul->id}}" name="modulId">
               <input type="hidden" value="{{$borang->id}}" name="borangId">
@@ -606,57 +628,19 @@ display: flex;
             </form>
           </div>
         </div>
-        @foreach($medans as $medan)
-          <tr class="frame9402-input" id="row">
-            <td class="frame9402-text31">Nama Medan:<input type="text" name="nama[]" class="frame9402-kotaknama" value="{{$medan->nama}}"></td>
-            <td class="frame9402-text30">Jenis Data:
-              <select name="datatype[]" class="frame9403-kotaknama3">
-                @if ($medan->datatype == "string" )
-                  <option value="string" selected>Abjad Angka</option>
-                  <option value="integer">Data Berangka</option>
-                @else
-                  <option value="string">Abjad Angka</option>
-                  <option value="integer"selected>Data Berangka</option>
-                @endif
-              </select>
-            </td>
-            <td class="frame9402-text32"> Pilihan:
-              <select name="pilihan[]" class="frame9403-kotaknama3">
-                @if ($medan->pilihan == "required" )
-                  <option value="required" selected>Mandatori</option>
-                  <option value="optional">Pilihan</option>
-                @else
-                  <option value="required">Mandatori</option>
-                  <option value="optional" selected>Pilihan</option>
-                @endif
-              </select>
-            </td>
-            <form action="/moduls/borang_field/delete" method="DELETE">
-              <td class="frame9402-frame8727" id="tindakan">
-                <button class="frame9402-rectangle828246"><img src="/SVG/bin.svg"/></button>
-              </td>
-            </form>
-            
-          </tr>
-        @endforeach
 
-        {{-- <form action="/moduls/borang_field/update" method="POST" style="width: 100%;">    
-          @csrf
-          <input type="hidden" name="modulId" value="{{$modul->id}}">
-          <input type="hidden" name="prosesId" value="{{$proses->id}}"/>
-          <input type="hidden" name="borangId" value="{{$borang->id}}">
-          <table style="overflow: scroll; max-height: 750px; width:100%;" id="borangField" class="draggable-table">
-            <tbody class="row_drag">
-            @if ($borang->context != null)
-              @php
-                $contexts = json_decode($borang->context);
-              @endphp
-              @foreach($contexts as $context)
-              <tr class="frame9402-input" id="row">
-                <td class="frame9402-text31">Nama Medan:<input type="text" name="nama[]" class="frame9402-kotaknama" value="{{$context->nama}}"></td>
+        <table style="overflow: scroll; max-height: 750px; width:100%;">
+          <tbody>
+          @foreach($medans as $medan)
+
+            <tr class="frame9402-input">          
+              <form action="/moduls/borang_field/update" method="POST">
+                @csrf
+                @method('PUT')
+                <td class="frame9402-text31">Nama Medan:<input type="text" name="nama" class="frame9402-kotaknama" value="{{$medan->nama}}"></td>
                 <td class="frame9402-text30">Jenis Data:
-                  <select name="datatype[]" class="frame9403-kotaknama3">
-                    @if ($context->datatype == "string" )
+                  <select name="datatype" class="frame9403-kotaknama3">
+                    @if ($medan->datatype == "string" )
                       <option value="string" selected>Abjad Angka</option>
                       <option value="integer">Data Berangka</option>
                     @else
@@ -666,8 +650,8 @@ display: flex;
                   </select>
                 </td>
                 <td class="frame9402-text32"> Pilihan:
-                  <select name="pilihan[]" class="frame9403-kotaknama3">
-                    @if ($context->pilihan == "required" )
+                  <select name="pilihan" class="frame9403-kotaknama3">
+                    @if ($medan->pilihan == "required" )
                       <option value="required" selected>Mandatori</option>
                       <option value="optional">Pilihan</option>
                     @else
@@ -676,24 +660,27 @@ display: flex;
                     @endif
                   </select>
                 </td>
-                <td class="frame9402-frame8727" id="tindakan">
-                  <button class="frame9402-rectangle828246" id="DeleteRow"><img src="/SVG/bin.svg"/></button>
+                <td class="frame9402-text30">Turutan:
+                  <input type="text" name="sequence" class="frame9403-kotaknama3" value="{{$medan->sequence}}">
                 </td>
-              </tr>
-              @endforeach
-            @endif
-            </tbody>
-          </table>
-          <button type="submit" class="frame9403-frame7445">
-            <div class="frame9403-frame7293">
-              <span class="frame9403-text21"><span>Simpan</span></span>
-              <img
-              src="/SVG/kemaskini.svg"
-              class="frame9403-group7527"
-              />
-            </div>
-          </button>
-        </form> --}}
+                <input type="hidden" name="medanID" value="{{$medan->id}}">
+                <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                <input type="hidden" value="{{$modul->id}}" name="modulId">
+                <input type="hidden" value="{{$borang->id}}" name="borangId">
+                <td class="frame9402-frame8727" id="tindakan">
+                  <button class="frame9402-rectangle828246" style="height: auto;"><svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;margin-top: 5px;" viewBox="0 0 530 512" width="31px"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"></path></svg></button>
+                </td>
+              </form>
+              <form action="/moduls/borang_field/delete" method="DELETE">
+                <td class="frame9402-frame8727" id="tindakan">
+                  <button class="frame9402-rectangle828246"><img src="/SVG/bin.svg"/></button>
+                </td>
+              </form>
+              
+            </tr>
+          @endforeach
+          </tbody>
+        </table>
       </div>
     {{-- upload Borang --}}
     {{-- <div class="borangPopup">
@@ -712,35 +699,6 @@ display: flex;
   </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
-$("#rowAdder").click(function () {
-            newRowAdd =
-            '<tr class="frame9402-input" id="row">'+
-                '<td class="frame9402-text31">Nama Medan:<input type="text" name="nama[]" class="frame9402-kotaknama" placeholder="Nama Medan"></td>'+
-                '<td class="frame9402-text30">Jenis Data:'+
-                    '<select name="datatype[]" class="frame9403-kotaknama3">'+
-                        '<option value="string">Abjad Angka</option>'+
-                        '<option value="integer">Data Berangka</option>'+
-                    '</select>'+
-                '</td>'+
-                '<td class="frame9402-text32"> Pilihan:'+
-                '<select name="pilihan[]" class="frame9403-kotaknama3">'+
-                    '<option value="required">Mandatori</option>'+
-                    '<option value="optional">Pilihan</option>'+
-                '</select></td>'+
-                '<td class="frame9402-frame8727" id="tindakan">'+
-                    '<button class="frame9402-rectangle828246" id="DeleteRow"><img src="/SVG/bin.svg"/></button>'+
-                '</td>'+
-            '</tr>';
-            $('#borangField').append(newRowAdd);
-        });
- 
-$("body").on("click", "#DeleteRow", function () {
-  $(this).parents("#row").remove();
-});
-$("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
-
-</script>
 <script>
 function openForm() {
   document.getElementById("popupForm").style.display = "block";
@@ -749,17 +707,4 @@ function closeForm() {
   document.getElementById("popupForm").style.display = "none";
 }
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript">
-  $( ".row_drag" ).sortable({
-      delay: 120,
-      stop: function() {
-          var selectedRow = new Array();
-          $('.row_drag>tr').each(function() {
-              selectedRow.push($(this).attr("id"));
-          });
-      }
-  });
-</script>
-
 @endsection

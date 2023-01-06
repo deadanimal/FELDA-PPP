@@ -6,15 +6,13 @@
 
     <div class="header">
         <h1 class="header-title">
-            Borang Contoh
-            {{-- {{$borang->nama}} --}}
+            {{$borang->nama}}
         </h1>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item" style="color: #FFFFFF">Modul Contoh</li>
-                <li class="breadcrumb-item active" aria-current="page">Nama Proses</li>
-            </ol>
-        </nav>
+        <a href="/moduls/{{$modul->id}}/{{$proses->id}}/borang/{{$borang->id}}"  class="frame9403-frame7445" style="margin-left:0px;">
+            <div class="frame9403-frame7293">
+              <span class="frame9403-text21"><span>Kembali</span></span>
+            </div>
+        </a>
     </div>
     <div class="row">
         <div class="col-12">
@@ -23,15 +21,15 @@
                 <h5 class="card-title mb-0">Sila isikan maklumat anda berikut dengan betul.</h5>
             </div>
             <div class="card-body">
-                <form action="" method="post" enctype="multipart/form-data">
-                    @csrf
+                    @foreach($medans as $medan)
                     <div class="row">
                         <div class="mb-3">
-                            <label for="nama" style="font-family:'Poppins'">Nama</label>
-                            <input type="text" class="form-control" maxlength="100" size="100" name="" id="nama" required>
+                            <label for="nama" style="font-family:'Poppins'">{{$medan->nama}}</label>
+                            <input type="text" class="form-control" maxlength="100" size="100" name="" id="nama" readonly>
                         </div>
                     </div>
-                    <button type="submit" class="frame9403-frame7445">
+                    @endforeach
+                    <button type="submit" class="frame9403-frame7445" disabled>
                         <div class="frame9403-frame7293">
                           <span class="frame9403-text21"><span>Hantar</span></span>
                           <img
@@ -40,7 +38,6 @@
                           />
                         </div>
                     </button>
-                </form>
             </div>
         </div>
     </div>
@@ -67,6 +64,7 @@
     margin-left:auto;
     margin-right: 0px;
     cursor: pointer;
+    text-decoration: none;
   }
   .frame9403-frame7293 {
     display: flex;

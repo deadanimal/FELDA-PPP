@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Medan extends Model
 {
     use HasFactory;
+    protected $table = 'medan';
 
     public function borang() {
         return $this->belongsTo(Borang::class, 'borang_id');

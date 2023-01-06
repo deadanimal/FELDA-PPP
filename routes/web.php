@@ -67,12 +67,14 @@ Route::put('/moduls/borang/update', [ModulController::class, 'borang_update']);
 Route::delete('/moduls/borang/delete', [ModulController::class, 'borang_delete']);
 
 Route::get('/moduls/{modul_id}/{proses_id}/borang/{borang_id}', [BorangController::class, 'borang_detail']);
-Route::post('/moduls/borang_field/add', [BorangController::class, 'borang_field_update']);
+Route::post('/moduls/borang_field/add', [BorangController::class, 'borang_field_add']);
 Route::put('/moduls/borang_field/update', [BorangController::class, 'borang_field_update']);
 Route::delete('/moduls/borang_field/delete', [BorangController::class, 'borang_field_update']);
+Route::get('/viewBorang', [BorangController::class, 'borang_view']);
+Route::get('/moduls/{modul_id}/{proses_id}/borang/{borang_id}', [BorangController::class, 'borang_detail']);
 
 });
 
 Route::get('/userView', function () {
-    return view('userView.viewBorang');
+    return view('pengurusanModul.viewBorang');
 });// Route::post('/Borang/uploadBorang',  [BorangController::class, 'uploadBorang']);
