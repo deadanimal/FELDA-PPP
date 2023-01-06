@@ -576,7 +576,7 @@ display: flex;
               <td>
                 <button class="frame9403-frame7445"  onclick="openForm()">
                   <div class="frame9403-frame7293">
-                  <span class="frame9403-text21"><span>Tambah Borang</span></span>
+                  <span class="frame9403-text21"><span>Tambah Medan</span></span>
                   <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
                   </div>
                 </button>
