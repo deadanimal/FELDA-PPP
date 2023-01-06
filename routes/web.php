@@ -45,7 +45,7 @@ Route::put('/user-categories',[UserController::class, 'category_update']);
 Route::get('/user-categories/{id}/delete',[UserController::class, 'category_delete']);
 
 Route::get('/audit', [UserController::class, 'user_audit']);
-// Route::get('/auditDates', [UserController::class, 'user_auditDate']);
+Route::post('/user_auditFilter', [UserController::class, 'user_auditFilter']);
 
 
 Route::get('/moduls', [ModulController::class, 'modul_list']);

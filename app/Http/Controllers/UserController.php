@@ -348,150 +348,36 @@ class UserController extends Controller
         return view('auditTrail.audit', compact('audits'));
     }
  
-    // public function user_auditDate(Request $request)
-    // {
-    //     $from_date = $request->from_date;
-    //     $to_date = $request->to_date;
+    public function user_auditFilter(Request $request)
+    {
+        $idPengguna = $request->idPengguna;
+        $action = $request->action;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
 
-    //     $audits = Audit::whereBetween('created_at', [$from_date , $to_date])
-    //        ->orderBy("created_at", "DESC")->get();
-           
-    //        foreach ($audits as $key => $a) {
-    //         if ($a->event == "updated") {
-    //             $a['event'] = "Kemaskini";
+       if($idPengguna != null){
+        $user = User::where('idPengguna', 'LIKE', '%'.$idPengguna.'%')->first();
 
-    //             if($a->auditable_type== "App\Models\User"){
-    //                 $var = preg_split("#/#", $a->url); 
-    //                 if(array_key_exists('status', $a->new_values)){
-    //                     $a['event'] = "Padam";
-    //                     $user = User::find($var[4]);
-    //                     $a->setAttribute('value', "Nama: ".$user->nama."<br>ID Pengguna:".$user->idPengguna);
-    //                 }
-    //                 elseif($var[3]=="forgot"){
-    //                     $a->setAttribute('value', "Lupa Kata Laluan");
+        $audits = Audit::orWhere('user_id', 'LIKE', $user->id)
+            ->orWhereBetween('created_at', [$from_date , $to_date])
+            ->orWhere('action', 'LIKE', '%'.$action.'%')
+            ->orderBy("created_at", "DESC")->get();
 
-    //                 }
-    //                 elseif($var[3]=="logout"){
-    //                     $a->setAttribute('value', "Log Keluar");
+       }
+       elseif($action != null ){
+            $audits = Audit::where('action', 'LIKE', '%'.$action.'%')
+            ->orWhereBetween('created_at', [$from_date , $to_date])
+            ->orderBy("created_at", "DESC")->get();
 
-    //                 }
-    //                 elseif($var[3]=="login"){
-    //                     $a->setAttribute('value', "Log Masuk");
+       }
+       elseif($from_date != null){
+            $audits = Audit::whereBetween('created_at', [$from_date , $to_date])
+            ->orderBy("created_at", "DESC")->get();
+            dd($audits);
+        }
 
-    //                 }
-    //                 elseif(array_key_exists('kategoripengguna', $a->new_values) || array_key_exists('wilayah', $a->new_values) ||
-    //                  array_key_exists('rancangan', $a->new_values) || array_key_exists('password', $a->new_values)||
-    //                  array_key_exists('email', $a->new_values) || array_key_exists('nokadpengenalan', $a->new_values)||
-    //                  array_key_exists('notelefon', $a->new_values) || array_key_exists('idPengguna', $a->new_values) || 
-    //                  array_key_exists('nama', $a->new_values)){
-    //                     $user = User::find($var[4]);
-    //                     $a->setAttribute('value', "Nama: ".$user->nama."<br>ID Pengguna:".$user->idPengguna);
-
-    //                 }
-
-    //             }
-    //             elseif ($a->auditable_type== "App\Models\Modul") {
-    //                 $var = preg_split("#/#", $a->url);
-    //                 $modul = Modul::find($var[4]); 
-    //                 $a->setAttribute('value', "Modul: ".$modul->nama."<br>Status:".$modul->status);
-                    
-    //             }
-    //             elseif ($a->auditable_type== "App\Models\Proses") {
-    //                 if (array_key_exists('nama', $a->new_values)){
-    //                     $a->setAttribute('value', "Nama Proses: ".$a->new_values['nama']);
-    //                 }else{
-    //                     if($a->new_values['status'] == "1"){
-    //                         $a->setAttribute('value', "Proses Status: Aktif");
-    //                     }else{
-    //                         $a->setAttribute('value', "Proses Status: Tidak Aktif");
-    //                     }
-    //                 }
-
-    //             }
-    //             elseif ($a->auditable_type== "App\Models\Borang") {
-    //                 if (array_key_exists('nama', $a->new_values)){
-    //                     $a->setAttribute('value', "Nama Borang: ".$a->new_values['Nama']);
-    //                 }
-    //                 else{
-    //                     if (array_key_exists('status', $a->new_values)){
-    //                         if($a->new_values['status'] == "1"){
-    //                             $a->setAttribute('value', "Proses Status: Aktif");
-    //                         }else{
-    //                             $a->setAttribute('value', "Proses Status: Tidak Aktif");
-    //                         }
-    //                     }
-    //                     else{
-    //                         $a->setAttribute('value', "Kemaskini Isi Borang");
-
-    //                     }
-
-    //                 }
-    //             }
-    //             elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
-    //                 $a->setAttribute('value', "Kategori Pengguna: ".$a->new_values['nama']);
-    //             }
-    //         }
-    //         elseif($a->event == "created"){
-    //             $a['event'] = "Cipta";
-    //             if($a->auditable_type== "App\Models\User"){
-    //                 $a->setAttribute('value', "Nama Pengguna: ".$a->new_values['nama']);
-    //             }
-    //             elseif ($a->auditable_type== "App\Models\Modul") {
-    //                 $a->setAttribute('value', "Nama Modul: ".$a->new_values['nama']);
-    //             }
-    //             elseif ($a->auditable_type== "App\Models\Proses") {
-    //                 $a->setAttribute('value', "Nama Proses: ".$a->new_values['nama']);
-    //             }
-    //             elseif ($a->auditable_type== "App\Models\Borang") {
-    //                 $a->setAttribute('value', "Nama Borang: ".$a->new_values['namaBorang']);
-    //             }
-    //             elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
-    //                 $a->setAttribute('value', "Nama Kategori Pengguna: ".$a->new_values['nama']);
-    //             }
-    //         }
-    //         elseif($a->event == "deleted"){
-    //             $a['event'] = "Padam";
-    //             if ($a->auditable_type== "App\Models\Modul") {
-    //                 $a->setAttribute('value', 'Nama Modul: '.$a->old_values['nama']);
-    //             }
-    //             elseif ($a->auditable_type== "App\Models\Proses") {
-    //                 $a->setAttribute('value', 'Nama Proses: '.$a->old_values['nama']);
-    //             }
-    //             elseif ($a->auditable_type== "App\Models\Borang") {
-    //                 $a->setAttribute('value', 'Nama Borang: '.$a->old_values['nama']);
-    //             }
-    //             elseif ($a->auditable_type== "App\Models\KategoriPengguna") {
-    //                 $a->setAttribute('value', "Nama Kategori Pengguna: ".$a->old_values['nama']);
-    //             }
-    //         }
-    //     }
-    //     if($request->ajax()) {
-    //         return DataTables::collection($audits)
-    //         ->editColumn('created_at', function (Audit $audits) {
-    //             return $audits->created_at; // no formatting, just returned $user->created_at; 
-    //         })
-    //         ->addIndexColumn()
-    //         ->addColumn('userNama', function (Audit $audits) {
-    //             if($audits->user) {
-    //                 $html_ = $audits->user->nama;
-    //             } else {
-    //                 $html_ = '-';
-    //             }
-    //             return $html_;
-    //         })  
-    //         ->addColumn('userid', function (Audit $audits) {
-    //             if($audits->user) {
-    //                 $html_ = $audits->user->idPengguna;
-    //             } else {
-    //                 $html_ = '-';
-    //             }
-    //             return $html_;
-    //         }) 
-    //         ->rawColumns(['userNama', 'userid', 'value'])                                                 
-    //         ->make(true);
-    //     }
-
-    //     return view('auditTrail.auditDate', compact('from_date', 'to_date'));
-    // }
+        
+        return view('auditTrail.auditFilter', compact('audits'));
+    }
 
 }

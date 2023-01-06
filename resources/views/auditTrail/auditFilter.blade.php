@@ -1,8 +1,6 @@
 @extends('layouts.guest')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 @section('innercontent')
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <div class="container-fluid">
   <div class="header">
     <h1 class="header-title">
@@ -31,8 +29,8 @@
               </tr>
               <tr style="border: none;">
                 <td style="border: none;"><p class="text04">Tarikh</p></td>
-                <td style="border: none;"><input type="date" name="from_date" class="form-control" placeholder="ID Pengguna"/></td>
-                <td style="border: none;"><input type="date" name="to_date" class="form-control" placeholder="ID Pengguna"/></td>
+                <td style="border: none;"><input type="date" name="from_date" id="min" class="form-control"/></td>
+                <td style="border: none;"><input type="date" name="to_date" id="max" class="form-control"/></td>
                 <td style="border: none;"></td>
               </tr>
             </tbody>
@@ -95,4 +93,16 @@
   text-decoration: none;
 }
 </style>
+<script>
+  $(document).ready(function() {
+    // Create date inputs
+    minDate = new DateTime($('#min'), {
+        format: 'YYYY-MM-DD'
+    });
+    maxDate = new DateTime($('#max'), {
+        format: 'YYYY-MM-DD'
+    });
+  
+});
+</script>
 @endsection
