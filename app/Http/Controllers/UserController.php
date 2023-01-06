@@ -373,7 +373,6 @@ class UserController extends Controller
        elseif($from_date != null){
             $audits = Audit::whereBetween('created_at', [$from_date , $to_date])
             ->orderBy("created_at", "DESC")->get();
-            dd($audits);
         }
 
         
