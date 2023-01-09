@@ -451,11 +451,10 @@
         flex-direction: column;
         background: #FFFFFF;
         color: #781E2A;
-        font-style: Bold;
         text-align: center;
         font-weight: 700;
         line-height: normal;
-        font-size: 15px;
+        font-size: 18px;
         text-decoration: none;
         font-family: 'Eina01-SemiBold', sans-serif;
     }

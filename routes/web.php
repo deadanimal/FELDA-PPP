@@ -69,12 +69,17 @@ Route::delete('/moduls/borang/delete', [ModulController::class, 'borang_delete']
 Route::get('/moduls/{modul_id}/{proses_id}/borang/{borang_id}', [BorangController::class, 'borang_detail']);
 Route::post('/moduls/borang_field/add', [BorangController::class, 'borang_field_add']);
 Route::put('/moduls/borang_field/update', [BorangController::class, 'borang_field_update']);
-Route::delete('/moduls/borang_field/delete', [BorangController::class, 'borang_field_update']);
+Route::delete('/moduls/borang_field/delete', [BorangController::class, 'borang_field_delete']);
 Route::get('/viewBorang', [BorangController::class, 'borang_view']);
 Route::get('/moduls/{modul_id}/{proses_id}/borang/{borang_id}', [BorangController::class, 'borang_detail']);
 
+Route::post('/moduls/tugasan/add', [ModulController::class, 'tugasan_add']);
+Route::put('/moduls/tugasan/update', [ModulController::class, 'tugasan_update']);
+Route::delete('/moduls/tugasan/delete', [ModulController::class, 'tugasan_delete']);
+
+Route::get('/test', function () {
+    return view('pengurusanTugasan.senaraiTugasan');
+});
 });
 
-Route::get('/userView', function () {
-    return view('pengurusanModul.viewBorang');
-});// Route::post('/Borang/uploadBorang',  [BorangController::class, 'uploadBorang']);
+// Route::post('/Borang/uploadBorang',  [BorangController::class, 'uploadBorang']);

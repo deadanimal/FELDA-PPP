@@ -10,9 +10,9 @@ use App\Models\Borang;
 use App\Models\Modul;
 use App\Models\Proses;
 use App\Models\Medan;
+use App\Models\Audit;
 use Illuminate\Http\Request;
 use Alert;
-use Artisan;
 
 class BorangController extends Controller
 {
@@ -63,6 +63,11 @@ class BorangController extends Controller
         $idProses = $request->prosesId;
         $proses = Proses::find($idProses);
 
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Tambah medan ".$medan->nama." pada Borang ".$borang->nama;
+        $audit->save();
+
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
         Alert::success('Tambah Meadan Borang berjaya.', 'Tambah medan borang telah berjaya.');   
@@ -90,12 +95,46 @@ class BorangController extends Controller
         $idProses = $request->prosesId;
         $proses = Proses::find($idProses);
 
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini medan ".$medan->nama." pada Borang ".$borang->nama;
+        $audit->save();
+
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
         Alert::success('Kemaskini Meadan Borang berjaya.', 'Kemaskini medan borang telah berjaya.');   
 
         return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans'));
     }
+
+    public function borang_field_delete(Request $request)
+    {
+        $medan = Medan::find($request->medanID);
+        $nama = $medan->nama;
+        $medan->delete();
+
+        $idBorang = $request->borangId;
+        $borang = Borang::find($idBorang);
+
+
+        $idModul = $request->modulId;
+        $modul = Modul::find($idModul);
+
+        $idProses = $request->prosesId;
+        $proses = Proses::find($idProses);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam medan ".$nama." pada Borang ".$borang->nama;
+        $audit->save();
+
+        $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
+
+        Alert::success('Padam Meadan Borang berjaya.', 'Kemaskini medan borang telah berjaya.');   
+
+        return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans'));
+    }
+
     public function borang_view(Request $request)
     {
         $idBorang = $request->borangId;

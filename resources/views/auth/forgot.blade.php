@@ -47,10 +47,10 @@
 </body>
 <style>
 html {
-  background: url("/Image/background.JPG");
+  background: url("/Image/background.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
-  font-family: 'Poppins';
+  font-family: 'Poppins', sans-serif;
   min-height: 100%;
 }
 body{

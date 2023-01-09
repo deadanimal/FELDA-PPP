@@ -8,6 +8,9 @@ use App\Models\Modul;
 use App\Models\Proses;
 use App\Models\Borang;
 use App\Models\Audit;
+use App\Models\Tugasan;
+use App\Models\KategoriPengguna;
+
 
 use Illuminate\Http\Request;
 use Alert;
@@ -268,8 +271,10 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $proses = Proses::find($request->prosesId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kategoriPengguna = KategoriPengguna::all();
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul'));
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan'));
     }
 
     public function borang_list(Request $request)
@@ -277,9 +282,13 @@ class ModulController extends Controller
         $idProses = (int)$request->route('proses_id');
         $borangs = Borang::where('proses', $idProses)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($idProses);
+
         $idModul = (int)$request->route('modul_id');
         $modul = Modul::find($idModul);
-        return view('pengurusanModul.senaraiBorang', compact('modul','borangs', 'proses'));
+        $tugasan = Tugasan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
+        $kategoriPengguna = KategoriPengguna::all();
+
+        return view('pengurusanModul.senaraiBorang', compact('modul','borangs', 'proses', 'tugasan', 'kategoriPengguna'));
     }
 
     public function borang_update(Request $request)
@@ -300,8 +309,10 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($request->prosesId);
+        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kategoriPengguna = KategoriPengguna::all();
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul'));
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna'));
     }
 
     public function borang_delete(Request $request)
@@ -320,7 +331,33 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($request->prosesId);
+        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kategoriPengguna = KategoriPengguna::all();
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul'));
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna'));
+    }
+
+    public function tugasan_add(Request $request){
+        $tugasan = new Tugasan;
+        $tugasan->nama = $request->namaTugas;
+        $tugasan->jenisTugas = $request->jenisTugas;
+        $tugasan->userKategori = $request->userKategori;
+        $tugasan->proses_id = $request->prosesId;
+        $tugasan->save();
+
+        $proses = Proses::find($request->prosesId);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Tugasan ".$tugasan->nama." pada Proses ".$proses->nama;
+        $audit->save();
+
+        $modul = Modul::find($request->modulId);
+        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kategoriPengguna = KategoriPengguna::all();
+
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna'));
+
     }
 }

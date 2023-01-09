@@ -1,6 +1,10 @@
 @extends('layouts.guest')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 @section('innercontent')
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 <style>
 .frame9402-frame9402 {
   width: 100%;
@@ -163,7 +167,7 @@
   text-decoration: none;
 }
 .frame9402-kotaknama {
-  width: 350px;
+  width: -webkit-fill-available;
   height: 45px;
   position: relative;
   box-sizing: content-box;
@@ -235,7 +239,7 @@ display: flex;
 }
 .frame9403-kotaknama3 {
     top: 0px;
-    width: fit-content;
+    width: -webkit-fill-available;
     height: 45px;
     position: relative;
     box-sizing: content-box;
@@ -272,27 +276,6 @@ display: flex;
     cursor: pointer;
     margin-left: auto;
     margin-right: 10px;
-  }
-  .loginPopup {
-    position: relative;
-    text-align: center;
-    width: 100%;
-  }
-  .formPopup {
-    display: none;
-    position: fixed;
-    left: 50%;
-    top: 25%;
-    transform: translate(-50%, 5%);
-    border: 4px solid #781E2A;
-    border-radius: 8px;
-    z-index: 9;
-  }
-  .formContainer {
-    max-width: 550px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
   }
   .frame9402-kotaknamaBorang {
   width: auto;
@@ -353,7 +336,7 @@ display: flex;
   font-stretch: normal;
   margin-bottom: 0;
   text-decoration: none;
-  margin-left: 3%;
+  margin-left: 2%;
 }
 .frame9402-text31 {
   color: #494949;
@@ -386,7 +369,7 @@ display: flex;
   text-decoration: none;
 }
 .frame9402-frame8727 {
-  width: 10%;
+  width: 5%;
   display: flex;
   opacity: 1;
   position: relative;
@@ -400,11 +383,10 @@ display: flex;
   justify-content: center;
 }
 .frame9402-rectangle828246 {
-  width: 32px;
+  width: 35px;
   height: 30px;
   padding: 0px;
-  margin-right: 7px;    
-  margin-left: 7px;
+  margin-top: -5px;
   position: relative;
   box-sizing: border-box;
   background-color: transparent;
@@ -503,6 +485,7 @@ display: flex;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
+    margin-bottom: 0px;
   }
   .frame9402-kotaknamaMedan {
   height: auto;
@@ -559,7 +542,7 @@ display: flex;
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <table class="table table-borderless">
+          <table style="overflow: auto; height: auto; max-height: 750px; width:100%;">
             <tr>
               <td>
                 <form action="/viewBorang" method="GET">
@@ -632,7 +615,6 @@ display: flex;
         <table style="overflow: scroll; max-height: 750px; width:100%;">
           <tbody>
           @foreach($medans as $medan)
-
             <tr class="frame9402-input">          
               <form action="/moduls/borang_field/update" method="POST">
                 @csrf
@@ -649,7 +631,7 @@ display: flex;
                     @endif
                   </select>
                 </td>
-                <td class="frame9402-text32"> Pilihan:
+                <td class="frame9402-text30"> Pilihan:
                   <select name="pilihan" class="frame9403-kotaknama3">
                     @if ($medan->pilihan == "required" )
                       <option value="required" selected>Mandatori</option>
@@ -661,22 +643,51 @@ display: flex;
                   </select>
                 </td>
                 <td class="frame9402-text30">Turutan:
-                  <input type="text" name="sequence" class="frame9403-kotaknama3" value="{{$medan->sequence}}">
+                  <select name="pilihan" class="frame9403-kotaknama3" style="width: 50%;">
+                  @for($x=1; $x<=count($medans); $x++)
+                    <option value="{{$x}}" @if($x == $medan->sequence)selected @endif>{{$x}}</option>
+                  @endfor
+                  {{-- <input type="text" name="sequence" class="frame9403-kotaknama3" value="{{$medan->sequence}}"> --}}
                 </td>
                 <input type="hidden" name="medanID" value="{{$medan->id}}">
                 <input type="hidden" value="{{$proses->id}}" name="prosesId">
                 <input type="hidden" value="{{$modul->id}}" name="modulId">
                 <input type="hidden" value="{{$borang->id}}" name="borangId">
                 <td class="frame9402-frame8727" id="tindakan">
-                  <button class="frame9402-rectangle828246" style="height: auto;"><svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;margin-top: 5px;" viewBox="0 0 530 512" width="31px"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"></path></svg></button>
+                  <button class="frame9402-rectangle828246" style="height: auto;" title="Simpan"><svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;margin-top: 5px;" viewBox="0 0 530 512" width="31px"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"></path></svg></button>
                 </td>
               </form>
-              <form action="/moduls/borang_field/delete" method="DELETE">
-                <td class="frame9402-frame8727" id="tindakan">
-                  <button class="frame9402-rectangle828246"><img src="/SVG/bin.svg"/></button>
-                </td>
-              </form>
+              <td class="frame9402-frame8727">
+                <button type="button" class="frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModal{{$medan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+              </td>
               
+              <div class="modal fade" id="exampleModal{{$medan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Padam Medan {{$medan->nama}}</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <p>Anda Pasti Mahu Padam Medan {{$medan->nama}}?<p>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                          <form method="post" action="/moduls/borang_field/delete">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" name="medanID" value="{{$medan->id}}">
+                            <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                            <input type="hidden" value="{{$modul->id}}" name="modulId">
+                            <input type="hidden" value="{{$borang->id}}" name="borangId">
+                            <button class="btn btn-danger">Ya</button>
+                          </form>
+                      </div>
+                    </div>
+                </div>
+              </div>
             </tr>
           @endforeach
           </tbody>
