@@ -274,7 +274,7 @@ class ModulController extends Controller
         $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan'));
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna'));
     }
 
     public function borang_list(Request $request)
@@ -351,6 +351,66 @@ class ModulController extends Controller
         $audit->user_id = Auth::user()->id;
         $audit->action = "Cipta Tugasan ".$tugasan->nama." pada Proses ".$proses->nama;
         $audit->save();
+
+        $modul = Modul::find($request->modulId);
+        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kategoriPengguna = KategoriPengguna::all();
+
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna'));
+
+    }
+
+    public function tugasan_edit(Request $request){
+        $idTugasan = $request->tugasanID;
+        $tugasan = Tugasan::find($idTugasan);
+
+        $proses = Proses::find($request->prosesId);
+
+        $modul = Modul::find($request->modulId);
+        $kategoriPengguna = KategoriPengguna::all();
+
+        return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna'));
+
+    }
+
+    public function tugasan_update(Request $request){
+        $idTugasan = $request->tugasanID;
+        $tugasan = Tugasan::find($idTugasan);
+        $tugasan->nama = $request->namaTugas;
+        $tugasan->jenisTugas = $request->jenisTugas;
+        $tugasan->userKategori = $request->userKategori;
+        $tugasan->proses_id = $request->prosesId;
+        $tugasan->save();
+
+        $proses = Proses::find($request->prosesId);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Tugasan ".$tugasan->nama." pada Proses ".$proses->nama;
+        $audit->save();
+
+        $modul = Modul::find($request->modulId);
+        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kategoriPengguna = KategoriPengguna::all();
+
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna'));
+
+    }
+    public function tugasan_delete(Request $request){
+        $idTugasan = $request->tugasanID;
+        $tugasan = Tugasan::find($idTugasan);
+
+        $proses = Proses::find($request->prosesId);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Tugasan ".$tugasan->nama." pada Proses ".$proses->nama;
+        $audit->save();
+
+        $tugasan->delete();
+        Alert::success('Padam Tugasan Berjaya.', 'Padam tugasan telah berjaya.');
 
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();

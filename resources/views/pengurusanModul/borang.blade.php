@@ -613,84 +613,88 @@ display: flex;
         </div>
 
         <table style="overflow: scroll; max-height: 750px; width:100%;">
+          @if (!$medans->isEmpty())
           <tbody>
-          @foreach($medans as $medan)
-            <tr class="frame9402-input">          
-              <form action="/moduls/borang_field/update" method="POST">
-                @csrf
-                @method('PUT')
-                <td class="frame9402-text31">Nama Medan:<input type="text" name="nama" class="frame9402-kotaknama" value="{{$medan->nama}}"></td>
-                <td class="frame9402-text30">Jenis Data:
-                  <select name="datatype" class="frame9403-kotaknama3">
-                    @if ($medan->datatype == "string" )
-                      <option value="string" selected>Abjad Angka</option>
-                      <option value="integer">Data Berangka</option>
-                    @else
-                      <option value="string">Abjad Angka</option>
-                      <option value="integer"selected>Data Berangka</option>
-                    @endif
-                  </select>
+            @foreach($medans as $medan)
+              <tr class="frame9402-input">          
+                <form action="/moduls/borang_field/update" method="POST">
+                  @csrf
+                  @method('PUT')
+                  <td class="frame9402-text31">Nama Medan:<input type="text" name="nama" class="frame9402-kotaknama" value="{{$medan->nama}}"></td>
+                  <td class="frame9402-text30">Jenis Data:
+                    <select name="datatype" class="frame9403-kotaknama3">
+                      @if ($medan->datatype == "string" )
+                        <option value="string" selected>Abjad Angka</option>
+                        <option value="integer">Data Berangka</option>
+                      @else
+                        <option value="string">Abjad Angka</option>
+                        <option value="integer"selected>Data Berangka</option>
+                      @endif
+                    </select>
+                  </td>
+                  <td class="frame9402-text30"> Pilihan:
+                    <select name="pilihan" class="frame9403-kotaknama3">
+                      @if ($medan->pilihan == "required" )
+                        <option value="required" selected>Mandatori</option>
+                        <option value="optional">Pilihan</option>
+                      @else
+                        <option value="required">Mandatori</option>
+                        <option value="optional" selected>Pilihan</option>
+                      @endif
+                    </select>
+                  </td>
+                  <td class="frame9402-text30">Turutan:
+                    <select name="sequence" class="frame9403-kotaknama3" style="width: 50%;">
+                    @for($x=1; $x<=count($medans); $x++)
+                      <option value="{{$x}}" @if($x == $medan->sequence)selected @endif>{{$x}}</option>
+                    @endfor
+                    {{-- <input type="text" name="sequence" class="frame9403-kotaknama3" value="{{$medan->sequence}}"> --}}
+                  </td>
+                  <input type="hidden" name="medanID" value="{{$medan->id}}">
+                  <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                  <input type="hidden" value="{{$modul->id}}" name="modulId">
+                  <input type="hidden" value="{{$borang->id}}" name="borangId">
+                  <td class="frame9402-frame8727" id="tindakan">
+                    <button class="frame9402-rectangle828246" style="height: auto;" title="Simpan"><svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;margin-top: 5px;" viewBox="0 0 530 512" width="31px"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"></path></svg></button>
+                  </td>
+                </form>
+                <td class="frame9402-frame8727">
+                  <button type="button" class="frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModal{{$medan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
                 </td>
-                <td class="frame9402-text30"> Pilihan:
-                  <select name="pilihan" class="frame9403-kotaknama3">
-                    @if ($medan->pilihan == "required" )
-                      <option value="required" selected>Mandatori</option>
-                      <option value="optional">Pilihan</option>
-                    @else
-                      <option value="required">Mandatori</option>
-                      <option value="optional" selected>Pilihan</option>
-                    @endif
-                  </select>
-                </td>
-                <td class="frame9402-text30">Turutan:
-                  <select name="pilihan" class="frame9403-kotaknama3" style="width: 50%;">
-                  @for($x=1; $x<=count($medans); $x++)
-                    <option value="{{$x}}" @if($x == $medan->sequence)selected @endif>{{$x}}</option>
-                  @endfor
-                  {{-- <input type="text" name="sequence" class="frame9403-kotaknama3" value="{{$medan->sequence}}"> --}}
-                </td>
-                <input type="hidden" name="medanID" value="{{$medan->id}}">
-                <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                <input type="hidden" value="{{$modul->id}}" name="modulId">
-                <input type="hidden" value="{{$borang->id}}" name="borangId">
-                <td class="frame9402-frame8727" id="tindakan">
-                  <button class="frame9402-rectangle828246" style="height: auto;" title="Simpan"><svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;margin-top: 5px;" viewBox="0 0 530 512" width="31px"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"></path></svg></button>
-                </td>
-              </form>
-              <td class="frame9402-frame8727">
-                <button type="button" class="frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModal{{$medan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
-              </td>
-              
-              <div class="modal fade" id="exampleModal{{$medan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Padam Medan {{$medan->nama}}</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                          </button>
+                
+                <div class="modal fade" id="exampleModal{{$medan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Padam Medan {{$medan->nama}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Anda Pasti Mahu Padam Medan {{$medan->nama}}?<p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                            <form method="post" action="/moduls/borang_field/delete">
+                              @csrf
+                              @method('DELETE')
+                              <input type="hidden" name="medanID" value="{{$medan->id}}">
+                              <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                              <input type="hidden" value="{{$modul->id}}" name="modulId">
+                              <input type="hidden" value="{{$borang->id}}" name="borangId">
+                              <button class="btn btn-danger">Ya</button>
+                            </form>
+                        </div>
                       </div>
-                      <div class="modal-body">
-                          <p>Anda Pasti Mahu Padam Medan {{$medan->nama}}?<p>
-                      </div>
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
-                          <form method="post" action="/moduls/borang_field/delete">
-                            @csrf
-                            @method('DELETE')
-                            <input type="hidden" name="medanID" value="{{$medan->id}}">
-                            <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                            <input type="hidden" value="{{$modul->id}}" name="modulId">
-                            <input type="hidden" value="{{$borang->id}}" name="borangId">
-                            <button class="btn btn-danger">Ya</button>
-                          </form>
-                      </div>
-                    </div>
+                  </div>
                 </div>
-              </div>
-            </tr>
-          @endforeach
+              </tr>
+            @endforeach
           </tbody>
+          @else
+            <tr class="frame9402-input" style="background-color: #FFFFFF; justify-content:center;"><td><h2 class="frame9402-text01" style="color:black;"> Tiada Medan </h2></td></tr>
+          @endif
         </table>
       </div>
     {{-- upload Borang --}}

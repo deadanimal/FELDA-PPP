@@ -74,6 +74,7 @@ Route::get('/viewBorang', [BorangController::class, 'borang_view']);
 Route::get('/moduls/{modul_id}/{proses_id}/borang/{borang_id}', [BorangController::class, 'borang_detail']);
 
 Route::post('/moduls/tugasan/add', [ModulController::class, 'tugasan_add']);
+Route::get('/moduls/tugasan/edit', [ModulController::class, 'tugasan_edit']);
 Route::put('/moduls/tugasan/update', [ModulController::class, 'tugasan_update']);
 Route::delete('/moduls/tugasan/delete', [ModulController::class, 'tugasan_delete']);
 

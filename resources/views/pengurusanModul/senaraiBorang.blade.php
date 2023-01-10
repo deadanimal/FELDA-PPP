@@ -4,7 +4,6 @@
 @section('innercontent')
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
 <div class="container-fluid">
 
   <div class="header">
@@ -24,12 +23,20 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <button class="frame9403-frame7445"  onclick="openForm()">
-            <div class="frame9403-frame7293">
-            <span class="frame9403-text21"><span>Tambah Borang</span></span>
-            <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-            </div>
-          </button>
+          <table style="width: 100%">
+            <tr>
+              <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Borang</h1></td>
+              <td>
+                <button class="frame9403-frame7445"  onclick="openForm()">
+                  <div class="frame9403-frame7293">
+                  <span class="frame9403-text21"><span>Tambah Borang</span></span>
+                  <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                  </div>
+                </button>
+              </td>
+            </tr>
+          </table>
+          
         </div>
 
         {{-- popup form Tambah Borang --}}
@@ -103,13 +110,13 @@
                   <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Padam Boran {{$borang->nama}}</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Padam Borang {{$borang->namaBorang}}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Anda Pasti Mahu Padam Borang {{$borang->nama}}?<p>
+                            <p>Anda Pasti Mahu Padam Borang {{$borang->namaBorang}}?<p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
@@ -139,12 +146,19 @@
 
       <div class="card">
         <div class="card-header">
-            <button class="frame9403-frame7445"  onclick="openFormTugas()">
-            <div class="frame9403-frame7293">
-            <span class="frame9403-text21"><span>Cipta Tugasan</span></span>
-            <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-            </div>
-            </button>
+          <table style="width: 100%">
+            <tr>
+              <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Tugasan</h1></td>
+              <td>
+                <button class="frame9403-frame7445"  onclick="openFormTugas()">
+                  <div class="frame9403-frame7293">
+                  <span class="frame9403-text21"><span>Cipta Tugasan</span></span>
+                  <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                  </div>
+                </button>
+              </td>
+            </tr>
+          </table>
         </div>
 
         {{-- popup form Tambah Tugasan --}}
@@ -180,81 +194,78 @@
             </form>
           </div>
         </div>
-        {{-- senarai borang --}}
-        <table style="overflow: auto; height: auto; max-height: 750px; width:100%;">
-          @if (!$tugasan->isEmpty())
-            @php
-              $i = 1;
-            @endphp
-            @foreach ($tugasan as $tugasan)
-              @if ($i == 1 || $i% 2 == 1)
-                <tr class="frame9402-input">
-              @else
-                <tr class="frame9402-input" style="background-color: rgba(162, 50, 93, 0.08);"> 
-              @endif
-                <td class="frame9402-text30">Nama Tugasan:</td>
-                <td class="frame9402-text31"><input type="text" id="nama{{$i}}" class="frame9402-kotaknama" value="{{$tugasan->Nama}}"></td>
-                <td class="frame9402-text32">
-                  <select name="jenisTugas" id="jenisTugas{{$i}}" class="frame9403-kotaknama3">
-                      <option value="checkBox" @if ($tugasan->jenisTugas == "checkBox") selected @endif>Kotak Semak</option>
-                      <option value="uploadDoc" @if ($tugasan->jenisTugas == "uploadDoc") selected @endif>Muat Naik Dokumen</option>
-                      <option value="input"  @if ($tugasan->jenisTugas == "input") selected @endif>Input</option>
-                  </select></td>
-                <td class="frame9402-frame8727" id="tindakan">
-                  <form method="Post" action="/moduls/tugasan/update">
-                    @csrf
-                    @method('PUT')
+        {{-- senarai Tugasan --}}
+        <table class="table table-bordered table-striped w-100 modul-datatable">
+          <thead class="text-white bg-primary w-100">
+            <tr>
+                <th scope="col">Nama Tugasan</th>
+                <th scope="col">Jenis Tugasan</th>
+                <th scope="col">Kategori Pengguna</th>
+                <th scope="col" >Tindakan</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (!$tugasan->isEmpty())
+              @foreach ($tugasan as $tugasan)
+              <tr>
+                <td class="text-center">{{$tugasan->nama}}</td>
+                <td class="text-center">
+                  @if($tugasan->jenisTugas == "input")
+                  Input
+                  @elseif($tugasan->jenisTugas == "checkBox")
+                  Kotak Semak
+                  @elseif($tugasan->jenisTugas == "uploadDoc")
+                  Muat Naik Dokumen
+                  @endif
+                </td>
+                <td class="text-center">{{$tugasan->kategoriPengguna->nama}}</td>
+                <td class="text-center">
+                  <form action="/moduls/tugasan/edit" method="GET">
+                    <input type="hidden" name="tugasanID" value="{{$tugasan->id}}">
+                    <input type="hidden" name="prosesId" value="{{$proses->id}}">
+                    <input type="hidden" name="modulId" value="{{$modul->id}}">
 
-                    <input type="hidden" name="namaupdate" id="namaupdate{{$i}}" >
-                    <input type="hidden" name="statusUpdate" id="statusUpdate{{$i}}" >
-                    <input type="hidden" value="{{$modul->id}}" name="modulId">
-                    <input type="hidden" name="prosesId" id="prosesId" value="{{$proses->id}}">
-                    <input type="hidden" name="borangId" id="borangID" value="{{$borang->id}}">
-                    <button class="frame9402-rectangle828245" type="submit" onclick="save({{$i}})" style="margin-left: 7px;margin-top: 9px;background-color: transparent;border-color: transparent;" title="Simpan">                
-                      <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 530 512" width="31px"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
+                    <button class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Masuk">
+                      <img src="/SVG/pencil.svg" title="kemaskini"/>
                     </button>
                   </form>
-                  {{-- <a href="/pengurusanModul/kemaskiniProses/{{$proses->id}}/{{}}" class="frame9402-rectangle8282452" id="kemaskini">
-                    <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 548 612"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
-                  </a> --}}
-                  <button type="button" class="frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModal{{$i}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                 
+                  <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModaltugas{{$tugasan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
 
                   <!-- Modal -->
-                  <div class="modal fade" id="exampleModaltugasan{{$i}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Padam Tugasan {{$borang->nama}}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
+                  <div class="modal fade" id="exampleModaltugas{{$tugasan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Padam Tugasan {{$tugasan->nama}}</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              <p>Anda Pasti Mahu Padam Tugasan {{$tugasan->nama}}?<p>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                              <form method="post" action="/moduls/tugasan/delete">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" value="{{$tugasan->id}}" name="tugasanID">
+                                <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                                <input type="hidden" value="{{$modul->id}}" name="modulId">
+                                <button class="btn btn-danger">Ya</button>
+                              </form>
+                          </div>
                         </div>
-                        <div class="modal-body">
-                            <p>Anda Pasti Mahu Padam Borang {{$borang->nama}}?<p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
-                            <form method="post" action="/moduls/borang/delete">
-                              @csrf
-                              @method('DELETE')
-                              <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                              <input type="hidden" value="{{$modul->id}}" name="modulId">
-                              <input type="hidden" name="borangId" value="{{$borang->id}}"/>
-                              <button class="btn btn-danger">Ya</button>
-                            </form>
-                        </div>
-                      </div>
-                  </div>
+                    </div>
                   </div>
                 </td>
               </tr>
-              @php
-                $i++;
-              @endphp
-            @endforeach 
-          @else
-            <tr class="frame9402-input" style="background-color: #FFFFFF;"><h2 class="frame9402-text01" style="color:black;"> Tiada Borang </h2></tr>
-          @endif
+              @endforeach 
+            @else
+              <tr class="frame9402-input" style="background-color: #FFFFFF;"><h2 class="frame9402-text01" style="color:black;"> Tiada Tugasan </h2></tr>
+            @endif
+          </tbody>
         </table>
 
       </div>
@@ -270,6 +281,15 @@ function save(no)
    var status_val=document.getElementById("status"+no).value;
    document.getElementById("statusUpdate"+no).value = status_val;
    document.getElementById("namaupdate"+no).value=nama_val;
+  }
+  function savetugasan(no)
+  {
+   var namatugas_val=document.getElementById("namaTugas"+no).value;
+   var jenistugas_val=document.getElementById("jenisTugas"+no).value;
+   var userKategori_val=document.getElementById("userKategori"+no).value;
+   document.getElementById("namaTugasupdate"+no).value = namatugas_val;
+   document.getElementById("jenisTugasupdate"+no).value=jenistugas_val;
+   document.getElementById("userKategoriupdate"+no).value=userKategori_val;
   }
 </script>
 

@@ -61,6 +61,9 @@ class User extends Authenticatable
     public function audit() {
         return $this->hasMany(Audit::class);
     }
+    public function borangJawapan() {
+        return $this->hasMany(borangJawapan::class);
+    }
   
     
 
