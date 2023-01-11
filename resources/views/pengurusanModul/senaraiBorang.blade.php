@@ -594,6 +594,7 @@ function closeFormTugas() {
       padding: 20px;
       background-color: #fff;
       border-radius: 8px;
+      margin-bottom: 0px;
     }
     .frame9402-kotaknamaBorang {
     width: 299px;
@@ -720,6 +721,7 @@ function closeFormTugas() {
     position: relative;
     box-sizing: border-box;
     margin-right: 10px;
+    border: none;
   }
   .frame9402-rectangle8282452 {
     width: 32px;

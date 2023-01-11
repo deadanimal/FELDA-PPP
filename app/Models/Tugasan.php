@@ -18,4 +18,8 @@ class Tugasan extends Model
     public function kategoriPengguna() {
         return $this->belongsTo(KategoriPengguna::class, 'userKategori');
     }
+
+    public function checkboxes(){
+        return $this->hasMany(checkbox::class);
+    }
 }

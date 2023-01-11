@@ -78,6 +78,10 @@ Route::get('/moduls/tugasan/edit', [ModulController::class, 'tugasan_edit']);
 Route::put('/moduls/tugasan/update', [ModulController::class, 'tugasan_update']);
 Route::delete('/moduls/tugasan/delete', [ModulController::class, 'tugasan_delete']);
 
+Route::post('/moduls/tugasan/checkbox/add', [ModulController::class, 'checkbox_add']);
+Route::put('/moduls/tugasan/checkbox/update', [ModulController::class, 'checkbox_update']);
+Route::delete('/moduls/tugasan/checkbox/delete', [ModulController::class, 'checkbox_delete']);
+
 Route::get('/test', function () {
     return view('pengurusanTugasan.senaraiTugasan');
 });

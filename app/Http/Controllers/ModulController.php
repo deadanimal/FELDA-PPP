@@ -10,6 +10,7 @@ use App\Models\Borang;
 use App\Models\Audit;
 use App\Models\Tugasan;
 use App\Models\KategoriPengguna;
+use App\Models\checkbox;
 
 
 use Illuminate\Http\Request;
@@ -370,7 +371,9 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $kategoriPengguna = KategoriPengguna::all();
 
-        return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna'));
+        $checkboxes = checkbox::where('tugasan',$idTugasan)->get();
+
+        return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes'));
 
     }
 
@@ -418,6 +421,75 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
 
         return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna'));
+
+    }
+    public function checkbox_add(Request $request){
+        $idTugasan = $request->tugasanID;
+
+        $checkbox = New checkbox;
+        $checkbox->nama = $request->nama;
+        $checkbox->tugasan = $idTugasan;
+        $checkbox->save();
+
+        $tugasan = Tugasan::find($idTugasan);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Kotak Semak ".$checkbox->nama." pada Tugasan ".$tugasan->nama;
+        $audit->save();
+        
+        $proses = Proses::find($request->prosesId);
+        $modul = Modul::find($request->modulId);
+        $kategoriPengguna = KategoriPengguna::all();
+        $checkboxes = checkbox::where('tugasan',$idTugasan)->get();
+
+        return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes'));
+
+    }
+    public function checkbox_update(Request $request){
+
+        $checkbox = checkbox::find($request->checkboxID);
+        $checkbox->nama = $request->namaCbUpdate;
+        $checkbox->save();
+
+        $idTugasan = $request->tugasanID;
+
+        $tugasan = Tugasan::find($request->tugasanID);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Kotak Semak ".$checkbox->nama." pada Tugasan ".$tugasan->nama;
+        $audit->save();
+
+        $proses = Proses::find($request->prosesId);
+        $modul = Modul::find($request->modulId);
+        $kategoriPengguna = KategoriPengguna::all();
+        $checkboxes = checkbox::where('tugasan',$idTugasan)->get();
+
+        return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes'));
+
+    }
+
+    public function checkbox_delete(Request $request){
+
+        $checkbox = checkbox::find($request->checkboxID);
+        
+
+        $tugasan = Tugasan::find($request->tugasanID);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Kotak Semak ".$checkbox->nama." pada Tugasan ".$tugasan->nama;
+        $audit->save();
+        
+        $checkbox->delete();
+
+        $proses = Proses::find($request->prosesId);
+        $modul = Modul::find($request->modulId);
+        $kategoriPengguna = KategoriPengguna::all();
+        $checkboxes = checkbox::where('tugasan',$request->tugasanID)->get();
+
+        return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes'));
 
     }
 }

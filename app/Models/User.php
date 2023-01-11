@@ -64,6 +64,9 @@ class User extends Authenticatable
     public function borangJawapan() {
         return $this->hasMany(borangJawapan::class);
     }
+    public function checkbox() {
+        return $this->hasMany(checkbox::class);
+    }
   
     
 

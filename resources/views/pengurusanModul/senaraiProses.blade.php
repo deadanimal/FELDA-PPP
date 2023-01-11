@@ -286,6 +286,7 @@
       padding: 20px;
       background-color: #fff;
       border-radius: 8px;
+      margin-bottom: 0px;
     }
     .frame9402-kotaknamaProses {
     width: 299px;
