@@ -3,7 +3,6 @@
 @section('innercontent')
 
 <div class="container-fluid">
-
     <div class="header">
         <h1 class="header-title">
             Borang {{$borang->namaBorang}}
@@ -15,7 +14,7 @@
                 <div class="card-header">
                 <h5 class="card-title mb-0">Sila isikan maklumat anda berikut dengan betul.</h5>
             </div>
-            <form action="/borang/view/add"></form>
+            <form action="/userBorang/view/add"></form>
             <div class="card-body">
                 @php
                     $count=0;

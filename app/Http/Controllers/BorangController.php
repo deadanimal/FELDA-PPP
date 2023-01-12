@@ -138,6 +138,7 @@ class BorangController extends Controller
 
     public function borang_view(Request $request)
     {
+        
         $idBorang = $request->borangId;
         $borang = Borang::find($idBorang);
 
@@ -153,12 +154,16 @@ class BorangController extends Controller
     }
     public function userBorang_view(Request $request)
     {
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
         $idBorang = (int)$request->route('idBorang');
         $borang = Borang::find($idBorang);
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
-        return view('userView.userBorang', compact('borang', 'medans'));
+        return view('userView.userBorang', compact('borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function userBorang_submit(Request $request)
@@ -175,8 +180,12 @@ class BorangController extends Controller
         }
 
         Alert::success('Maklumat Anda Berjaya Disimpan.', 'Maklumat anda telah berjaya disimpan.');   
+        
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
 
-        return view('dashboard');
+        return view('dashboard', compact('menuModul', 'menuProses', 'menuBorang'));
     }
 
     

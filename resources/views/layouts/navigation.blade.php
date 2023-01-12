@@ -112,7 +112,7 @@
                             <ul id="auth{{$mProses->id}}" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                                 @foreach ($menuBorang as $mBorang)
                                     @if ($mBorang->proses == $mProses->id)
-                                        <li class="sidebar-item"><a class="sidebar-link" href="/borang/view/{{$mBorang->id}}">{{$mBorang->namaBorang}}</a></li>                                    
+                                        <li class="sidebar-item"><a class="sidebar-link" href="/userBorang/view/{{$mBorang->id}}">{{$mBorang->namaBorang}}</a></li>                                    
                                     @endif
                                 @endforeach
                             </ul>

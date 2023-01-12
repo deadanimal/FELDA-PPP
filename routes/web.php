@@ -85,10 +85,10 @@ Route::post('/moduls/tugasan/checkbox/add', [ModulController::class, 'checkbox_a
 Route::put('/moduls/tugasan/checkbox/update', [ModulController::class, 'checkbox_update']);
 Route::delete('/moduls/tugasan/checkbox/delete', [ModulController::class, 'checkbox_delete']);
 
-Route::get('/borang/view/{{idBorang}}', [BorangController::class, 'userBorang_view']);
-Route::post('/borang/view/add', [BorangController::class, 'userBorang_submit']);
-Route::put('/borang/view/update', [BorangController::class, 'userBorang_update']);
-Route::delete('/borang/view/delete', [BorangController::class, 'userBorang_delete']);
+Route::get('/userBorang/view/{idBorang}', [BorangController::class, 'userBorang_view']);
+Route::post('/userBorang/view/add', [BorangController::class, 'userBorang_submit']);
+Route::put('/userBorang/view/update', [BorangController::class, 'userBorang_update']);
+Route::delete('/userBorang/view/delete', [BorangController::class, 'userBorang_delete']);
 
 Route::get('/test', function () {
     return view('pengurusanTugasan.senaraiTugasan');
