@@ -26,9 +26,12 @@ require __DIR__.'/auth.php';
 
 // Route::get('',  [WebsiteController::class, 'home']);
 Route::middleware(['auth'])->group(function () {
-Route::get('/dashboard', function () {
-        return view('dashboard');
-    });
+
+// Route::get('/dashboard', function () {
+//         return view('dashboard');
+// });
+Route::get('/dashboard',  [UserController::class, 'dashboard']);
+
 Route::get('/users/info',  [UserController::class, 'user_info']);
 Route::put('/users/update',  [UserController::class, 'user_info_update']);
 Route::get('/users',  [UserController::class, 'user_list']);
@@ -70,7 +73,7 @@ Route::get('/moduls/{modul_id}/{proses_id}/borang/{borang_id}', [BorangControlle
 Route::post('/moduls/borang_field/add', [BorangController::class, 'borang_field_add']);
 Route::put('/moduls/borang_field/update', [BorangController::class, 'borang_field_update']);
 Route::delete('/moduls/borang_field/delete', [BorangController::class, 'borang_field_delete']);
-Route::get('/viewBorang', [BorangController::class, 'borang_view']);
+Route::get('/moduls/borang/viewBorang', [BorangController::class, 'borang_view']);
 Route::get('/moduls/{modul_id}/{proses_id}/borang/{borang_id}', [BorangController::class, 'borang_detail']);
 
 Route::post('/moduls/tugasan/add', [ModulController::class, 'tugasan_add']);
@@ -81,6 +84,11 @@ Route::delete('/moduls/tugasan/delete', [ModulController::class, 'tugasan_delete
 Route::post('/moduls/tugasan/checkbox/add', [ModulController::class, 'checkbox_add']);
 Route::put('/moduls/tugasan/checkbox/update', [ModulController::class, 'checkbox_update']);
 Route::delete('/moduls/tugasan/checkbox/delete', [ModulController::class, 'checkbox_delete']);
+
+Route::get('/borang/view/{{idBorang}}', [BorangController::class, 'userBorang_view']);
+Route::post('/borang/view/add', [BorangController::class, 'userBorang_submit']);
+Route::put('/borang/view/update', [BorangController::class, 'userBorang_update']);
+Route::delete('/borang/view/delete', [BorangController::class, 'userBorang_delete']);
 
 Route::get('/test', function () {
     return view('pengurusanTugasan.senaraiTugasan');

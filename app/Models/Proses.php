@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Proses extends Model
 {
     use HasFactory;
+    protected $table = 'proses';
 
     public function modul() {
         return $this->belongsTo(Modul::class, 'modul');

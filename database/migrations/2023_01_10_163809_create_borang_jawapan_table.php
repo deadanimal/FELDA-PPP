@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('borang_jawapan', function (Blueprint $table) {
             $table->id();
             $table->string('jawapan');
-            $table->foreignId('useid')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('userid')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('medan')->references('id')->on('medan')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });

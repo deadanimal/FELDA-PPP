@@ -98,9 +98,29 @@
                     </a>
                 </li>
             @endif
-            <li class="sidebar-header">
-                Pengguna
-            </li>
+
+            @foreach ($menuModul as $mModul)
+                <li class="sidebar-header">
+                    {{$mModul->nama}}
+                </li>
+                @foreach ($menuProses as $mProses)
+                    @if ($mProses->modul == $mModul->id)
+                        <li class="sidebar-item">
+                            <a data-bs-target="#auth{{$mProses->id}}" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
+                                <i class="align-middle me-2 fas fa-fw fa-file"></i> <span class="align-middle">{{$mProses->nama}}</span>
+                            </a>
+                            <ul id="auth{{$mProses->id}}" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+                                @foreach ($menuBorang as $mBorang)
+                                    @if ($mBorang->proses == $mProses->id)
+                                        <li class="sidebar-item"><a class="sidebar-link" href="/borang/view/{{$mBorang->id}}">{{$mBorang->namaBorang}}</a></li>                                    
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endif
+                @endforeach
+            @endforeach
+            
             {{-- <li class="sidebar-item">
                 <a data-bs-target="#ui" data-bs-toggle="collapse" class="sidebar-link collapsed">
                     <i class="align-middle me-2 fas fa-fw fa-flask"></i> <span class="align-middle">User Interface</span>

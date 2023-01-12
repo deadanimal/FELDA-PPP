@@ -204,6 +204,9 @@
   margin-right: 30px;
   margin-bottom: 20px;
 }
+.frame9403-frame7445:hover{
+    text-decoration: none;
+}
 .frame9403-frame7293 {
 display: flex;
   position: relative;
@@ -545,7 +548,7 @@ display: flex;
           <table style="overflow: auto; height: auto; max-height: 750px; width:100%;">
             <tr>
               <td>
-                <form action="/viewBorang" method="GET">
+                <form action="/moduls/borang/viewBorang" method="GET">
                   <button type="submit" class="frame9403-frame7445" style="margin-left: 0px; margin-right:auto;">
                     <input type="hidden" value="{{$proses->id}}" name="prosesId">
                     <input type="hidden" value="{{$modul->id}}" name="modulId">

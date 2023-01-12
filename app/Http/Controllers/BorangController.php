@@ -11,6 +11,7 @@ use App\Models\Modul;
 use App\Models\Proses;
 use App\Models\Medan;
 use App\Models\Audit;
+use App\Models\borangJawapan;
 use Illuminate\Http\Request;
 use Alert;
 
@@ -140,7 +141,6 @@ class BorangController extends Controller
         $idBorang = $request->borangId;
         $borang = Borang::find($idBorang);
 
-
         $idModul = $request->modulId;
         $modul = Modul::find($idModul);
 
@@ -151,5 +151,34 @@ class BorangController extends Controller
 
         return view('pengurusanModul.viewBorang', compact('borang', 'proses', 'modul', 'medans'));
     }
+    public function userBorang_view(Request $request)
+    {
+        $idBorang = (int)$request->route('idBorang');
+        $borang = Borang::find($idBorang);
+
+        $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
+
+        return view('userView.userBorang', compact('borang', 'medans'));
+    }
+
+    public function userBorang_submit(Request $request)
+    {
+        $count = $request->totalCount;
+        $userID = $request->userID;
+
+        for($x=0; $x<=$count; $x++){
+            $ans = new borangJawapan;
+            $ans->jawapan = $request->jawapan.$x;
+            $ans->userid = $userID;
+            $ans->medan = $request->medanID.$x;
+            $ans->save();
+        }
+
+        Alert::success('Maklumat Anda Berjaya Disimpan.', 'Maklumat anda telah berjaya disimpan.');   
+
+        return view('dashboard');
+    }
+
+    
 
 }

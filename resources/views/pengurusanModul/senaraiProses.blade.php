@@ -40,6 +40,7 @@
               </label>
               <input type="text" class="frame9402-kotaknamaProses" id="namaProses" placeholder="Nama Proses" name="namaProses" required>
               <input type="hidden" value="{{$modul->id}}" name="modulId">
+              <input type="hidden" value="{{count($prosess)+1}}" name="sequence">
               <button type="submit" class="btn">Tambah</button>
               <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
             </form>
@@ -60,14 +61,22 @@
               @endif
                 <td class="frame9402-text30">Nama Proses:</td>
                 <td class="frame9402-text31"><input type="text" id="nama{{$i}}" class="frame9402-kotaknama" value="{{$proses->nama}}"></td>
+                <td class="frame9402-text32">Turutan Proses:
+                  <select name="sequence" id="sequence{{$i}}" class="frame9403-kotaknama3">
+                    @for($x=1; $x<=count($prosess); $x++)
+                      <option value="{{$x}}" @if($x == $proses->sequence)selected @endif>{{$x}}</option>
+                    @endfor
+                </td>
+
                 <td class="frame9402-text32">
+                  Status Proses:
                   <select name="status" id="status{{$i}}" class="frame9403-kotaknama3">
                   @if ($proses->status == 1)
                     <option value="1" selected>Aktif</option>
-                    <option value="2">Tidak Aktif</option>
+                    <option value="0">Tidak Aktif</option>
                   @else
                     <option value="1">Aktif</option>
-                    <option value="2" selected>Tidak Aktif</option>
+                    <option value="0" selected>Tidak Aktif</option>
                   @endif
                   </select></td>
                 <td class="frame9402-frame8727" id="tindakan">
@@ -82,6 +91,7 @@
 
                     <input type="hidden" name="namaupdate" id="namaupdate{{$i}}" >
                     <input type="hidden" name="statusUpdate" id="statusUpdate{{$i}}" >
+                    <input type="hidden" name="sequenceUpdate" id="sequenceUpdate{{$i}}" >
                     <input type="hidden" name="prosesId" id="prosesId" value="{{$proses->id}}">
                     <input type="hidden" name="modulID" id="modulID" value="{{$modul->id}}">
                     <button class="frame9402-rectangle828245" type="submit" onclick="save({{$i}})" style="margin-left:10px;padding: 0px;background-color: transparent;border-color: transparent;" title="Simpan">                
@@ -235,7 +245,7 @@
   }
   .frame9403-kotaknama3 {
       top: 0px;
-      width: 50%;
+      width: 59%;
       height: 50px;
       position: relative;
       box-sizing: content-box;
@@ -246,6 +256,7 @@
       box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2);
       background-color:#FFFFFF;
       background-position:99% center;
+      text-align: center;
       display:block;
       font-family: 'Eina01-SemiBold', sans-serif;
       font-size: 17.3081px;
@@ -325,7 +336,7 @@
     }
     .frame9402-input {
     width: 100%;
-    height: 70px;
+    height: 80px;
     display: flex;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -471,6 +482,8 @@ function save(no)
   {
    var nama_val=document.getElementById("nama"+no).value;
    var status_val=document.getElementById("status"+no).value;
+   var sequence_val=document.getElementById("sequence"+no).value;
+   document.getElementById("sequenceUpdate"+no).value = sequence_val;
    document.getElementById("statusUpdate"+no).value = status_val;
    document.getElementById("namaupdate"+no).value=nama_val;
   }

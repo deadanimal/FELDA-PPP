@@ -16,6 +16,9 @@ use App\Models\KategoriPengguna;
 use App\Models\Rancangan;
 use App\Models\Audit;
 
+use App\Models\Proses;
+use App\Models\Borang;
+
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +28,15 @@ use Alert;
 
 class UserController extends Controller
 {
+    public function dashboard()
+    {
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('dashboard', compact('menuModul', 'menuProses', 'menuBorang'));
+
+    }
     public function user_add_page()
     {
         $wilayah = Wilayah::all()->pluck('nama','id');
@@ -64,7 +76,7 @@ class UserController extends Controller
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Cipta pengguna".$user->nama;
+        $audit->action = "Cipta pengguna ".$user->nama;
         $audit->save();
 
         Alert::success('Daftar pengguna berjaya.', 'Pendaftaran pengguna berjaya.');   
@@ -183,7 +195,7 @@ class UserController extends Controller
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Padam pengguna".$user->nama;
+        $audit->action = "Padam pengguna ".$user->nama;
         $audit->save();
         Alert::success('Padam pengguna berjaya.', 'Padam pengguna telah berjaya.');   
 
@@ -218,7 +230,7 @@ class UserController extends Controller
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Kemaskini Pengguna".$user->nama;
+        $audit->action = "Kemaskini Pengguna ".$user->nama;
         $audit->save();
 
         Alert::success('Kemaskini pengguna berjaya.', 'Kemaskini pengguna telah berjaya.');   

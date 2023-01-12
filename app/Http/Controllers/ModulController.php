@@ -191,6 +191,7 @@ class ModulController extends Controller
         $prosess = new Proses;
         $prosess->nama = $request->namaProses;
         $prosess->status = 1;
+        $prosess->sequence = $request->sequence;
         $prosess->modul = $request->modulId;
         $prosess->save();
 
@@ -201,7 +202,7 @@ class ModulController extends Controller
 
         Alert::success('Cipta proses berjaya.', 'Cipta proses telah berjaya.');
         $modul = Modul::find($request->modulId);
-        $prosess = Proses::where('modul', $request->modulId)->orderBy("updated_at", "DESC")->get();
+        $prosess = Proses::where('modul', $request->modulId)->orderBy("sequence", "ASC")->get();
 
         return view('pengurusanModul.senaraiProses', compact('modul', 'prosess'));
     }
@@ -209,7 +210,7 @@ class ModulController extends Controller
     public function proses_list(Request $request)
     {
         $idModul = (int)$request->route('modul_id');
-        $prosess = Proses::where('modul', $idModul)->orderBy("updated_at", "DESC")->get();
+        $prosess = Proses::where('modul', $idModul)->orderBy("sequence", "ASC")->get();
         $modul = Modul::find($idModul);
         return view('pengurusanModul.senaraiProses', compact('modul', 'prosess'));
     }
@@ -220,16 +221,17 @@ class ModulController extends Controller
         $proses = Proses::find($prosesId);
         $proses->nama = $request->namaupdate;
         $proses->status = $request->statusUpdate;
+        $proses->sequence = $request->sequenceUpdate;
         $proses->save();
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Kemaskini Proses ".$prosess->nama;
+        $audit->action = "Kemaskini Proses ".$proses->nama;
         $audit->save();
 
         Alert::success('Kemaskini Proses berjaya.', 'Kemaskini Proses telah berjaya.');
 
-        $prosess = Proses::where('modul', $request->modulID)->orderBy("updated_at", "DESC")->get();
+        $prosess = Proses::where('modul', $request->modulID)->orderBy("sequence", "ASC")->get();
         $modul = Modul::find($request->modulID);
 
         return view('pengurusanModul.senaraiProses', compact('modul', 'prosess'));
@@ -248,7 +250,7 @@ class ModulController extends Controller
         $proses->delete();
         Alert::success('Padam Proses Berjaya.', 'Padam proses telah berjaya.');
 
-        $prosess = Proses::where('modul', $request->modulId)->orderBy("updated_at", "DESC")->get();
+        $prosess = Proses::where('modul', $request->modulId)->orderBy("sequence", "ASC")->get();
         $modul = Modul::find($request->modulId);
 
         return view('pengurusanModul.senaraiProses', compact('modul', 'prosess'));

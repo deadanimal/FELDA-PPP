@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->bigInteger('status');
+            $table->bigInteger('sequence');
             $table->timestamps();
             $table->foreignId('modul')->references('id')->on('moduls')->onUpdate('cascade')->onDelete('cascade');
         });
