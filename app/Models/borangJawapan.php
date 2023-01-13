@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class borangJawapan extends Model
 {
     use HasFactory;
+    protected $table = 'borang_jawapan';
 
     public function user(){
         return $this->belongsTo(User::class, 'userid');

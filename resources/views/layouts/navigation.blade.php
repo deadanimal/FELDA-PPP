@@ -99,6 +99,35 @@
                 </li>
             @endif
 
+            <li class="sidebar-header">
+                Pengguna
+            </li>
+            @foreach ($menuModul as $mModul) 
+            <li class="sidebar-item">
+                <a data-bs-target="#auth{{$mModul->id}}" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
+                    <i class="align-middle me-2 ion ion-ios-folder"></i> <span class="align-middle">{{$mModul->nama}}</span>
+                </a>
+                <ul id="auth{{$mModul->id}}" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
+                    @foreach ($menuProses as $mProses)
+                        @if ($mProses->modul == $mModul->id)
+                        <li class="sidebar-item">
+                            <a data-bs-target="#subauth{{$mProses->id}}" data-bs-toggle="collapse" class="sidebar-link submenu collapsed" aria-expanded="false">
+                                <i class="align-middle me-2 ion ion-ios-journal"></i> <span class="align-middle">{{$mProses->nama}}</span>
+                            </a>
+                            <ul id="subauth{{$mProses->id}}" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#submenu">
+                                @foreach ($menuBorang as $mBorang)
+                                    @if ($mBorang->proses == $mProses->id)
+                                        <li class="sidebar-item"><a class="sidebar-link" href="/userBorang/view/{{$mBorang->id}}"><i class="align-middle me-2 fas fa-fw fa-file"></i>{{$mBorang->namaBorang}}</a></li>  
+                                    @endif                                  
+                                @endforeach
+                            </ul>
+                        </li>
+                        @endif
+                    @endforeach
+                </ul>
+            </li>
+            @endforeach
+{{-- 
             @foreach ($menuModul as $mModul)
                 <li class="sidebar-header">
                     {{$mModul->nama}}
@@ -107,7 +136,7 @@
                     @if ($mProses->modul == $mModul->id)
                         <li class="sidebar-item">
                             <a data-bs-target="#auth{{$mProses->id}}" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
-                                <i class="align-middle me-2 fas fa-fw fa-file"></i> <span class="align-middle">{{$mProses->nama}}</span>
+                                <i class="align-middle ion ion-ios-journal me-2"></i> <span class="align-middle">{{$mProses->nama}}</span>
                             </a>
                             <ul id="auth{{$mProses->id}}" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                                 @foreach ($menuBorang as $mBorang)
@@ -119,7 +148,9 @@
                         </li>
                     @endif
                 @endforeach
-            @endforeach
+            @endforeach --}}
+
+            
             
             {{-- <li class="sidebar-item">
                 <a data-bs-target="#ui" data-bs-toggle="collapse" class="sidebar-link collapsed">

@@ -41,7 +41,12 @@ class UserController extends Controller
     {
         $wilayah = Wilayah::all()->pluck('nama','id');
         $kategoriPengguna = KategoriPengguna::all();
-        return view('pengurusanPengguna.daftarPengguna', compact('wilayah', 'kategoriPengguna'));
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanPengguna.daftarPengguna', compact('wilayah', 'kategoriPengguna', 'menuModul', 'menuProses', 'menuBorang'));
 
     }
 
@@ -89,7 +94,12 @@ class UserController extends Controller
         $wilayah = Wilayah::all()->pluck('nama','id');
         $rancangan = Rancangan::all();
         $kategoriPengguna = KategoriPengguna::all();
-        return view('pengurusanPengguna.maklumatPengguna', compact('kategoriPengguna', 'wilayah', 'rancangan'));
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanPengguna.maklumatPengguna', compact('kategoriPengguna', 'wilayah', 'rancangan', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
 
@@ -183,7 +193,11 @@ class UserController extends Controller
 
         $bilangan = count($user);
 
-        return view('pengurusanPengguna.senaraiPengguna', compact('user', 'bilangan'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanPengguna.senaraiPengguna', compact('user', 'bilangan', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function user_delete(Request $request)
@@ -209,7 +223,12 @@ class UserController extends Controller
         $wilayah = Wilayah::all()->pluck('nama','id');;
         $kategoriPengguna = KategoriPengguna::all();
         $user = User::find($id);
-        return view('pengurusanPengguna.kemaskini', compact('user', 'kategoriPengguna', 'wilayah'));
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanPengguna.kemaskini', compact('user', 'kategoriPengguna', 'wilayah', 'menuModul', 'menuProses', 'menuBorang'));
     }
     public function user_update(Request $request)
     {
@@ -291,7 +310,12 @@ class UserController extends Controller
                 ->rawColumns(['tindakan'])                          
                 ->make(true);
             }
-        return view('pengurusanPengguna.pengurusanKategoriPengguna', compact('kategoriPenggunas'));
+
+            $menuModul = Modul::all();
+            $menuProses = Proses::where('status', 1)->get();
+            $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanPengguna.pengurusanKategoriPengguna', compact('kategoriPenggunas', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function category_add(Request $request)
@@ -314,7 +338,12 @@ class UserController extends Controller
     {
         $id = (int)$request->route('id');
         $kategoriPengguna = KategoriPengguna::find($id);
-        return view('pengurusanPengguna.editKategoriPengguna', compact('kategoriPengguna'));
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanPengguna.editKategoriPengguna', compact('kategoriPengguna', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function category_update(Request $request)
@@ -356,8 +385,11 @@ class UserController extends Controller
     {
         $audits = Audit::orderBy("updated_at", "DESC")->get();
         
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
 
-        return view('auditTrail.audit', compact('audits'));
+        return view('auditTrail.audit', compact('audits', 'menuModul', 'menuProses', 'menuBorang'));
     }
  
     public function user_auditFilter(Request $request)
@@ -387,8 +419,11 @@ class UserController extends Controller
             ->orderBy("created_at", "DESC")->get();
         }
 
-        
-        return view('auditTrail.auditFilter', compact('audits'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('auditTrail.auditFilter', compact('audits', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
 }

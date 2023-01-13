@@ -11,6 +11,7 @@ use App\Models\Audit;
 use App\Models\Tugasan;
 use App\Models\KategoriPengguna;
 use App\Models\checkbox;
+use App\Models\JenisKemaskini;
 
 
 use Illuminate\Http\Request;
@@ -23,7 +24,11 @@ class ModulController extends Controller
 
     public function modul_add_page()
     {
-        return view('pengurusanModul.ciptaModul');
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.ciptaModul', compact( 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function modul_add(Request $request)
@@ -118,7 +123,11 @@ class ModulController extends Controller
             ->make(true);
         }
         $bilangan = count($modul);
-        return view('pengurusanModul.senaraiModul', compact('modul', 'bilangan'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.senaraiModul', compact('modul', 'bilangan',  'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function modul_delete(Request $request)
@@ -141,7 +150,12 @@ class ModulController extends Controller
     {
         $idModul = (int)$request->route('id');
         $modul = Modul::find($idModul); 
-        return view('pengurusanModul.kemaskiniModul', compact('modul'));
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.kemaskiniModul', compact('modul',  'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function modul_copy(Request $request)
@@ -183,7 +197,11 @@ class ModulController extends Controller
         $modul = Modul::all();
         $bilangan = count(Modul::all());
 
-        return view('pengurusanModul.senaraiModul', compact('modul', 'bilangan'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.senaraiModul', compact('modul', 'bilangan',  'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function proses_add(Request $request)
@@ -204,7 +222,11 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $prosess = Proses::where('modul', $request->modulId)->orderBy("sequence", "ASC")->get();
 
-        return view('pengurusanModul.senaraiProses', compact('modul', 'prosess'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.senaraiProses', compact('modul', 'prosess',  'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function proses_list(Request $request)
@@ -212,7 +234,12 @@ class ModulController extends Controller
         $idModul = (int)$request->route('modul_id');
         $prosess = Proses::where('modul', $idModul)->orderBy("sequence", "ASC")->get();
         $modul = Modul::find($idModul);
-        return view('pengurusanModul.senaraiProses', compact('modul', 'prosess'));
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.senaraiProses', compact('modul', 'prosess',  'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function proses_update(Request $request)
@@ -234,7 +261,11 @@ class ModulController extends Controller
         $prosess = Proses::where('modul', $request->modulID)->orderBy("sequence", "ASC")->get();
         $modul = Modul::find($request->modulID);
 
-        return view('pengurusanModul.senaraiProses', compact('modul', 'prosess'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.senaraiProses', compact('modul', 'prosess',  'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function proses_delete(Request $request)
@@ -253,7 +284,11 @@ class ModulController extends Controller
         $prosess = Proses::where('modul', $request->modulId)->orderBy("sequence", "ASC")->get();
         $modul = Modul::find($request->modulId);
 
-        return view('pengurusanModul.senaraiProses', compact('modul', 'prosess'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.senaraiProses', compact('modul', 'prosess',  'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function borang_add(Request $request)
@@ -275,9 +310,14 @@ class ModulController extends Controller
         $proses = Proses::find($request->prosesId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
     }
 
     public function borang_list(Request $request)
@@ -289,9 +329,15 @@ class ModulController extends Controller
         $idModul = (int)$request->route('modul_id');
         $modul = Modul::find($idModul);
         $tugasan = Tugasan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
+        $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+
         $kategoriPengguna = KategoriPengguna::all();
 
-        return view('pengurusanModul.senaraiBorang', compact('modul','borangs', 'proses', 'tugasan', 'kategoriPengguna'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.senaraiBorang', compact('modul','borangs', 'proses', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
     }
 
     public function borang_update(Request $request)
@@ -313,9 +359,14 @@ class ModulController extends Controller
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($request->prosesId);
         $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
     }
 
     public function borang_delete(Request $request)
@@ -335,9 +386,14 @@ class ModulController extends Controller
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($request->prosesId);
         $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
     }
 
     public function tugasan_add(Request $request){
@@ -358,9 +414,14 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
 
     }
 
@@ -375,7 +436,11 @@ class ModulController extends Controller
 
         $checkboxes = checkbox::where('tugasan',$idTugasan)->get();
 
-        return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
 
     }
 
@@ -398,9 +463,14 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
 
     }
     public function tugasan_delete(Request $request){
@@ -420,9 +490,14 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
 
     }
     public function checkbox_add(Request $request){
@@ -445,7 +520,11 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
         $checkboxes = checkbox::where('tugasan',$idTugasan)->get();
 
-        return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
 
     }
     public function checkbox_update(Request $request){
@@ -468,7 +547,11 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
         $checkboxes = checkbox::where('tugasan',$idTugasan)->get();
 
-        return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
 
     }
 
@@ -491,7 +574,39 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
         $checkboxes = checkbox::where('tugasan',$request->tugasanID)->get();
 
-        return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
+
+    }
+    
+    public function JenisKemaskini_add(Request $request){
+
+        $kemaskini = new JenisKemaskini;
+        $kemaskini->nama = $request->namaKemas;
+        $kemaskini->proses_id = $request->prosesId;
+        $kemaskini->save();
+
+        $proses = Proses::find($request->prosesId);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Jenis Kemaskini".$kemaskini->nama." pada Proses ".$proses->nama;
+        $audit->save();
+
+        $modul = Modul::find($request->modulId);
+        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kategoriPengguna = KategoriPengguna::all();
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
 
     }
 }

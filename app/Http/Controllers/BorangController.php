@@ -30,7 +30,11 @@ class BorangController extends Controller
 
         $medans = Medan::where('borang_id', $idBorang)->orderBy("sequence", "ASC")->get();
 
-        return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
+        return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function uploadBorang(Request $request)
@@ -41,7 +45,11 @@ class BorangController extends Controller
 
         Alert::success('Muat Naik Borang berjaya.', 'Muat naik borang anda berjaya.');   
 
-        return view('pengurusanModul.borang', compact('borang'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
+        return view('pengurusanModul.borang', compact('borang', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function borang_field_add(Request $request)
@@ -73,7 +81,11 @@ class BorangController extends Controller
 
         Alert::success('Tambah Meadan Borang berjaya.', 'Tambah medan borang telah berjaya.');   
 
-        return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function borang_field_update(Request $request)
@@ -105,7 +117,11 @@ class BorangController extends Controller
 
         Alert::success('Kemaskini Meadan Borang berjaya.', 'Kemaskini medan borang telah berjaya.');   
 
-        return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
+        return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function borang_field_delete(Request $request)
@@ -133,7 +149,11 @@ class BorangController extends Controller
 
         Alert::success('Padam Meadan Borang berjaya.', 'Kemaskini medan borang telah berjaya.');   
 
-        return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function borang_view(Request $request)
@@ -150,7 +170,11 @@ class BorangController extends Controller
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
-        return view('pengurusanModul.viewBorang', compact('borang', 'proses', 'modul', 'medans'));
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.viewBorang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
     }
     public function userBorang_view(Request $request)
     {
@@ -163,6 +187,10 @@ class BorangController extends Controller
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
         return view('userView.userBorang', compact('borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
     }
 
@@ -171,11 +199,11 @@ class BorangController extends Controller
         $count = $request->totalCount;
         $userID = $request->userID;
 
-        for($x=0; $x<=$count; $x++){
+        for($x=0; $x<$count; $x++){
             $ans = new borangJawapan;
-            $ans->jawapan = $request->jawapan.$x;
+            $ans->jawapan = $request->jawapan[$x];
             $ans->userid = $userID;
-            $ans->medan = $request->medanID.$x;
+            $ans->medan = $request->medanID[$x];
             $ans->save();
         }
 
