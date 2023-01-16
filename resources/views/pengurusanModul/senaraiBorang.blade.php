@@ -289,16 +289,16 @@
           </table>
         </div>
 
-        {{-- popup form Tambah Tugasan --}}
+        {{-- popup form jensi kemaskini  --}}
         <div class="divPopup">
           <div class="formPopup" id="popupFormKemas">
-            <form action="/moduls/tugasan/add" method="POST" class="formContainer">
+            <form action="/moduls/jenisKemas/add" method="POST" class="formContainer">
                 @csrf
                 <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA JENIS KEMASKINI</h2>
                 <label for="namaKemas" class="frame9402-text04">
                 <strong>Nama Jenis Kemaskini</strong>
                 </label>
-                <input type="text" class="frame9402-kotaknamaBorang" id="namaKemas" placeholder="Nama Tugasan" name="namaKemas" required>
+                <input type="text" class="frame9402-kotaknamaBorang" id="namaKemas" placeholder="Nama Jenis Kemaskini" name="namaKemas" required>
                 <input type="hidden" value="{{$proses->id}}" name="prosesId">
                 <input type="hidden" value="{{$modul->id}}" name="modulId">
                 <button type="submit" class="btn">Cipta</button>
@@ -306,8 +306,8 @@
             </form>
           </div>
         </div>
-        {{-- senarai jensi kemaskini --}}
 
+        {{-- senarai jensi kemaskini --}}
         @if (!$kemaskini->isEmpty())
         <table class="table table-bordered table-striped w-100">
           <thead class="text-white bg-primary w-100">
@@ -321,7 +321,7 @@
               <tr>
                 <td class="text-center">{{$kemaskini->nama}}</td>
                 <td class="text-center">
-                  <form action="/moduls/tugasan/edit" method="GET">
+                  <form action="/moduls/jenisKemas/edit" method="GET">
                     <input type="hidden" name="kemaskiniID" value="{{$kemaskini->id}}">
                     <input type="hidden" name="prosesId" value="{{$proses->id}}">
                     <input type="hidden" name="modulId" value="{{$modul->id}}">
@@ -348,7 +348,7 @@
                           </div>
                           <div class="modal-footer">
                               <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
-                              <form method="post" action="/moduls/tugasan/delete">
+                              <form method="post" action="/moduls/jenisKemas/delete">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" value="{{$kemaskini->id}}" name="kemaskiniID">
@@ -632,7 +632,6 @@ function closeFormKemas() {
     height: auto;
     font-size: 16px;
     align-self: auto;
-    text-align: left;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
     font-stretch: normal;

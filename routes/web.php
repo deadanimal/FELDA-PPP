@@ -90,9 +90,20 @@ Route::post('/userBorang/view/add', [BorangController::class, 'userBorang_submit
 Route::put('/userBorang/view/update', [BorangController::class, 'userBorang_update']);
 Route::delete('/userBorang/view/delete', [BorangController::class, 'userBorang_delete']);
 
-Route::get('/test', function () {
-    return view('pengurusanTugasan.senaraiTugasan');
-});
+Route::post('/moduls/jenisKemas/add', [ModulController::class, 'JenisKemas_add']);
+Route::get('/moduls/jenisKemas/edit', [ModulController::class, 'JenisKemas_edit']);
+Route::put('/moduls/jenisKemas/update', [ModulController::class, 'JenisKemas_update']);
+Route::delete('/moduls/jenisKemas/delete', [ModulController::class, 'JenisKemas_delete']);
+
+Route::post('/moduls/jenisKemas/Param/add', [ModulController::class, 'Param_add']);
+Route::put('/moduls/jenisKemas/Param/update', [ModulController::class, 'Param_update']);
+Route::delete('/moduls/jenisKemas/Param/delete', [ModulController::class, 'Param_delete']);
+
+Route::get('/user/borang_app/list', [BorangController::class, 'borangList_app']);
+
+// Route::get('/test', function () {
+//     return view('pengurusanTugasan.senaraiTugasan');
+// });
 });
 
 // Route::post('/Borang/uploadBorang',  [BorangController::class, 'uploadBorang']);

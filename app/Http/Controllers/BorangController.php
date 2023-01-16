@@ -178,10 +178,6 @@ class BorangController extends Controller
     }
     public function userBorang_view(Request $request)
     {
-        $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
-        $menuBorang = Borang::where('status', 1)->get();
-
         $idBorang = (int)$request->route('idBorang');
         $borang = Borang::find($idBorang);
 
@@ -214,6 +210,30 @@ class BorangController extends Controller
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('dashboard', compact('menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function user_listBorang(Request $request)
+    {
+        $borang = Borang::find($idBorang);
+
+        $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
+        return view('userView.userBorang', compact('borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function borangList_app(Request $request)
+    {
+        $borangs = Borang::all();
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
+        return view('pengurusanBorang.borangList', compact('borangs','menuModul', 'menuProses', 'menuBorang'));
     }
 
     

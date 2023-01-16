@@ -88,6 +88,16 @@
                     </ul>
                 </li>
                 @endif
+                
+                @if (Request::is('user/borang_app') || Request::is('user/borang_app/*'))
+                    <li class="sidebar-item active">
+                @else
+                    <li class="sidebar-item">
+                @endif
+                    <a  class="sidebar-link" href="/user/borang_app/list">
+                        <i class="align-middle me-2 ion ion-ios-paper"></i> <span class="align-middle">KELULUSAN BORANG</span>
+                    </a>
+                </li>
                 @if (Request::is('audit'))
                 <li class="sidebar-item active">
                 @else
