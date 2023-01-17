@@ -100,6 +100,10 @@ Route::put('/moduls/jenisKemas/Param/update', [ModulController::class, 'Param_up
 Route::delete('/moduls/jenisKemas/Param/delete', [ModulController::class, 'Param_delete']);
 
 Route::get('/user/borang_app/list', [BorangController::class, 'borangList_app']);
+Route::get('/user/borang_app/{borang_id}/user_list', [BorangController::class, 'borangApp_list']);
+Route::get('/user/borang_app/{borang_id}/{user_id}/view', [BorangController::class, 'borangApp_view']);
+
+Route::put('/user/borang_app/update', [BorangController::class, 'borangApp_update']);
 
 // Route::get('/test', function () {
 //     return view('pengurusanTugasan.senaraiTugasan');

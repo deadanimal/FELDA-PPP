@@ -24,7 +24,7 @@
                     <i class="align-middle me-2 fas fa-fw fa-home"></i> <span class="align-middle">LAMAN UTAMA</span>
                 </a>
             </li>
-            @if(Auth::user()->kategoripengguna == "1")
+            @if(Auth::user()->kategori->nama != "Peserta")
                 @if (Request::is('users') || Request::is('users/*') || Request::is('user-categories') || Request::is('user-categories/*'))
                 <li class="sidebar-item active">
                     <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
@@ -88,7 +88,7 @@
                     </ul>
                 </li>
                 @endif
-                
+
                 @if (Request::is('user/borang_app') || Request::is('user/borang_app/*'))
                     <li class="sidebar-item active">
                 @else

@@ -12,49 +12,51 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                <h5 class="card-title mb-0">Sila isikan maklumat anda berikut dengan betul.</h5>
-            </div>
-            <form action="/userBorang/view/add" method="POST">
-                @csrf
-                <div class="card-body">
-                    @php
-                        $count=0;
-                    @endphp
-                    @foreach($medans as $medan)
-                        <div class="row">
-                            <div class="mb-3">
-                                <label for="jawapan[{{$count}}]" style="font-family:'Poppins'">{{$medan->nama}}</label>
-                                <input 
-                                @if ($medan->datatype == "string")
-                                    type="text" 
-                                @else
-                                    type="number" step="any"
-                                @endif
-
-                                @if ($medan->pilihan == "required")
-                                    required 
-                                @endif
-                                class="form-control" maxlength="100" size="100" name="jawapan[{{$count}}]" id="jawapan{{$count}}">
-                                <input type="hidden" name="medanID[{{$count}}]" value="{{$medan->id}}">
-                            </div>
-                        </div>
-                        @php
-                            $count++;
-                        @endphp
-                    @endforeach
-                    <input type="hidden" name="totalCount" value="{{$count}}">
-                    <input type="hidden" name="userID" value="{{Auth::user()->id}}">
-                    <button type="submit" class="frame9403-frame7445">
-                        <div class="frame9403-frame7293">
-                            <span class="frame9403-text21"><span>Hantar</span></span>
-                            <img
-                            src="/SVG/kemaskini.svg"
-                            class="frame9403-group7527"
-                            />
-                        </div>
-                    </button>
+                    <h5 class="card-title mb-0">Sila isikan maklumat anda berikut dengan betul.</h5>
                 </div>
-            </form>
+                <form action="/userBorang/view/add" method="POST">
+                    @csrf
+                    <div class="card-body">
+                        @php
+                            $count=0;
+                        @endphp
+                        @foreach($medans as $medan)
+                            <div class="row">
+                                <div class="mb-3">
+                                    <label for="jawapan[{{$count}}]" style="font-family:'Poppins'">{{$medan->nama}}</label>
+                                    <input 
+                                    @if ($medan->datatype == "string")
+                                        type="text" 
+                                    @else
+                                        type="number" step="any"
+                                    @endif
+
+                                    @if ($medan->pilihan == "required")
+                                        required 
+                                    @endif
+                                    class="form-control" maxlength="100" size="100" name="jawapan[{{$count}}]" id="jawapan{{$count}}">
+                                    <input type="hidden" name="medanID[{{$count}}]" value="{{$medan->id}}">
+                                </div>
+                            </div>
+                            @php
+                                $count++;
+                            @endphp
+                        @endforeach
+                        <input type="hidden" name="borangID" value="{{$borang->id}}">
+                        <input type="hidden" name="totalCount" value="{{$count}}">
+                        <input type="hidden" name="userID" value="{{Auth::user()->id}}">
+                        <button type="submit" class="frame9403-frame7445">
+                            <div class="frame9403-frame7293">
+                                <span class="frame9403-text21"><span>Hantar</span></span>
+                                <img
+                                src="/SVG/kemaskini.svg"
+                                class="frame9403-group7527"
+                                />
+                            </div>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

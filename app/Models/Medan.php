@@ -15,7 +15,7 @@ class Medan extends Model
     }
     
     public function borangJawapan() {
-        return $this->hasMany(borangJawapan::class);
+        return $this->hasMany(borangJawapan::class,'medan');
     }
     
 }

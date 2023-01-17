@@ -8,7 +8,7 @@
 
   <div class="header">
     <h1 class="header-title">
-        Senarai Borang
+        Senarai Permohon Bagi {{$oneBorang->namaBorang}}
     </h1>
   </div>
   
@@ -16,36 +16,125 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-            <table class="table table-borderless">
-                <thead></thead>
-                <tbody>
-                  <tr style="border: none;">
-                    <td style="border: none;"><p class="text04" style="text-align: right;">Nama Borang:</p></td>
-                    <td style="border: none;"><input type="text" name="namaBorang" class="form-control" placeholder="Nama Borang" value=""></td>
-                    <td style="border: none;"><button type="submit" class="btn btn-primary" style="margin-right: auto; margin-left:auto;">Cari</button></td>
-                  </tr>
-                </tbody>
-            </table>
+          
         </div>
 
         {{-- senarai borang --}}
         <table class="table table-bordered table-striped w-100">
           <thead class="text-white bg-primary w-100" style="text-align: center;">
             <tr>
-                <th scope="col">Nama Borang</th>
+                <th scope="col">Nama Permohon</th>
+                <th scope="col">Status</th>
+                <th scope="col">Pengesahan Permohonan</th>
                 <th scope="col">Tindakan</th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($borangs as $borang)
-                <tr>
-                    <td class="text-center">{{$borang->namaBorang}}</td>
-                    <td class="text-center">
-                        <a class="btn btn-success" href="/user/borang_app/{{$borang->id}}/user_list" style="color: white; text-decoration:none;">
-                            Senarai Permohon
-                        </a>
-                    </td>
-                </tr> 
+            @php
+            $user = null;
+            @endphp
+            @foreach ($borangJwpns as $borangJwpn)
+                @if ($borangJwpn->userid != $user)
+                    <tr>
+                        <td class="text-center">{{$borangJwpn->user->nama}}</td>
+                        <td class="text-center">{{$borangJwpn->status}}</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-success" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModal{{$borangJwpn->id}}">Lulus</button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{$borangJwpn->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Lulus Permohonan</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Anda Pasti Mahu Lulus Permohonan {{$borangJwpn->user->nama}}?<p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>      
+                                        <form action="/user/borang_app/update" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="borangID" value="{{$oneBorang->id}}">
+                                            <input type="hidden" name="userID" value="{{$borangJwpn->userid}}">
+                                            <input type="hidden" name="stat" value="Lulus">
+                                            <button class="btn btn-danger">Ya</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            
+                                
+                            </form>
+                            <button type="button" class="btn btn-danger" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModaldel{{$borangJwpn->id}}">Tidak Lulus</button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModaldel{{$borangJwpn->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="post" action="/user/borang_app/update">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="mb-3">
+                                                    <h5 for="exampleFormControlTextarea1">Ulasan: </h5>
+                                                    <textarea type="text" class="form-control" name="ulasan" id="ulasan" required></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="mb-3">
+                                                    <table>
+                                                        <tr  style="background: none;">
+                                                            <td style="border: none;"><h5 style="text-align: right;">Pembetulan:</h5></td>
+                                                            <td style="border: none;">
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="Pembetulan" name="pembetulan" value="1" class="custom-control-input">
+                                                                    <label class="custom-control-label" for="Pembetulan">Ya</label>
+                                                                </div>
+                                                                <div class="custom-control custom-radio">
+                                                                    <input type="radio" id="Pembetulan1" name="pembetulan" value="0" class="custom-control-input">
+                                                                    <label class="custom-control-label" for="Pembetulan1">Tidak</label>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>      
+                                            <input type="hidden" name="userID" value="{{$borangJwpn->userid}}">
+                                            <input type="hidden" name="borangID" value="{{$oneBorang->id}}">
+                                            <input type="hidden" name="stat" value="Tidak Lulus">   
+                                            <button type="submit" class="btn btn-danger">Ya</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->user->id}}/view" style="color: white; text-decoration:none;">
+                                Papar Borang Permohon
+                            </a>
+                        </td>
+                    </tr>
+                @endif
+                @php
+                    $user = $borangJwpn->userid;
+                @endphp
             @endforeach
           </tbody>
         </table>

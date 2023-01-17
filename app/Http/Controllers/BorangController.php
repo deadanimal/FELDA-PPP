@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Http\Controllers\Controller;
@@ -194,12 +195,13 @@ class BorangController extends Controller
     {
         $count = $request->totalCount;
         $userID = $request->userID;
-
+        $borangid = $request->borangID;
         for($x=0; $x<$count; $x++){
             $ans = new borangJawapan;
             $ans->jawapan = $request->jawapan[$x];
             $ans->userid = $userID;
             $ans->medan = $request->medanID[$x];
+            $ans->borang_id = $borangid;
             $ans->save();
         }
 
@@ -227,7 +229,7 @@ class BorangController extends Controller
 
     public function borangList_app(Request $request)
     {
-        $borangs = Borang::all();
+        $borangs = Borang::where('status', 1)->get();
 
         $menuModul = Modul::all();
         $menuProses = Proses::where('status', 1)->get();
@@ -236,6 +238,127 @@ class BorangController extends Controller
         return view('pengurusanBorang.borangList', compact('borangs','menuModul', 'menuProses', 'menuBorang'));
     }
 
+    public function borangApp_list(Request $request)
+    {
+        $borangId = (int) $request->route('borang_id');
+        $oneBorang = Borang::find($borangId);
+        if(Auth::user()->kategori->nama == "Pengurus Rancangan"){
+            $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('status','Sedang di proses')->get();
+        }
+        elseif(Str::contains(Auth::user()->kategori->nama , "Wilayah")){
+            $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('status','Lulus Peringkat Rancangan')->get();
+        }
+        elseif(Str::contains(Auth::user()->kategori->nama , "HQ")){
+            $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('status','Lulus Peringkat Wilayah')->get();
+        }
+        elseif(Auth::user()->kategori->nama == "Pengarah Jabatan"){
+            $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('status','Lulus Peringkat HQ')->get();
+        }
+        elseif(Auth::user()->kategori->nama == "Super Admin"){
+            $borangJwpns = borangJawapan::where('borang_id', $borangId)->get();
+        }
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
+        return view('pengurusanBorang.userListBorang', compact('borangJwpns','oneBorang','menuModul', 'menuProses', 'menuBorang'));
+    }
+    public function borangApp_view(Request $request)
+    {
+        $userId = (int) $request->route('user_id');
+        $borangId = (int) $request->route('borang_id');
+        $oneBorang = Borang::find($borangId);
+
+        $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('userid', $userId)->get();
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
+        return view('pengurusanBorang.viewBorangApp', compact('borangJwpns','oneBorang','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    
+    public function borangApp_update(Request $request)
+    {
+        $userId = $request->userID;
+        $borangId = $request->borangID;
+        $stat = $request->stat;
+
+        $oneBorang = Borang::find($borangId);
+
+        $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('userid', $userId)->get();
+
+        foreach($borangJwpns as $jwpn){
+            $jawapan = borangJawapan::find($jwpn->id);
+            if($stat == "Lulus"){
+                if(Auth::user()->kategori->nama == "Pengurus Rancangan"){
+                    $borangJwpns = 'Lulus Peringkat Rancangan';
+                }
+                elseif(Str::contains(Auth::user()->kategori->nama , "Wilayah")){
+                    $jawapan->status = 'Lulus Peringkat Wilayah';
+                }
+                elseif(Str::contains(Auth::user()->kategori->nama , "HQ")){
+                    $jawapan->status = 'Lulus Peringkat HQ';
+                }
+                elseif(Auth::user()->kategori->nama == "Pengarah Jabatan"){
+                    $jawapan->status = 'Di sahkan Pengarah Jabatan';
+                }
+                Alert::success('Lulus '.$oneBorang->namaBorang.' Berjaya .', 'Lulus '.$oneBorang->namaBorang.' permhononan '.$jwpn->user->nama.' telah berjaya');   
+            }
+            elseif($stat == "Tidak Lulus"){
+                if(Auth::user()->kategori->nama == "Pengurus Rancangan"){
+                    $jawapan->status = 'Tidak Lulus Peringkat Rancangan';
+                    $jawapan->ulasan = $request->ulasan;
+                    $jawapan->pembetulan = $request->pembetulan;
+                }
+                elseif(Str::contains(Auth::user()->kategori->nama , "Wilayah")){
+                    $jawapan->status = 'Tidak Lulus Peringkat Wilayah';
+                    $jawapan->ulasan = $request->ulasan;
+                    $jawapan->pembetulan = $request->pembetulan;
+                }
+                elseif(Str::contains(Auth::user()->kategori->nama , "HQ")){
+                    $jawapan->status = 'Tidak Lulus Peringkat HQ';
+                    $jawapan->ulasan = $request->ulasan;
+                    $jawapan->pembetulan = $request->pembetulan;
+                }
+                elseif(Auth::user()->kategori->nama == "Pengarah Jabatan"){
+                    $jawapan->status = 'Tidak Lulus Peringkat Pengarah Jabatan';
+                    $jawapan->ulasan = $request->ulasan;
+                    $jawapan->pembetulan = $request->pembetulan;
+                } 
+                Alert::success('Tidak Lulus '.$oneBorang->namaBorang.' Berjaya .', $oneBorang->namaBorang.' permohonan '.$jwpn->user->nama.' tidak diluluskan');   
+
+            }
+            $jawapan->save();
+        }
+
+        if(Auth::user()->kategori->nama == "Pengurus Rancangan"){
+            $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('status','Sedang di proses')->get();
+        }
+        elseif(Str::contains(Auth::user()->kategori->nama , "Wilayah")){
+            $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('status','Lulus Peringkat Rancangan')->get();
+        }
+        elseif(Str::contains(Auth::user()->kategori->nama , "HQ")){
+            $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('status','Lulus Peringkat Wilayah')->get();
+        }
+        elseif(Auth::user()->kategori->nama == "Pengarah Jabatan"){
+            $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('status','Lulus Peringkat HQ')->get();
+        }
+        elseif(Auth::user()->kategori->nama == "Super Admin"){
+            $borangJwpns = borangJawapan::where('borang_id', $borangId)->get();
+        }
+
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        
+        return view('pengurusanBorang.userListBorang', compact('borangJwpns','oneBorang','menuModul', 'menuProses', 'menuBorang'));
+    }
+    
     
 
 }
