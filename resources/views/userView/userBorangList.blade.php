@@ -8,7 +8,7 @@
 
   <div class="header">
     <h1 class="header-title">
-        Senarai Borang
+        Senarai Borang Yang Di Mohon
     </h1>
   </div>
   
@@ -16,42 +16,49 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-            <form action="/user/borang_app/list/search" method="post">
-                @csrf
-                <table class="table table-borderless">
-                    <thead></thead>
-                    <tbody>
-                    <tr style="border: none;">
-                        <td style="border: none;"><p class="text04" style="text-align: right; margin-bottom:0;">Nama Borang:</p></td>
-                        <td style="border: none;"><input type="text" name="searchBorang" class="form-control" placeholder="Nama Borang" value=""></td>
-                        <td style="border: none;"><button type="submit" class="btn btn-primary" style="margin-right: auto; margin-left:auto;">Cari</button></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </form>
+          
         </div>
-
+        @if (!$borangJwpns->isEmpty())
         {{-- senarai borang --}}
         <table class="table table-bordered table-striped w-100">
           <thead class="text-white bg-primary w-100" style="text-align: center;">
             <tr>
                 <th scope="col">Nama Borang</th>
+                <th scope="col">Status</th>
+                <th scope="col">Ulasan</th>
                 <th scope="col">Tindakan</th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($borangs as $borang)
-                <tr>
-                    <td class="text-center">{{$borang->namaBorang}}</td>
-                    <td class="text-center">
-                        <a class="btn btn-success" href="/user/borang_app/{{$borang->id}}/user_list" style="color: white; text-decoration:none;">
-                            Senarai Permohon
-                        </a>
-                    </td>
-                </tr> 
+            @php
+            $borang = null;
+            @endphp
+            @foreach ($borangJwpns as $borangJwpn)
+                @if ($borangJwpn->borang_id != $borang)
+                    <tr>
+                        <td class="text-center">{{$borangJwpn->borangs->namaBorang}}</td>
+                        <td class="text-center">{{$borangJwpn->status}}</td>
+                        <td class="text-center">{{$borangJwpn->ulasan ?? ""}}</td>
+                        <td class="text-center">
+                            @if ($borangJwpn->pembetulan == 1)
+                                <a href="/user/sub_borang/{{$borangJwpn->borang_id}}/edit" type="button" class="btn btn-primary">Kemaskini</a>
+                            @else
+                            <a class="btn btn-info" href="/user/sub_borang/{{$borangJwpn->borang_id}}/view" style="color: white; text-decoration:none;">
+                                Papar Borang Permohon
+                            </a>
+                            @endif
+                        </td>
+                    </tr>
+                @endif
+                @php
+                $borang = $borangJwpn->borang_id;
+                @endphp
             @endforeach
           </tbody>
         </table>
+        @else
+        <h1 style="text-align: center; padding-bottom:5%;">Tiada Permohonan</h1>
+        @endif
       </div>
     </div>
   </div>

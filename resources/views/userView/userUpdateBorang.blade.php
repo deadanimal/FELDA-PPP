@@ -5,8 +5,13 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            Borang {{$borang->namaBorang}}
+            Borang {{$borangJwpns[0]->borangs->namaBorang}}
         </h1>
+        <a href="/user/sub_borang/list"  class="frame9403-frame7445" style="margin-left:0px;">
+            <div class="frame9403-frame7293">
+              <span class="frame9403-text21"><span>Kembali</span></span>
+            </div>
+        </a>
     </div>
     <div class="row">
         <div class="col-12">
@@ -14,30 +19,19 @@
                 <div class="card-header">
                     <h5 class="card-title mb-0">Sila isikan maklumat anda berikut dengan betul.</h5>
                 </div>
-                <form action="/userBorang/view/add" method="POST">
-                    @csrf
-                    <div class="card-body">
-                        @foreach($medans as $medan)
+                <div class="card-body">
+                    <form action="/user/sub_borang/update" method="post">
+                        @csrf
+                        @method('PUT')
+                        @foreach ($borangJwpns as $jwpn)
                             <div class="row">
                                 <div class="mb-3">
-                                    <label for="jawapan{{$medan->id}}" style="font-family:'Poppins'">{{$medan->nama}}</label>
-                                    <input 
-                                    @if ($medan->datatype == "string")
-                                        type="text" 
-                                    @else
-                                        type="number" step="any"
-                                    @endif
-
-                                    @if ($medan->pilihan == "required")
-                                        required 
-                                    @endif
-                                    class="form-control" maxlength="100" size="100" name="jawapan[]" id="jawapan{{$medan->id}}">
-                                    <input type="hidden" name="medanID[]" value="{{$medan->id}}">
+                                    <label for="jwpn{{$jwpn->id}}" style="font-family:'Poppins'">{{$jwpn->medans->nama}}</label>
+                                    <input class="form-control" name="jwpn[]" id="jwpn{{$jwpn->id}}" value="{{$jwpn->jawapan}}">
+                                    <input type="hidden" name="borangjwpnId[]" value="{{$jwpn->id}}">
                                 </div>
                             </div>
                         @endforeach
-                        <input type="hidden" name="borangID" value="{{$borang->id}}">
-                        <input type="hidden" name="userID" value="{{Auth::user()->id}}">
                         <button type="submit" class="frame9403-frame7445">
                             <div class="frame9403-frame7293">
                                 <span class="frame9403-text21"><span>Hantar</span></span>
@@ -46,9 +40,8 @@
                                 class="frame9403-group7527"
                                 />
                             </div>
-                        </button>
-                    </div>
-                </form>
+                        </button>                    </form>
+                </div>
             </div>
         </div>
     </div>

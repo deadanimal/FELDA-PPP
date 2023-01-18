@@ -102,8 +102,15 @@ Route::delete('/moduls/jenisKemas/Param/delete', [ModulController::class, 'Param
 Route::get('/user/borang_app/list', [BorangController::class, 'borangList_app']);
 Route::get('/user/borang_app/{borang_id}/user_list', [BorangController::class, 'borangApp_list']);
 Route::get('/user/borang_app/{borang_id}/{user_id}/view', [BorangController::class, 'borangApp_view']);
-
+Route::post('/user/borang_app/list/search', [BorangController::class, 'borangApp_search']);
 Route::put('/user/borang_app/update', [BorangController::class, 'borangApp_update']);
+
+Route::get('/user/sub_borang/list', [BorangController::class, 'subBorang_list']);
+Route::get('/user/sub_borang/{borang_id}/view', [BorangController::class, 'subBorang_view']);
+Route::get('/user/sub_borang/{borang_id}/edit', [BorangController::class, 'subBorang_edit']);
+Route::put('/user/sub_borang/update', [BorangController::class, 'subBorang_update']);
+
+Route::get('/user/tugasan/list', [UserController::class, 'tugasList_app']);
 
 // Route::get('/test', function () {
 //     return view('pengurusanTugasan.senaraiTugasan');

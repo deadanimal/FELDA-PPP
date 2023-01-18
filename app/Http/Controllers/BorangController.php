@@ -75,7 +75,7 @@ class BorangController extends Controller
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Tambah medan ".$medan->nama." pada Borang ".$borang->nama;
+        $audit->action = "Tambah medan ".$medan->nama." pada Borang ".$borang->namaBorang;
         $audit->save();
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
@@ -111,7 +111,7 @@ class BorangController extends Controller
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Kemaskini medan ".$medan->nama." pada Borang ".$borang->nama;
+        $audit->action = "Kemaskini medan ".$medan->nama." pada Borang ".$borang->namaBorang;
         $audit->save();
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
@@ -143,7 +143,7 @@ class BorangController extends Controller
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Padam medan ".$nama." pada Borang ".$borang->nama;
+        $audit->action = "Padam medan ".$nama." pada Borang ".$borang->namaBorang;
         $audit->save();
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
@@ -193,17 +193,25 @@ class BorangController extends Controller
 
     public function userBorang_submit(Request $request)
     {
-        $count = $request->totalCount;
+        $medanID = $request->medanID;
+        $jawapan = $request->jawapan;
+        $count = count($jawapan);
+
         $userID = $request->userID;
         $borangid = $request->borangID;
         for($x=0; $x<$count; $x++){
             $ans = new borangJawapan;
-            $ans->jawapan = $request->jawapan[$x];
+            $ans->jawapan = $jawapan[$x];
             $ans->userid = $userID;
-            $ans->medan = $request->medanID[$x];
+            $ans->medan = $medanID[$x];
             $ans->borang_id = $borangid;
             $ans->save();
         }
+        $borang = Borang::find($borangid);
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Menghantar Borang ".$borang->namaBorang;
+        $audit->save();
 
         Alert::success('Maklumat Anda Berjaya Disimpan.', 'Maklumat anda telah berjaya disimpan.');   
         
@@ -211,7 +219,7 @@ class BorangController extends Controller
         $menuProses = Proses::where('status', 1)->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('dashboard', compact('menuModul', 'menuProses', 'menuBorang'));
+        return redirect('/user/sub_borang/list');
     }
 
     public function user_listBorang(Request $request)
@@ -237,6 +245,19 @@ class BorangController extends Controller
         
         return view('pengurusanBorang.borangList', compact('borangs','menuModul', 'menuProses', 'menuBorang'));
     }
+
+    public function borangApp_search(Request $request)
+    {
+        $nBorang= $request->searchBorang;
+        $borangs = Borang::where('status', 1)->where('namaBorang','LIKE','%'.$nBorang.'%')->get();
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
+        return view('pengurusanBorang.borangList', compact('borangs','menuModul', 'menuProses', 'menuBorang'));
+    }
+    
 
     public function borangApp_list(Request $request)
     {
@@ -293,8 +314,9 @@ class BorangController extends Controller
         foreach($borangJwpns as $jwpn){
             $jawapan = borangJawapan::find($jwpn->id);
             if($stat == "Lulus"){
+                $action = $jawapan->user->nama;
                 if(Auth::user()->kategori->nama == "Pengurus Rancangan"){
-                    $borangJwpns = 'Lulus Peringkat Rancangan';
+                    $jawapan->status = 'Lulus Peringkat Rancangan';
                 }
                 elseif(Str::contains(Auth::user()->kategori->nama , "Wilayah")){
                     $jawapan->status = 'Lulus Peringkat Wilayah';
@@ -304,6 +326,9 @@ class BorangController extends Controller
                 }
                 elseif(Auth::user()->kategori->nama == "Pengarah Jabatan"){
                     $jawapan->status = 'Di sahkan Pengarah Jabatan';
+                }
+                elseif(Auth::user()->kategori->nama == "Super Admin"){
+                    $jawapan->status = 'Lulus Oleh Super Admin';
                 }
                 Alert::success('Lulus '.$oneBorang->namaBorang.' Berjaya .', 'Lulus '.$oneBorang->namaBorang.' permhononan '.$jwpn->user->nama.' telah berjaya');   
             }
@@ -328,11 +353,29 @@ class BorangController extends Controller
                     $jawapan->ulasan = $request->ulasan;
                     $jawapan->pembetulan = $request->pembetulan;
                 } 
-                Alert::success('Tidak Lulus '.$oneBorang->namaBorang.' Berjaya .', $oneBorang->namaBorang.' permohonan '.$jwpn->user->nama.' tidak diluluskan');   
+                elseif(Auth::user()->kategori->nama == "Super Admin"){
+                    $jawapan->status = 'Tidak Lulus Oleh Super Admin';
+                    $jawapan->ulasan = $request->ulasan;
+                    $jawapan->pembetulan = $request->pembetulan;
+                }
+                
+                Alert::success('Tidak Lulus '.$oneBorang->namaBorang.' Berjaya .', 'Borang '.$oneBorang->namaBorang.' permohonan '.$jwpn->user->nama.' tidak diluluskan');   
 
             }
             $jawapan->save();
         }
+        
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        if ($stat == "Lulus") {
+            $audit->action = "Meluluskan Borang ".$oneBorang->namaBorang." yang di hantar oleh ".$action;
+        } 
+        elseif($stat == "Tidak Lulus") {
+            $audit->action = "Tidak luluskan Borang ".$oneBorang->namaBorang." yang di hantar oleh ".$action;
+        }
+        $audit->save();
+        
+
 
         if(Auth::user()->kategori->nama == "Pengurus Rancangan"){
             $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('status','Sedang di proses')->get();
@@ -350,7 +393,6 @@ class BorangController extends Controller
             $borangJwpns = borangJawapan::where('borang_id', $borangId)->get();
         }
 
-
         $menuModul = Modul::all();
         $menuProses = Proses::where('status', 1)->get();
         $menuBorang = Borang::where('status', 1)->get();
@@ -359,6 +401,76 @@ class BorangController extends Controller
         return view('pengurusanBorang.userListBorang', compact('borangJwpns','oneBorang','menuModul', 'menuProses', 'menuBorang'));
     }
     
+    public function subBorang_list(Request $request)
+    {
+        $userId = Auth::user()->id;
+        $borangJwpns = borangJawapan::where('userid', $userId)->get();
+        
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
+        return view('userView.userBorangList', compact('borangJwpns','menuModul', 'menuProses', 'menuBorang'));
+    }
     
+    public function subBorang_view(Request $request)
+    {
+        $borangId = (int) $request->route('borang_id');
+        $userId = Auth::user()->id;
+
+        $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('userid', $userId)->get();
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
+        return view('userView.viewSubBorang', compact('borangJwpns','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function subBorang_edit(Request $request)
+    {
+        $borangId = (int) $request->route('borang_id');
+        $userId = Auth::user()->id;
+
+        $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('userid', $userId)->get();
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
+        return view('userView.userUpdateBorang', compact('borangJwpns','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function subBorang_update(Request $request)
+    {
+        $borangId = (int) $request->route('borang_id');
+        $userId = Auth::user()->id;
+
+        $borangjwpnId = $request->borangjwpnId;
+        $jwpn = $request->jwpn;
+        $count = count($jwpn);
+
+        for($x=0; $x<$count; $x++){
+            $ans = borangJawapan::find($borangjwpnId[$x]);
+            $ans->jawapan = $request->jwpn[$x];
+            $ans->pembetulan = null;
+            $ans->status = "Sedang di proses";
+            $ans->ulasan = null;
+            $ans->save();
+        }
+
+        $borangJwpns = borangJawapan::where('userid', $userId)->get();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Mengemaskini Borang ".$oneBorang->namaBorang;
+        $audit->save();
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
+        return view('userView.userBorangList', compact('borangJwpns','menuModul', 'menuProses', 'menuBorang'));
+    }
 
 }

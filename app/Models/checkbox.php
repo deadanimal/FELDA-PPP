@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class checkbox extends Model
 {
     use HasFactory;
+    protected $table = 'checkboxes';
 
     public function tugasan(){
         return $this->belongsTo(Tugasan::class, 'tugasan');

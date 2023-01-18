@@ -18,7 +18,7 @@
         <div class="card-header">
           
         </div>
-
+        @if (!$borangJwpns->isEmpty())
         {{-- senarai borang --}}
         <table class="table table-bordered table-striped w-100">
           <thead class="text-white bg-primary w-100" style="text-align: center;">
@@ -100,12 +100,12 @@
                                                             <td style="border: none;"><h5 style="text-align: right;">Pembetulan:</h5></td>
                                                             <td style="border: none;">
                                                                 <div class="custom-control custom-radio">
-                                                                    <input type="radio" id="Pembetulan" name="pembetulan" value="1" class="custom-control-input">
-                                                                    <label class="custom-control-label" for="Pembetulan">Ya</label>
+                                                                    <input type="radio" id="Pembetulan{{$borangJwpn->id}}" name="pembetulan" value="1" class="custom-control-input">
+                                                                    <label class="custom-control-label" for="Pembetulan{{$borangJwpn->id}}">Ya</label>
                                                                 </div>
                                                                 <div class="custom-control custom-radio">
-                                                                    <input type="radio" id="Pembetulan1" name="pembetulan" value="0" class="custom-control-input">
-                                                                    <label class="custom-control-label" for="Pembetulan1">Tidak</label>
+                                                                    <input type="radio" id="Pembetulan1{{$borangJwpn->id}}" name="pembetulan" value="0" class="custom-control-input">
+                                                                    <label class="custom-control-label" for="Pembetulan1{{$borangJwpn->id}}">Tidak</label>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -138,6 +138,9 @@
             @endforeach
           </tbody>
         </table>
+        @else
+        <h1 style="text-align: center; padding-bottom:5%;">Tiada Permohonan</h1>
+        @endif
       </div>
     </div>
   </div>

@@ -18,4 +18,9 @@ class borangJawapan extends Model
     public function medans(){
         return $this->belongsTo(Medan::class, 'medan');
     }
+
+    public function borangs(){
+        return $this->belongsTo(Borang::class, 'borang_id');
+    }
 }
+

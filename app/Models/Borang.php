@@ -16,4 +16,9 @@ class Borang extends Model
     public function medan() {
         return $this->hasMany(Medan::class);
     }
+
+    public function jwpn(){
+        return $this->hasMany(borangJawapan::class);
+
+    }
 }

@@ -15,6 +15,8 @@ use App\Models\Modul;
 use App\Models\KategoriPengguna;
 use App\Models\Rancangan;
 use App\Models\Audit;
+use App\Models\Tugasan;
+use App\Models\checkbox;
 
 use App\Models\Proses;
 use App\Models\Borang;
@@ -425,5 +427,34 @@ class UserController extends Controller
 
         return view('auditTrail.auditFilter', compact('audits', 'menuModul', 'menuProses', 'menuBorang'));
     }
+    
+    public function tugasList_app(Request $request)
+    {
+        $user = Auth::user()->kategoripengguna;
 
+        $tugasans= Tugasan::where('userKategori', $user)->get();
+        if($tugasans == null){
+            $menuModul = Modul::all();
+            $menuProses = Proses::where('status', 1)->get();
+            $menuBorang = Borang::where('status', 1)->get();
+            return view('userView.userTugasan', compact('tugasans', 'menuModul', 'menuProses', 'menuBorang'));
+        }
+        else{
+            foreach($tugasans as $tugasan){
+                $checkboxes = checkbox::where('tugasan', $tugasan->id)->get();   
+                $menuModul = Modul::all();
+                $menuProses = Proses::where('status', 1)->get();
+                $menuBorang = Borang::where('status', 1)->get();
+                return view('userView.userTugasan', compact('tugasans', 'checkboxes' ,'menuModul', 'menuProses', 'menuBorang'));
+        
+            }
+        }
+        
+
+        $menuModul = Modul::all();
+        $menuProses = Proses::where('status', 1)->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        return view('userView.userTugasan', compact('tugasans', 'menuModul', 'menuProses', 'menuBorang'));
+
+    }
 }

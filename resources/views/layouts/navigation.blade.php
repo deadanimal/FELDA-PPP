@@ -3,7 +3,7 @@
     margin-left: -260px;
 }
 </style>
-<nav id="sidebar" class="sidebar" style="max-width: 260px; min-width:260px;">
+<nav id="sidebar" class="sidebar" style="max-width: auto; min-width:auto;">
     <a class="sidebar-brand" href="/dashboard" style="background:#781E2A;">
         <img src="/Image/logo.png" style="max-width: 230px; background:#ffff; border-radius:4px;"/>
     </a>
@@ -13,7 +13,7 @@
             <div class="fw-bold"><h2 style="color: #153d77;">{{Auth::user()->idPengguna}}</h2></div>
             <h4 style="color: #153d77;">{{Auth::user()->nama}}</h4>
         </div>
-
+        
         <ul class="sidebar-nav">
             @if (Request::is('dashboard'))
             <li class="sidebar-item active">
@@ -24,6 +24,15 @@
                     <i class="align-middle me-2 fas fa-fw fa-home"></i> <span class="align-middle">LAMAN UTAMA</span>
                 </a>
             </li>
+            @if (Request::is('user/tugasan') || Request::is('user/tugasan/*'))
+                    <li class="sidebar-item active">
+                @else
+                    <li class="sidebar-item">
+                @endif
+                    <a  class="sidebar-link" href="/user/tugasan/list">
+                        <i class="align-middle me-2 fas fa-fw fa-clipboard-check"></i> <span class="align-middle">TUGASAN</span>
+                    </a>
+                </li>
             @if(Auth::user()->kategori->nama != "Peserta")
                 @if (Request::is('users') || Request::is('users/*') || Request::is('user-categories') || Request::is('user-categories/*'))
                 <li class="sidebar-item active">
@@ -80,7 +89,7 @@
                 @else
                 <li class="sidebar-item">
                     <a data-bs-target="#auth" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
-                        <i class="align-middle me-2 fas fa-fw fa-file"></i> <span class="align-middle">PENGURUSAN MODUL</span>
+                        <i class="align-middle me-2 fas fa-fw fa-folder-open"></i> <span class="align-middle">PENGURUSAN MODUL</span>
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                         <li class="sidebar-item"><a class="sidebar-link" href="/moduls/add">Cipta Modul</a></li>
@@ -95,7 +104,7 @@
                     <li class="sidebar-item">
                 @endif
                     <a  class="sidebar-link" href="/user/borang_app/list">
-                        <i class="align-middle me-2 ion ion-ios-paper"></i> <span class="align-middle">KELULUSAN BORANG</span>
+                        <i class="align-middle me-2 fas fa-fw fa-file-signature"></i> <span class="align-middle">KELULUSAN BORANG</span>
                     </a>
                 </li>
                 @if (Request::is('audit'))
@@ -112,6 +121,15 @@
             <li class="sidebar-header">
                 Pengguna
             </li>
+            @if (Request::is('/user/sub_borang/*'))
+                <li class="sidebar-item active">
+            @else
+                <li class="sidebar-item">
+            @endif
+                <a  class="sidebar-link" href="/user/sub_borang/list">
+                    <i class="align-middle me-2 fas fa-fw fa-list-alt"></i> <span class="align-middle">BORANG DI MOHON</span>
+                </a>
+            </li>
             @foreach ($menuModul as $mModul) 
             <li class="sidebar-item">
                 <a data-bs-target="#auth{{$mModul->id}}" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
@@ -127,7 +145,7 @@
                             <ul id="subauth{{$mProses->id}}" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#submenu">
                                 @foreach ($menuBorang as $mBorang)
                                     @if ($mBorang->proses == $mProses->id)
-                                        <li class="sidebar-item"><a class="sidebar-link" href="/userBorang/view/{{$mBorang->id}}"><i class="align-middle me-2 fas fa-fw fa-file"></i>{{$mBorang->namaBorang}}</a></li>  
+                                        <li class="sidebar-item"><a class="sidebar-link" href="/userBorang/view/{{$mBorang->id}}"><i class="align-middle me-2 fas fa-fw fa-file-alt"></i>{{$mBorang->namaBorang}}</a></li>  
                                     @endif                                  
                                 @endforeach
                             </ul>
