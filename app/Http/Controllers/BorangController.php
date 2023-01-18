@@ -80,7 +80,7 @@ class BorangController extends Controller
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
-        Alert::success('Tambah Meadan Borang berjaya.', 'Tambah medan borang telah berjaya.');   
+        Alert::success('Tambah Medan Borang berjaya.', 'Tambah medan borang telah berjaya.');   
 
         $menuModul = Modul::all();
         $menuProses = Proses::where('status', 1)->get();

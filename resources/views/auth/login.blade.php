@@ -70,7 +70,7 @@
                                 <div class="log-masuk-text14">
                                     Selamat
                                     <br />
-                                    Datang ke
+                                    Datang
                                 </div>
                                 <span class="log-masuk-text19">
                                     Sistem Pengurusan Maklumat
