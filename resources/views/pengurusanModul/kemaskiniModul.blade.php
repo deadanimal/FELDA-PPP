@@ -134,6 +134,7 @@
   font-family: 'Eina01-SemiBold', sans-serif;
   font-size: 18px;
   padding-left:10px;
+  text-transform: uppercase;
 }
 .frame9403-frame7445 {
     width: 157px;
@@ -206,7 +207,8 @@ display: flex;
         background-position:99% center;
         display:block;
         font-family: 'Eina01-SemiBold', sans-serif;
-        font-size: 17.3081px;
+        font-size: 17.3081px;  
+        text-transform: uppercase;
         box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)
     }   
 </style>

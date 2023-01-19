@@ -11,7 +11,17 @@
       <div class="card">
         <div class="card-header">
           <h5 class="card-title mb-0">Sila isikan maklumat anda berikut dengan betul.</h5>
-      </div>
+          @if ($errors->any())
+            @foreach ($errors->all() as $error)
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <div class="alert-message">
+                  <strong>{{ $error }}</strong>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            @endforeach
+          @endif
+        </div>
       <div class="card-body">
         <form action="/users/add" method="post" enctype="multipart/form-data">
           @csrf
@@ -22,17 +32,13 @@
               </div>
               <div class="mb-3 col-md-6">
                   <label for="idPengguna" style="font-family:'Poppins'">ID Pengguna</label>
-                  <input type="text" class="form-control frame9403-kotaknama" maxlength="12" size="12" name="idPengguna" id="idPengguna" value=""
-                  @if(Auth::user()->kategoripengguna != "4"){
-                    readonly
-                  }
-                  @endif>
+                  <input type="text" class="form-control frame9403-kotaknama" maxlength="12" size="12" name="idPengguna" id="idPengguna" value="">
               </div>
           </div>
           <div class="row">
               <div class="mb-3 col-md-6">
                   <label for="email" style="font-family:'Poppins'">Email</label>
-                  <input type="email" class="form-control frame9403-kotaknama" name="email" id="email" required>
+                  <input type="email" class="form-control frame9403-kotaknama" name="email" id="email" required style="text-transform: none;">
               </div>
               <div class="mb-3 col-md-6">
                   <label for="noTelefon" style="font-family:'Poppins'">No. Telefon</label>
@@ -87,7 +93,7 @@
               <div class="mb-3 col-md-6">
                   <label for="passcode" style="font-family:'Poppins'">Kata Laluan</label>
                   <div style="display: flex; flex-direction: row; align-items: center;">
-                    <input type="password" id="passcode" class="form-control frame9403-kotaknama" name="password" minlength="8" value="ppp@felda" required>
+                    <input type="password" id="passcode" class="form-control frame9403-kotaknama" name="password" minlength="8" value="ppp@felda" required style="text-transform: none;">
                     <i class="far fa-eye" onclick="showPassFunction()" id="iconPass" style="margin-left: 10px"></i>
                   </div>
               </div>
@@ -151,6 +157,7 @@
     font-family: 'Eina01-SemiBold', sans-serif;
     font-size: 17.3081px;
     padding-left:10px;
+    text-transform: uppercase;
     box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)
   }
   .frame9403-kotaknama3 {
@@ -167,6 +174,7 @@
     display:block;
     font-family: 'Eina01-SemiBold', sans-serif;
     font-size: 17.3081px;
+    text-transform: uppercase;
     box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)
   }
   .frame9403-frame7445 {

@@ -8,6 +8,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
+.arial-N{
+  font-family: 'Arial-N', sans-serif;
+  font-size: 18px;
+}
 .frame9402-box {
   width: max-content;
   display: flex;
@@ -322,7 +326,7 @@ display: flex;
             <table class="table table-borderless">
                 <tr>
                     <td><span class="frame9402-text04">Nama Tugasan: </span></td>
-                    <td><input type="text" class="frame9402-kotaknama" name="namaKemas" value="{{$kemaskini->nama}}" required/></td>
+                    <td><input type="text" class="frame9402-kotaknama arial-N" name="namaKemas" value="{{$kemaskini->nama}}" required/></td>
                 </tr>
             </table>
             <button type="submit" class="frame9403-frame7445">

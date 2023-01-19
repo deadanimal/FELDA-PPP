@@ -181,7 +181,8 @@
   font-size: 18px;
   padding-left:10px;
   box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2);
-  background-color: #FFFFFF;
+  background-color: #FFFFFF;  
+  text-transform: uppercase;
 }
 .frame9403-frame7445 {
   width: auto;
@@ -256,7 +257,8 @@ display: flex;
     display:block;
     font-family: 'Eina01-SemiBold', sans-serif;
     font-size: 17.3081px;
-    text-align: center;
+    text-align: center;  
+    text-transform: uppercase;
   }
 * {
     box-sizing: border-box;
@@ -290,7 +292,8 @@ display: flex;
   margin-bottom: 30px;
   font-family: 'Eina01-SemiBold', sans-serif;
   font-size: 18px;
-  padding-left:10px;
+  padding-left:10px;  
+    text-transform: uppercase;
 }
   .formContainer .btn {
     padding: 12px 20px;
@@ -482,6 +485,7 @@ display: flex;
     border: 4px solid #781E2A;
     border-radius: 8px;
     z-index: 9;
+    width: 550px;
   }
   .formContainer {
     max-width: 550px;
@@ -504,7 +508,8 @@ display: flex;
   margin-bottom: 30px;
   font-family: 'Eina01-SemiBold', sans-serif;
   font-size: 18px;
-  padding-left:10px;
+  padding-left:10px;  
+    text-transform: uppercase;
 }
   .formContainer .btn {
     padding: 12px 20px;
@@ -577,7 +582,7 @@ display: flex;
             <form action="/moduls/borang_field/add" method="POST" class="formContainer">
               @csrf
               <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA MEDAN</h2>
-              <table class="table">
+              <table class="table" style="padding: 5%;">
                 <tr>
                   <td class="frame9402-text04"><p class="text-xs-center" style="margin: auto;">Nama Medan</p></td>
                   <td><input type="text" class="frame9402-kotaknama" placeholder="Nama Medan" name="nama" required></td>
@@ -586,8 +591,8 @@ display: flex;
                   <td class="frame9402-text04"><p class="text-xs-center"  style="margin: auto;">Jenis Data</p></td>
                   <td>
                     <select name="datatype" class="frame9403-kotaknama3">
-                      <option value="string">Abjad Angka</option>
-                      <option value="integer">Data Berangka</option>
+                      <option value="string">Alfanumerik</option>
+                      <option value="integer">Numerikal</option>
                     </select>
                   </td>
                 </tr>
@@ -627,11 +632,11 @@ display: flex;
                   <td class="frame9402-text30">Jenis Data:
                     <select name="datatype" class="frame9403-kotaknama3">
                       @if ($medan->datatype == "string" )
-                        <option value="string" selected>Abjad Angka</option>
-                        <option value="integer">Data Berangka</option>
+                        <option value="string" selected>Alfanumerik</option>
+                        <option value="integer">Numerikal</option>
                       @else
-                        <option value="string">Abjad Angka</option>
-                        <option value="integer"selected>Data Berangka</option>
+                        <option value="string">Alfanumerik</option>
+                        <option value="integer"selected>Numerikal</option>
                       @endif
                     </select>
                   </td>

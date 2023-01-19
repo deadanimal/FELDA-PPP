@@ -151,6 +151,7 @@
         font-family: 'Eina01-SemiBold';
         font-size: 18px;
         padding-left: 10px;
+        text-transform: uppercase;
     }
 
     .frame9402-b-u-t-t-o-n-c-a-r-i-a-n {
@@ -260,6 +261,7 @@
         display:block;
         font-family: 'Eina01-SemiBold', sans-serif;
         font-size: 17.3081px;
+        text-transform: uppercase;
         box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)
     }
 </style>

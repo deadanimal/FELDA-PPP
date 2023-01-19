@@ -54,6 +54,10 @@
   </div>
 </div>
 <style>
+.arial-N{
+      font-family: 'Arial-N', sans-serif;
+      font-size: 18px;
+  }
 .frame9402-frame9281 {
     display: flex;
     position: relative;
@@ -194,29 +198,32 @@
               columns: [{
                       data: 'DT_RowIndex',
                       name: 'DT_RowIndex',
-                      className: "text-center"
+                      className: "text-center arial-N"
                   },
                   {
                       data: 'idPengguna',
                       name: 'idPengguna',
-                      className: "text-center"
+                      className: "text-center arial-N"
                   },
                   {
                       data: 'nama',
-                      name: 'nama'
+                      name: 'nama',
+                      className: "arial-N"
                   },
                   {
                       data: 'wilayah', 
-                      name: 'wilayah'
+                      name: 'wilayah',
+                      className: "arial-N"
                   },
                   {
                       data: 'rancangan',
-                      name: 'rancangan'
+                      name: 'rancangan',
+                      className: "arial-N"
                   },
                   {
                       data: 'tindakan',
                       name: 'tindakan',
-                      className: "text-center col-sm-auto w-25"
+                      className: "text-center col-sm-auto w-25 arial-N"
                   },                    
 
               ]

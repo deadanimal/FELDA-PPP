@@ -23,10 +23,10 @@
         <table class="table table-bordered table-striped w-100">
           <thead class="text-white bg-primary w-100" style="text-align: center;">
             <tr>
-                <th scope="col">Nama Borang</th>
-                <th scope="col">Status</th>
-                <th scope="col">Ulasan</th>
-                <th scope="col">Tindakan</th>
+                <th scope="col" class="arial">Nama Borang</th>
+                <th scope="col" class="arial">Status</th>
+                <th scope="col" class="arial">Ulasan</th>
+                <th scope="col" class="arial">Tindakan</th>
             </tr>
           </thead>
           <tbody>
@@ -36,10 +36,10 @@
             @foreach ($borangJwpns as $borangJwpn)
                 @if ($borangJwpn->borang_id != $borang)
                     <tr>
-                        <td class="text-center">{{$borangJwpn->borangs->namaBorang}}</td>
-                        <td class="text-center">{{$borangJwpn->status}}</td>
-                        <td class="text-center">{{$borangJwpn->ulasan ?? ""}}</td>
-                        <td class="text-center">
+                        <td class="text-center arial">{{$borangJwpn->borangs->namaBorang}}</td>
+                        <td class="text-center arial">{{$borangJwpn->status}}</td>
+                        <td class="text-center arial">{{$borangJwpn->ulasan ?? ""}}</td>
+                        <td class="text-center arial">
                             @if ($borangJwpn->pembetulan == 1)
                                 <a href="/user/sub_borang/{{$borangJwpn->borang_id}}/edit" type="button" class="btn btn-primary">Kemaskini</a>
                             @else
@@ -109,6 +109,10 @@ function closeFormKemas() {
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <style>
+    .arial{
+        font-family: 'Arial-N', sans-serif;
+        font-size: 18px;
+    }
   .frame9402-frame9402 {
     width: 100%;
     display: flex;

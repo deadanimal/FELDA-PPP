@@ -199,7 +199,7 @@
         @if (!$tugasan->isEmpty())
         <table class="table table-bordered table-striped w-100">
           <thead class="text-white bg-primary w-100">
-            <tr>
+            <tr class="text-center">
                 <th scope="col">Nama Tugasan</th>
                 <th scope="col">Jenis Tugasan</th>
                 <th scope="col">Kategori Pengguna</th>
@@ -209,8 +209,8 @@
           <tbody>
               @foreach ($tugasan as $tugasan)
               <tr>
-                <td class="text-center">{{$tugasan->nama}}</td>
-                <td class="text-center">
+                <td class="text-center arial-N">{{$tugasan->nama}}</td>
+                <td class="text-center arial-N">
                   @if($tugasan->jenisTugas == "input")
                     Input
                   @elseif($tugasan->jenisTugas == "checkBox")
@@ -219,8 +219,8 @@
                     Muat Naik Dokumen
                   @endif
                 </td>
-                <td class="text-center">{{$tugasan->kategoriPengguna->nama}}</td>
-                <td class="text-center">
+                <td class="text-center arial-N">{{$tugasan->kategoriPengguna->nama}}</td>
+                <td class="text-center arial-N">
                   <form action="/moduls/tugasan/edit" method="GET">
                     <input type="hidden" name="tugasanID" value="{{$tugasan->id}}">
                     <input type="hidden" name="prosesId" value="{{$proses->id}}">
@@ -312,15 +312,15 @@
         <table class="table table-bordered table-striped w-100">
           <thead class="text-white bg-primary w-100">
             <tr>
-                <th scope="col">Nama Jenis Kemaskini</th>
+                <th scope="col" class="text-center">Nama Jenis Kemaskini</th>
                 <th scope="col" >Tindakan</th>
             </tr>
           </thead>
           <tbody>
               @foreach ($kemaskini as $kemaskini)
               <tr>
-                <td class="text-center">{{$kemaskini->nama}}</td>
-                <td class="text-center">
+                <td class="text-center arial-N">{{$kemaskini->nama}}</td>
+                <td class="text-center arial-N">
                   <form action="/moduls/jenisKemas/edit" method="GET">
                     <input type="hidden" name="kemaskiniID" value="{{$kemaskini->id}}">
                     <input type="hidden" name="prosesId" value="{{$proses->id}}">
@@ -420,6 +420,10 @@ function closeFormKemas() {
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <style>
+  .arial-N{
+      font-family: 'Arial-N', sans-serif;
+      font-size: 18px;
+  }
   .frame9402-frame9402 {
     width: 100%;
     display: flex;
@@ -594,7 +598,8 @@ function closeFormKemas() {
     font-size: 18px;
     padding-left:10px;
     box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2);
-    background-color: #FFFFFF;
+    background-color: #FFFFFF;  
+    text-transform: uppercase;
   }
   .frame9403-frame7445 {
       width: auto;
@@ -663,7 +668,9 @@ function closeFormKemas() {
       background-position:99% center;
       display:block;
       font-family: 'Eina01-SemiBold', sans-serif;
-      font-size: 17.3081px;
+      font-size: 17.3081px;  
+      text-transform: uppercase;
+      text-align: center;
     }
   * {
       box-sizing: border-box;
@@ -717,7 +724,8 @@ function closeFormKemas() {
     margin-bottom: 30px;
     font-family: 'Eina01-SemiBold', sans-serif;
     font-size: 18px;
-    padding-left:10px;
+    padding-left:10px;  
+    text-transform: uppercase;
   }
     .formContainer .btn {
       padding: 12px 20px;

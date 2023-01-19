@@ -94,7 +94,7 @@ body{
   max-width:560px;
   margin-bottom: 0;
   flex-direction: column;
-  background: linear-gradient(181.36deg, rgba(225, 225, 225, 0.51) -24.18%, rgba(241, 241, 241, 0) 105.9%);
+  background: linear-gradient(181.36deg, rgba(225, 225, 225, 0.61) -24.18%, rgba(241, 241, 241, 0) 105.9%);
   backdrop-filter: blur(5px);
   border-image-source: linear-gradient(210.57deg, rgba(255, 255, 255, 0.47) 6.66%, rgba(255, 255, 255, 0) 93.17%);
 
@@ -203,12 +203,12 @@ body{
   text-decoration: none;
 }
 ::placeholder { 
-  color: #FFFFFF;
+  color: black;
   font-size: 16px;
   font-family: 'Poppins';
   font-style:italic;
   font-weight: 500;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .log-masuk-rectangle46 {
@@ -218,31 +218,14 @@ body{
   position: relative;
   box-sizing: border-box;
   border-color: rgba(255, 255, 255, 1);
-  background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0.55);
   border-style: solid;
   border-width: 1px;
   margin-right: 0;
   border-radius: 5px;
   margin-bottom: 0;
   padding-left:20px;
-  color: #FFFFFF;
-}
-
-.log-masuk-rectangle461 {
-  width: 366px;
-  height: 40px;
-  font-size: 16px;
-  position: relative;
-  box-sizing: border-box;
-  border-color: rgba(255, 255, 255, 1);
-  background-color: rgba(255, 255, 255, 0);
-  border-style: solid;
-  border-width: 1px;
-  margin-right: 0;
-  border-radius: 5px;
-  margin-bottom: 0;
-  padding-left:20px;
-  color: #FFFFFF;
+  color: black;
 }
 
 label {
@@ -259,16 +242,6 @@ label {
   background: url("/SVG/person.svg") center / contain no-repeat;
 }
 
-.log-masuk-frame121 label:before {
-  content: "";
-  position: absolute;
-  left: 5px;
-  top: 0px;
-  bottom: 0;
-  width: 11px;
-  height: 42px;
-  background: url("/SVG/password.svg") center / contain no-repeat;
-}
 .log-masuk-frame4 {
   width: auto;
   height: 90px;
@@ -361,6 +334,7 @@ label {
   font-weight: 700;
   line-height: normal;
   font-size: 18px;
+  cursor: pointer;
 }
 .log-masuk-button6:hover {
   opacity:1; 

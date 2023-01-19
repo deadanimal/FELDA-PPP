@@ -54,6 +54,10 @@
                         font-family:'Eina01-SemiBold';
                         src: url('/fonts/Eina01-SemiBold.ttf');
                     }
+                    @font-face{
+                        font-family:'Arial-N';
+                        src: url('/fonts/Arial-Narrow.ttf');
+                    }
                 </style>
                 @yield('innercontent')
 

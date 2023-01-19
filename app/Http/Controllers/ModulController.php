@@ -175,7 +175,7 @@ class ModulController extends Controller
         $audit->action = "Membuat salinan modul ".$modul->nama;
         $audit->save();
 
-        Alert::success('Copy Modul berjaya.', 'Copy modul telah berjaya.');
+        Alert::success('Salinan Modul berjaya.', 'Salinan modul telah berjaya.');
 
         return back();
     }

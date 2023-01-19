@@ -8,6 +8,10 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
+.arial-N{
+  font-family: 'Arial-N', sans-serif;
+  font-size: 18px;
+}
 .frame9402-box {
   width: max-content;
   display: flex;
@@ -103,6 +107,7 @@
         font-family: 'Eina01-SemiBold';
         font-size: 18px;
         padding-left: 10px;
+        text-transform: uppercase;
     }
     .frame9402-frame7293 {
         height: 20px;
@@ -129,6 +134,7 @@
         display:block;
         font-family: 'Eina01-SemiBold', sans-serif;
         font-size: 17.3081px;
+        text-transform: uppercase;
         box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)
     }
     .frame9403-frame7293 {
@@ -239,6 +245,7 @@ display: flex;
     font-family: 'Eina01-SemiBold', sans-serif;
     font-size: 18px;
     padding-left:10px;
+    text-transform: uppercase;
   }
     .formContainer .btn {
       padding: 12px 20px;

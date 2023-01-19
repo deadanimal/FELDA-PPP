@@ -31,7 +31,7 @@
                                     @if ($medan->pilihan == "required")
                                         required 
                                     @endif
-                                    class="form-control" maxlength="100" size="100" name="jawapan[]" id="jawapan{{$medan->id}}">
+                                    class="form-control" style="text-transform: uppercase;" maxlength="100" size="100" name="jawapan[]" id="jawapan{{$medan->id}}">
                                     <input type="hidden" name="medanID[]" value="{{$medan->id}}">
                                 </div>
                             </div>

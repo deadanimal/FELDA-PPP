@@ -113,7 +113,7 @@
                 <li class="sidebar-item">
                 @endif
                     <a  class="sidebar-link" href="/audit">
-                        <i class="align-middle me-2 fas fa-fw fa-book"></i> <span class="align-middle">Audit</span>
+                        <i class="align-middle me-2 fas fa-fw fa-book"></i> <span class="align-middle">AUDIT</span>
                     </a>
                 </li>
             @endif

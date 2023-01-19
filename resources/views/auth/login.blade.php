@@ -252,12 +252,12 @@
     }
 
     ::placeholder {
-        color: #FFFFFF;
+        color: black;
         font-size: 16px;
         font-family: 'Poppins', sans-serif;
         font-style: italic;
         font-weight: 500;
-        opacity: 0.5;
+        opacity: 0.6;
     }
 
     .log-masuk-rectangle46 {
@@ -267,13 +267,13 @@
         position: relative;
         box-sizing: border-box;
         border-color: rgba(255, 255, 255, 1);
-        background-color: rgba(255, 255, 255, 0);
+        background-color: rgba(255, 255, 255, 0.55);
         border-style: solid;
         margin-right: 0;
         border-radius: 5px;
         margin-bottom: 0;
         padding-left: 20px;
-        color: #FFFFFF;
+        color: black;
     }
 
     .log-masuk-rectangle461 {
@@ -283,13 +283,13 @@
         position: relative;
         box-sizing: border-box;
         border-color: rgba(255, 255, 255, 1);
-        background-color: rgba(255, 255, 255, 0);
+        background-color: rgba(255, 255, 255, 0.55);
         border-style: solid;
         margin-right: 0;
         border-radius: 5px;
         margin-bottom: 0;
         padding-left: 20px;
-        color: #FFFFFF;
+        color: black;
     }
 
     label {

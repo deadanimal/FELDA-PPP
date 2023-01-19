@@ -183,11 +183,12 @@
     margin-right: 0;
     border-radius: 3.461621046066284px;
     margin-bottom: 0;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial-N', sans-serif;
     font-size: 18px;
     padding-left:10px;
     box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2);
     background-color: #FFFFFF;
+    text-transform: uppercase;
   }
   .frame9403-frame7445 {
       width: auto;
@@ -260,6 +261,7 @@
       display:block;
       font-family: 'Eina01-SemiBold', sans-serif;
       font-size: 17.3081px;
+      text-transform: uppercase;
     }
   * {
       box-sizing: border-box;
@@ -314,6 +316,7 @@
     font-family: 'Eina01-SemiBold', sans-serif;
     font-size: 18px;
     padding-left:10px;
+  text-transform: uppercase;
   }
     .formContainer .btn {
       padding: 12px 20px;
