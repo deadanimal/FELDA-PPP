@@ -26,7 +26,7 @@ class ModulController extends Controller
     public function modul_add_page()
     {
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.ciptaModul', compact( 'menuModul', 'menuProses', 'menuBorang'));
@@ -125,7 +125,7 @@ class ModulController extends Controller
         }
         $bilangan = count($modul);
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.senaraiModul', compact('modul', 'bilangan',  'menuModul', 'menuProses', 'menuBorang'));
@@ -153,7 +153,7 @@ class ModulController extends Controller
         $modul = Modul::find($idModul); 
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.kemaskiniModul', compact('modul',  'menuModul', 'menuProses', 'menuBorang'));
@@ -199,7 +199,7 @@ class ModulController extends Controller
         $bilangan = count(Modul::all());
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.senaraiModul', compact('modul', 'bilangan',  'menuModul', 'menuProses', 'menuBorang'));
@@ -224,7 +224,7 @@ class ModulController extends Controller
         $prosess = Proses::where('modul', $request->modulId)->orderBy("sequence", "ASC")->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.senaraiProses', compact('modul', 'prosess',  'menuModul', 'menuProses', 'menuBorang'));
@@ -237,7 +237,7 @@ class ModulController extends Controller
         $modul = Modul::find($idModul);
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.senaraiProses', compact('modul', 'prosess',  'menuModul', 'menuProses', 'menuBorang'));
@@ -263,7 +263,7 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulID);
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.senaraiProses', compact('modul', 'prosess',  'menuModul', 'menuProses', 'menuBorang'));
@@ -286,7 +286,7 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.senaraiProses', compact('modul', 'prosess',  'menuModul', 'menuProses', 'menuBorang'));
@@ -315,7 +315,7 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
@@ -335,7 +335,7 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.senaraiBorang', compact('modul','borangs', 'proses', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
@@ -364,7 +364,7 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
@@ -391,7 +391,7 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
@@ -419,7 +419,7 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
@@ -438,7 +438,7 @@ class ModulController extends Controller
         $checkboxes = checkbox::where('tugasan',$idTugasan)->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
@@ -468,7 +468,7 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
@@ -495,7 +495,7 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
@@ -522,7 +522,7 @@ class ModulController extends Controller
         $checkboxes = checkbox::where('tugasan',$idTugasan)->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
@@ -549,7 +549,7 @@ class ModulController extends Controller
         $checkboxes = checkbox::where('tugasan',$idTugasan)->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
@@ -576,7 +576,7 @@ class ModulController extends Controller
         $checkboxes = checkbox::where('tugasan',$request->tugasanID)->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.editTugasan', compact('proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
@@ -604,7 +604,7 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         Alert::success('Kemaskini Jenis Kemaskini Berjaya.', 'Kemaskini Jenis Kemaskini telah berjaya.');
@@ -626,7 +626,7 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.editKemas', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'params'));
@@ -654,7 +654,7 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         Alert::success('Kemaskini Jenis Kemaskini Berjaya.', 'Kemaskini Jenis Kemaskini telah berjaya.');
@@ -681,7 +681,7 @@ class ModulController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         Alert::success('Padam Jenis Kemaskini Berjaya.', 'Padam Jenis Kemaskini telah berjaya.');
@@ -711,7 +711,7 @@ class ModulController extends Controller
 
         
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         Alert::success('Tambah Parameter Berjaya.', 'Tambah parameter telah berjaya.');
@@ -740,7 +740,7 @@ class ModulController extends Controller
         $params = KemasParameter::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         Alert::success('Kemaskini Parameter Berjaya.', 'Kemaskini parameter telah berjaya.');
@@ -767,7 +767,7 @@ class ModulController extends Controller
         $params = KemasParameter::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         Alert::success('Padam Parameter Berjaya.', 'Padam Parameter telah berjaya.');

@@ -32,7 +32,7 @@ class BorangController extends Controller
         $medans = Medan::where('borang_id', $idBorang)->orderBy("sequence", "ASC")->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
@@ -47,7 +47,7 @@ class BorangController extends Controller
         Alert::success('Muat Naik Borang berjaya.', 'Muat naik borang anda berjaya.');   
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         return view('pengurusanModul.borang', compact('borang', 'menuModul', 'menuProses', 'menuBorang'));
@@ -83,7 +83,7 @@ class BorangController extends Controller
         Alert::success('Tambah Medan Borang berjaya.', 'Tambah medan borang telah berjaya.');   
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
@@ -119,7 +119,7 @@ class BorangController extends Controller
         Alert::success('Kemaskini Meadan Borang berjaya.', 'Kemaskini medan borang telah berjaya.');   
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
@@ -151,7 +151,7 @@ class BorangController extends Controller
         Alert::success('Padam Meadan Borang berjaya.', 'Kemaskini medan borang telah berjaya.');   
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
@@ -172,7 +172,7 @@ class BorangController extends Controller
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.viewBorang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
@@ -185,7 +185,7 @@ class BorangController extends Controller
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         return view('userView.userBorang', compact('borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
@@ -216,7 +216,7 @@ class BorangController extends Controller
         Alert::success('Maklumat Anda Berjaya Disimpan.', 'Maklumat anda telah berjaya disimpan.');   
         
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return redirect('/user/sub_borang/list');
@@ -229,7 +229,7 @@ class BorangController extends Controller
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         return view('userView.userBorang', compact('borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
@@ -240,7 +240,7 @@ class BorangController extends Controller
         $borangs = Borang::where('status', 1)->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         return view('pengurusanBorang.borangList', compact('borangs','menuModul', 'menuProses', 'menuBorang'));
@@ -252,7 +252,7 @@ class BorangController extends Controller
         $borangs = Borang::where('status', 1)->where('namaBorang','LIKE','%'.$nBorang.'%')->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         return view('pengurusanBorang.borangList', compact('borangs','menuModul', 'menuProses', 'menuBorang'));
@@ -280,7 +280,7 @@ class BorangController extends Controller
         }
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         return view('pengurusanBorang.userListBorang', compact('borangJwpns','oneBorang','menuModul', 'menuProses', 'menuBorang'));
@@ -294,7 +294,7 @@ class BorangController extends Controller
         $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('userid', $userId)->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         return view('pengurusanBorang.viewBorangApp', compact('borangJwpns','oneBorang','menuModul', 'menuProses', 'menuBorang'));
@@ -394,7 +394,7 @@ class BorangController extends Controller
         }
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         
@@ -407,7 +407,7 @@ class BorangController extends Controller
         $borangJwpns = borangJawapan::where('userid', $userId)->get();
         
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         return view('userView.userBorangList', compact('borangJwpns','menuModul', 'menuProses', 'menuBorang'));
@@ -421,7 +421,7 @@ class BorangController extends Controller
         $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('userid', $userId)->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         return view('userView.viewSubBorang', compact('borangJwpns','menuModul', 'menuProses', 'menuBorang'));
@@ -435,7 +435,7 @@ class BorangController extends Controller
         $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('userid', $userId)->get();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         return view('userView.userUpdateBorang', compact('borangJwpns','menuModul', 'menuProses', 'menuBorang'));
@@ -467,7 +467,7 @@ class BorangController extends Controller
         $audit->save();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         return view('userView.userBorangList', compact('borangJwpns','menuModul', 'menuProses', 'menuBorang'));

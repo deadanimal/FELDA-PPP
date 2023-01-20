@@ -119,6 +119,7 @@
   font-family: 'Eina01-SemiBold', sans-serif;
   font-size: 17.3081px;
   padding-left:10px;
+  text-transform: uppercase;
   box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)
 }
 .frame9403-frame7445 {
@@ -138,7 +139,7 @@
   margin-top: 20px;
   justify-content: center;
   background-color: #A2335D;
-  margin-left:20%;
+  margin-left:5%;
   cursor: pointer;
 }
 .frame9403-frame7293 {

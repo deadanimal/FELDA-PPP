@@ -52,7 +52,7 @@ Route::post('/user_auditFilter', [UserController::class, 'user_auditFilter']);
 
 
 Route::get('/moduls', [ModulController::class, 'modul_list']);
-Route::get('/moduls/add', [ModulController::class, 'modul_add_page']);
+Route::get('/modul/add', [ModulController::class, 'modul_add_page']);
 Route::post('/moduls/add', [ModulController::class, 'modul_add']);
 Route::get('/moduls/{id}', [ModulController::class, 'modul_detail']);
 Route::get('/moduls/{id}/delete', [ModulController::class, 'modul_delete']);

@@ -33,7 +33,7 @@ class UserController extends Controller
     public function dashboard()
     {
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('dashboard', compact('menuModul', 'menuProses', 'menuBorang'));
@@ -45,7 +45,7 @@ class UserController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanPengguna.daftarPengguna', compact('wilayah', 'kategoriPengguna', 'menuModul', 'menuProses', 'menuBorang'));
@@ -62,12 +62,13 @@ class UserController extends Controller
         $request->validate([
             'email' => ['required', 'string', 'email', 'unique:users'],
             'nama' => ['required', 'string'],
-            'nokadpengenalan' => ['required', 'string', 'unique:users'],
+            'nokadpengenalan' => ['required','min:12' ,'string', 'unique:users'],
             'password' => ['required'],
             'kategoripengguna' => ['required'],
             'wilayah' => ['required'],
             'rancangan' => ['required'],
         ]);
+
         $user = new User;
         $user->email = $request->email;
         $user->nama = $request->nama;
@@ -98,7 +99,7 @@ class UserController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanPengguna.maklumatPengguna', compact('kategoriPengguna', 'wilayah', 'rancangan', 'menuModul', 'menuProses', 'menuBorang'));
@@ -196,7 +197,7 @@ class UserController extends Controller
         $bilangan = count($user);
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanPengguna.senaraiPengguna', compact('user', 'bilangan', 'menuModul', 'menuProses', 'menuBorang'));
@@ -227,7 +228,7 @@ class UserController extends Controller
         $user = User::find($id);
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanPengguna.kemaskini', compact('user', 'kategoriPengguna', 'wilayah', 'menuModul', 'menuProses', 'menuBorang'));
@@ -314,7 +315,7 @@ class UserController extends Controller
             }
 
             $menuModul = Modul::all();
-            $menuProses = Proses::where('status', 1)->get();
+            $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
             $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanPengguna.pengurusanKategoriPengguna', compact('kategoriPenggunas', 'menuModul', 'menuProses', 'menuBorang'));
@@ -342,7 +343,7 @@ class UserController extends Controller
         $kategoriPengguna = KategoriPengguna::find($id);
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanPengguna.editKategoriPengguna', compact('kategoriPengguna', 'menuModul', 'menuProses', 'menuBorang'));
@@ -388,7 +389,7 @@ class UserController extends Controller
         $audits = Audit::orderBy("updated_at", "DESC")->get();
         
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('auditTrail.audit', compact('audits', 'menuModul', 'menuProses', 'menuBorang'));
@@ -422,7 +423,7 @@ class UserController extends Controller
         }
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('auditTrail.auditFilter', compact('audits', 'menuModul', 'menuProses', 'menuBorang'));
@@ -435,7 +436,7 @@ class UserController extends Controller
         $tugasans= Tugasan::where('userKategori', $user)->get();
         if($tugasans == null){
             $menuModul = Modul::all();
-            $menuProses = Proses::where('status', 1)->get();
+            $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
             $menuBorang = Borang::where('status', 1)->get();
             return view('userView.userTugasan', compact('tugasans', 'menuModul', 'menuProses', 'menuBorang'));
         }
@@ -443,7 +444,7 @@ class UserController extends Controller
             foreach($tugasans as $tugasan){
                 $checkboxes = checkbox::where('tugasan', $tugasan->id)->get();   
                 $menuModul = Modul::all();
-                $menuProses = Proses::where('status', 1)->get();
+                $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
                 $menuBorang = Borang::where('status', 1)->get();
                 return view('userView.userTugasan', compact('tugasans', 'checkboxes' ,'menuModul', 'menuProses', 'menuBorang'));
         
@@ -452,7 +453,7 @@ class UserController extends Controller
         
 
         $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         return view('userView.userTugasan', compact('tugasans', 'menuModul', 'menuProses', 'menuBorang'));
 

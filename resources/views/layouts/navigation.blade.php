@@ -68,16 +68,16 @@
                     </ul>
                 </li>
                 @endif 
-                @if (Request::is('moduls') || Request::is('moduls/*'))
+                @if (Request::is('moduls') || Request::is('moduls/*') || Request::is('modul/*') )
                 <li class="sidebar-item active">
                     <a data-bs-target="#auth" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
                         <i class="align-middle me-2 fas fa-fw fa-file"></i> <span class="align-middle">PENGURUSAN MODUL</span>
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
-                        @if (Request::is('moduls/add'))
-                        <li class="sidebar-item active"><a class="sidebar-link" href="/moduls/add">Cipta Modul</a></li>
+                        @if (Request::is('modul/add'))
+                        <li class="sidebar-item active"><a class="sidebar-link" href="/modul/add">Cipta Modul</a></li>
                         @else
-                        <li class="sidebar-item"><a class="sidebar-link" href="/moduls/add">Cipta Modul</a></li> 
+                        <li class="sidebar-item"><a class="sidebar-link" href="/modul/add">Cipta Modul</a></li> 
                         @endif
                         @if (Request::is('moduls') || Request::is('moduls/*'))
                         <li class="sidebar-item active"><a class="sidebar-link" href="/moduls">Senarai Modul</a></li>
@@ -92,7 +92,7 @@
                         <i class="align-middle me-2 fas fa-fw fa-folder-open"></i> <span class="align-middle">PENGURUSAN MODUL</span>
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                        <li class="sidebar-item"><a class="sidebar-link" href="/moduls/add">Cipta Modul</a></li>
+                        <li class="sidebar-item"><a class="sidebar-link" href="/modul/add">Cipta Modul</a></li>
                         <li class="sidebar-item"><a class="sidebar-link" href="/moduls">Senarai Modul</a></li>
                     </ul>
                 </li>

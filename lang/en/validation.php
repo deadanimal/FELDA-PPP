@@ -153,8 +153,13 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'nokadpengenalan' => [
+            'min' => 'No. Kad Pengenalan mestilah sekurang-kurangnya 12 aksara',
+            'unique'=> 'No. Kad Pengenalan sudah di daftar',
+        ],
+
+        'email' => [
+            'unique'=> 'Emel sudah di daftar',
         ],
     ],
 

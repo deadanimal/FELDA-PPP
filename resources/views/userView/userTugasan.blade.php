@@ -50,7 +50,7 @@
                             <input type="hidden" name="userID" value="{{Auth::user()->id}}">
                             <button type="submit" class="frame9403-frame7445">
                                 <div class="frame9403-frame7293">
-                                    <span class="frame9403-text21"><span>Kemaskini</span></span>
+                                    <span class="frame9403-text21"><span>Kemas</span></span>
                                     <img
                                     src="/SVG/kemaskini.svg"
                                     class="frame9403-group7527"

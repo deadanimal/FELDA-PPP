@@ -37,7 +37,7 @@
           </div>
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="email" style="font-family:'Poppins'">Email</label>
+                  <label for="email" style="font-family:'Poppins'">Emel</label>
                   <input type="email" class="form-control frame9403-kotaknama" name="email" id="email" required style="text-transform: none;">
               </div>
               <div class="mb-3 col-md-6">
@@ -49,7 +49,7 @@
           <div class="row">
               <div class="mb-3 col-md-6">
                   <label for="nokadpengenalan" style="font-family:'Poppins'">No. Kad Pengenalan</label>
-                  <input type="text" class="form-control frame9403-kotaknama" id="nokadpengenalan" name="nokadpengenalan" maxlength="12"
+                  <input type="text" class="form-control frame9403-kotaknama" id="nokadpengenalan" name="nokadpengenalan" maxlength="12" minlength="12"
                   size="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="E.g: 750922140122" required>
               </div>
               <div class="mb-3 col-md-6">
