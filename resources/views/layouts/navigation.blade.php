@@ -11,7 +11,7 @@
         <div class="sidebar-user">
             <img src="/Image/dummy-person.jpeg" class="img-fluid rounded-circle mb-2" alt="Linda Miller" />
             <div class="fw-bold"><h2 style="color: #153d77;">{{Auth::user()->idPengguna}}</h2></div>
-            <h4 style="color: #153d77;">{{Auth::user()->nama}}</h4>
+            <h4 style="color: #153d77; text-transform: uppercase;">{{Auth::user()->nama}}</h4>
         </div>
         
         <ul class="sidebar-nav">
