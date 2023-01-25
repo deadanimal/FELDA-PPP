@@ -36,7 +36,7 @@
             @foreach ($borangJwpns as $borangJwpn)
                 @if ($borangJwpn->borang_id != $borang)
                     <tr>
-                        <td class="text-center arial">{{$borangJwpn->borangs->namaBorang}}</td>
+                        <td class="text-center arial" style="text-transform: uppercase;">{{$borangJwpn->borangs->namaBorang}}</td>
                         <td class="text-center arial">{{$borangJwpn->status}}</td>
                         <td class="text-center arial">{{$borangJwpn->ulasan ?? ""}}</td>
                         <td class="text-center arial">

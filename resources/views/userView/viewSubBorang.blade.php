@@ -22,7 +22,7 @@
                     @foreach ($borangJwpns as $jwpn)
                         <div class="row">
                             <div class="mb-3">
-                                <label for="jwpn{{$jwpn->id}}" style="font-family:'Poppins'">{{$jwpn->medans->nama}}</label>
+                                <label for="jwpn{{$jwpn->id}}" style="font-family:'Poppins'; text-transform: uppercase;">{{$jwpn->medans->nama}}</label>
                                 <input class="form-control" name="jwpn[]" id="jwpn{{$jwpn->id}}" value="{{$jwpn->jawapan}}" readonly>
                             </div>
                         </div>

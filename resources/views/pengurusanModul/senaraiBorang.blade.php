@@ -331,7 +331,7 @@
                     </button>
                   </form>
                  
-                  <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModaltugas{{$tugasan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                  <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModaltugas{{$kemaskini->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
 
                   <!-- Modal -->
                   <div class="modal fade" id="exampleModaltugas{{$kemaskini->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
