@@ -495,10 +495,13 @@ display: flex;
                 <tr>
                   <td class="text-center arial-N">{{$answer->kategori->nama}}</td>
                   <td class="text-center arial-N">{{$answer->tugasan->nama}}</td>
-                  <td class="text-center arial-N">{{$answer->value}}</td>
+                  @if($answer->tugasan->jenisTugas == 'uploadDoc')
+                    <td class="text-center arial-N"><a href="{{$answer->value}}" style="font-family:'Arial'"> Papar Dokumen </a>                    </td>
+                  @else
+                    <td class="text-center arial-N">{{$answer->value}}</td>
+                  @endif
                 </tr>
               @endforeach 
-              
             </tbody>
           </table>
         </div>  
