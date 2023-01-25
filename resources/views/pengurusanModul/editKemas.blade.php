@@ -111,6 +111,7 @@
         font-family: 'Eina01-SemiBold';
         font-size: 18px;
         padding-left: 10px;
+        text-transform: uppercase;
     }
     .frame9402-frame7293 {
         height: 20px;
