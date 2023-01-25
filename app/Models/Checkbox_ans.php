@@ -14,8 +14,8 @@ class Checkbox_ans extends Model
         return $this->belongsTo(checkbox::class, 'checkbox_id');
 
     }
-    public function user(){
-        return $this->belongsTo(User::class, 'userid');
+    public function kategori(){
+        return $this->belongsTo(KategoriPengguna::class, 'kategori_id');
 
     }
 }

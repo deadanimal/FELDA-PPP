@@ -11,6 +11,7 @@
 .arial-N{
   font-family: 'Arial-N', sans-serif;
   font-size: 18px;
+  text-transform: uppercase;
 }
 .frame9402-box {
   width: max-content;
@@ -360,7 +361,8 @@ display: flex;
             </button>
           </form>
         </div>
-        <div class="card" id="checkcard" @if ($tugasan->jenisTugas == "checkBox")
+        <div class="card" id="checkcard" 
+        @if ($tugasan->jenisTugas == "checkBox")
           style="margin-top:5%;"
         @else
           style="display: none;margin-top:5%;"
@@ -480,6 +482,55 @@ display: flex;
             </tbody>
           </table>
         </div>
+        @if (!$tugas_ans->isEmpty())
+          <div class="card" id="checkcard" style="margin-top:5%;">
+          <table class="table table-bordered table-striped">
+            <thead class="text-white bg-primary w-100" style="text-align: center;">
+              <th scope="col">Kategori Pengguna</th>
+              <th scope="col">Tugasan</th>
+              <th scope="col">Input</th>
+            </thead>
+            <tbody>
+              @foreach ($tugas_ans as $answer)
+                <tr>
+                  <td class="text-center arial-N">{{$answer->kategori->nama}}</td>
+                  <td class="text-center arial-N">{{$answer->tugasan->nama}}</td>
+                  <td class="text-center arial-N">{{$answer->value}}</td>
+                </tr>
+              @endforeach 
+              
+            </tbody>
+          </table>
+        </div>  
+        @endif
+
+        @if ($cb_ans != null)
+          <div class="card" id="checkcard" style="margin-top:5%;">
+            <table class="table table-bordered table-striped">
+              <thead class="text-white bg-primary w-100" style="text-align: center;">
+                <th scope="col">Kategori Pengguna</th>
+                <th scope="col">Tugasan Telah Dilakukan</th>
+              </thead>
+              <tbody>
+                @foreach ($cb_ans as $key=>$answer)
+                  @foreach ($answer as $cb)
+                      @foreach($checkboxes as $checkbox)
+                        @if ($cb->checkbox_id == $checkbox->id)
+                          @if ($cb->value == '1')
+                            <tr>
+                              <td class="text-center arial-N">{{$cb->kategori->nama}}</td>
+                              <td class="text-center arial-N">{{$cb->chckbox->nama}}</td>
+                            </tr>
+                          @endif
+                        @endif
+                      @endforeach
+                  @endforeach
+                @endforeach 
+              </tbody>
+            </table>
+          </div>  
+        @endif
+        
       </div>
     </div>
 </div>

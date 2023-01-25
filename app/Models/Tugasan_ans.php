@@ -11,12 +11,12 @@ class Tugasan_ans extends Model
     protected $table = 'tugasan_ans';
 
     public function tugasan(){
-        return $this->belongsTo(Tugasan::class, 'tugasan');
+        return $this->belongsTo(Tugasan::class, 'tugasan_id');
 
     }
 
-    public function user(){
-        return $this->belongsTo(User::class, 'userid');
+    public function kategori(){
+        return $this->belongsTo(KategoriPengguna::class, 'kategori_id');
 
     }
 }

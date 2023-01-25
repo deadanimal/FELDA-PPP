@@ -60,7 +60,7 @@
                                         <form action="/user/tugasan/in_add" method="post">
                                             @csrf
                                             <label for="tugasan" style="font-family:'Poppins'">{{$bill}} ) {{$tugasan->nama}}</label>
-                                            <input type="text"  class="form-control" maxlength="100" size="100" name="jawapan[]" id="jawapan" style="margin-top: 1%;"
+                                            <input type="text"  class="form-control" maxlength="100" size="100" name="jawapan" id="jawapan" style="margin-top: 1%;"
                                             @foreach ($tugas_anss as $key=>$tugas_ans)
                                                 @foreach ($tugas_ans as $answer)
                                                     @if ($answer->tugasan_id == $tugasan->id)

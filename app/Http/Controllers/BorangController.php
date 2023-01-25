@@ -31,7 +31,7 @@ class BorangController extends Controller
 
         $medans = Medan::where('borang_id', $idBorang)->orderBy("sequence", "ASC")->get();
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
@@ -46,7 +46,7 @@ class BorangController extends Controller
 
         Alert::success('Muat Naik Borang berjaya.', 'Muat naik borang anda berjaya.');   
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
@@ -82,7 +82,7 @@ class BorangController extends Controller
 
         Alert::success('Tambah Medan Borang berjaya.', 'Tambah medan borang telah berjaya.');   
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
@@ -118,7 +118,7 @@ class BorangController extends Controller
 
         Alert::success('Kemaskini Medan Borang berjaya.', 'Kemaskini medan borang telah berjaya.');   
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
@@ -150,7 +150,7 @@ class BorangController extends Controller
 
         Alert::success('Padam Medan Borang berjaya.', 'Kemaskini medan borang telah berjaya.');   
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
@@ -171,7 +171,7 @@ class BorangController extends Controller
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
@@ -184,7 +184,7 @@ class BorangController extends Controller
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
@@ -215,7 +215,7 @@ class BorangController extends Controller
 
         Alert::success('Maklumat Anda Berjaya Disimpan.', 'Maklumat anda telah berjaya disimpan.');   
         
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
@@ -228,7 +228,7 @@ class BorangController extends Controller
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
@@ -239,7 +239,7 @@ class BorangController extends Controller
     {
         $borangs = Borang::where('status', 1)->get();
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
@@ -251,7 +251,7 @@ class BorangController extends Controller
         $nBorang= $request->searchBorang;
         $borangs = Borang::where('status', 1)->where('namaBorang','LIKE','%'.$nBorang.'%')->get();
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
@@ -279,7 +279,7 @@ class BorangController extends Controller
             $borangJwpns = borangJawapan::where('borang_id', $borangId)->get();
         }
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
@@ -293,7 +293,7 @@ class BorangController extends Controller
 
         $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('userid', $userId)->get();
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
@@ -393,7 +393,7 @@ class BorangController extends Controller
             $borangJwpns = borangJawapan::where('borang_id', $borangId)->get();
         }
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
@@ -406,7 +406,7 @@ class BorangController extends Controller
         $userId = Auth::user()->id;
         $borangJwpns = borangJawapan::where('userid', $userId)->get();
         
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
@@ -420,7 +420,7 @@ class BorangController extends Controller
 
         $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('userid', $userId)->get();
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
@@ -434,7 +434,7 @@ class BorangController extends Controller
 
         $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('userid', $userId)->get();
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
@@ -466,7 +466,7 @@ class BorangController extends Controller
         $audit->action = "Mengemaskini Borang ".$oneBorang->namaBorang;
         $audit->save();
 
-        $menuModul = Modul::all();
+        $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
