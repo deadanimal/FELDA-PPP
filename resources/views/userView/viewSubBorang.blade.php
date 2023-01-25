@@ -23,7 +23,7 @@
                         <div class="row">
                             <div class="mb-3">
                                 <label for="jwpn{{$jwpn->id}}" style="font-family:'Poppins'; text-transform: uppercase;">{{$jwpn->medans->nama}}</label>
-                                <input class="form-control" name="jwpn[]" id="jwpn{{$jwpn->id}}" value="{{$jwpn->jawapan}}" readonly>
+                                <input class="form-control" name="jwpn[]" id="jwpn{{$jwpn->id}}" value="{{$jwpn->jawapan}}" readonly style="text-transform: uppercase;">
                             </div>
                         </div>
                     @endforeach
