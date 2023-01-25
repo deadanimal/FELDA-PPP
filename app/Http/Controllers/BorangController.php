@@ -116,7 +116,7 @@ class BorangController extends Controller
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
-        Alert::success('Kemaskini Meadan Borang berjaya.', 'Kemaskini medan borang telah berjaya.');   
+        Alert::success('Kemaskini Medan Borang berjaya.', 'Kemaskini medan borang telah berjaya.');   
 
         $menuModul = Modul::all();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -148,7 +148,7 @@ class BorangController extends Controller
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
-        Alert::success('Padam Meadan Borang berjaya.', 'Kemaskini medan borang telah berjaya.');   
+        Alert::success('Padam Medan Borang berjaya.', 'Kemaskini medan borang telah berjaya.');   
 
         $menuModul = Modul::all();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();

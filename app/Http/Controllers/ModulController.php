@@ -405,6 +405,9 @@ class ModulController extends Controller
         $tugasan->proses_id = $request->prosesId;
         $tugasan->save();
 
+
+        Alert::success('Tambah Tugasan Berjaya.', 'Tambah tugasan telah berjaya.');
+
         $proses = Proses::find($request->prosesId);
 
         $audit = new Audit;
@@ -453,6 +456,8 @@ class ModulController extends Controller
         $tugasan->userKategori = $request->userKategori;
         $tugasan->proses_id = $request->prosesId;
         $tugasan->save();
+
+        Alert::success('Kemaskini Tugasan Berjaya.', 'Kemaskini tugasan telah berjaya.');
 
         $proses = Proses::find($request->prosesId);
 

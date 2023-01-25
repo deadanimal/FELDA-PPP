@@ -209,7 +209,7 @@
           <tbody>
               @foreach ($tugasan as $tugasan)
               <tr>
-                <td class="text-center arial-N">{{$tugasan->nama}}</td>
+                <td class="text-center arial-N" style="text-transform: uppercase;">{{$tugasan->nama}}</td>
                 <td class="text-center arial-N">
                   @if($tugasan->jenisTugas == "input")
                     Input
@@ -319,7 +319,7 @@
           <tbody>
               @foreach ($kemaskini as $kemaskini)
               <tr>
-                <td class="text-center arial-N">{{$kemaskini->nama}}</td>
+                <td class="text-center arial-N" style="text-transform: uppercase;">{{$kemaskini->nama}}</td>
                 <td class="text-center arial-N">
                   <form action="/moduls/jenisKemas/edit" method="GET">
                     <input type="hidden" name="kemaskiniID" value="{{$kemaskini->id}}">

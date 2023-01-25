@@ -17,9 +17,10 @@ use App\Models\Rancangan;
 use App\Models\Audit;
 use App\Models\Tugasan;
 use App\Models\checkbox;
-
 use App\Models\Proses;
 use App\Models\Borang;
+use App\Models\Checkbox_ans;
+use App\Models\Tugasan_ans;
 
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -438,24 +439,145 @@ class UserController extends Controller
             $menuModul = Modul::all();
             $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
             $menuBorang = Borang::where('status', 1)->get();
-            return view('userView.userTugasan', compact('tugasans', 'menuModul', 'menuProses', 'menuBorang'));
+            $checkboxes = null;
+            $cb_anss = null;
+            $tugas_anss = null;
+            return view('userView.userTugasan', compact('cb_anss','tugas_anss','tugasans', 'checkboxes', 'menuModul', 'menuProses', 'menuBorang'));
         }
         else{
+            $checkboxes = null;
+            $cb_anss = null;
+            $tugas_anss = null;
+
+            $count=0;
             foreach($tugasans as $tugasan){
-                $checkboxes = checkbox::where('tugasan', $tugasan->id)->get();   
-                $menuModul = Modul::all();
-                $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-                $menuBorang = Borang::where('status', 1)->get();
-                return view('userView.userTugasan', compact('tugasans', 'checkboxes' ,'menuModul', 'menuProses', 'menuBorang'));
-        
+                $checkboxes[] = checkbox::where('tugasan', $tugasan->id)->get();
+                $tugas_anss[] = Tugasan_ans::where('tugasan_id', $tugasan->id)->get();
             }
+
+            foreach($checkboxes as $key=>$checkbox){
+                if(!$checkbox->isempty()){
+                    foreach($checkbox as $cb){
+                        $cb_anss[] = Checkbox_ans::where('checkbox_id', $cb->id)->get();
+                    }
+                }
+                else{
+                    continue;
+                }
+                
+            }
+
+
+            
+
+            $menuModul = Modul::all();
+            $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+            $menuBorang = Borang::where('status', 1)->get();
+            return view('userView.userTugasan', compact('cb_anss','tugas_anss','tugasans', 'checkboxes' ,'menuModul', 'menuProses', 'menuBorang'));
+                
         }
         
+    }
 
-        $menuModul = Modul::all();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
-        return view('userView.userTugasan', compact('tugasans', 'menuModul', 'menuProses', 'menuBorang'));
+    public function doTugas_in(Request $request)
+    {
+        $tugasID = $request->tugasanID;
+        $catgryID = $request->categoryID;
+        try{
+            $answerID = $request->answerID;
+        }
+        catch (Exception $e) {
+        }
 
+        if($answerID == null){
+            $tugasan = new Tugasan_ans;
+            $tugasan->value = $request->jawapan;
+            $tugasan->tugasan_id = $tugasID;
+            $tugasan->kategori_id = $catgryID;
+            $tugasan->save();
+        }
+        else{
+                $tugasan = Tugasan_ans::find($answerID);
+                $tugasan->value = $request->jawapan;
+                $tugasan->tugasan_id = $tugasID;
+                $tugasan->kategori_id = $catgryID;
+                $tugasan->save();
+        }
+       
+        return redirect('/user/tugasan/list');
+
+    }
+
+    public function doTugas_cb(Request $request)
+    {
+        $tugasID = $request->tugasanID;
+        $catgryID = $request->categoryID;
+        $chckbox = $request->chckbox;
+        $cbID = $request->chckboxId;
+
+        $count = count($chckbox);
+        try{
+            $checkboxid = $request->chckboxansid;
+        }
+        catch (Exception $e) {
+        }
+
+        if($checkboxid == null){
+            for($x=0; $x<$count; $x++){
+                $checkbox = new Checkbox_ans;
+                $checkbox->value = $chckbox[$x];
+                $checkbox->checkbox_id = $cbID[$x];
+                $checkbox->kategori_id = $catgryID;
+                $checkbox->save();
+            }
+        }
+        else{
+            for($x=0; $x<$count; $x++){
+                $checkbox = Checkbox_ans::find($checkboxid[$x]);
+                $checkbox->value = $chckbox[$x];
+                $checkbox->checkbox_id = $cbID[$x];
+                $checkbox->kategori_id = $catgryID;
+                $checkbox->save();
+            }
+        }
+       
+        return redirect('/user/tugasan/list');
+    }
+
+    public function doTugas_file(Request $request)
+    {
+        $tugasID = $request->tugasanID;
+        $catgryID = $request->categoryID;
+
+        try{
+            $answerID = $request->answerID;
+        }
+        catch (Exception $e) {
+        }
+
+        if($answerID == null){
+            $tugasan = new Tugasan_ans;
+            if($request->file()) {
+                $file_up = time().'.'.$request->file_up->extension();  
+                $request->file_up->move(public_path('file'), $file_up);
+                $tugasan->value = '/file/' . $file_up;
+            }
+                $tugasan->tugasan_id = $tugasID;
+                $tugasan->kategori_id = $catgryID;
+                $tugasan->save();
+        }
+        else{
+            $tugasan = Tugasan_ans::find($answerID);
+            if($request->file()) {
+                $file_up = time().'.'.$request->file_up->extension();  
+                $request->file_up->move(public_path('file'), $file_up);
+                $tugasan->value = '/file/' . $file_up;
+            }
+                $tugasan->tugasan_id = $tugasID;
+                $tugasan->kategori_id = $catgryID;
+                $tugasan->save();
+        }
+       
+        return redirect('/user/tugasan/list');
     }
 }

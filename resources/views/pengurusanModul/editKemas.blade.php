@@ -246,6 +246,7 @@ display: flex;
     font-family: 'Eina01-SemiBold', sans-serif;
     font-size: 18px;
     padding-left:10px;
+    text-transform: uppercase;
   }
     .formContainer .btn {
       padding: 12px 20px;
@@ -378,7 +379,7 @@ display: flex;
                 @foreach($params as $param)
                 <tr>
                     <td><p class="frame9402-text04">Nama Parameter:</p></td>
-                    <td><p class="frame9402-text04" style="text-align: left;">{{$param->nama}}</p></td>
+                    <td><p class="frame9402-text04" style="text-align: left; text-transform:uppercase;">{{$param->nama}}</p></td>
                     <td>
                     <!-- Button trigger modal update-->
                     <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#exampleModalCenter{{$param->id}}">

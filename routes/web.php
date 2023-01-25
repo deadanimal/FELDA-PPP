@@ -111,6 +111,9 @@ Route::get('/user/sub_borang/{borang_id}/edit', [BorangController::class, 'subBo
 Route::put('/user/sub_borang/update', [BorangController::class, 'subBorang_update']);
 
 Route::get('/user/tugasan/list', [UserController::class, 'tugasList_app']);
+Route::post('/user/tugasan/in_add', [UserController::class, 'doTugas_in']);
+Route::post('/user/tugasan/cb_add', [UserController::class, 'doTugas_cb']);
+Route::post('/user/tugasan/file_add', [UserController::class, 'doTugas_file']);
 
 // Route::get('/test', function () {
 //     return view('pengurusanTugasan.senaraiTugasan');
