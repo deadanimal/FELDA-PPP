@@ -193,7 +193,7 @@ class ModulController extends Controller
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Kemaskini Modul ".$modul->nama;
+        $audit->action = "Kemaskini Modul ".$moduls->nama;
         $audit->save();
 
         Alert::success('Kemaskini Modul berjaya.', 'Kemaskini modul telah berjaya.');
