@@ -455,19 +455,19 @@ class UserController extends Controller
                 $tugas_anss[] = Tugasan_ans::where('tugasan_id', $tugasan->id)->get();
             }
 
-            foreach($checkboxes as $key=>$checkbox){
-                if(!$checkbox->isempty()){
-                    foreach($checkbox as $cb){
-                        $cb_anss[] = Checkbox_ans::where('checkbox_id', $cb->id)->get();
+            if($checkboxes != null){
+                foreach($checkboxes as $key=>$checkbox){
+                    if(!$checkbox->isempty()){
+                        foreach($checkbox as $cb){
+                            $cb_anss[] = Checkbox_ans::where('checkbox_id', $cb->id)->get();
+                        }
                     }
-                }
-                else{
-                    continue;
-                }
+                    else{
+                        continue;
+                    }
                 
+                }
             }
-
-
             
 
             $menuModul = Modul::where('status', 'Active')->get();
