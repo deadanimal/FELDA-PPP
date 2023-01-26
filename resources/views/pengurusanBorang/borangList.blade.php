@@ -45,7 +45,7 @@
                     <td class="text-center arial-N">{{$borang->namaBorang}}</td>
                     <td class="text-center arial-N">
                         <a class="btn btn-success" href="/user/borang_app/{{$borang->id}}/user_list" style="color: white; text-decoration:none;">
-                            Senarai Permohon
+                            Senarai Pemohon
                         </a>
                     </td>
                 </tr> 
