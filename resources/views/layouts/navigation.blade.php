@@ -71,7 +71,7 @@
                 @if (Request::is('moduls') || Request::is('moduls/*') || Request::is('modul/*') )
                 <li class="sidebar-item active">
                     <a data-bs-target="#auth" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
-                        <i class="align-middle me-2 fas fa-fw fa-file"></i> <span class="align-middle">PENGURUSAN MODUL</span>
+                        <i class="align-middle me-2 fas fa-fw fa-folder"></i> <span class="align-middle">PENGURUSAN MODUL</span>
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
                         @if (Request::is('modul/add'))
@@ -89,7 +89,7 @@
                 @else
                 <li class="sidebar-item">
                     <a data-bs-target="#auth" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
-                        <i class="align-middle me-2 fas fa-fw fa-folder-open"></i> <span class="align-middle">PENGURUSAN MODUL</span>
+                        <i class="align-middle me-2 fas fa-fw fa-folder"></i> <span class="align-middle">PENGURUSAN MODUL</span>
                     </a>
                     <ul id="auth" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                         <li class="sidebar-item"><a class="sidebar-link" href="/modul/add">Cipta Modul</a></li>
