@@ -327,8 +327,12 @@ display: flex;
             <input type="hidden" name="modulId" value="{{$modul->id}}">
             <table class="table table-borderless">
                 <tr>
-                    <td><span class="frame9402-text04">Nama Tugasan: </span></td>
+                    <td><span class="frame9402-text04">Nama Jenis Kemaskini: </span></td>
                     <td><input type="text" class="frame9402-kotaknama arial-N" name="namaKemas" value="{{$kemaskini->nama}}" required/></td>
+                </tr>
+                <tr>
+                  <td><span class="frame9402-text04">Jenis Ternakan/Tanaman: </span></td>
+                  <td><input type="text" class="frame9402-kotaknama arial-N" name="namaKemas" value="{{$kemaskini->jenis}}" required/></td>
                 </tr>
             </table>
             <button type="submit" class="frame9403-frame7445">
@@ -343,7 +347,7 @@ display: flex;
             <div class="card-header">
                 <table style="width: 100%">
                 <tr>
-                    <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">SENARAI PARAMETER</h1></td>
+                    <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">SENARAI AKTIVITI</h1></td>
                     <td>
                     <button class="frame9403-frame7445"  onclick="openForm()">
                         <div class="frame9403-frame7293">
@@ -356,13 +360,13 @@ display: flex;
                 </table>
                 <div class="divPopup">
                 <div class="formPopup" id="popupForm">
-                    <form action="/moduls/jenisKemas/Param/add" method="POST" class="formContainer">
+                    <form action="/moduls/jenisKemas/aktiviti/add" method="POST" class="formContainer">
                         @csrf
-                        <h2 class="frame9402-text01" style="margin-top: 0px;">TAMBAH PARAMETER</h2>
+                        <h2 class="frame9402-text01" style="margin-top: 0px;">TAMBAH AKTIVITI</h2>
                         <table>
                         <tr>
-                            <td><p class="frame9402-text04">Nama Parameter</p></td>
-                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Nama Parameter" name="namaParam" required></td>
+                            <td><p class="frame9402-text04">Nama Aktiviti</p></td>
+                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Nama Aktiviti" name="namaAktiviti" required></td>
                         </tr>
                         </table>
                         <input type="hidden" value="{{$kemaskini->id}}" name="kemaskiniID">
@@ -374,41 +378,44 @@ display: flex;
                 </div>
                 </div>
             </div>
-            @if (!$params->isEmpty())
+            @if (!$aktivitis->isEmpty())
             <table class="table table-borderless table-striped">
                 <tbody>
-                @foreach($params as $param)
+                @foreach($aktivitis as $act)
                 <tr>
-                    <td><p class="frame9402-text04">Nama Parameter:</p></td>
-                    <td><p class="frame9402-text04" style="text-align: left; text-transform:uppercase;">{{$param->nama}}</p></td>
+                    <td><p class="frame9402-text04">Nama Aktiviti:</p></td>
+                    <td><p class="frame9402-text04" style="text-align: left; text-transform:uppercase;">{{$act->nama}}</p></td>
                     <td>
+                      <a href="/moduls/jenisKemas/aktiviti/Param/{{$proses->id}}/{{$modul->id}}/{{$act->id}}" class="frame9402-rectangle828245" style="margin-right: 2%;" title="masuk">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A; width: 32px; height: 30px;" viewBox="0 0 556 502"><path d="M88.7 223.8L0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z"></path></svg>
+                      </a>
                     <!-- Button trigger modal update-->
-                    <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#exampleModalCenter{{$param->id}}">
+                    <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#exampleModalCenter{{$act->id}}">
                         <img src="/SVG/pencil.svg"/>
                     </button>
 
                     <!-- Modal update-->
-                    <div class="modal fade" id="exampleModalCenter{{$param->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal fade" id="exampleModalCenter{{$act->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">KEMASKINI {{$param->nama}}</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">KEMASKINI {{$act->nama}}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                                 </div>
-                                <form method="post" action="/moduls/jenisKemas/Param/update">
+                                <form method="post" action="/moduls/jenisKemas/aktiviti/update">
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-body">
                                         <label for="namaBorang" class="frame9402-text04">
-                                        <strong>Nama Parameter</strong>
+                                        <strong>Nama Aktiviti</strong>
                                         </label>
-                                        <input type="text" class="frame9402-kotaknamaBorang" value="{{$param->nama}}" name="namaParamUp" required>
+                                        <input type="text" class="frame9402-kotaknamaBorang" value="{{$act->nama}}" name="namaAktivitiUp" required>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
-                                        <input type="hidden" value="{{$param->id}}" name="paramId">
+                                        <input type="hidden" value="{{$act->id}}" name="aktivId">
                                         <input type="hidden" value="{{$kemaskini->id}}" name="kemaskiniID">
                                         <input type="hidden" value="{{$proses->id}}" name="prosesId">
                                         <input type="hidden" value="{{$modul->id}}" name="modulId">
@@ -420,27 +427,27 @@ display: flex;
                     </div>
 
                     <!-- Button trigger modal delete -->
-                    <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalcheck{{$param->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                    <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalcheck{{$act->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
 
                     <!-- Modal delete-->
-                    <div class="modal fade" id="exampleModalcheck{{$param->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="exampleModalcheck{{$act->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Padam Parameter {{$param->nama}}</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Padam Aktiviti {{$act->nama}}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p>Anda Pasti Mahu Padam Parameter {{$param->nama}}?<p>
+                                <p>Anda Pasti Mahu Padam Aktiviti {{$act->nama}}?<p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
-                                <form method="post" action="/moduls/jenisKemas/Param/delete">
+                                <form method="post" action="/moduls/jenisKemas/aktiviti/delete">
                                     @csrf
                                     @method('DELETE')
-                                    <input type="hidden" value="{{$param->id}}" name="paramId">
+                                    <input type="hidden" value="{{$act->id}}" name="aktivId">
                                     <input type="hidden" value="{{$kemaskini->id}}" name="kemaskiniID">
                                     <input type="hidden" value="{{$proses->id}}" name="prosesId">
                                     <input type="hidden" value="{{$modul->id}}" name="modulId">
@@ -456,7 +463,7 @@ display: flex;
                 </tbody>
             </table>
             @else
-                <h2 class="frame9402-text01" style="color:black; margin-bottom:5%;"> Tiada Jenis Kemaskini </h2>
+                <h2 class="frame9402-text01" style="color:black; margin-bottom:5%;"> Tiada Aktiviti </h2>
             @endif
         </div>
       </div>

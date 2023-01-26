@@ -12,7 +12,8 @@ use App\Models\Tugasan;
 use App\Models\KategoriPengguna;
 use App\Models\checkbox;
 use App\Models\JenisKemaskini;
-use App\Models\KemasParameter;
+use App\Models\AktivitiParameter;
+use App\Models\Aktiviti;
 use App\Models\Checkbox_ans;
 use App\Models\Tugasan_ans;
 
@@ -615,6 +616,7 @@ class ModulController extends Controller
 
         $kemaskini = new JenisKemaskini;
         $kemaskini->nama = $request->namaKemas;
+        $kemaskini->jenis = $request->namaJenis;
         $kemaskini->proses_id = $request->prosesId;
         $kemaskini->save();
 
@@ -650,15 +652,14 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $params = KemasParameter::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
-        $kategoriPengguna = KategoriPengguna::all();
+        $aktivitis = Aktiviti::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
 
 
         $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanModul.editKemas', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'params'));
+        return view('pengurusanModul.editKemas', compact('borangs', 'proses', 'modul', 'tugasan',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
 
     }
 
@@ -718,25 +719,128 @@ class ModulController extends Controller
         return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
 
     }
+    public function aktiviti_add(Request $request){
 
-    public function Param_add(Request $request){
+        $aktiviti = new Aktiviti;
+        $aktiviti->nama = $request->namaAktiviti;
+        $aktiviti->kemas_id = $request->kemaskiniID;
+        $aktiviti->save();
 
-        $param = new KemasParameter;
-        $param->nama = $request->namaParam;
-        $param->kemas_id = $request->kemaskiniID;
-        $param->save();
-
-        $proses = Proses::find($request->prosesId);
+        $kemaskini = JenisKemaskini::find($request->kemaskiniID);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Cipta Parameter ".$param->nama." pada Proses ".$proses->nama;
+        $audit->action = "Cipta Aktiviti ".$aktiviti->nama." pada  Jenis Kemaskini  ".$kemaskini->nama;
         $audit->save();
 
         $modul = Modul::find($request->modulId);
         $kemaskini = JenisKemaskini::find($request->kemaskiniID);
-        $kategoriPengguna = KategoriPengguna::all();
-        $params = KemasParameter::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
+        $aktivitis = Aktiviti::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
+        $proses = Proses::find($request->prosesId);
+
+        
+        $menuModul = Modul::where('status', 'Active')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        Alert::success('Tambah Aktiviti Berjaya.', 'Tambah aktiviti telah berjaya.');
+
+        return view('pengurusanModul.editKemas', compact('proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
+
+    }
+
+    public function aktiviti_update(Request $request){
+
+        $aktiviti = Aktiviti::find($request->aktivId);
+        $aktiviti->nama = $request->namaAktivitiUp;
+        $aktiviti->kemas_id = $request->kemaskiniID;
+        $aktiviti->save();
+
+        $kemaskini = JenisKemaskini::find($request->kemaskiniID);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Aktiviti ".$aktiviti->nama." pada  Jenis Kemaskini ".$kemaskini->nama;
+        $audit->save();
+
+        $modul = Modul::find($request->modulId);
+        $proses = Proses::find($request->prosesId);
+        $aktivitis = Aktiviti::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
+
+        $menuModul = Modul::where('status', 'Active')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        Alert::success('Kemaskini Aktiviti Berjaya.', 'Kemaskini aktiviti telah berjaya.');
+
+        return view('pengurusanModul.editKemas', compact('proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
+
+    }
+
+    public function aktiviti_delete(Request $request){
+
+        $aktiviti = Aktiviti::find($request->aktivId);
+        $kemaskini = JenisKemaskini::find($request->kemaskiniID);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Parameter ".$aktiviti->nama." pada Jenis Kemaskini ".$kemaskini->nama;
+        $audit->save();
+
+        $aktiviti->delete();
+
+        $modul = Modul::find($request->modulId);
+        $proses = Proses::find($request->prosesId);
+        $aktivitis = Aktiviti::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
+
+        $menuModul = Modul::where('status', 'Active')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        Alert::success('Padam Aktiviti Berjaya.', 'Aktiviti telah berjaya dipadam.');
+
+        return view('pengurusanModul.editKemas', compact('proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
+
+    }
+
+    public function Param_get(Request $request){
+
+        $idAct = (int)$request->route('id');
+        $prosesId = (int)$request->route('prosesId');
+        $modulId = (int)$request->route('modulId');
+
+        $params = AktivitiParameter::where('aktiviti', $idAct)->get();
+        
+        $proses = Proses::find($prosesId);
+        $aktiviti = Aktiviti::find($idAct);
+        $modul = Modul::find($modulId);
+        
+        $menuModul = Modul::where('status', 'Active')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.paramList', compact('proses', 'modul', 'menuModul', 'menuProses', 'menuBorang', 'aktiviti', 'params'));
+
+    }
+
+
+    public function Param_add(Request $request){
+
+        $param = new AktivitiParameter;
+        $param->nama = $request->namaParam;
+        $param->aktiviti = $request->aktivitiId;
+        $param->save();
+
+        $proses = Proses::find($request->prosesId);
+        $aktiviti = Aktiviti::find($request->aktivitiId);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Parameter ".$param->nama." pada Aktiviti ".$aktiviti->nama;
+        $audit->save();
+
+        $modul = Modul::find($request->modulId);
+        $params = AktivitiParameter::where('aktiviti', $request->aktivitiId)->orderBy("updated_at", "DESC")->get();
 
         
         $menuModul = Modul::where('status', 'Active')->get();
@@ -745,28 +849,27 @@ class ModulController extends Controller
 
         Alert::success('Tambah Parameter Berjaya.', 'Tambah parameter telah berjaya.');
 
-        return view('pengurusanModul.editKemas', compact('proses', 'modul', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'params'));
+        return view('pengurusanModul.paramList', compact('proses', 'modul', 'menuModul', 'menuProses', 'menuBorang', 'aktiviti', 'params'));
 
     }
 
     public function Param_update(Request $request){
 
-        $param = KemasParameter::find($request->paramId);
+        $param = AktivitiParameter::find($request->paramId);
         $param->nama = $request->namaParamUp;
-        $param->kemas_id = $request->kemaskiniID;
+        $param->aktiviti = $request->aktivId;
         $param->save();
 
-        $kemaskini = JenisKemaskini::find($request->kemaskiniID);
+        $aktiviti = Aktiviti::find($request->aktivId);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Kemaskini Parameter ".$param->nama." pada  Jenis Kemaskini ".$kemaskini->nama;
+        $audit->action = "Kemaskini Parameter ".$param->nama." pada Aktiviti ".$aktiviti->nama;
         $audit->save();
-
+        
         $modul = Modul::find($request->modulId);
         $proses = Proses::find($request->prosesId);
-        $kategoriPengguna = KategoriPengguna::all();
-        $params = KemasParameter::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
+        $params = AktivitiParameter::where('aktiviti', $request->aktivId)->orderBy("updated_at", "DESC")->get();
 
         $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -774,26 +877,26 @@ class ModulController extends Controller
 
         Alert::success('Kemaskini Parameter Berjaya.', 'Kemaskini parameter telah berjaya.');
 
-        return view('pengurusanModul.editKemas', compact('proses', 'modul', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'params'));
+        return view('pengurusanModul.paramList', compact('proses', 'modul', 'menuModul', 'menuProses', 'menuBorang', 'aktiviti', 'params'));
 
     }
 
     public function Param_delete(Request $request){
 
-        $param = KemasParameter::find($request->paramId);
-        $kemaskini = JenisKemaskini::find($request->kemaskiniID);
+        $param = AktivitiParameter::find($request->paramId);
+        
+        $aktiviti = Aktiviti::find($request->aktivId);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Padam Parameter ".$param->nama." pada Jenis Kemaskini ".$kemaskini->nama;
+        $audit->action = "Padam Parameter ".$param->nama." pada Jenis Kemaskini ".$aktiviti->nama;
         $audit->save();
 
         $param->delete();
 
         $modul = Modul::find($request->modulId);
         $proses = Proses::find($request->prosesId);
-        $kategoriPengguna = KategoriPengguna::all();
-        $params = KemasParameter::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
+        $params = AktivitiParameter::where('aktiviti', $request->aktivId)->orderBy("updated_at", "DESC")->get();
 
         $menuModul = Modul::where('status', 'Active')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -801,7 +904,7 @@ class ModulController extends Controller
 
         Alert::success('Padam Parameter Berjaya.', 'Padam Parameter telah berjaya.');
 
-        return view('pengurusanModul.editKemas', compact('proses', 'modul', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'params'));
+        return view('pengurusanModul.paramList', compact('proses', 'modul', 'menuModul', 'menuProses', 'menuBorang', 'aktiviti', 'params'));
 
     }
 

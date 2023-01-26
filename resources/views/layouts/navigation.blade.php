@@ -117,41 +117,6 @@
                     </a>
                 </li>
             @elseif(Auth::user()->kategoripengguna != "4")
-                @if (Request::is('users') || Request::is('users/*') || Request::is('user-categories') || Request::is('user-categories/*'))
-                <li class="sidebar-item active">
-                    <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
-                        </svg><span class="align-middle">PENGURUSAN PENGGUNA</span>
-                    </a>
-
-                    <ul id="pages" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
-                        @if (Request::is('users') || Request::is('users/*'))
-                        <li class="sidebar-item active"><a class="sidebar-link" href="/users">Senarai Pengguna</a></li>
-                        @else
-                        <li class="sidebar-item"><a class="sidebar-link" href="/users">Senarai Pengguna</a></li>
-                        @endif
-                        @if (Request::is('user-categories') || Request::is('user-categories/*'))
-                        <li class="sidebar-item active"><a class="sidebar-link" href="/user-categories">Pengurusan Kategori Pengguna</a></li>
-                        @else
-                        <li class="sidebar-item"><a class="sidebar-link" href="/user-categories">Pengurusan Kategori Pengguna</a></li>
-                        @endif
-                    </ul>  
-                </li>
-                @else
-                <li class="sidebar-item">
-                    <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
-                        </svg><span class="align-middle">PENGURUSAN PENGGUNA</span>
-                    </a>
-                    <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-                        <li class="sidebar-item"><a class="sidebar-link" href="/users">Senarai Pengguna</a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="/user-categories">Pengurusan Kategori Pengguna</a></li>
-                    </ul>
-                </li>
-                @endif 
-
                 @if (Request::is('user/borang_app') || Request::is('user/borang_app/*'))
                     <li class="sidebar-item active">
                 @else
@@ -178,7 +143,7 @@
             @foreach ($menuModul as $mModul) 
             <li class="sidebar-item">
                 <a data-bs-target="#auth{{$mModul->id}}" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
-                    <i class="align-middle me-2 ion ion-ios-folder"></i> <span class="align-middle">{{$mModul->nama}}</span>
+                    <i class="align-middle me-2 ion ion-ios-folder"></i> <span class="align-middle" style="text-transform: uppercase;">{{$mModul->nama}}</span>
                 </a>
                 <ul id="auth{{$mModul->id}}" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     @foreach ($menuProses as $mProses)

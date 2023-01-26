@@ -299,6 +299,11 @@
                 <strong>Nama Jenis Kemaskini</strong>
                 </label>
                 <input type="text" class="frame9402-kotaknamaBorang" id="namaKemas" placeholder="Nama Jenis Kemaskini" name="namaKemas" required>
+                <label for="namaJenis" class="frame9402-text04">
+                  <strong>Jenis Ternakan/Tanaman</strong>
+                </label>
+                <input type="text" class="frame9402-kotaknamaBorang" id="namaJenis" placeholder="Jenis Ternakan/Tanaman" name="namaJenis" required>
+                  
                 <input type="hidden" value="{{$proses->id}}" name="prosesId">
                 <input type="hidden" value="{{$modul->id}}" name="modulId">
                 <button type="submit" class="btn">Cipta</button>
@@ -313,6 +318,7 @@
           <thead class="text-white bg-primary w-100">
             <tr>
                 <th scope="col" class="text-center">Nama Jenis Kemaskini</th>
+                <th scope="col" class="text-center">Jenis Ternakan/Tanaman</th>
                 <th scope="col" >Tindakan</th>
             </tr>
           </thead>
@@ -320,6 +326,7 @@
               @foreach ($kemaskini as $kemaskini)
               <tr>
                 <td class="text-center arial-N" style="text-transform: uppercase;">{{$kemaskini->nama}}</td>
+                <td class="text-center arial-N" style="text-transform: uppercase;">{{$kemaskini->jenis}}</td>
                 <td class="text-center arial-N">
                   <form action="/moduls/jenisKemas/edit" method="GET">
                     <input type="hidden" name="kemaskiniID" value="{{$kemaskini->id}}">

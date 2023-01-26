@@ -95,9 +95,14 @@ Route::get('/moduls/jenisKemas/edit', [ModulController::class, 'JenisKemas_edit'
 Route::put('/moduls/jenisKemas/update', [ModulController::class, 'JenisKemas_update']);
 Route::delete('/moduls/jenisKemas/delete', [ModulController::class, 'JenisKemas_delete']);
 
-Route::post('/moduls/jenisKemas/Param/add', [ModulController::class, 'Param_add']);
-Route::put('/moduls/jenisKemas/Param/update', [ModulController::class, 'Param_update']);
-Route::delete('/moduls/jenisKemas/Param/delete', [ModulController::class, 'Param_delete']);
+Route::post('/moduls/jenisKemas/aktiviti/add', [ModulController::class, 'aktiviti_add']);
+Route::put('/moduls/jenisKemas/aktiviti/update', [ModulController::class, 'aktiviti_update']);
+Route::delete('/moduls/jenisKemas/aktiviti/delete', [ModulController::class, 'aktiviti_delete']);
+
+Route::get('/moduls/jenisKemas/aktiviti/Param/{prosesId}/{modulId}/{id}', [ModulController::class, 'Param_get']);
+Route::post('/moduls/jenisKemas/aktiviti/Param/add', [ModulController::class, 'Param_add']);
+Route::put('/moduls/jenisKemas/aktiviti/Param/update', [ModulController::class, 'Param_update']);
+Route::delete('/moduls/jenisKemas/aktiviti/Param/delete', [ModulController::class, 'Param_delete']);
 
 Route::get('/user/borang_app/list', [BorangController::class, 'borangList_app']);
 Route::get('/user/borang_app/{borang_id}/user_list', [BorangController::class, 'borangApp_list']);

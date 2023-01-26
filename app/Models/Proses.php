@@ -17,4 +17,12 @@ class Proses extends Model
     public function borang() {
         return $this->hasMany(Borang::class, 'borang');
     }
+
+    public function tugas() {
+        return $this->hasMany(Tugasan::class);
+    }
+
+    public function aktiviti() {
+        return $this->hasMany(aktivit::class);
+    }
 }

@@ -42,6 +42,7 @@
   .arial-N{
       font-family: 'Arial-N', sans-serif;
       font-size: 18px;
+      text-transform: uppercase;
   }
   .frame9402-frame9281 {
     display: flex;
