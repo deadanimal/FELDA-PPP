@@ -345,13 +345,13 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Padam Tugasan {{$kemaskini->nama}}</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">Padam Jenis Kemaskini {{$kemaskini->nama}}</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                               </button>
                           </div>
                           <div class="modal-body">
-                              <p>Anda Pasti Mahu Padam Tugasan {{$kemaskini->nama}}?<p>
+                              <p>Anda Pasti Mahu Jenis Kemaskini {{$kemaskini->nama}}?<p>
                           </div>
                           <div class="modal-footer">
                               <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
