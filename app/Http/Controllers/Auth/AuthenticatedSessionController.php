@@ -32,15 +32,22 @@ class AuthenticatedSessionController extends Controller
     {
         $user = User::where('email', $request->email)->first();
 
-        if($user->status == "1") {
-            $request->authenticate();
-            $request->session()->regenerate();
-            return redirect()->intended(RouteServiceProvider::HOME);
+        if($user != null){
+           if($user->status == "1") {
+                $request->authenticate();
+                $request->session()->regenerate();
+                return redirect()->intended(RouteServiceProvider::HOME);
+            }
+            else{
+                session()->flash('message','Anda tidak dapat masuk ke sistem');
+                return back();
+            } 
         }
         else{
-            session()->flash('message','Anda tidak dapat masuk ke sistem');
+            session()->flash('message','Tiada e-mel didaftarkan');
             return back();
-        }
+        } 
+        
     }
 
     /**
