@@ -368,10 +368,10 @@ class BorangController extends Controller
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
         if ($stat == "Lulus") {
-            $audit->action = "Meluluskan Borang ".$oneBorang->namaBorang." yang di hantar oleh ".$action;
+            $audit->action = "Meluluskan Borang ".$oneBorang->namaBorang." yang di hantar oleh ".$jwpn->user->nama;
         } 
         elseif($stat == "Tidak Lulus") {
-            $audit->action = "Tidak luluskan Borang ".$oneBorang->namaBorang." yang di hantar oleh ".$action;
+            $audit->action = "Tidak luluskan Borang ".$oneBorang->namaBorang." yang di hantar oleh ".$jwpn->user->nama;
         }
         $audit->save();
         
