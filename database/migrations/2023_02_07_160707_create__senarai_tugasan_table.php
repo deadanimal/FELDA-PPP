@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('checkboxes', function (Blueprint $table) {
+        Schema::create('senarai_tugasan', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->foreignId('tugasan')->references('id')->on('tugasan')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('jenisTugas');
+            $table->string('due_date');
+            $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('proses_id')->references('id')->on('proses')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('checkboxes');
+        Schema::dropIfExists('senarai_tugasan');
     }
 };

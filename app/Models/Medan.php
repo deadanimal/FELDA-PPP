@@ -14,8 +14,8 @@ class Medan extends Model
         return $this->belongsTo(Borang::class, 'borang_id');
     }
     
-    public function borangJawapan() {
-        return $this->hasMany(borangJawapan::class,'medan');
+    public function jawapan_medan() {
+        return $this->hasMany(Jawapan_Medan::class);
     }
     
 }

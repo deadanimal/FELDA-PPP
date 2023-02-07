@@ -13,6 +13,7 @@ use App\Models\Proses;
 use App\Models\Medan;
 use App\Models\Audit;
 use App\Models\borangJawapan;
+use App\Models\Jawapan_medan;
 use Illuminate\Http\Request;
 use Alert;
 
@@ -158,8 +159,7 @@ class BorangController extends Controller
     }
 
     public function borang_view(Request $request)
-    {
-        
+    { 
         $idBorang = $request->borangId;
         $borang = Borang::find($idBorang);
 
@@ -197,16 +197,26 @@ class BorangController extends Controller
         $jawapan = $request->jawapan;
         $count = count($jawapan);
 
-        $userID = $request->userID;
         $borangid = $request->borangID;
+
+        $ans = new borangJawapan;
+        $ans->nama = $request->nama;
+        $ans->ic = $request->ic;
+        $ans->userid = $request->userID;
+        $ans->borang_id = $borangid;
+        $ans->save();
+
+        $ans = borangJawapan::where('nama', $request->nama)->where('ic', $request->ic)->where('borang_id', $borangid)->get();
+
         for($x=0; $x<$count; $x++){
-            $ans = new borangJawapan;
-            $ans->jawapan = $jawapan[$x];
-            $ans->userid = $userID;
-            $ans->medan = $medanID[$x];
-            $ans->borang_id = $borangid;
-            $ans->save();
+
+            $jwpn_Medan = new Jawapan_medan;
+            $jwpn_Medan->jawapan = $jawapan[$x];
+            $jwpn_Medan->jawapan_id = $ans->id;
+            $jwpn_Medan->medan = $medanID[$x];
+            $jwpn_Medan->save();
         }
+
         $borang = Borang::find($borangid);
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
@@ -405,7 +415,7 @@ class BorangController extends Controller
     {
         $userId = Auth::user()->id;
         $borangJwpns = borangJawapan::where('userid', $userId)->get();
-        
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
@@ -419,6 +429,8 @@ class BorangController extends Controller
         $userId = Auth::user()->id;
 
         $borangJwpns = borangJawapan::where('borang_id', $borangId)->where('userid', $userId)->get();
+        $medans = Medan::where('borang_id', $borangId)->get();
+        $jawapanMedans = Jawapan_medan::where('jawapan_id', $borangJwpns->id)->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();

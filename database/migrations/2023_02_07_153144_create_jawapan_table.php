@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('checkbox_ans', function (Blueprint $table) {
+        Schema::create('jawapan', function (Blueprint $table) {
             $table->id();
-            $table->integer('value');
-            $table->foreignId('checkbox_id')->references('id')->on('checkboxes')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('kategori_id')->references('id')->on('kategori_penggunas')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('nama');
+            $table->string('ic');
+            $table->foreignId('borang_id')->references('id')->on('borangs')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('checkbox_ans');
+        Schema::dropIfExists('jawapan');
     }
 };

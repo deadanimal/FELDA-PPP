@@ -8,18 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Tugasan extends Model
 {
     use HasFactory;
-    protected $table = 'tugasan';
+    protected $table = 'senarai_tugasan';
 
 
     public function proses() {
         return $this->belongsTo(Proses::class, 'proses_id');
     }
 
-    public function kategoriPengguna() {
-        return $this->belongsTo(KategoriPengguna::class, 'userKategori');
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function checkboxes(){
-        return $this->hasMany(checkbox::class);
-    }
 }

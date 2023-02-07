@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('borang_jawapan', function (Blueprint $table) {
+        Schema::create('perkara_tugasan', function (Blueprint $table) {
             $table->id();
-            $table->string('jawapan');
-            $table->foreignId('userid')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('medan')->references('id')->on('medan')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('value');
+            $table->foreignId('tugasan_id')->references('id')->on('senarai_tugasan')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('borang_jawapan');
+        Schema::dropIfExists('perkara_tugasan');
     }
 };

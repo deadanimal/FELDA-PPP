@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tugasan', function (Blueprint $table) {
+        Schema::create('organisasi_users', function (Blueprint $table) {
             $table->id();
-            $table->string('Nama');
-            $table->string('jenisTugas');
-            $table->foreignId('userKategori')->references('id')->on('kategori_penggunas')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('proses_id')->references('id')->on('proses')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('organisasi_id')->references('id')->on('Organisasi')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('user_type');
+            $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tugasan');
+        Schema::dropIfExists('organisasi_users');
     }
 };

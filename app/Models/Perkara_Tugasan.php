@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tugasan_ans extends Model
+class Perkara_Tugasan extends Model
 {
     use HasFactory;
-    protected $table = 'tugasan_ans';
+    protected $table = 'perkara_tugasan';
 
     public function tugasan(){
         return $this->belongsTo(Tugasan::class, 'tugasan_id');
 
     }
 
-    public function kategori(){
-        return $this->belongsTo(KategoriPengguna::class, 'kategori_id');
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
 
     }
 }

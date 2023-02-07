@@ -55,19 +55,27 @@ class User extends Authenticatable
     public function rancangan_id() {
         return $this->belongsTo(Rancangan::class,'rancangan');
     }
+
     public function modul() {
         return $this->hasMany(Modul::class);
     }
+
     public function audit() {
         return $this->hasMany(Audit::class);
     }
+
     public function borangJawapan() {
         return $this->hasMany(borangJawapan::class);
     }
+
     public function checkbox() {
         return $this->hasMany(checkbox::class);
     }
   
+    public function Organisasi_users() {
+        return $this->hasMany(Organisasi_users::class);
+    }
+
     
 
 }
