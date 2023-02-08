@@ -418,10 +418,14 @@ class BorangController extends Controller
     {
         $userId = Auth::user()->id;
         $borangJwpns = Jawapan::where('user_id', $userId)->get();
-
-        foreach($borangJwpns as $jwpn ){
-            $kelulusanBorang = Kelulusan_borang::where('jawapan_id', $jwpn->id)->get();
+        if (!$borangJwpns->isEmpty()) {
+            foreach($borangJwpns as $jwpn ){
+                $kelulusanBorang = Kelulusan_borang::where('jawapan_id', $jwpn->id)->get();
+            }
+        }else{
+            $kelulusanBorang = Kelulusan_borang::where('jawapan_id', 0)->get();
         }
+        
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
