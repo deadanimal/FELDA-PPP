@@ -8,14 +8,14 @@ use App\Models\Modul;
 use App\Models\Proses;
 use App\Models\Borang;
 use App\Models\Audit;
-use App\Models\Tugasan;
+use App\Models\Senarai_Tugasan;
 use App\Models\KategoriPengguna;
 use App\Models\checkbox;
 use App\Models\JenisKemaskini;
 use App\Models\AktivitiParameter;
 use App\Models\Aktiviti;
 use App\Models\Checkbox_ans;
-use App\Models\Tugasan_ans;
+use App\Models\Perkara_Tugasan;
 
 
 use Illuminate\Http\Request;
@@ -313,7 +313,7 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $proses = Proses::find($request->prosesId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasan = Senarai_Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
@@ -332,7 +332,7 @@ class ModulController extends Controller
 
         $idModul = (int)$request->route('modul_id');
         $modul = Modul::find($idModul);
-        $tugasan = Tugasan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
+        $tugasan = Senarai_Tugasan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
 
         $kategoriPengguna = KategoriPengguna::all();
@@ -362,7 +362,7 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($request->prosesId);
-        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasan = Senarai_Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
@@ -389,7 +389,7 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($request->prosesId);
-        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasan = Senarai_Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
@@ -401,10 +401,11 @@ class ModulController extends Controller
     }
 
     public function tugasan_add(Request $request){
-        $tugasan = new Tugasan;
+        $tugasan = new Senarai_Tugasan;
         $tugasan->nama = $request->namaTugas;
         $tugasan->jenisTugas = $request->jenisTugas;
-        $tugasan->userKategori = $request->userKategori;
+        $tugasan->due_date = $request->due_date;
+        $tugasan->user_id = $request->user_id;
         $tugasan->proses_id = $request->prosesId;
         $tugasan->save();
 
@@ -420,7 +421,7 @@ class ModulController extends Controller
 
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasan = Senarai_Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
@@ -434,86 +435,20 @@ class ModulController extends Controller
 
     public function tugasan_edit(Request $request){
         $idTugasan = $request->tugasanID;
-        $tugasan = Tugasan::find($idTugasan);
+        $tugasan = Senarai_Tugasan::find($idTugasan);
         $proses = Proses::find($request->prosesId);
 
         $modul = Modul::find($request->modulId);
         $kategoriPengguna = KategoriPengguna::all();
-
-        $checkboxes = checkbox::where('tugasan',$idTugasan)->get();
-        
-        $tugas_ans = Tugasan_ans::where('tugasan_id', $idTugasan)->get();
-        $cb_ans = null;
-        foreach($checkboxes as $checkbox){
-            $cb_ans[] = Checkbox_ans::where('checkbox_id', $checkbox->id)->get();
-        }
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.editTugasan', compact('tugas_ans','cb_ans','proses', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
-
     }
 
-    public function tugasan_update(Request $request){
-        $idTugasan = $request->tugasanID;
-        $tugasan = Tugasan::find($idTugasan);
-        $tugasan->nama = $request->namaTugas;
-        $tugasan->jenisTugas = $request->jenisTugas;
-        $tugasan->userKategori = $request->userKategori;
-        $tugasan->proses_id = $request->prosesId;
-        $tugasan->save();
-
-        Alert::success('Kemaskini Tugasan Berjaya.', 'Kemaskini tugasan telah berjaya.');
-
-        $proses = Proses::find($request->prosesId);
-
-        $audit = new Audit;
-        $audit->user_id = Auth::user()->id;
-        $audit->action = "Kemaskini Tugasan ".$tugasan->nama." pada Proses ".$proses->nama;
-        $audit->save();
-
-        $modul = Modul::find($request->modulId);
-        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $kategoriPengguna = KategoriPengguna::all();
-
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
-
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
-
-    }
-    public function tugasan_delete(Request $request){
-        $idTugasan = $request->tugasanID;
-        $tugasan = Tugasan::find($idTugasan);
-
-        $proses = Proses::find($request->prosesId);
-
-        $audit = new Audit;
-        $audit->user_id = Auth::user()->id;
-        $audit->action = "Padam Tugasan ".$tugasan->nama." pada Proses ".$proses->nama;
-        $audit->save();
-
-        $tugasan->delete();
-        Alert::success('Padam Tugasan Berjaya.', 'Padam tugasan telah berjaya.');
-
-        $modul = Modul::find($request->modulId);
-        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $kategoriPengguna = KategoriPengguna::all();
-        
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
-
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
-
-    }
+   
     public function checkbox_add(Request $request){
         $idTugasan = $request->tugasanID;
 
@@ -546,71 +481,7 @@ class ModulController extends Controller
         return view('pengurusanModul.editTugasan', compact('proses', 'cb_ans' ,'tugas_ans','modul', 'tugasan', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
 
     }
-    public function checkbox_update(Request $request){
-
-        $checkbox = checkbox::find($request->checkboxID);
-        $checkbox->nama = $request->namaCbUpdate;
-        $checkbox->save();
-
-        $idTugasan = $request->tugasanID;
-
-        $tugasan = Tugasan::find($request->tugasanID);
-
-        $audit = new Audit;
-        $audit->user_id = Auth::user()->id;
-        $audit->action = "Kemaskini Kotak Semak ".$checkbox->nama." pada Tugasan ".$tugasan->nama;
-        $audit->save();
-
-        $proses = Proses::find($request->prosesId);
-        $modul = Modul::find($request->modulId);
-        $kategoriPengguna = KategoriPengguna::all();
-        $checkboxes = checkbox::where('tugasan',$idTugasan)->get();
-
-        $tugas_ans = Tugasan_ans::where('tugasan_id', $idTugasan)->get();
-        $cb_ans = null;
-        foreach($checkboxes as $checkbox){
-            $cb_ans[] = Checkbox_ans::where('checkbox_id', $checkbox->id)->get();
-        }
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
-
-        return view('pengurusanModul.editTugasan', compact('proses', 'cb_ans' ,'tugas_ans', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
-
-    }
-
-    public function checkbox_delete(Request $request){
-
-        $checkbox = checkbox::find($request->checkboxID);
-        
-
-        $tugasan = Tugasan::find($request->tugasanID);
-
-        $audit = new Audit;
-        $audit->user_id = Auth::user()->id;
-        $audit->action = "Padam Kotak Semak ".$checkbox->nama." pada Tugasan ".$tugasan->nama;
-        $audit->save();
-        
-        $checkbox->delete();
-
-        $proses = Proses::find($request->prosesId);
-        $modul = Modul::find($request->modulId);
-        $kategoriPengguna = KategoriPengguna::all();
-        $checkboxes = checkbox::where('tugasan',$request->tugasanID)->get();
-       
-        $tugas_ans = Tugasan_ans::where('tugasan_id', $tugasan->id)->get();
-        $cb_ans = null;
-        foreach($checkboxes as $checkbox){
-            $cb_ans[] = Checkbox_ans::where('checkbox_id', $checkbox->id)->get();
-        }
-
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
-
-        return view('pengurusanModul.editTugasan', compact('proses','cb_ans' ,'tugas_ans', 'modul', 'tugasan', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
-
-    }
+    
     
     public function JenisKemas_add(Request $request){
 

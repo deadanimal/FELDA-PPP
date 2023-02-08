@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class borangJawapan extends Model
+class Jawapan extends Model
 {
     use HasFactory;
-    protected $table = 'borang_jawapan';
+    protected $table = 'jawapan';
 
     public function user(){
         return $this->belongsTo(User::class, 'userid');
@@ -16,6 +16,10 @@ class borangJawapan extends Model
 
     public function borangs(){
         return $this->belongsTo(Borang::class, 'borang_id');
+    }
+
+    public function kelulusan_borang(){
+        return $this->hasOne(Borang::class, 'borang_id');
     }
 }
 

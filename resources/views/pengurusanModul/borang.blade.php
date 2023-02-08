@@ -565,6 +565,18 @@ display: flex;
                 </form>
               </td>
               <td>
+                <form action="/moduls/borang/kelulusan" method="GET">
+                  <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;">
+                    <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                    <input type="hidden" value="{{$modul->id}}" name="modulId">
+                    <input type="hidden" value="{{$borang->id}}" name="borangId">
+                    <div class="frame9403-frame7293">
+                    <span class="frame9403-text21"><span>Proses Kelulusan</span></span>
+                    </div>
+                  </button>
+                </form>
+              </td>
+              <td>
                 <button class="frame9403-frame7445"  onclick="openForm()">
                   <div class="frame9403-frame7293">
                   <span class="frame9403-text21"><span>Tambah Medan</span></span>

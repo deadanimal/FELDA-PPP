@@ -17,10 +17,23 @@
                 <form action="/userBorang/view/add" method="POST">
                     @csrf
                     <div class="card-body">
+                        <div class="row">
+                            <div class="mb-3">
+                                <label for="nama" style="font-family:'Poppins'">NAMA</label>
+                                <input type="text" class="form-control" style="text-transform: uppercase;" name="nama" id="nama">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3">
+                                <label for="ic" style="font-family:'Poppins'">NO KAD PENGENALAN</label>
+                                <input type="text" class="form-control" name="ic" id="ic" maxlength="12" minlength="12"
+                                size="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="E.g: 750922140122" required>
+                            </div>
+                        </div>
                         @foreach($medans as $medan)
                             <div class="row">
                                 <div class="mb-3">
-                                    <label for="jawapan{{$medan->id}}" style="font-family:'Poppins'">{{$medan->nama}}</label>
+                                    <label for="jawapan{{$medan->id}}" style="font-family:'Poppins'; text-transform:uppercase">{{$medan->nama}}</label>
                                     <input 
                                     @if ($medan->datatype == "string")
                                         type="text" 
@@ -31,13 +44,15 @@
                                     @if ($medan->pilihan == "required")
                                         required 
                                     @endif
-                                    class="form-control" style="text-transform: uppercase;" maxlength="100" size="100" name="jawapan[]" id="jawapan{{$medan->id}}">
+                                    @if ($medan->nama != 'emel')
+                                        style="text-transform: uppercase;"
+                                    @endif
+                                    class="form-control" maxlength="100" size="100" name="jawapan[]" id="jawapan{{$medan->id}}">
                                     <input type="hidden" name="medanID[]" value="{{$medan->id}}">
                                 </div>
                             </div>
                         @endforeach
                         <input type="hidden" name="borangID" value="{{$borang->id}}">
-                        <input type="hidden" name="userID" value="{{Auth::user()->id}}">
                         <button type="submit" class="frame9403-frame7445">
                             <div class="frame9403-frame7293">
                                 <span class="frame9403-text21"><span>Hantar</span></span>

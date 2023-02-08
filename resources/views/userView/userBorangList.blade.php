@@ -30,29 +30,30 @@
             </tr>
           </thead>
           <tbody>
-            @php
-            $borang = null;
-            @endphp
             @foreach ($borangJwpns as $borangJwpn)
-                @if ($borangJwpn->borang_id != $borang)
-                    <tr>
-                        <td class="text-center arial">{{$borangJwpn->borangs->namaBorang}}</td>
-                        <td class="text-center arial">{{$borangJwpn->status}}</td>
-                        <td class="text-center arial">{{$borangJwpn->ulasan ?? ""}}</td>
-                        <td class="text-center arial">
-                            @if ($borangJwpn->pembetulan == 1)
-                                <a href="/user/sub_borang/{{$borangJwpn->borang_id}}/edit" type="button" class="btn btn-primary">Kemaskini</a>
-                            @else
-                            <a class="btn btn-info" href="/user/sub_borang/{{$borangJwpn->borang_id}}/view" style="color: white; text-decoration:none;">
-                                Papar Borang Permohon
-                            </a>
-                            @endif
-                        </td>
-                    </tr>
+              <tr>
+                <td class="text-center arial">{{$borangJwpn->borangs->namaBorang}}</td>
+                @if(!$kelulusanBorang->isEmpty())
+                  @foreach($kelulusanBorang as $lulusBorang)
+                    @if ($lulusBorang->jawapan_id == $borangJwpn->id)
+                        <td class="text-center arial">{{$lulusBorang->keputusan}}</td>
+                        <td class="text-center arial">{{$lulusBorang->ulasan ?? ""}}</td>
+                    @endif
+                  @endforeach
+                @else
+                <td class="text-center arial">Sedang di Proses</td>
+                    <td class="text-center arial"></td>
                 @endif
-                @php
-                $borang = $borangJwpn->borang_id;
-                @endphp
+                <td class="text-center arial">
+                    @if ($borangJwpn->pembetulan == 1)
+                        <a href="/user/sub_borang/{{$borangJwpn->borang_id}}/edit" type="button" class="btn btn-primary">Kemaskini</a>
+                    @else
+                    <a class="btn btn-info" href="/user/sub_borang/{{$borangJwpn->borang_id}}/view" style="color: white; text-decoration:none;">
+                        Papar Borang Permohon
+                    </a>
+                    @endif
+                </td>
+              </tr>
             @endforeach
           </tbody>
         </table>

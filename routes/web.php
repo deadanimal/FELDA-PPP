@@ -76,14 +76,14 @@ Route::delete('/moduls/borang_field/delete', [BorangController::class, 'borang_f
 Route::get('/moduls/borang/viewBorang', [BorangController::class, 'borang_view']);
 Route::get('/moduls/{modul_id}/{proses_id}/borang/{borang_id}', [BorangController::class, 'borang_detail']);
 
+Route::get('/moduls/borang/kelulusan', [BorangController::class, 'borang_kelulusan']);
+Route::post('/moduls/borang/kelulusan/add', [BorangController::class, 'tahapKelulusan_add']);
+Route::put('/moduls/borang/kelulusan/update', [BorangController::class, 'tahapKelulusan_update']);
+Route::delete('/moduls/borang/kelulusan/delete', [BorangController::class, 'tahapKelulusan_delete']);
+
 Route::post('/moduls/tugasan/add', [ModulController::class, 'tugasan_add']);
-Route::get('/moduls/tugasan/edit', [ModulController::class, 'tugasan_edit']);
-Route::put('/moduls/tugasan/update', [ModulController::class, 'tugasan_update']);
-Route::delete('/moduls/tugasan/delete', [ModulController::class, 'tugasan_delete']);
 
 Route::post('/moduls/tugasan/checkbox/add', [ModulController::class, 'checkbox_add']);
-Route::put('/moduls/tugasan/checkbox/update', [ModulController::class, 'checkbox_update']);
-Route::delete('/moduls/tugasan/checkbox/delete', [ModulController::class, 'checkbox_delete']);
 
 Route::get('/userBorang/view/{idBorang}', [BorangController::class, 'userBorang_view']);
 Route::post('/userBorang/view/add', [BorangController::class, 'userBorang_submit']);

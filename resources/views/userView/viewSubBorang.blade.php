@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            Borang {{$borangJwpns[0]->borangs->namaBorang}}
+            Borang {{$borangJwpns->borangs->namaBorang}}
         </h1>
         <a href="/user/sub_borang/list"  class="frame9403-frame7445" style="margin-left:0px;">
             <div class="frame9403-frame7293">
@@ -19,14 +19,26 @@
                 <div class="card-header">
                 </div>
                 <div class="card-body">
-                    @foreach ($borangJwpns as $jwpn)
-                        <div class="row">
-                            <div class="mb-3">
-                                <label for="jwpn{{$jwpn->id}}" style="font-family:'Poppins'; text-transform: uppercase;">{{$jwpn->medans->nama}}</label>
-                                <input class="form-control" name="jwpn[]" id="jwpn{{$jwpn->id}}" value="{{$jwpn->jawapan}}" readonly style="text-transform: uppercase;">
-                            </div>
-                        </div>
-                    @endforeach
+                  <div class="row">
+                      <div class="mb-3">
+                          <label for="nama" style="font-family:'Poppins'; text-transform: uppercase;">NAMA</label>
+                          <input class="form-control" name="nama" id="nama" value="{{$borangJwpns->nama}}" readonly style="text-transform: uppercase;">
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="mb-3">
+                        <label for="ic" style="font-family:'Poppins'; text-transform: uppercase;">NO KAD PENGENALAN</label>
+                        <input class="form-control" name="ic" id="ic" value="{{$borangJwpns->ic}}" readonly style="text-transform: uppercase;">
+                    </div>
+                  </div>
+                  @foreach($jawapanMedans as $jwpnMed)
+                    <div class="row">
+                      <div class="mb-3">
+                          <label for="jwpn{{$jwpnMed->id}}" style="font-family:'Poppins'; text-transform: uppercase;">{{$jwpnMed->medan->nama}}</label>
+                          <input class="form-control" name="jwpn[]" id="jwpn{{$jwpnMed->id}}" value="{{$jwpnMed->jawapan}}" readonly style="text-transform: uppercase;">
+                      </div>
+                    </div>
+                  @endforeach
                 </div>
             </div>
         </div>
