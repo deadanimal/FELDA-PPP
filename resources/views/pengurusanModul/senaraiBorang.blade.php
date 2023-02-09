@@ -167,26 +167,42 @@
             <form action="/moduls/tugasan/add" method="POST" class="formContainer">
                 @csrf
                 <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA TUGASAN</h2>
-                <label for="namaTugas" class="frame9402-text04">
-                <strong>Nama Tugasan</strong>
-                </label>
-                <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama Tugasan" name="namaTugas" required>
-                <label for="jenisTugas" class="frame9402-text04">
-                    <strong>Jenis Tugasan</strong>
-                </label>
-                <select name="jenisTugas" class="frame9402-kotaknamaBorang" id="jenisTugas">
-                    <option value="checkBox">Kotak Semak</option>
-                    <option value="uploadDoc">Muat Naik Dokumen</option>
-                    <option value="input">Input</option>
-                </select>
-                <label for="userKategori" class="frame9402-text04">
-                    <strong>Kategori Pengguna untuk Membuat Tugasan</strong>
-                </label>
-                <select name="userKategori" class="frame9402-kotaknamaBorang" id="userKategori">
-                    @foreach($kategoriPengguna as $kategori)
-                      <option value="{{$kategori->id}}">{{$kategori->nama}}</option>
-                    @endforeach
-                </select>
+                <table class="table table-borderless">
+                <tr>
+                  <td>
+                    <label for="namaTugas" class="frame9402-text04">
+                      <strong>Nama Tugasan</strong>
+                    </label>
+                  </td>
+                  <td>
+                    <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama Tugasan" name="namaTugas" required>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="user" class="frame9402-text04">
+                      <strong>Pengguna Ditugaskan</strong>
+                    </label>
+                  </td>
+                  <td>
+                    <select name="user" class="frame9402-kotaknamaBorang" id="user">
+                      @foreach($users as $user)
+                        <option value="{{$user->id}}">{{$user->nama}}</option>
+                      @endforeach
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="jenisTugas" class="frame9402-text04">
+                      <strong>Traikh</strong>
+                    </label>
+                  </td>
+                  <td>
+                    <input type="date" class="frame9402-kotaknamaBorang" id="tarikh" name="tarikh" required>
+                  </td>
+                </tr>
+                </table>
                 <input type="hidden" value="{{$proses->id}}" name="prosesId">
                 <input type="hidden" value="{{$modul->id}}" name="modulId">
                 <button type="submit" class="btn">Cipta</button>

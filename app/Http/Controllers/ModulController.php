@@ -16,6 +16,7 @@ use App\Models\AktivitiParameter;
 use App\Models\Aktiviti;
 use App\Models\Checkbox_ans;
 use App\Models\Perkara_Tugasan;
+use App\Models\User;
 
 
 use Illuminate\Http\Request;
@@ -334,14 +335,14 @@ class ModulController extends Controller
         $modul = Modul::find($idModul);
         $tugasan = Senarai_Tugasan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
-
-        $kategoriPengguna = KategoriPengguna::all();
+        $users = User::where('status', 1)->get();
+        
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanModul.senaraiBorang', compact('modul','borangs', 'proses', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
+        return view('pengurusanModul.senaraiBorang', compact('modul','borangs', 'proses', 'tugasan', 'users',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
     }
 
     public function borang_update(Request $request)
@@ -403,8 +404,7 @@ class ModulController extends Controller
     public function tugasan_add(Request $request){
         $tugasan = new Senarai_Tugasan;
         $tugasan->nama = $request->namaTugas;
-        $tugasan->jenisTugas = $request->jenisTugas;
-        $tugasan->due_date = $request->due_date;
+        $tugasan->due_date = $request->tarikh;
         $tugasan->user_id = $request->user_id;
         $tugasan->proses_id = $request->prosesId;
         $tugasan->save();

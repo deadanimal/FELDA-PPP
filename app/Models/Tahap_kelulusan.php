@@ -16,4 +16,8 @@ class Tahap_kelulusan extends Model
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function kelulusanBorang(){
+        return $this->hasMany(Kelulusan_borang::class);
+    }
 }

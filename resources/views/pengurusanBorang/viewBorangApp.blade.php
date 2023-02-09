@@ -1,13 +1,16 @@
 @extends('layouts.guest')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 @section('innercontent')
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            Borang {{$oneBorang->namaBorang}}
+            Borang {{$borangJwpn->borangs->namaBorang}}
         </h1>
-        <a href="/user/borang_app/{{$oneBorang->id}}/user_list"  class="frame9403-frame7445" style="margin-left:0px;">
+        <a href="/user/borang_app/{{$borangJwpn->borangs->id}}/user_list"  class="frame9403-frame7445" style="margin-left:0px;">
             <div class="frame9403-frame7293">
               <span class="frame9403-text21"><span>Kembali</span></span>
             </div>
@@ -17,18 +20,130 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h1 class="header-title" style="color: var(--bs-body-color)">Nama Permohon {{$borangJwpns[0]->user->nama}}</h1>
+                    <h1 class="header-title" style="color: var(--bs-body-color)">Nama Permohon: <p style="color: var(--bs-body-color);text-transform:uppercase">{{$borangJwpn->user->nama}}</p></h1>
                 </div>
                 <div class="card-body">
-                    @foreach ($borangJwpns as $jwpn)
-                        <div class="row">
-                            <div class="mb-3">
-                                <label for="jwpn{{$jwpn->id}}" style="font-family:'Poppins'; text-transform: uppercase;">{{$jwpn->medans->nama}}</label>
-                                <input class="form-control" name="jwpn{{$jwpn->id}}" id="jwpn{{$jwpn->id}}" value="{{$jwpn->jawapan}}" readonly style="text-transform: uppercase;">
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Poppins'; text-transform: uppercase;">NAMA</label>
+                            <input class="form-control" name="jwpn{{$borangJwpn->id}}" id="jwpn{{$borangJwpn->id}}" value="{{$borangJwpn->nama}}" readonly style="text-transform: uppercase;">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Poppins'; text-transform: uppercase;">NO KAD PENGENALAN</label>
+                            <input class="form-control" name="jwpn{{$borangJwpn->id}}" id="jwpn{{$borangJwpn->id}}" value="{{$borangJwpn->ic}}" readonly style="text-transform: uppercase;">
+                        </div>
+                    </div>
+                @foreach($jawapanMedan as $jwpnMedan)
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="jwpn{{$jwpnMedan->id}}" style="font-family:'Poppins'; text-transform: uppercase;">{{$jwpnMedan->medan->nama}}</label>
+                            <input class="form-control" name="jwpn{{$jwpnMedan->id}}" id="jwpn{{$jwpnMedan->id}}" value="{{$jwpnMedan->jawapan}}" readonly style="text-transform: uppercase;">
+                        </div>
+                    </div>
+                @endforeach
+                </div>
+            </div>
+            <div class="card">
+                <table class="table table-borderless">
+                    <th>
+                        <h1 class="header-title" style="color: var(--bs-body-color)">Kelulusan</h1>
+                    </th>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-success" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModal{{$borangJwpn->id}}">Lulus</button>
+                
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{$borangJwpn->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Lulus Permohonan</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Anda Pasti Mahu Lulus Permohonan {{$borangJwpn->user->nama}}?<p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>      
+                                        <form action="/user/borang_app/update" method="post">
+                                            @csrf
+                                            <input type="hidden" name="tahapLulusID" value="{{$tahapLulus}}">
+                                            <input type="hidden" name="jawapanID" value="{{$borangJwpn->id}}">
+                                            <input type="hidden" name="borangID" value="{{$borangJwpn->borangs->id}}">
+                                            <input type="hidden" name="userID" value="{{$borangJwpn->userid}}">
+                                            <input type="hidden" name="status" value="Lulus">
+                                            <button class="btn btn-danger">Ya</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <button type="button" class="btn btn-danger" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModaldel{{$borangJwpn->id}}">Tidak Lulus</button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModaldel{{$borangJwpn->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="post" action="/user/borang_app/update">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="mb-3">
+                                                <h5 for="exampleFormControlTextarea1">Ulasan: </h5>
+                                                <textarea type="text" class="form-control" name="ulasan" id="ulasan" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="mb-3">
+                                                <table>
+                                                    <tr  style="background: none;">
+                                                        <td style="border: none;"><h5 style="text-align: right;">Pembetulan:</h5></td>
+                                                        <td style="border: none;">
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" id="Pembetulan{{$borangJwpn->id}}" name="pembetulan" value="1" class="custom-control-input">
+                                                                <label class="custom-control-label" for="Pembetulan{{$borangJwpn->id}}">Ya</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" id="Pembetulan1{{$borangJwpn->id}}" name="pembetulan" value="0" class="custom-control-input">
+                                                                <label class="custom-control-label" for="Pembetulan1{{$borangJwpn->id}}">Tidak</label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>      
+                                        <input type="hidden" name="userID" value="{{$borangJwpn->user_id}}">
+                                        <input type="hidden" name="borangID" value="{{$borangJwpn->borangs->id}}">
+                                        <input type="hidden" name="stat" value="Tidak Lulus">   
+                                        <button type="submit" class="btn btn-danger">Ya</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                        </div>
+                        </td>
+                    </tr>
+                </table>
+                
+                
+                
             </div>
         </div>
     </div>

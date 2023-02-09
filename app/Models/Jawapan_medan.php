@@ -10,7 +10,7 @@ class Jawapan_medan extends Model
     use HasFactory;
 
     public function borangJawapan() {
-        return $this->belongsTo(borangJawapan::class, 'jawapan_id');
+        return $this->belongsTo(Jawapan::class, 'jawapan_id');
     }
     
     public function medan() {

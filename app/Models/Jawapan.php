@@ -11,15 +11,19 @@ class Jawapan extends Model
     protected $table = 'jawapan';
 
     public function user(){
-        return $this->belongsTo(User::class, 'userid');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function borangs(){
         return $this->belongsTo(Borang::class, 'borang_id');
     }
 
-    public function kelulusan_borang(){
-        return $this->hasOne(Borang::class, 'borang_id');
+    public function jawapanMedan(){
+        return $this->hasMany(Jawapan_medan::class);
+    }
+
+    public function kelulusanBorang(){
+        return $this->hasMany(Kelulusan_borang::class);
     }
 }
 
