@@ -20,6 +20,7 @@ use App\Models\Tahap_kelulusan;
 use App\Models\Kelulusan_borang;
 use Illuminate\Http\Request;
 use Alert;
+use PDF;
 
 class BorangController extends Controller
 {
@@ -278,26 +279,30 @@ class BorangController extends Controller
         $oneBorang = Borang::find($borangId);
         $proseskelulusan = ProsesKelulusan::where('borang_id', $borangId)->first();
         $tahapKelulusan = Tahap_kelulusan::where('prosesKelulusan_id', $proseskelulusan->id)->orderBy("sequence", "ASC")->get();
-        $lulusBorangs = Kelulusan_borang::all();
-        
+        $lulusBorangs = Kelulusan_borang::with('tahap_kelulusan')->orderBy('created_at', 'DESC')->get();
         for($x=0; $x<count($tahapKelulusan); $x++){
-            if($x=0){
-                if($tKelulusan->user_id == Auth::user()->id){
+            if($x==0){
+                if($tahapKelulusan[$x]->user_id == Auth::user()->id && $tahapKelulusan[$x]->sequence == 1){
                     $borangJwpns = Jawapan::where('borang_id', $borangId)->get();
-                    $tahapLulus = $tKelulusan->id;
+                    $tahapLulus = $tahapKelulusan[$x]->id;
+                    $noLulusBorang = [];
                 }
             }else{
-                $kelulusanBorang = Kelulusan_borang::where('tahapKelulusan_id', $tKelulusan->id)->get();
-                foreach($kelulusanBorang as $klulusanborang){
-                    if($klulusanborang)
-                    if($tKelulusan->user_id == Auth::user()->id){
-                        $borangJwpns = Jawapan::where('borang_id', $borangId)->get();
-                        $tahapLulus = $tKelulusan->id;
-                    } 
+                $z = $x-1;
+                $y = $tahapKelulusan[$z]->sequence + 1;
+                if($tahapKelulusan[$x]->user_id == Auth::user()->id && $tahapKelulusan[$x]->sequence == $y){
+                    $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
+                    ->whereRelation('kelulusanBorang','keputusan', 'Lulus')
+                    ->whereRelation('kelulusanBorang.tahap_kelulusan','sequence', $tahapKelulusan[$z]->sequence)->get();
+                    $tahapLulus = $tahapKelulusan[$x]->id;
+                    $noLulusBorang = [];
+                    if(!$borangJwpns->isEmpty()){
+                        $noLulusBorang = Kelulusan_borang::where('jawapan_id', $borangJwpns[0]->id)->get();
+                    }
                 }
-                
             }
         }
+
         // foreach($tahapKelulusan as $tKelulusan){
         //     if($tKelulusan->user_id == Auth::user()->id){
         //         $borangJwpns = Jawapan::where('borang_id', $borangId)->get();
@@ -308,7 +313,7 @@ class BorangController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('pengurusanBorang.userListBorang', compact('lulusBorangs','borangJwpns','tahapLulus','oneBorang','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanBorang.userListBorang', compact('noLulusBorang','tahapKelulusan','lulusBorangs','borangJwpns','tahapLulus','oneBorang','menuModul', 'menuProses', 'menuBorang'));
     }
     public function borangApp_view(Request $request)
     {
@@ -317,15 +322,29 @@ class BorangController extends Controller
         $tahapLulus = (int) $request->route('level_app');
 
         $borangJwpn = Jawapan::where('borang_id', $borangId)->where('user_id', $userId)->first();
+        $lulusBorangs = Kelulusan_borang::where('tahapKelulusan_id', $tahapLulus)->where('jawapan_id', $borangJwpn->id)->get();
         $jawapanMedan = Jawapan_medan::where('jawapan_id', $borangJwpn->id)->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('pengurusanBorang.viewBorangApp', compact('tahapLulus','jawapanMedan','borangJwpn','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanBorang.viewBorangApp', compact('lulusBorangs','tahapLulus','jawapanMedan','borangJwpn','menuModul', 'menuProses', 'menuBorang'));
     }
 
+    public function borangApp_pdf(Request $request)
+    {
+        $userId = (int) $request->route('user_id');
+        $borangId = (int) $request->route('borang_id');
+
+        $borangJwpn = Jawapan::where('borang_id', $borangId)->where('user_id', $userId)->first();
+        $jawapanMedan = Jawapan_medan::where('jawapan_id', $borangJwpn->id)->get();
+        
+        $data = compact('borangJwpn', 'jawapanMedan');
+        $pdf = PDF::loadView('pengurusanBorang.borangPDF', $data);
+
+        return $pdf->download('Borang_Permohonan.pdf');
+    }
     
     public function borangApp_update(Request $request)
     {
@@ -334,8 +353,8 @@ class BorangController extends Controller
         $borangId = $request->borangID;
         $tahapLulusID = $request->tahapLulusID;
 
-        $check = count(Kelulusan_borang::where('tahapKelulusan_id', $tahapLulusID)->where('jawapan_id')->get());
-        if($check = 0){
+        $check = count(Kelulusan_borang::where('tahapKelulusan_id', $tahapLulusID)->where('jawapan_id', $jawapanID)->get());
+        if($check == 0){
             $lulusBorang = new Kelulusan_borang;
             $lulusBorang->tahapKelulusan_id= $tahapLulusID;
             $lulusBorang->jawapan_id = $jawapanID;
@@ -345,7 +364,6 @@ class BorangController extends Controller
             }
             $lulusBorang->save();
         }
-        
         return redirect('/user/borang_app/'.$borangId.'/user_list');
     }
     

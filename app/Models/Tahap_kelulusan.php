@@ -20,4 +20,12 @@ class Tahap_kelulusan extends Model
     public function kelulusanBorang(){
         return $this->hasMany(Kelulusan_borang::class);
     }
+
+    public function borangs(){
+        return $this->hasOnethrough(ProsesKelulusan::class, Borang::class);
+    }
+
+    public function jawapan(){
+        return $this->hasOnethrough(Jawapan::class, Kelulusan_borang::class);
+    }
 }

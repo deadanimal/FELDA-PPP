@@ -36,15 +36,22 @@
                     @if (!$lulusBorangs->isEmpty())
                         @foreach ($lulusBorangs as $lulusBorang)
                             @if ($borangJwpn->id == $lulusBorang->jawapan_id)
-                                {{$lulusBorang->keputusan}}
+                                {{$lulusBorang->keputusan}} Oleh {{$lulusBorang->tahap_kelulusan->user->nama}}<br>
+                                @break
                             @endif
                         @endforeach
                     @endif
                     </td>
                     <td class="text-center">
-                        <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->user->id}}/view/{{$tahapLulus}}" style="color: white; text-decoration:none;">
-                            Papar Borang Permohon
+                      @if(count($tahapKelulusan) == count($noLulusBorang))
+                        <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->user->id}}/pdf" style="color: white; text-decoration:none;">
+                          generate pdf
                         </a>
+                      @else
+                        <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->user->id}}/view/{{$tahapLulus}}" style="color: white; text-decoration:none;">
+                          Papar Borang Permohon
+                        </a>
+                      @endif
                     </td>
                 </tr>
             @endforeach

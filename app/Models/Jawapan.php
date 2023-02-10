@@ -25,5 +25,9 @@ class Jawapan extends Model
     public function kelulusanBorang(){
         return $this->hasMany(Kelulusan_borang::class);
     }
+
+    public function tahapKelulusan(){
+        return $this->hasManythrough(Tahap_kelulusan::class, Kelulusan_borang::class);
+    }
 }
 

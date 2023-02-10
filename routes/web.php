@@ -107,6 +107,7 @@ Route::delete('/moduls/jenisKemas/aktiviti/Param/delete', [ModulController::clas
 Route::get('/user/borang_app/list', [BorangController::class, 'borangList_app']);
 Route::get('/user/borang_app/{borang_id}/user_list', [BorangController::class, 'borangApp_list']);
 Route::get('/user/borang_app/{borang_id}/{user_id}/view/{level_app}', [BorangController::class, 'borangApp_view']);
+Route::get('/user/borang_app/{borang_id}/{user_id}/pdf', [BorangController::class, 'borangApp_pdf']);
 Route::post('/user/borang_app/list/search', [BorangController::class, 'borangApp_search']);
 Route::post('/user/borang_app/update', [BorangController::class, 'borangApp_update']);
 
