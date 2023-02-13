@@ -117,8 +117,11 @@ Route::get('/user/sub_borang/{borang_id}/edit', [BorangController::class, 'subBo
 Route::put('/user/sub_borang/update', [BorangController::class, 'subBorang_update']);
 
 Route::get('/user/tugasan/list', [UserController::class, 'tugasList_app']);
-Route::post('/user/tugasan/in_add', [UserController::class, 'doTugas_in']);
-Route::post('/user/tugasan/cb_add', [UserController::class, 'doTugas_cb']);
+Route::get('/user/tugasan/{tugas_id}/item_list', [UserController::class, 'tugasItem_list']);
+Route::post('/user/tugasan/item_add', [UserController::class, 'tugasItem_add']);
+Route::get('/user/tugasan/{tugas_id}/tugas_item/{item_id}/progress_list', [UserController::class, 'tugasItemProgress_list']);
+Route::post('/user/tugasan/tugas_item/progress_add', [UserController::class, 'tugasItemProgress_add']);
+
 Route::post('/user/tugasan/file_add', [UserController::class, 'doTugas_file']);
 
 // Route::get('/test', function () {

@@ -5,107 +5,41 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            Tugasan Bagi {{Auth::user()->kategori->nama}}
+            Tugasan Bagi {{Auth::user()->nama}}
         </h1>
     </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Sila lengkapkan tugasan berikut.</h5>
+                    <h5 class="card-title mb-0">Sila lengkapkan tugasan berikut sebelum tarikh yang ditetapkan.</h5>
                 </div>
                 <div class="card-body">
                     @if (!$tugasans->isEmpty())
-                    @php
-                        $bill = 1;
-                    @endphp
-                        @foreach($tugasans as $tugasan)
-                            <div class="row">
-                                <div class="mb-3">
-                                    @if($tugasan->jenisTugas == "checkBox")
-                                        <form action="/user/tugasan/cb_add" method="post">
-                                            @csrf
-                                            <label for="tugasan" style="font-family:'Poppins'">{{$bill}}) {{$tugasan->nama}}</label>
-                                            @foreach($checkboxes as $key=>$checkbox)
-                                                @foreach($checkbox as $cb)
-                                                    @if($tugasan->id == $cb->tugasan)
-                                                        <?php $i=$loop->index; ?>
-                                                        <label class="form-check">
-                                                            <input type="hidden" value="0" name="chckbox[{{$i}}]">
-                                                            <input class="form-check-input" type="checkbox" value="1" name="chckbox[{{$i}}]"
-                                                                @foreach ($cb_anss as $key=>$checkbox_ans)
-                                                                    @foreach ($checkbox_ans as $key=>$cb_ans)
-                                                                            @if ($cb_ans->checkbox_id == $cb->id && $cb_ans->value == '1')
-                                                                                checked
-                                                                            @endif
-                                                                    @endforeach
-                                                                @endforeach
-                                                                >
-                                                                @foreach ($cb_anss as $key=>$checkbox_ans)
-                                                                    @foreach ($checkbox_ans as $key=>$cb_ans)
-                                                                            @if ($cb_ans->checkbox_id == $cb->id)
-                                                                                <input type="hidden" name="chckboxansid[{{$i}}]" value="{{$cb_ans->id}}">
-                                                                            @endif
-                                                                    @endforeach
-                                                                @endforeach
-                                                            <span class="form-check-label">
-                                                                    {{$cb->nama}}
-                                                                </span>
-                                                        </label>
-                                                        <input type="hidden" name="chckboxId[{{$i}}]" value="{{$cb->id}}">
-                                                    @endif
-                                                @endforeach
-                                            @endforeach
-                                    @elseif ($tugasan->jenisTugas == "input")
-                                        <form action="/user/tugasan/in_add" method="post">
-                                            @csrf
-                                            <label for="tugasan" style="font-family:'Poppins'">{{$bill}} ) {{$tugasan->nama}}</label>
-                                            <input type="text"  class="form-control" maxlength="100" size="100" name="jawapan" id="jawapan" style="margin-top: 1%;"
-                                            @foreach ($tugas_anss as $key=>$tugas_ans)
-                                                @foreach ($tugas_ans as $answer)
-                                                    @if ($answer->tugasan_id == $tugasan->id)
-                                                        value="{{$answer->value}}"
-                                                    @endif
-                                                @endforeach
-                                            @endforeach
-                                            >
-                                            @foreach ($tugas_anss as $key=>$tugas_ans)
-                                                @foreach ($tugas_ans as $answer)
-                                                    @if ($answer->tugasan_id == $tugasan->id)
-                                                        <input type="hidden" name="answerID" value="{{$answer->id}}">
-                                                    @endif
-                                                @endforeach
-                                            @endforeach
-
-                                    @elseif($tugasan->jenisTugas == "uploadDoc")
-                                        <form action="/user/tugasan/file_add" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            <label for="tugasan" style="font-family:'Poppins'">{{$bill}} ) {{$tugasan->nama}}</label><br><br>
-                                            <input type="file" class="form-control btn btn-outline-primary" name="file_up" id="doc">
-                                            @foreach ($tugas_anss as $key=>$tugas_ans)
-                                                @foreach ($tugas_ans as $answer)
-                                                    @if ($answer->tugasan_id == $tugasan->id)
-                                                    <a href="{{$answer->value}}" style="font-family:'Arial'"> Papar Dokumen </a>
-                                                    <input type="hidden" name="answerID" value="{{$answer->id}}">
-                                                    @endif
-                                                @endforeach
-                                            @endforeach
-                                    @endif
-                                        <input type="hidden" name="tugasanID" value="{{$tugasan->id}}">
-                                        <input type="hidden" name="categoryID" value="{{Auth::user()->kategori->id}}">
-                                        <button class="btn frame9403-frame7445" type="submit">
-                                            <div class="frame9403-frame7293">
-                                                <span class="frame9403-text21"><span>Simpan</span></span>
-                                                <img src="/SVG/daftar.svg" class="frame9403-group7527">
-                                            </div>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                            @php
-                                $bill++
-                            @endphp
-                        @endforeach
+                    <table class="table table-bordered table-striped w-100">
+                        <thead class="text-white bg-primary w-100">
+                          <tr class="text-center">
+                              <th scope="col">Nama Tugasan</th>
+                              <th scope="col">Tarikh</th>
+                              <th scope="col">Tindakan</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($tugasans as $tugasan)
+                            <tr>
+                                <td class="text-center arial-N" style="text-transform: uppercase;">{{$tugasan->nama}}</td>
+                                <td class="text-center arial-N">{{$tugasan->due_date}}</td>
+                                <td class="text-center arial-N">
+                                    <a class="btn btn-success" href="/user/tugasan/{{$tugasan->id}}/item_list" style="color: white; text-decoration:none;">
+                                    Semak Tugasan
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach 
+                        </tbody>
+                      </table>
+                      
+                                    
                     @else
                         <h1 style="text-align: center;"> Tiada Tugasan </h1>
                     @endif

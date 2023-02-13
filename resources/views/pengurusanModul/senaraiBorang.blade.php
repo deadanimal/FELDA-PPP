@@ -212,31 +212,23 @@
         </div>
         {{-- senarai Tugasan --}}
 
-        @if (!$tugasan->isEmpty())
+        @if (!$tugasans->isEmpty())
         <table class="table table-bordered table-striped w-100">
           <thead class="text-white bg-primary w-100">
             <tr class="text-center">
                 <th scope="col">Nama Tugasan</th>
-                <th scope="col">Jenis Tugasan</th>
-                <th scope="col">Kategori Pengguna</th>
-                <th scope="col" >Tindakan</th>
+                <th scope="col">Pengguna Ditugaskan</th>
+                <th scope="col">Tarikh</th>
+                {{-- <th scope="col">Tindakan</th> --}}
             </tr>
           </thead>
           <tbody>
-              @foreach ($tugasan as $tugasan)
+              @foreach ($tugasans as $tugasan)
               <tr>
                 <td class="text-center arial-N" style="text-transform: uppercase;">{{$tugasan->nama}}</td>
-                <td class="text-center arial-N">
-                  @if($tugasan->jenisTugas == "input")
-                    Input
-                  @elseif($tugasan->jenisTugas == "checkBox")
-                    Kotak Semak
-                  @elseif($tugasan->jenisTugas == "uploadDoc")
-                    Muat Naik Dokumen
-                  @endif
-                </td>
-                <td class="text-center arial-N">{{$tugasan->kategoriPengguna->nama}}</td>
-                <td class="text-center arial-N">
+                <td class="text-center arial-N" style="text-transform: uppercase;">{{$tugasan->user->nama}}</td>
+                <td class="text-center arial-N">{{$tugasan->due_date}}</td>
+                {{-- <td class="text-center arial-N">
                   <form action="/moduls/tugasan/edit" method="GET">
                     <input type="hidden" name="tugasanID" value="{{$tugasan->id}}">
                     <input type="hidden" name="prosesId" value="{{$proses->id}}">
@@ -276,15 +268,13 @@
                         </div>
                     </div>
                   </div>
-                </td>
+                </td> --}}
               </tr>
               @endforeach 
           </tbody>
         </table>
         @else
-          <table class="table table-bordered table-striped w-100">
-            <tr class="frame9402-input" style="border:none;"><h2 class="frame9402-text01" style="color:black;"> Tiada Tugasan </h2></tr>
-          </table>
+          
         @endif
       </div>
 

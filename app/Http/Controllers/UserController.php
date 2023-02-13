@@ -15,12 +15,12 @@ use App\Models\Modul;
 use App\Models\KategoriPengguna;
 use App\Models\Rancangan;
 use App\Models\Audit;
-use App\Models\Tugasan;
+use App\Models\Senarai_Tugasan;
 use App\Models\checkbox;
 use App\Models\Proses;
 use App\Models\Borang;
-use App\Models\Checkbox_ans;
-use App\Models\Tugasan_ans;
+use App\Models\Perkara_Tugasan;
+use App\Models\PerkaraTugasan_Progress;
 
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -432,51 +432,75 @@ class UserController extends Controller
     
     public function tugasList_app(Request $request)
     {
-        $user = Auth::user()->kategoripengguna;
+        $user = Auth::user()->id;
 
-        $tugasans= Tugasan::where('userKategori', $user)->get();
-        if($tugasans == null){
-            $menuModul = Modul::where('status', 'Go-live')->get();
-            $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-            $menuBorang = Borang::where('status', 1)->get();
-            $checkboxes = null;
-            $cb_anss = null;
-            $tugas_anss = null;
-            return view('userView.userTugasan', compact('cb_anss','tugas_anss','tugasans', 'checkboxes', 'menuModul', 'menuProses', 'menuBorang'));
-        }
-        else{
-            $checkboxes = null;
-            $cb_anss = null;
-            $tugas_anss = null;
+        $tugasans= Senarai_Tugasan::where('user_id', $user)->get();
 
-            $count=0;
-            foreach($tugasans as $tugasan){
-                $checkboxes[] = checkbox::where('tugasan', $tugasan->id)->get();
-                $tugas_anss[] = Tugasan_ans::where('tugasan_id', $tugasan->id)->get();
-            }
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        return view('userView.userTugasan', compact('tugasans', 'menuModul', 'menuProses', 'menuBorang'));
+         
+    }
 
-            if($checkboxes != null){
-                foreach($checkboxes as $key=>$checkbox){
-                    if(!$checkbox->isempty()){
-                        foreach($checkbox as $cb){
-                            $cb_anss[] = Checkbox_ans::where('checkbox_id', $cb->id)->get();
-                        }
-                    }
-                    else{
-                        continue;
-                    }
-                
-                }
-            }
-            
+    public function tugasItem_list(Request $request)
+    {
+        $tugas_id = (int)$request->route('tugas_id');
 
-            $menuModul = Modul::where('status', 'Go-live')->get();
-            $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-            $menuBorang = Borang::where('status', 1)->get();
-            return view('userView.userTugasan', compact('cb_anss','tugas_anss','tugasans', 'checkboxes' ,'menuModul', 'menuProses', 'menuBorang'));
-                
-        }
+        $tugasans= Senarai_Tugasan::find($tugas_id);
+
+        $tugasan_item = Perkara_Tugasan::where('tugasan_id', $tugas_id)->get();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        return view('userView.userTugasanItem', compact('tugasan_item','tugasans', 'menuModul', 'menuProses', 'menuBorang'));
         
+    }
+
+    public function tugasItem_add(Request $request)
+    {
+        $tugas_id = $request->tugasan_id;
+
+        $item = new Perkara_Tugasan;
+        $item->nama = $request->namaTugas;
+        $item->plan_date = $request->plan_date;
+        $item->tugasan_id = $tugas_id;
+        $item->user_id = Auth::user()->id;
+        $item->save();
+
+        return redirect('/user/tugasan/'.$tugas_id.'/item_list');
+    }
+
+    public function tugasItemProgress_list(Request $request)
+    {
+        $tugas_id = (int)$request->route('tugas_id');
+
+        $tugasItem_id = (int)$request->route('item_id');
+
+        $tugasan_item = Perkara_Tugasan::find($tugasItem_id);
+        $item_progress = PerkaraTugasan_Progress::where('perkara_tugasan', $tugasItem_id)->get();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('userView.userTugasanProgress', compact('item_progress','tugasan_item','tugas_id', 'menuModul', 'menuProses', 'menuBorang'));
+        
+    }
+
+    public function tugasItemProgress_add(Request $request)
+    {
+        $tugas_id = $request->tugas_id;
+        $tugasItem_id = $request->tugasItem_id;
+
+        $tugas_progress = new PerkaraTugasan_Progress;
+        $tugas_progress->progress = $request->progress;
+        $tugas_progress->actual_date = $request->actual_date;
+        $tugas_progress->perkara_tugasan = $tugasItem_id;
+        $tugas_progress->save();
+
+        return redirect('/user/tugasan/'.$tugas_id.'/tugas_item/'.$tugasItem_id.'/progress_list');
     }
 
     public function doTugas_in(Request $request)

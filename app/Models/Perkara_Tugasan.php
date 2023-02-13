@@ -19,4 +19,9 @@ class Perkara_Tugasan extends Model
         return $this->belongsTo(User::class, 'user_id');
 
     }
+
+    public function PerkaraTugasanProgress(){
+        return $this->hasMany(PerkaraTugasan_Progress::class);
+
+    }
 }

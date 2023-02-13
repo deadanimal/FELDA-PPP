@@ -286,6 +286,9 @@ class BorangController extends Controller
                     $borangJwpns = Jawapan::where('borang_id', $borangId)->get();
                     $tahapLulus = $tahapKelulusan[$x]->id;
                     $noLulusBorang = [];
+                    if(!$borangJwpns->isEmpty()){
+                        $noLulusBorang = Kelulusan_borang::where('jawapan_id', $borangJwpns[0]->id)->get();
+                    }
                 }
             }else{
                 $z = $x-1;
