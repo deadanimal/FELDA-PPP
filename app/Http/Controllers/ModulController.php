@@ -468,7 +468,7 @@ class ModulController extends Controller
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $tugasan = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $kategoriPengguna = KategoriPengguna::all();
+        $users = User::where('status', 1)->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -476,7 +476,7 @@ class ModulController extends Controller
 
         Alert::success('Kemaskini Jenis Kemaskini Berjaya.', 'Kemaskini Jenis Kemaskini telah berjaya.');
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
+        return view('pengurusanModul.senaraiBorang', compact('users','borangs', 'proses', 'modul', 'tugasan',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
 
     }
 
@@ -518,7 +518,7 @@ class ModulController extends Controller
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $tugasan = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $kategoriPengguna = KategoriPengguna::all();
+        $users = User::where('status', 1)->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -526,7 +526,7 @@ class ModulController extends Controller
 
         Alert::success('Kemaskini Jenis Kemaskini Berjaya.', 'Kemaskini Jenis Kemaskini telah berjaya.');
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
+        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'users',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
 
     }
 
@@ -545,7 +545,7 @@ class ModulController extends Controller
 
         $modul = Modul::find($request->modulId);
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $kategoriPengguna = KategoriPengguna::all();
+        $users = User::where('status', 1)->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -553,7 +553,7 @@ class ModulController extends Controller
 
         Alert::success('Padam Jenis Kemaskini Berjaya.', 'Padam Jenis Kemaskini telah berjaya.');
 
-        return view('pengurusanModul.senaraiBorang', compact('proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
+        return view('pengurusanModul.senaraiBorang', compact('proses', 'modul', 'tugasan', 'users',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
 
     }
     public function aktiviti_add(Request $request){
