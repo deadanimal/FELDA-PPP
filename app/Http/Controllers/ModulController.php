@@ -314,7 +314,7 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $proses = Proses::find($request->prosesId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasan = Senarai_Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasan = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
@@ -363,7 +363,7 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($request->prosesId);
-        $tugasans = Senarai_Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasans = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
@@ -390,7 +390,7 @@ class ModulController extends Controller
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($request->prosesId);
-        $tugasans = Senarai_Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasans = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
@@ -402,7 +402,7 @@ class ModulController extends Controller
     }
 
     public function tugasan_add(Request $request){
-        $tugasan = new Senarai_Tugasan;
+        $tugasan = new Senarai_tugasan;
         $tugasan->nama = $request->namaTugas;
         $tugasan->due_date = $request->tarikh;
         $tugasan->user_id = $request->user;
@@ -421,7 +421,7 @@ class ModulController extends Controller
 
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasans = Senarai_Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasans = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $users = User::where('status', 1)->get();
 
@@ -435,7 +435,7 @@ class ModulController extends Controller
 
     public function tugasan_edit(Request $request){
         $idTugasan = $request->tugasanID;
-        $tugasans = Senarai_Tugasan::find($idTugasan);
+        $tugasans = Senarai_tugasan::find($idTugasan);
         $proses = Proses::find($request->prosesId);
 
         $modul = Modul::find($request->modulId);
@@ -446,40 +446,6 @@ class ModulController extends Controller
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pengurusanModul.editTugasan', compact('tugas_ans','cb_ans','proses', 'modul', 'tugasans', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
-    }
-
-   
-    public function checkbox_add(Request $request){
-        $idTugasan = $request->tugasanID;
-
-        $checkbox = New checkbox;
-        $checkbox->nama = $request->nama;
-        $checkbox->tugasan = $idTugasan;
-        $checkbox->save();
-
-        $tugasan = Tugasan::find($idTugasan);
-
-        $audit = new Audit;
-        $audit->user_id = Auth::user()->id;
-        $audit->action = "Cipta Kotak Semak ".$checkbox->nama." pada Tugasan ".$tugasan->nama;
-        $audit->save();
-        
-        $proses = Proses::find($request->prosesId);
-        $modul = Modul::find($request->modulId);
-        $kategoriPengguna = KategoriPengguna::all();
-        $checkboxes = checkbox::where('tugasan',$idTugasan)->get();
-        
-        $tugas_ans = Tugasan_ans::where('tugasan_id', $idTugasan)->get();
-        $cb_ans = null;
-        foreach($checkboxes as $checkbox){
-            $cb_ans[] = Checkbox_ans::where('checkbox_id', $checkbox->id)->get();
-        }
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
-
-        return view('pengurusanModul.editTugasan', compact('proses', 'cb_ans' ,'tugas_ans','modul', 'tugasan', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
-
     }
     
     
@@ -500,7 +466,7 @@ class ModulController extends Controller
 
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasan = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
@@ -522,7 +488,7 @@ class ModulController extends Controller
 
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasan = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $aktivitis = Aktiviti::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
 
 
@@ -550,7 +516,7 @@ class ModulController extends Controller
 
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasan = Tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasan = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kategoriPengguna = KategoriPengguna::all();
 
