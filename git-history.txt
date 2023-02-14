@@ -1,0 +1,89 @@
+* 9fa2504 Tugasan module update 13/2/23
+* cf25c0f BorangController update 10/2/23
+* 5fa8b46 BorangController/ModulController update 9/2/23
+* 88dab72 BorangController update 8/2/23
+* bd4f79f migration/model/borangController/ModulController update 8/2/23
+* 539d117 migration/model/borangController update 7/2/23
+* 7b7f786 bug at borang approval
+* c11a3cd update login error 27/1/23
+* b614731 update navbar 26/1/23
+* bc9020e update navbar 26/1/23
+* ee06db9 update borang list  26/1/23
+* c94633e update jenis kemaskini 26/1/23
+* bc20676 update tugasan 26/1/23
+* 6dff227 Req update jenisKemas
+* 45dd071 bug 26/1/23
+* a0f66d1 update tugasan
+* 5937832 update tugasan
+* 9dbfe48 update uppercase
+* aef4516 update uppercase
+* 86c4294 update uppercase
+* e3e3a1e update uppercase
+* f7f9a26 user do Tugasan
+* 5a7951a variance pre-uat 4/1/23
+* b2f8028 update pre-uat 4/1/23
+* fd0d4eb update login
+* 2910281 User borang list/ tugasan list
+* e1c518c Kelulusan Borang
+* 1365c3a Parameter Jenis Kemaskini
+* 1f2d3ee end-user borang & jenis Kemaskini
+* 050ca27 update userview borang
+* 37128a2 sidebar display modul/process/borang & userview borang
+* 77063c8 CRUD tugas-checkbox
+* 741c971 update & delete tugas
+* 1303899 update borang_field & Cipta tugas
+* 07edb35 update view borang and sequence
+* 0c636ec view borang and sequence
+* 10c70e1 update audit2
+* d31c2f8 update audit
+* 47f624a update audit
+* e42644f update audit
+* 183b970 update login
+* 722ee91 update user update & register
+* 5554fc3 update navbar/user update & register
+* cc34b12 fix user info
+* 68287cd fix table audit
+* 925d567 fix table modul & audit
+* 84ec291 fix table category user list
+* 81c9e73 update table user list
+* 077e8f2 implement DataTable in audit
+* 6ed89ff update Popup delete confirmation
+* 22a27cc Popup delete confirmation
+* 34b18a8 update login page
+* 5618e1c update login page
+* 1db5af1 update login page
+* a8dc144 update login page
+* 4b4cbf6 login & forgot page
+* c1d8813 change php ver
+* 2d6d8e6 20/12
+* 2d505be 20/12
+* 78f2d25 Update route & GUI
+* e21f616 123
+* e43e735 321
+* b7dfd2f 123
+* e6652b6 123
+* b0e7f80 321
+* 66f9851 123
+* 5e1b7d0 delete confirmation
+* c21c6cd bug update 2
+* f3e83ce nav bar single click
+* 867e591 Senarai Pengguna link nama
+* 53ec15e Bug Update
+* b3b8f7e navbar active
+* dfe3989 requirement/ bug pengurusan pengguna
+* 4ef2511 requirement/ bug pengurusan pengguna
+* 299af72 requirement dragable field borang
+* 8f2706e bug pengurusan modul
+* 5ce2b72 Enter borang
+* 5578c44 update MaklumatPengguna
+* d352e18 update MaklumatPengguna
+* 53c0e65 update MaklumatPengguna
+* ff35b7e update MaklumatPengguna
+* 304dfa0 update MaklumatPengguna
+* b61a4e7 Borang
+* 62440d3 Tambah Kategori Pengguna
+* 1938262 CRUD proses Borang
+* 3504d8a second
+* 0711a09 first
+* 64956e2 Create README.md
+* 8c2e369 Initial commit

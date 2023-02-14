@@ -83,8 +83,6 @@ Route::delete('/moduls/borang/kelulusan/delete', [BorangController::class, 'taha
 
 Route::post('/moduls/tugasan/add', [ModulController::class, 'tugasan_add']);
 
-Route::post('/moduls/tugasan/checkbox/add', [ModulController::class, 'checkbox_add']);
-
 Route::get('/userBorang/view/{idBorang}', [BorangController::class, 'userBorang_view']);
 Route::post('/userBorang/view/add', [BorangController::class, 'userBorang_submit']);
 Route::put('/userBorang/view/update', [BorangController::class, 'userBorang_update']);
@@ -122,11 +120,9 @@ Route::post('/user/tugasan/item_add', [UserController::class, 'tugasItem_add']);
 Route::get('/user/tugasan/{tugas_id}/tugas_item/{item_id}/progress_list', [UserController::class, 'tugasItemProgress_list']);
 Route::post('/user/tugasan/tugas_item/progress_add', [UserController::class, 'tugasItemProgress_add']);
 
-Route::post('/user/tugasan/file_add', [UserController::class, 'doTugas_file']);
-
-// Route::get('/test', function () {
-//     return view('pengurusanTugasan.senaraiTugasan');
-// });
+Route::get('/test', function () {
+    return view('pengurusanBorang.TemplatePermohonanPerolehanIbuPejabatWilayah_');
+});
 });
 
 // Route::post('/Borang/uploadBorang',  [BorangController::class, 'uploadBorang']);

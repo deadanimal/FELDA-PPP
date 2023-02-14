@@ -15,7 +15,7 @@ use App\Models\Modul;
 use App\Models\KategoriPengguna;
 use App\Models\Rancangan;
 use App\Models\Audit;
-use App\Models\Senarai_Tugasan;
+use App\Models\Senarai_tugasan;
 use App\Models\checkbox;
 use App\Models\Proses;
 use App\Models\Borang;
@@ -434,7 +434,7 @@ class UserController extends Controller
     {
         $user = Auth::user()->id;
 
-        $tugasans= Senarai_Tugasan::where('user_id', $user)->get();
+        $tugasans= Senarai_tugasan::where('user_id', $user)->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -447,7 +447,7 @@ class UserController extends Controller
     {
         $tugas_id = (int)$request->route('tugas_id');
 
-        $tugasans= Senarai_Tugasan::find($tugas_id);
+        $tugasans= Senarai_tugasan::find($tugas_id);
 
         $tugasan_item = Perkara_Tugasan::where('tugasan_id', $tugas_id)->get();
 
@@ -501,113 +501,5 @@ class UserController extends Controller
         $tugas_progress->save();
 
         return redirect('/user/tugasan/'.$tugas_id.'/tugas_item/'.$tugasItem_id.'/progress_list');
-    }
-
-    public function doTugas_in(Request $request)
-    {
-        $tugasID = $request->tugasanID;
-        $catgryID = $request->categoryID;
-        try{
-            $answerID = $request->answerID;
-        }
-        catch (Exception $e) {
-        }
-
-        if($answerID == null){
-            $tugasan = new Tugasan_ans;
-            $tugasan->value = $request->jawapan;
-            $tugasan->tugasan_id = $tugasID;
-            $tugasan->kategori_id = $catgryID;
-            $tugasan->save();
-        }
-        else{
-                $tugasan = Tugasan_ans::find($answerID);
-                $tugasan->value = $request->jawapan;
-                $tugasan->tugasan_id = $tugasID;
-                $tugasan->kategori_id = $catgryID;
-                $tugasan->save();
-        }
-
-        Alert::success('Simpan Tugas berjaya.', 'Tugas berjaya disimpan.');   
-
-        return redirect('/user/tugasan/list');
-
-    }
-
-    public function doTugas_cb(Request $request)
-    {
-        $tugasID = $request->tugasanID;
-        $catgryID = $request->categoryID;
-        $chckbox = $request->chckbox;
-        $cbID = $request->chckboxId;
-
-        $count = count($chckbox);
-        try{
-            $checkboxid = $request->chckboxansid;
-        }
-        catch (Exception $e) {
-        }
-
-        if($checkboxid == null){
-            for($x=0; $x<$count; $x++){
-                $checkbox = new Checkbox_ans;
-                $checkbox->value = $chckbox[$x];
-                $checkbox->checkbox_id = $cbID[$x];
-                $checkbox->kategori_id = $catgryID;
-                $checkbox->save();
-            }
-        }
-        else{
-            for($x=0; $x<$count; $x++){
-                $checkbox = Checkbox_ans::find($checkboxid[$x]);
-                $checkbox->value = $chckbox[$x];
-                $checkbox->checkbox_id = $cbID[$x];
-                $checkbox->kategori_id = $catgryID;
-                $checkbox->save();
-            }
-        }
-
-        Alert::success('Simpan Tugas berjaya.', 'Tugas berjaya disimpan.');   
-       
-        return redirect('/user/tugasan/list');
-    }
-
-    public function doTugas_file(Request $request)
-    {
-        $tugasID = $request->tugasanID;
-        $catgryID = $request->categoryID;
-
-        try{
-            $answerID = $request->answerID;
-        }
-        catch (Exception $e) {
-        }
-
-        if($answerID == null){
-            $tugasan = new Tugasan_ans;
-            if($request->file()) {
-                $file_up = time().'.'.$request->file_up->extension();  
-                $request->file_up->move(public_path('file'), $file_up);
-                $tugasan->value = '/file/' . $file_up;
-            }
-                $tugasan->tugasan_id = $tugasID;
-                $tugasan->kategori_id = $catgryID;
-                $tugasan->save();
-        }
-        else{
-            $tugasan = Tugasan_ans::find($answerID);
-            if($request->file()) {
-                $file_up = time().'.'.$request->file_up->extension();  
-                $request->file_up->move(public_path('file'), $file_up);
-                $tugasan->value = '/file/' . $file_up;
-            }
-                $tugasan->tugasan_id = $tugasID;
-                $tugasan->kategori_id = $catgryID;
-                $tugasan->save();
-        }
-
-        Alert::success('Simpan Tugas berjaya.', 'Tugas berjaya disimpan.');   
-
-        return redirect('/user/tugasan/list');
     }
 }
