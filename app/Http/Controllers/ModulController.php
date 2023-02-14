@@ -553,7 +553,7 @@ class ModulController extends Controller
 
         Alert::success('Padam Jenis Kemaskini Berjaya.', 'Padam Jenis Kemaskini telah berjaya.');
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
+        return view('pengurusanModul.senaraiBorang', compact('proses', 'modul', 'tugasan', 'kategoriPengguna',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
 
     }
     public function aktiviti_add(Request $request){
