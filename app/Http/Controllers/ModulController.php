@@ -466,7 +466,7 @@ class ModulController extends Controller
 
         $modul = Modul::find($request->modulId);
         $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasans = Senarai_s::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasans = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
         $users = User::where('status', 1)->get();
 
