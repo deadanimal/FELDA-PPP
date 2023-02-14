@@ -8,7 +8,7 @@ use App\Models\Modul;
 use App\Models\Proses;
 use App\Models\Borang;
 use App\Models\Audit;
-use App\Models\Senarai_Tugasan;
+use App\Models\Senarai_tugasan;
 use App\Models\KategoriPengguna;
 use App\Models\checkbox;
 use App\Models\JenisKemaskini;
@@ -333,7 +333,7 @@ class ModulController extends Controller
 
         $idModul = (int)$request->route('modul_id');
         $modul = Modul::find($idModul);
-        $tugasans = Senarai_Tugasan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
+        $tugasans = Senarai_tugasan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
         $users = User::where('status', 1)->get();
         
