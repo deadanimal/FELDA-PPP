@@ -9,7 +9,11 @@ class JenisKemaskini extends Model
 {
     use HasFactory;
 
-    public function proses() {
-        return $this->belongsTo(Proses::class, 'proses_id');
+    public function jenisTernakan() {
+        return $this->belongsTo(jenis_ternakan::class, 'id_jenisTernakans');
+    }
+
+    public function aktiviti() {
+        return $this->hasMany(Aktiviti::class);
     }
 }

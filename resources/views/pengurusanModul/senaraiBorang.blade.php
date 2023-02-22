@@ -274,7 +274,7 @@
           </tbody>
         </table>
         @else
-          
+          <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Tugasan </h2>
         @endif
       </div>
 
@@ -282,11 +282,11 @@
         <div class="card-header">
           <table style="width: 100%">
             <tr>
-              <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Jenis Kemaskini</h1></td>
+              <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Ternakan/Tanaman</h1></td>
               <td>
                 <button class="frame9403-frame7445"  onclick="openFormKemas()">
                   <div class="frame9403-frame7293">
-                  <span class="frame9403-text21"><span>Cipta Jenis Kemaskini</span></span>
+                  <span class="frame9403-text21"><span>Cipta Ternakan/Tanaman</span></span>
                   <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
                   </div>
                 </button>
@@ -298,13 +298,9 @@
         {{-- popup form jensi kemaskini  --}}
         <div class="divPopup">
           <div class="formPopup" id="popupFormKemas">
-            <form action="/moduls/jenisKemas/add" method="POST" class="formContainer">
+            <form action="/moduls/jenisTernakan/add" method="POST" class="formContainer">
                 @csrf
-                <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA JENIS KEMASKINI</h2>
-                <label for="namaKemas" class="frame9402-text04">
-                <strong>Nama Jenis Kemaskini</strong>
-                </label>
-                <input type="text" class="frame9402-kotaknamaBorang" id="namaKemas" placeholder="Nama Jenis Kemaskini" name="namaKemas" required>
+                <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA JENIS TERNAKAN/TANAMAN</h2>
                 <label for="namaJenis" class="frame9402-text04">
                   <strong>Jenis Ternakan/Tanaman</strong>
                 </label>
@@ -319,52 +315,92 @@
         </div>
 
         {{-- senarai jensi kemaskini --}}
-        @if (!$kemaskini->isEmpty())
+        @if (!$jenisTernakan->isEmpty())
         <table class="table table-bordered table-striped w-100">
           <thead class="text-white bg-primary w-100">
             <tr>
-                <th scope="col" class="text-center">Nama Jenis Kemaskini</th>
                 <th scope="col" class="text-center">Jenis Ternakan/Tanaman</th>
                 <th scope="col" >Tindakan</th>
             </tr>
           </thead>
-          <tbody>
-              @foreach ($kemaskini as $kemaskini)
+          <tbody style="back">
+              @foreach ($jenisTernakan as $jenisTernakan)
               <tr>
-                <td class="text-center arial-N" style="text-transform: uppercase;">{{$kemaskini->nama}}</td>
-                <td class="text-center arial-N" style="text-transform: uppercase;">{{$kemaskini->jenis}}</td>
+                <td class="text-center arial-N" style="text-transform: uppercase;">{{$jenisTernakan->nama}}</td>
                 <td class="text-center arial-N">
-                  <form action="/moduls/jenisKemas/edit" method="GET">
-                    <input type="hidden" name="kemaskiniID" value="{{$kemaskini->id}}">
+                  {{-- <form action="/moduls/jenisTernakan/edit" method="GET">
+                    <input type="hidden" name="jenisTernakanID" value="{{$jenisTernakan->id}}">
                     <input type="hidden" name="prosesId" value="{{$proses->id}}">
                     <input type="hidden" name="modulId" value="{{$modul->id}}">
 
                     <button class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Masuk">
                       <img src="/SVG/pencil.svg" title="kemaskini"/>
                     </button>
-                  </form>
+                  </form> --}}
                  
-                  <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModaltugas{{$kemaskini->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
-
+                  <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalTernakan{{$jenisTernakan->id}}" title="Padam"><img src="/SVG/pencil.svg"/></button>
+                  
                   <!-- Modal -->
-                  <div class="modal fade" id="exampleModaltugas{{$kemaskini->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="exampleModalTernakan{{$jenisTernakan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Padam Jenis Kemaskini {{$kemaskini->nama}}</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">Edit Jenis Ternakan/Tanaman {{$jenisTernakan->nama}}</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                               </button>
                           </div>
                           <div class="modal-body">
-                              <p>Anda Pasti Mahu Jenis Kemaskini {{$kemaskini->nama}}?<p>
+                            <form action="/moduls/jenisTernakan/update" method="GET">
+                              <label for="namaJenis" class="frame9402-text04">
+                                <strong>Jenis Ternakan/Tanaman</strong>
+                              </label>
+                              <input type="text" class=".form-control" value="{{$jenisTernakan->nama}}" name="namaJenis" required>
+                                                              
+                              <input type="hidden" name="prosesId" value="{{$proses->id}}">
+                              <input type="hidden" name="modulId" value="{{$modul->id}}">
+          
+                              <button class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Masuk">
+                                <img src="/SVG/pencil.svg" title="kemaskini"/>
+                              </button>
+                            </form>                           
+                          </div>
+                          <div class="modal-footer">
+                              {{-- <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                              <form method="post" action="/moduls/jenisTernakan/delete">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" value="{{$jenisTernakan->id}}" name="jenisTernakanID">
+                                <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                                <input type="hidden" value="{{$modul->id}}" name="modulId">
+                                <button class="btn btn-danger">Ya</button>
+                              </form> --}}
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+
+                  <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModaltugas{{$jenisTernakan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModaltugas{{$jenisTernakan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Padam Jenis Ternakan/Tanaman {{$jenisTernakan->nama}}</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              <p>Anda Pasti Mahu Jenis Ternakan/Tanaman {{$jenisTernakan->nama}}?<p>
                           </div>
                           <div class="modal-footer">
                               <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
-                              <form method="post" action="/moduls/jenisKemas/delete">
+                              <form method="post" action="/moduls/jenisTernakan/delete">
                                 @csrf
                                 @method('DELETE')
-                                <input type="hidden" value="{{$kemaskini->id}}" name="kemaskiniID">
+                                <input type="hidden" value="{{$jenisTernakan->id}}" name="jenisTernakanID">
                                 <input type="hidden" value="{{$proses->id}}" name="prosesId">
                                 <input type="hidden" value="{{$modul->id}}" name="modulId">
                                 <button class="btn btn-danger">Ya</button>
@@ -379,9 +415,7 @@
           </tbody>
         </table>
         @else
-          <table class="table table-bordered table-striped w-100">
-            <tr class="frame9402-input" style="border:none;"><h2 class="frame9402-text01" style="color:black;"> Tiada Jenis Kemaskini </h2></tr>
-          </table>
+          <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Jenis Ternakan/Tanaman </h2>
         @endif
       </div>
     </div>

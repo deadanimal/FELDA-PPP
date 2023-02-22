@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('aktivitis', function (Blueprint $table) {
+        Schema::create('jenis_kemaskinis', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->foreignId('kemas_id')->references('id')->on('jenis_kemaskinis')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('id_jenisTernakans')->references('id')->on('jenis_ternakans')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aktivitis');
+        Schema::dropIfExists('jenis_kemaskinis');
     }
 };

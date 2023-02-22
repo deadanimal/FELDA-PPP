@@ -11,7 +11,7 @@ class Aktiviti extends Model
     protected $table='aktivitis';
 
     public function kemaskini() {
-        return $this->belongsTo(JenisKemaskini::class, 'kemas_id');
+        return $this->belongsTo(JenisKemaskini::class, 'id_jenisKemaskini');
     }
 
     public function param() {

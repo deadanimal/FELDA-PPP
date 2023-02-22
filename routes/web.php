@@ -88,6 +88,11 @@ Route::post('/userBorang/view/add', [BorangController::class, 'userBorang_submit
 Route::put('/userBorang/view/update', [BorangController::class, 'userBorang_update']);
 Route::delete('/userBorang/view/delete', [BorangController::class, 'userBorang_delete']);
 
+Route::post('/moduls/jenisTernakan/add', [ModulController::class, 'jenisTernakan_add']);
+Route::get('/moduls/jenisTernakan/edit', [ModulController::class, 'jenisTernakan_edit']);
+Route::put('/moduls/jenisTernakan/update', [ModulController::class, 'jenisTernakan_update']);
+Route::delete('/moduls/jenisTernakan/delete', [ModulController::class, 'jenisTernakan_delete']);
+
 Route::post('/moduls/jenisKemas/add', [ModulController::class, 'JenisKemas_add']);
 Route::get('/moduls/jenisKemas/edit', [ModulController::class, 'JenisKemas_edit']);
 Route::put('/moduls/jenisKemas/update', [ModulController::class, 'JenisKemas_update']);
