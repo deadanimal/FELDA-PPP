@@ -485,13 +485,15 @@ class ModulController extends Controller
 
         $proses = Proses::find($request->prosesId);
 
+        $modul = Modul::find($request->modulId);
+
         $kemaskini = JenisKemaskini::where('id_jenisTernakans', $request->jenisTernakanID)->orderBy("updated_at", "DESC")->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanModul.editKemas', compact('menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'jenisTernakan'));
+        return view('pengurusanModul.editTernakan', compact('modul','proses','menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'jenisTernakan'));
     }
 
     public function jenisTernakan_update(Request $request){
@@ -521,7 +523,7 @@ class ModulController extends Controller
 
         Alert::success('Kemaskini Jenis Ternakan/Tanaman Berjaya.', 'Kemaskini Jenis Ternakan/Tanaman telah berjaya.');
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasans', 'users',  'menuModul', 'menuProses', 'menuBorang', 'jenisTernakan'));
+        return view('pengurusanModul.editTernakan', compact('borangs', 'proses', 'modul', 'tugasans', 'users',  'menuModul', 'menuProses', 'menuBorang', 'jenisTernakan'));
 
     }
 
@@ -549,29 +551,27 @@ class ModulController extends Controller
 
         Alert::success('Padam Jenis Kemaskini Berjaya.', 'Padam Jenis Kemaskini telah berjaya.');
 
-        return view('pengurusanModul.senaraiBorang', compact('proses', 'modul', 'borangs','tugasans', 'users',  'menuModul', 'menuProses', 'menuBorang', 'jenisTernakan'));
+        return view('pengurusanModul.editTernakan', compact('proses', 'modul', 'borangs','tugasans', 'users',  'menuModul', 'menuProses', 'menuBorang', 'jenisTernakan'));
 
     }
     
     public function JenisKemas_add(Request $request){
 
         $kemaskini = new JenisKemaskini;
-        $kemaskini->nama = $request->namaJenis;
-        $kemaskini->proses_id = $request->prosesId;
+        $kemaskini->nama = $request->namaKemas;
+        $kemaskini->id_jenisTernakans = $request->ternakanaID;
         $kemaskini->save();
 
-        $proses = Proses::find($request->prosesId);
+        $jenisTernakan = jenis_ternakan::find($request->ternakanaID);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Cipta Jenis Kemaskini ".$kemaskini->nama." pada Proses ".$proses->nama;
+        $audit->action = "Cipta Jenis Kemaskini ".$kemaskini->nama." pada Jenis Ternakan/Tanaman ".$jenisTernakan->nama;
         $audit->save();
 
         $modul = Modul::find($request->modulId);
-        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasans = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $proses = Proses::find($request->prosesId);
         $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $users = User::where('status', 1)->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -579,7 +579,7 @@ class ModulController extends Controller
 
         Alert::success('Cipta Jenis Kemaskini Berjaya.', 'Kemaskini Jenis Kemaskini telah berjaya.');
 
-        return view('pengurusanModul.senaraiBorang', compact('users','borangs', 'proses', 'modul', 'tugasans',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
+        return view('pengurusanModul.editTernakan', compact('jenisTernakan', 'proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
 
     }
 
@@ -590,16 +590,14 @@ class ModulController extends Controller
         $proses = Proses::find($request->prosesId);
 
         $modul = Modul::find($request->modulId);
-        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasans = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $aktivitis = Aktiviti::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
-
+        $jenisTernakan = jenis_ternakan::find($request->ternakanaID);
+        $aktivitis = Aktiviti::where('id_jenisKemaskini', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanModul.editKemas', compact('borangs', 'proses', 'modul', 'tugasans',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
+        return view('pengurusanModul.editKemas', compact('jenisTernakan', 'proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
 
     }
 
@@ -607,21 +605,20 @@ class ModulController extends Controller
 
         $kemaskini = JenisKemaskini::find($request->kemaskiniID);
         $kemaskini->nama = $request->namaKemas;
-        $kemaskini->proses_id = $request->prosesId;
+        $kemaskini->id_jenisTernakans = $request->ternakanaID;
         $kemaskini->save();
 
-        $proses = Proses::find($request->prosesId);
+        $jenisTernakan = jenis_ternakan::find($request->ternakanaID);
+        $kemaskini = JenisKemaskini::find($request->kemaskiniID);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Kemaskini Jenis Kemaskini ".$kemaskini->nama." pada Proses ".$proses->nama;
+        $audit->action = "Kemaskini Jenis Kemaskini ".$kemaskini->nama." pada Jenis Ternakan/Tanaman ".$jenisTernakan->nama;
         $audit->save();
 
         $modul = Modul::find($request->modulId);
-        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasans = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $users = User::where('status', 1)->get();
+        $proses = Proses::find($request->prosesId);
+        $aktivitis = Aktiviti::where('id_jenisKemaskini', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -629,7 +626,7 @@ class ModulController extends Controller
 
         Alert::success('Kemaskini Jenis Kemaskini Berjaya.', 'Kemaskini Jenis Kemaskini telah berjaya.');
 
-        return view('pengurusanModul.senaraiBorang', compact('borangs', 'proses', 'modul', 'tugasans', 'users',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
+        return view('pengurusanModul.editKemas', compact('jenisTernakan', 'proses', 'modul', 'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
 
     }
 
@@ -637,20 +634,18 @@ class ModulController extends Controller
         $idKemas = $request->kemaskiniID;
         $kemas = JenisKemaskini::find($idKemas);
 
-        $proses = Proses::find($request->prosesId);
+        $jenisTernakan = jenis_ternakan::find($request->ternakanaID);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Padam Jenis Kemaskini ".$kemas->nama." pada Proses ".$proses->nama;
+        $audit->action = "Padam Jenis Kemaskini ".$kemas->nama." pada Jenis Ternakan/Tanaman ".$jenisTernakan->nama;
         $audit->save();
 
         $kemas->delete();
 
         $modul = Modul::find($request->modulId);
-        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasans = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $users = User::where('status', 1)->get();
+        $proses = Proses::find($request->prosesId);
+        $kemaskini = JenisKemaskini::where('id_jenisTernakans', $request->ternakanaID)->orderBy("updated_at", "DESC")->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -658,26 +653,26 @@ class ModulController extends Controller
 
         Alert::success('Padam Jenis Kemaskini Berjaya.', 'Padam Jenis Kemaskini telah berjaya.');
 
-        return view('pengurusanModul.senaraiBorang', compact('proses', 'modul', 'borangs','tugasans', 'users',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
+        return view('pengurusanModul.editTernakan', compact('proses', 'modul', 'jenisTernakan', 'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
 
     }
     public function aktiviti_add(Request $request){
 
         $aktiviti = new Aktiviti;
         $aktiviti->nama = $request->namaAktiviti;
-        $aktiviti->kemas_id = $request->kemaskiniID;
+        $aktiviti->id_jenisKemaskini = $request->kemaskiniID;
         $aktiviti->save();
 
         $kemaskini = JenisKemaskini::find($request->kemaskiniID);
+        $jenisTernakan = jenis_ternakan::find($request->ternakanaID);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Cipta Aktiviti ".$aktiviti->nama." pada  Jenis Kemaskini  ".$kemaskini->nama;
+        $audit->action = "Cipta Aktiviti ".$aktiviti->nama." pada Jenis Kemaskini ".$kemaskini->nama. " dalam Jenis Ternakan/Tanaman ".$jenisTernakan->nama;
         $audit->save();
 
         $modul = Modul::find($request->modulId);
-        $kemaskini = JenisKemaskini::find($request->kemaskiniID);
-        $aktivitis = Aktiviti::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
+        $aktivitis = Aktiviti::where('id_jenisKemaskini', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($request->prosesId);
 
         
@@ -687,7 +682,7 @@ class ModulController extends Controller
 
         Alert::success('Tambah Aktiviti Berjaya.', 'Tambah aktiviti telah berjaya.');
 
-        return view('pengurusanModul.editKemas', compact('proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
+        return view('pengurusanModul.editKemas', compact('jenisTernakan' ,'proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
 
     }
 
@@ -695,19 +690,20 @@ class ModulController extends Controller
 
         $aktiviti = Aktiviti::find($request->aktivId);
         $aktiviti->nama = $request->namaAktivitiUp;
-        $aktiviti->kemas_id = $request->kemaskiniID;
+        $aktiviti->id_jenisKemaskini = $request->kemaskiniID;
         $aktiviti->save();
 
         $kemaskini = JenisKemaskini::find($request->kemaskiniID);
+        $jenisTernakan = jenis_ternakan::find($request->ternakanaID);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Kemaskini Aktiviti ".$aktiviti->nama." pada  Jenis Kemaskini ".$kemaskini->nama;
+        $audit->action = "Kemaskini Aktiviti ".$aktiviti->nama." pada Jenis Kemaskini ".$kemaskini->nama. " dalam Jenis Ternakan/Tanaman ".$jenisTernakan->nama;
         $audit->save();
 
         $modul = Modul::find($request->modulId);
         $proses = Proses::find($request->prosesId);
-        $aktivitis = Aktiviti::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
+        $aktivitis = Aktiviti::where('id_jenisKemaskini', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -715,7 +711,7 @@ class ModulController extends Controller
 
         Alert::success('Kemaskini Aktiviti Berjaya.', 'Kemaskini aktiviti telah berjaya.');
 
-        return view('pengurusanModul.editKemas', compact('proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
+        return view('pengurusanModul.editKemas', compact('jenisTernakan','proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
 
     }
 
@@ -723,17 +719,18 @@ class ModulController extends Controller
 
         $aktiviti = Aktiviti::find($request->aktivId);
         $kemaskini = JenisKemaskini::find($request->kemaskiniID);
+        $jenisTernakan = jenis_ternakan::find($request->ternakanaID);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Padam Parameter ".$aktiviti->nama." pada Jenis Kemaskini ".$kemaskini->nama;
+        $audit->action = "Padam aktiviti ".$aktiviti->nama." pada Jenis Kemaskini ".$kemaskini->nama. " dalam Jenis Ternakan/Tanaman ".$jenisTernakan->nama;
         $audit->save();
 
         $aktiviti->delete();
 
         $modul = Modul::find($request->modulId);
         $proses = Proses::find($request->prosesId);
-        $aktivitis = Aktiviti::where('kemas_id', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
+        $aktivitis = Aktiviti::where('id_jenisKemaskini', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -741,7 +738,7 @@ class ModulController extends Controller
 
         Alert::success('Padam Aktiviti Berjaya.', 'Aktiviti telah berjaya dipadam.');
 
-        return view('pengurusanModul.editKemas', compact('proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
+        return view('pengurusanModul.editKemas', compact('jenisTernakan', 'proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
 
     }
 
@@ -770,6 +767,11 @@ class ModulController extends Controller
 
         $param = new AktivitiParameter;
         $param->nama = $request->namaParam;
+        $param->unit = $request->unit;
+        $param->jenisData = $request->jenisData;
+        $param->cycle = $request->cycle;
+        $param->sasaran_pendapatan = $request->sasaran;
+        $param->category = $request->category;
         $param->aktiviti = $request->aktivitiId;
         $param->save();
 
@@ -798,11 +800,16 @@ class ModulController extends Controller
     public function Param_update(Request $request){
 
         $param = AktivitiParameter::find($request->paramId);
-        $param->nama = $request->namaParamUp;
-        $param->aktiviti = $request->aktivId;
+        $param->nama = $request->namaParam;
+        $param->unit = $request->unit;
+        $param->jenisData = $request->jenisData;
+        $param->cycle = $request->cycle;
+        $param->sasaran_pendapatan = $request->sasaran;
+        $param->category = $request->category;
+        $param->aktiviti = $request->aktivitiId;
         $param->save();
 
-        $aktiviti = Aktiviti::find($request->aktivId);
+        $aktiviti = Aktiviti::find($request->aktivitiId);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
@@ -811,7 +818,7 @@ class ModulController extends Controller
         
         $modul = Modul::find($request->modulId);
         $proses = Proses::find($request->prosesId);
-        $params = AktivitiParameter::where('aktiviti', $request->aktivId)->orderBy("updated_at", "DESC")->get();
+        $params = AktivitiParameter::where('aktiviti', $request->aktivitiId)->orderBy("updated_at", "DESC")->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -827,7 +834,7 @@ class ModulController extends Controller
 
         $param = AktivitiParameter::find($request->paramId);
 
-        $aktiviti = Aktiviti::find($request->aktivId);
+        $aktiviti = Aktiviti::find($request->aktivitiId);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
@@ -838,7 +845,7 @@ class ModulController extends Controller
 
         $modul = Modul::find($request->modulId);
         $proses = Proses::find($request->prosesId);
-        $params = AktivitiParameter::where('aktiviti', $request->aktivId)->orderBy("updated_at", "DESC")->get();
+        $params = AktivitiParameter::where('aktiviti', $request->aktivitiId)->orderBy("updated_at", "DESC")->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -847,8 +854,6 @@ class ModulController extends Controller
         Alert::success('Padam Parameter Berjaya.', 'Padam Parameter telah berjaya.');
 
         return view('pengurusanModul.paramList', compact('proses', 'modul', 'menuModul', 'menuProses', 'menuBorang', 'aktiviti', 'params'));
-
     }
-
 
 }

@@ -45,10 +45,40 @@
                         @csrf
                         <h2 class="frame9402-text01" style="margin-top: 0px;">TAMBAH PARAMETER</h2>
                         <table>
-                        <tr>
-                            <td><p class="frame9402-text04">Nama Paremeter</p></td>
-                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Nama Parameter" name="namaParam" required></td>
-                        </tr>
+                          <tr>
+                              <td><p class="frame9402-text04">Nama Paremeter</p></td>
+                              <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Nama Parameter" name="namaParam" required></td>
+                          </tr>
+                          <tr>
+                            <td><p class="frame9402-text04">Unit</p></td>
+                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Unit" name="unit" required></td>
+                          </tr>
+                          <tr>
+                            <td><p class="frame9402-text04">Jenis Data</p></td>
+                            <td>
+                              <select name="jenisData" class="frame9402-kotaknamaBorang">
+                                <option value="Alfanumerik">Alfanumerik</option>
+                                <option value="Numerikal">Numerikal</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td><p class="frame9402-text04">Tempoh Kitaran</p></td>
+                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Tempoh Kitaran" name="cycle" required></td>
+                          </tr>
+                          <tr>
+                            <td><p class="frame9402-text04">Sasaran Pendapatan</p></td>
+                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Sasaran Pendapatan" name="sasaran" required></td>
+                          </tr>
+                          <tr>
+                            <td><p class="frame9402-text04">Kategori</p></td>
+                            <td>
+                              <select name="category" class="frame9402-kotaknamaBorang">
+                                <option value="Pendapatan">Pendapatan</option>
+                                <option value="Perbelanjaan">Perbelanjaan</option>
+                              </select>
+                            </td>
+                          </tr>
                         </table>
                         <input type="hidden" value="{{$aktiviti->id}}" name="aktivitiId">
                         <input type="hidden" value="{{$proses->id}}" name="prosesId">
@@ -60,13 +90,28 @@
                 </div>
             </div>
             @if (!$params->isEmpty())
-            <table class="table table-borderless table-striped">
+              <table class="table table-bordered table-striped w-100">
+                <thead class="text-white bg-primary w-100">
+                  <tr>
+                      <th scope="col" class="text-center">Nama Parameter</th>     
+                      <th scope="col" class="text-center">Unit</th>                      
+                      <th scope="col" class="text-center">Jenis Data</th>                      
+                      <th scope="col" class="text-center">Tempoh Kitaran</th>                      
+                      <th scope="col" class="text-center">Sasaran Pendapatan</th>                      
+                      <th scope="col" class="text-center">Kategori</th>                      
+                      <th scope="col" class="text-center">Tindakan</th>                      
+                  </tr>
+                </thead>
                 <tbody>
                 @foreach($params as $param)
                 <tr>
-                    <td><p class="frame9402-text04">Nama Parameter:</p></td>
-                    <td><p class="frame9402-text04" style="text-align: left; text-transform:uppercase;">{{$param->nama}}</p></td>
-                    <td>
+                    <td><p class="text-center arial-N" style="text-align: left; text-transform:uppercase;">{{$param->nama}}</p></td>
+                    <td><p class="text-center arial-N" style="text-align: left; text-transform:uppercase;">{{$param->unit}}</p></td>
+                    <td><p class="text-center arial-N" style="text-align: left; text-transform:uppercase;">{{$param->jenisData}}</p></td>
+                    <td><p class="text-center arial-N" style="text-align: left; text-transform:uppercase;">{{$param->cycle}}</p></td>
+                    <td><p class="text-center arial-N" style="text-align: left; text-transform:uppercase;">{{$param->sasaran_pendapatan}}</p></td>
+                    <td><p class="text-center arial-N" style="text-align: left; text-transform:uppercase;">{{$param->category}}</p></td>
+                    <td style="justify-content: center; display: flex; flex-wrap: wrap; align-items: center;">
                     <!-- Button trigger modal update-->
                     <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#exampleModalCenter{{$param->id}}">
                         <img src="/SVG/pencil.svg"/>
@@ -86,15 +131,47 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-body">
-                                        <label for="namaBorang" class="frame9402-text04">
-                                        <strong>Nama Parameter</strong>
-                                        </label>
-                                        <input type="text" class="frame9402-kotaknamaBorang" value="{{$param->nama}}" name="namaParamUp" required>
+                                      <table>
+                                        <tr>
+                                            <td style="vertical-align: middle;"><p class="frame9402-text04">Nama Paremeter</p></td>
+                                            <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->nama}}" name="namaParam" required></td>
+                                        </tr>
+                                        <tr>
+                                          <td style="vertical-align: middle;"><p class="frame9402-text04">Unit</p></td>
+                                          <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->unit}}" name="unit" required></td>
+                                        </tr>
+                                        <tr>
+                                          <td style="vertical-align: middle;"><p class="frame9402-text04">Jenis Data</p></td>
+                                          <td>
+                                            <select name="jenisData" class="frame9402-kotaknamaBorang">
+                                              <option value="Alfanumerik" @if($param->jenisData == "Alfanumerik") selected @endif>Alfanumerik</option>
+                                              <option value="Numerikal" @if($param->jenisData == "Numerikal") selected @endif>Numerikal</option>
+                                            </select>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td style="vertical-align: middle;"><p class="frame9402-text04">Tempoh Kitaran</p></td>
+                                          <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->cycle}}" name="cycle" required></td>
+                                        </tr>
+                                        <tr>
+                                          <td style="vertical-align: middle;"><p class="frame9402-text04">Sasaran Pendapatan</p></td>
+                                          <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->sasaran_pendapatan}}" name="sasaran" required></td>
+                                        </tr>
+                                        <tr>
+                                          <td style="vertical-align: middle;"><p class="frame9402-text04">Kategori</p></td>
+                                          <td>
+                                            <select name="category" class="frame9402-kotaknamaBorang">
+                                              <option value="Pendapatan" @if($param->category == "Pendapatan") selected @endif>Pendapatan</option>
+                                              <option value="Perbelanjaan" @if($param->category == "Perbelanjaan") selected @endif>Perbelanjaan</option>
+                                            </select>
+                                          </td>
+                                        </tr>
+                                      </table>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
                                         <input type="hidden" value="{{$param->id}}" name="paramId">
-                                        <input type="hidden" value="{{$aktiviti->id}}" name="aktivId">
+                                        <input type="hidden" value="{{$aktiviti->id}}" name="aktivitiId">
                                         <input type="hidden" value="{{$proses->id}}" name="prosesId">
                                         <input type="hidden" value="{{$modul->id}}" name="modulId">
                                         <button class="btn btn-danger">Kemaskini</button>
@@ -126,7 +203,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" value="{{$param->id}}" name="paramId">
-                                    <input type="hidden" value="{{$aktiviti->id}}" name="aktivId">
+                                    <input type="hidden" value="{{$aktiviti->id}}" name="aktivitiId">
                                     <input type="hidden" value="{{$proses->id}}" name="prosesId">
                                     <input type="hidden" value="{{$modul->id}}" name="modulId">
                                     <button class="btn btn-danger">Ya</button>
@@ -345,7 +422,7 @@
       justify-content: center;
       background-color: #A2335D;
       margin-left:auto;
-      margin-right: auto;
+      margin-right: 0px;
       margin-top: 20px;
       cursor: pointer;
     }
@@ -365,7 +442,7 @@
           z-index: 9;
         }
         .formContainer {
-          max-width: 550px;
+          max-width: fit-content;
           padding: 20px;
           background-color: #fff;
           border-radius: 8px;
