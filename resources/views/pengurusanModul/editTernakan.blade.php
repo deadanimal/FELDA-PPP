@@ -7,13 +7,15 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <style>
 .arial-N{
   font-family: 'Arial-N', sans-serif;
   font-size: 18px;
 }
 .frame9402-box {
-  width: max-content;
+  width: 80%;
   display: flex;
   padding: 29px;
   position: relative;
@@ -64,6 +66,7 @@
     }
 
     .frame9402-frame9278 {
+        width: 100%;
         display: flex;
         position: relative;
         box-sizing: border-box;
@@ -379,15 +382,16 @@ display: flex;
                 <thead class="text-white bg-primary w-100">
                   <tr>
                       <th scope="col" class="text-center">Nama Jenis Kemaskini</th>
-                      <th scope="col" >Tindakan</th>
+                      <th scope="col" class="text-center">Tindakan</th>
                   </tr>
                 </thead>
                 <tbody style="back">
                     @foreach($kemaskini as $kms)
                     <tr>
                       <td class="text-center arial-N" style="text-transform: uppercase;">{{$kms->nama}}</td>
-                      <td class="text-center arial-N">
-                        <form action="/moduls/jenisKemas/edit" method="GET">
+                      <td class="text-center">
+                        <div class="btn-group btn-group-toggle ">
+                          <form action="/moduls/jenisKemas/edit" method="GET">
                             <input type="hidden" name="kemaskiniID" value="{{$kms->id}}">
                             <input type="hidden" name="ternakanaID" value="{{$jenisTernakan->id}}">
                             <input type="hidden" name="prosesId" value="{{$proses->id}}">
@@ -396,38 +400,42 @@ display: flex;
                             <button class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Masuk">
                               <img src="/SVG/pencil.svg" title="kemaskini"/>
                             </button>
-                        </form>
-      
-                        <!-- Button trigger modal delete -->
-                        <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalcheck{{$kms->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                          </form>
 
-                        <!-- Modal delete-->
-                        <div class="modal fade" id="exampleModalcheck{{$kms->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Padam Jenis Kemaskini {{$kms->nama}}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Anda Pasti Mahu Padam Jenis Kemaskini {{$kms->nama}}?<p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
-                                    <form method="post" action="/moduls/jenisKemas/delete">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="hidden" value="{{$kms->id}}" name="kemaskiniID">
-                                        <input type="hidden" value="{{$jenisTernakan->id}}" name="ternakanaID">
-                                        <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                                        <input type="hidden" value="{{$modul->id}}" name="modulId">
-                                        <button class="btn btn-danger">Ya</button>
-                                    </form>
-                                </div>
-                                </div>
-                            </div>
+                          <a href="/moduls/jenisKemas/{{$kms->id}}/copy" class="frame9402-rectangle828246" style="margin-top: -3%; margin-left:10px">
+                            <svg style="fill: #CD352A; width: 32px; height: 30px;" viewBox="-32 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M320 448v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V120c0-13.255 10.745-24 24-24h72v296c0 30.879 25.121 56 56 56h168zm0-344V0H152c-13.255 0-24 10.745-24 24v368c0 13.255 10.745 24 24 24h272c13.255 0 24-10.745 24-24V128H344c-13.2 0-24-10.8-24-24zm120.971-31.029L375.029 7.029A24 24 0 0 0 358.059 0H352v96h96v-6.059a24 24 0 0 0-7.029-16.97z"/></svg>                        </a>
+
+                          <!-- Button trigger modal delete -->
+                          <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalcheck{{$kms->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+
+                          <!-- Modal delete-->
+                          <div class="modal fade" id="exampleModalcheck{{$kms->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Padam Jenis Kemaskini {{$kms->nama}}</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                      </button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <p>Anda Pasti Mahu Padam Jenis Kemaskini {{$kms->nama}}?<p>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                                      <form method="post" action="/moduls/jenisKemas/delete">
+                                          @csrf
+                                          @method('DELETE')
+                                          <input type="hidden" value="{{$kms->id}}" name="kemaskiniID">
+                                          <input type="hidden" value="{{$jenisTernakan->id}}" name="ternakanaID">
+                                          <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                                          <input type="hidden" value="{{$modul->id}}" name="modulId">
+                                          <button class="btn btn-danger">Ya</button>
+                                      </form>
+                                  </div>
+                                  </div>
+                              </div>
+                          </div>
                         </div>
                       </td>
                     </tr>

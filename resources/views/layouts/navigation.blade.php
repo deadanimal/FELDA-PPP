@@ -98,6 +98,16 @@
                 </li>
                 @endif
 
+                @if (Request::is('pelaporan') || Request::is('pelaporan/*'))
+                    <li class="sidebar-item active">
+                @else
+                    <li class="sidebar-item">
+                @endif
+                    <a  class="sidebar-link" href="/laporan">
+                        <i class="align-middle me-2 fas fa-fw fa-file-signature"></i> <span class="align-middle">PELAPORAN</span>
+                    </a>
+                </li>
+
                 @if (Request::is('user/borang_app') || Request::is('user/borang_app/*'))
                     <li class="sidebar-item active">
                 @else
@@ -107,6 +117,7 @@
                         <i class="align-middle me-2 fas fa-fw fa-file-signature"></i> <span class="align-middle">KELULUSAN BORANG</span>
                     </a>
                 </li>
+
                 @if (Request::is('audit'))
                 <li class="sidebar-item active">
                 @else
@@ -116,6 +127,7 @@
                         <i class="align-middle me-2 fas fa-fw fa-book"></i> <span class="align-middle">AUDIT</span>
                     </a>
                 </li>
+                
             @elseif(Auth::user()->kategoripengguna != "4")
                 @if (Request::is('user/borang_app') || Request::is('user/borang_app/*'))
                     <li class="sidebar-item active">

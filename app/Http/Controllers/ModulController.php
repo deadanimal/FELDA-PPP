@@ -19,7 +19,6 @@ use App\Models\Checkbox_ans;
 use App\Models\Perkara_Tugasan;
 use App\Models\User;
 
-
 use Illuminate\Http\Request;
 use Alert;
 use DataTables;
@@ -170,7 +169,7 @@ class ModulController extends Controller
         $modul = Modul::find($idModul);
 
         $modulBaru = new Modul;
-        $modulBaru->nama = $modul->nama." Copy ".date("Y-m-d H:i:s");;
+        $modulBaru->nama = $modul->nama." Copy ".date("Y-m-d H:i:s");
         $modulBaru->diciptaOleh = Auth::user()->id;
         $modulBaru->dikemaskiniOleh = Auth::user()->id;
         $modulBaru->save();
@@ -581,6 +580,28 @@ class ModulController extends Controller
 
         return view('pengurusanModul.editTernakan', compact('jenisTernakan', 'proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
 
+    }
+
+    public function JenisKemas_copy(Request $request)
+    {
+        $idJenisKemas = (int)$request->route('id');
+        $kemaskini = JenisKemaskini::find($idJenisKemas);
+
+        $kemaskiniBaru = new JenisKemaskini;
+        $kemaskiniBaru->nama = $kemaskini->nama." Copy ".date("Y-m-d H:i:s");
+        $kemaskiniBaru->id_jenisTernakans = $kemaskini->id_jenisTernakans;
+        $kemaskiniBaru->save();
+
+        $jenisTernakan = jenis_ternakan::find($kemaskini->id_jenisTernakans);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Membuat salinan Jenis Kemaskini ".$kemaskini->nama." pada Jenis Ternakan/Tanaman ".$jenisTernakan->nama;
+        $audit->save();
+
+        Alert::success('Salinan Jenis Kemaskini  berjaya.', 'Salinan Jenis Kemaskini  telah berjaya.');
+
+        return back();
     }
 
     public function JenisKemas_edit(Request $request){

@@ -13,7 +13,7 @@
   font-size: 18px;
 }
 .frame9402-box {
-  width: max-content;
+  width: 80%;
   display: flex;
   padding: 29px;
   position: relative;
@@ -64,6 +64,7 @@
     }
 
     .frame9402-frame9278 {
+        width: 100%;
         display: flex;
         position: relative;
         box-sizing: border-box;

@@ -97,6 +97,7 @@ Route::post('/moduls/jenisKemas/add', [ModulController::class, 'JenisKemas_add']
 Route::get('/moduls/jenisKemas/edit', [ModulController::class, 'JenisKemas_edit']);
 Route::put('/moduls/jenisKemas/update', [ModulController::class, 'JenisKemas_update']);
 Route::delete('/moduls/jenisKemas/delete', [ModulController::class, 'JenisKemas_delete']);
+Route::get('/moduls/jenisKemas/{id}/copy', [ModulController::class, 'JenisKemas_copy']);
 
 Route::post('/moduls/jenisKemas/aktiviti/add', [ModulController::class, 'aktiviti_add']);
 Route::put('/moduls/jenisKemas/aktiviti/update', [ModulController::class, 'aktiviti_update']);
@@ -124,6 +125,8 @@ Route::get('/user/tugasan/{tugas_id}/item_list', [UserController::class, 'tugasI
 Route::post('/user/tugasan/item_add', [UserController::class, 'tugasItem_add']);
 Route::get('/user/tugasan/{tugas_id}/tugas_item/{item_id}/progress_list', [UserController::class, 'tugasItemProgress_list']);
 Route::post('/user/tugasan/tugas_item/progress_add', [UserController::class, 'tugasItemProgress_add']);
+
+Route::get('/pelaporan', [PelaporanController::class, 'tugasList_app']);
 
 Route::get('/test', function () {
     return view('pengurusanBorang.TemplatePermohonanPerolehanIbuPejabatWilayah_');
