@@ -18,4 +18,5 @@ class Wilayah extends Model
     public function rancangan() {
         return $this->hasMany(Rancangan::class);
     }
+
 }

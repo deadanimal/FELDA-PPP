@@ -17,5 +17,5 @@ class Aktiviti extends Model
     public function param() {
         return $this->hasMany(Aktiviti_parameter::class);
     }
-    
+
 }

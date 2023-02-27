@@ -13,4 +13,8 @@ class AktivitiParameter extends Model
     public function aktiviti() {
         return $this->belongsTo(Aktiviti::class, 'aktiviti');
     }
+
+    public function AktivitiParameter() {
+        return $this->hasMany(AktivitiParameter::class);
+    }
 }

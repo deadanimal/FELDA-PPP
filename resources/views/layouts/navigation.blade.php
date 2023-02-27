@@ -100,12 +100,22 @@
 
                 @if (Request::is('pelaporan') || Request::is('pelaporan/*'))
                     <li class="sidebar-item active">
+                        <a data-bs-target="#pelaporan" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="true">
+                            <i class="align-middle me-2 fas fa-fw fa-file-invoice"></i> <span class="align-middle">PELAPORAN</span>
+                        </a>
+                    <ul id="pelaporan" class="sidebar-dropdown list-unstyled collapse show" data-bs-parent="#sidebar">
+                            
                 @else
                     <li class="sidebar-item">
+                        <a data-bs-target="#pelaporan" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
+                            <i class="align-middle me-2 fa-solid fa-chart-column"></i> <span class="align-middle">PELAPORAN</span>
+                        </a>
+                    <ul id="pelaporan" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">          
                 @endif
-                    <a  class="sidebar-link" href="/laporan">
-                        <i class="align-middle me-2 fas fa-fw fa-file-signature"></i> <span class="align-middle">PELAPORAN</span>
-                    </a>
+                       @foreach ($menuModul as $mModul) 
+                            <li class="sidebar-item"><a class="sidebar-link" href="/pelaporan/{{$mModul->id}}">{{$mModul->nama}}</a></li>
+                        @endforeach
+                    </ul>
                 </li>
 
                 @if (Request::is('user/borang_app') || Request::is('user/borang_app/*'))

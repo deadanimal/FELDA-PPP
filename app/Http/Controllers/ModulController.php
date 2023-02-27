@@ -10,12 +10,10 @@ use App\Models\Borang;
 use App\Models\Audit;
 use App\Models\Senarai_tugasan;
 use App\Models\KategoriPengguna;
-use App\Models\checkbox;
 use App\Models\jenis_ternakan;
 use App\Models\JenisKemaskini;
 use App\Models\AktivitiParameter;
 use App\Models\Aktiviti;
-use App\Models\Checkbox_ans;
 use App\Models\Perkara_Tugasan;
 use App\Models\User;
 

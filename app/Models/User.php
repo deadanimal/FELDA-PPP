@@ -76,6 +76,9 @@ class User extends Authenticatable
         return $this->hasMany(Organisasi_users::class);
     }
 
+    public function Jawapan_parameter() {
+        return $this->hasMany(Jawapan_parameter::class);
+    }
     
 
 }

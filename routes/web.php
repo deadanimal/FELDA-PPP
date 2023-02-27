@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ModulController;
 use App\Http\Controllers\BorangController;
-
+use App\Http\Controllers\PelaporanController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -126,11 +126,17 @@ Route::post('/user/tugasan/item_add', [UserController::class, 'tugasItem_add']);
 Route::get('/user/tugasan/{tugas_id}/tugas_item/{item_id}/progress_list', [UserController::class, 'tugasItemProgress_list']);
 Route::post('/user/tugasan/tugas_item/progress_add', [UserController::class, 'tugasItemProgress_add']);
 
-Route::get('/pelaporan', [PelaporanController::class, 'tugasList_app']);
+Route::get('/pelaporan/{id}', [PelaporanController::class, 'proses_list']);
+Route::get('/pelaporan/ternakanList/{proses_id}', [PelaporanController::class, 'ternakan_list']);
+Route::get('/pelaporan/kemaskiniList/{ternakan_id}', [PelaporanController::class, 'kemaskini_list']);
+Route::get('/pelaporan/aktvitiList/{kemaskini_id}', [PelaporanController::class, 'aktiviti_list']);
+Route::get('/pelaporan/userList/{aktiviti_id}', [PelaporanController::class, 'user_list']);
+Route::get('/pelaporan/JawapanList/{jawapan_id}', [PelaporanController::class, 'jawapan_list']);
 
 Route::get('/test', function () {
     return view('pengurusanBorang.TemplatePermohonanPerolehanIbuPejabatWilayah_');
 });
+
 });
 
 // Route::post('/Borang/uploadBorang',  [BorangController::class, 'uploadBorang']);
