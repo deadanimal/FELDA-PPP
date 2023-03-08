@@ -68,7 +68,7 @@
                           </tr>
                           <tr>
                             <td><p class="frame9402-text04">Sasaran Pendapatan</p></td>
-                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Sasaran Pendapatan" name="sasaran" required></td>
+                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Sasaran Pendapatan" name="sasaran"></td>
                           </tr>
                           <tr>
                             <td><p class="frame9402-text04">Kategori</p></td>
@@ -155,7 +155,7 @@
                                         </tr>
                                         <tr>
                                           <td style="vertical-align: middle;"><p class="frame9402-text04">Sasaran Pendapatan</p></td>
-                                          <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->sasaran_pendapatan}}" name="sasaran" required></td>
+                                          <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->sasaran_pendapatan}}" name="sasaran"></td>
                                         </tr>
                                         <tr>
                                           <td style="vertical-align: middle;"><p class="frame9402-text04">Kategori</p></td>

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Wilayah;
+use App\Models\Rancangan;
+use App\Models\User;
 use App\Models\Modul;
 use App\Models\Proses;
 use App\Models\Borang;
@@ -116,41 +119,43 @@ class PelaporanController extends Controller
     {
         $idAktiviti = (int)$request->route('aktiviti_id');
         $aktiviti = Aktiviti::find($idAktiviti);
-        $jwpnParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->orderBy("updated_at", "DESC")->get();
-        // dd($aktiviti);
-        if($request->ajax()) {
-            return DataTables::collection($jwpnParameter)
-            ->addIndexColumn()
-            ->addColumn('namaUser', function (Jawapan_parameter $jwpnParameter) {
-                if($jwpnParameter->user_id) {
-                    $html_ = $jwpnParameter->users->nama;
-                } else {
-                    $html_ = '-';
-                }
-                return $html_;
-            })
-            ->addColumn('rancangan', function (Jawapan_parameter $jwpnParameter) {
-                if($jwpnParameter->user_id) {
-                    $html_ = $jwpnParameter->users->rancangan_id->nama;
-                } else {
-                    $html_ = '-';
-                }
-                return $html_;
-            })->addColumn('wilayah', function (Jawapan_parameter $jwpnParameter) {
-                if($jwpnParameter->user_id) {
-                    $html_ = $jwpnParameter->users->wilayah_id->nama;
-                } else {
-                    $html_ = '-';
-                }
-                return $html_;
-            })->addColumn('tindakan', function (Jawapan_parameter $jwpnParameter) {
-                $url = '/pelaporan/JawapanList/'.$jwpnParameter->users->id;
-                return '<a href="'.$url.'" class="btn btn-info">
-                        Lihat
-                        </a>';
-            })                  
-            ->rawColumns(['tindakan'])                          
-            ->make(true);
+        $jwpnParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->orderBy('user_id')->get();
+        // dd($jwpnParameter);
+        
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pelaporan.senaraiUser', compact('aktiviti', 'jwpnParameter', 'idAktiviti', 'menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function userSearch_list(Request $request)
+    {
+        $idAktiviti = (int)$request->route('aktiviti_id');
+        $aktiviti = Aktiviti::find($idAktiviti);
+
+        $name = $request->carian;
+        if($name != ""){
+            $rancangan = Rancangan::where('nama','like', "%".$name."%")->first(); 
+            $wilayah = Wilayah::where('nama','like', "%".$name."%")->first(); 
+        }
+        else{
+            $wilayah = [];
+            $rancangan = [];
+        }
+        
+        if(!empty($wilayah) && !empty($rancangan)){
+            $jwpnParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->whereRelation('users.rancangan_id','id', $rancangan->id)->whereRelation('users.wilayah_id','id', $wilayah->id)->orderBy('user_id')->get();
+        }
+        elseif(!empty($rancangan)){
+            $jwpnParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->whereRelation('users.rancangan_id','id', $rancangan->id)->orderBy('user_id')->get();
+        }
+        elseif(!empty($wilayah)){
+            $jwpnParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->whereRelation('users.wilayah_id','id', $wilayah->id)->orderBy('user_id')->get();
+
+        }
+        else{
+            $jwpnParameter = [];
         }
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -159,51 +164,19 @@ class PelaporanController extends Controller
         return view('pelaporan.senaraiUser', compact('aktiviti', 'jwpnParameter', 'idAktiviti', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
-    public function jawapan_list(Request $request)
+    public function report_list(Request $request)
     {
-        $idAktiviti = (int)$request->route('jawapan_id');
+        $idAktiviti = (int)$request->route('aktiviti_id');
+        $idUser = (int)$request->route('user_id');
+        $user = user::find($idUser);
         $aktiviti = Aktiviti::find($idAktiviti);
-        $jwpnParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti')->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->orderBy("updated_at", "DESC")->get();
-        // dd($aktiviti);
-        if($request->ajax()) {
-            return DataTables::collection($jwpnParameter)
-            ->addIndexColumn()
-            ->addColumn('namaUser', function (Jawapan_parameter $jwpnParameter) {
-                if($jwpnParameter->user_id) {
-                    $html_ = $jwpnParameter->users->nama;
-                } else {
-                    $html_ = '-';
-                }
-                return $html_;
-            })
-            ->addColumn('rancangan', function (Jawapan_parameter $jwpnParameter) {
-                if($jwpnParameter->user_id) {
-                    $html_ = $jwpnParameter->users->rancangan_id->nama;
-                } else {
-                    $html_ = '-';
-                }
-                return $html_;
-            })->addColumn('wilayah', function (Jawapan_parameter $jwpnParameter) {
-                if($jwpnParameter->user_id) {
-                    $html_ = $jwpnParameter->users->wilayah_id->nama;
-                } else {
-                    $html_ = '-';
-                }
-                return $html_;
-            })->addColumn('tindakan', function (Jawapan_parameter $jwpnParameter) {
-                $url = '/pelaporan/JawapanList/'.$jwpnParameter->users->id;
-                return '<a href="'.$url.'" class="btn btn-info">
-                        Lihat
-                        </a>';
-            })                  
-            ->rawColumns(['tindakan'])                          
-            ->make(true);
-        }
+        $jwpnParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->where('user_id', $idUser)->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->orderBy('user_id')->get();
+        
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pelaporan.senaraiUser', compact('aktiviti', 'jwpnParameter', 'idAktiviti', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pelaporan.reportUser', compact('aktiviti', 'jwpnParameter', 'user', 'idAktiviti', 'menuModul', 'menuProses', 'menuBorang'));
     }
     
 }

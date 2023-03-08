@@ -12,22 +12,73 @@
   </div>
   <div class="card" style="width: auto;">
     <div class="card-header">
+       <h3>Carian Wilayah / Rancangan</h3>
+    </div>
+    <div class="card-body" style="width: auto;">
+        <form action="/pelaporan/userSearchList/{{$aktiviti->id}}" method="POST" class="formContainer">
+            @csrf
+            <table class="table table-borderless">
+                <tr>
+                    <td>
+                    <label class="frame9402-text04">
+                        <strong>Wilayah / Rancangan</strong>
+                    </label>
+                    </td>
+                    <td>
+                    <input type="text" class="frame9402-kotaknamaBorang" placeholder="Carian" name="carian">
+                    </td>
+                </tr>
+            </table>
+            <button type="submit" class="frame9403-frame7445">
+                <div class="frame9403-frame7293">
+                  <span class="frame9403-text21"><span>Cari</span></span>
+                  <img src="/SVG/find.svg" class="frame9403-group7527">
+                </div>
+            </button>
+        </form>
+    </div>
+  </div>
+  <div class="card" style="width: auto;">
+    <div class="card-header">
         <h3>SENARAI PENGGUNA</h3>
       </div>
     <div class="card-body" style="width: auto;">
       <div class="row d-flex justify-content-center">
-        <table class="table table-bordered table-striped w-100 user-datatable">
+        <table class="table table-bordered table-striped w-100">
           <thead class="text-white bg-primary w-100">
             <tr>
-                <th>Bil.</th>
-                <th scope="col">Nama Pengguna</th>
-                <th scope="col">Wilayah</th>
-                <th scope="col">Rancangan</th>
-                <th scope="col">Tindakan</th>
+                <th class="text-center">Bil.</th>
+                <th class="text-center" scope="col">Nama Pengguna</th>
+                <th class="text-center" scope="col">Wilayah</th>
+                <th class="text-center" scope="col">Rancangan</th>
+                <th class="text-center" scope="col">Tindakan</th>
             </tr>
           </thead>
+          @php
+              $index = 1;
+              $lastName = '';
+          @endphp
           <tbody>
-
+            {{-- @dd($jwpnParameter[0]->users->wilayah->nama) --}}
+            @foreach ($jwpnParameter as $jwpn)
+                @if ($jwpn->users->nama != $lastName)
+                    <tr>
+                        <td class="text-center arial-N">{{$index}}</td>
+                        <td class="text-center arial-N">{{$jwpn->users->nama}}</td>
+                        <td class="text-center arial-N">{{$jwpn->users->rancangan_id->nama}}</td>
+                        <td class="text-center arial-N">{{$jwpn->users->wilayah_id->nama}}</td>
+                        <td class="text-center col-sm-auto w-25">
+                            <a href="/pelaporan/report/{{$aktiviti->id}}/{{$jwpn->users->id}}" class="btn btn-info">
+                            Lihat
+                            </a>
+                        </td>
+                    </tr>
+                @php
+                $index++;
+                $lastName = $jwpn->users->nama;
+                @endphp
+                @endif
+            @endforeach
           </tbody>
         </table>
       </div>
@@ -118,91 +169,94 @@
     cursor:pointer;
     background: url("/SVG/bin.svg")
   }
+  .frame9403-frame7445 {
+    width: 157px;
+    height: 44px;
+    display: flex;
+    max-width: 157px;
+    box-shadow: 0px 2px 3px 0px rgb(0 0 0 / 25%);
+    box-sizing: border-box;
+    align-items: center;
+    align-self: center;
+    padding-top: 0px;
+    border-color: transparent;
+    padding-left: 20px;
+    border-radius: 8.598855018615723px;
+    padding-right: 20px;
+    flex-direction: column;
+    padding-bottom: 0px;
+    justify-content: center;
+    background-color: #A2335D;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+.frame9403-frame7293 {
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    align-items: center;
+    border-color: transparent;
+    margin-right: 0;
+    border-radius: 0px 0px 0px 0px;
+    margin-bottom: 0;
+}
+.frame9403-text21 {
+    color: #FFFFFF;
+    width: -webkit-fill-available;
+    height: auto;
+    font-size: 16px;
+    align-self: auto;
+    text-align: left;
+    font-family: Poppins;
+    font-weight: 600;
+    line-height: 34.39542007446289px;
+    font-stretch: normal;
+    margin-right: 2px;
+    margin-bottom: 0;
+    text-decoration: none;
+}
+.frame9403-group7527 {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    box-sizing: border-box;
+    border-color: transparent;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+.frame9402-kotaknamaBorang {
+    width: 299px;
+    height: 50px;
+    position: relative;
+    box-sizing: content-box;
+    border-color: rgba(140, 38, 60, 1);
+    border-style: solid;
+    border-width: 0.865405261516571px;
+    margin-right: 0;
+    border-radius: 3.461621046066284px;
+    margin-top: 10px;
+    font-family: 'Eina01-SemiBold', sans-serif;
+    font-size: 18px;
+    padding-left:10px;  
+    text-transform: uppercase;
+  }
+  .frame9402-text04 {
+    color: black;
+    height: auto;
+    font-size: 17px;
+    align-self: auto;
+    text-align: left;
+    font-family: 'Eina01-SemiBold', sans-serif;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    margin-right: 17px;
+    margin-bottom: 0;
+    text-decoration: none;
+  }
   </style>
-<script type="text/javascript">
-  $('.user-datatable').DataTable({
-              processing: true,
-              serverSide: true,
-              responsive: true,
-              language: {
-                  "search": "Carian:",
-                  "lengthMenu": "Tunjuk _MENU_ User",
-                  "info": "Tunjuk _START_ ke _END_ dari _TOTAL_ User",
-                  "paginate": {
-                      "first": "Pertama",
-                      "last": "Akhir",
-                      "next": "Seterusnya",
-                      "previous": "Sebelum"
-                  },
-                  "zeroRecords": "Carian tidak dijumpai",
-                  "infoEmpty": "Tiada maklumat",
-                  "infoFiltered": "(carian dari _MAX_ jumlah rekod)"
 
-
-
-              },
-              ajax: "/pelaporan/userList/".$idAktiviti,
-              columns: [{
-                      data: 'DT_RowIndex',
-                      name: 'DT_RowIndex',
-                      className: "text-center arial-N"
-                  },
-                  {
-                      data: 'namaUser',
-                      name: 'namaUser',
-                      className: "text-center arial-N"
-                  },
-                  {
-                      data: 'rancangan',
-                      name: 'rancangan',
-                      className: "text-center arial-N"
-                  },
-                  {
-                      data: 'wilayah',
-                      name: 'wilayah',
-                      className: "text-center arial-N"
-                  },
-                  {
-                      data: 'tindakan',
-                      name: 'tindakan',
-                      className: "text-center col-sm-auto w-25"
-                  },                    
-
-              ]
-          });
-  </script>
-  
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-{{-- <script type="text/javascript" src='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.js'></script>
-<link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.css' />
-<link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.css' />
-<script>
-  function confirmation(ev) {
-    ev.preventDefault();
-    var urlToRedirect = ev.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i tag and not a tag causing the href to be empty
-    console.log(urlToRedirect); // verify if this is the right URL
-    swal({
-          title: 'Anda Pasti Mahu Padam Modul?',
-          showCancelButton: true,
-          showConfirmButton: true,
-          confirmButtonText: 'Ya',
-          cancelButtonText: 'Tidak',
-          confirmButtonClass: 'btn btn-success',
-          cancelButtonClass: 'btn btn-danger',
-          type: 'warning',
-          buttonsStyling: true
-      }).then(function (yes) {
-          // Called if you click Yes.
-          if (yes) {
-            window.location.href = urlToRedirect;
-          }
-      },
-      function (no) {
-          // Called if you click No.
-          if (no == 'cancel') {
-              swal('Tidak Di Padam', '', 'error');
-          }
-      });
-    }
-</script> --}}
+
 @endsection

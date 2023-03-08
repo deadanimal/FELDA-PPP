@@ -7,25 +7,50 @@
 <div class="container-fluid">
   <div class="header">
     <h1 class="header-title">
-        PELAPORAN JENIS KEMASKINI <span style="text-transform: uppercase">{{$kemaskini->nama}} </span>
+        PELAPORAN AKTIVITI <span style="text-transform: uppercase">{{$aktiviti->nama}} </span>
     </h1>
   </div>
   <div class="card" style="width: auto;">
     <div class="card-header">
-        <h3>SENARAI AKTIVITI</h3>
+        <h3>SENARAI PENGGUNA</h3>
       </div>
     <div class="card-body" style="width: auto;">
       <div class="row d-flex justify-content-center">
-        <table class="table table-bordered table-striped w-100 kemaskini-datatable">
+        <table class="table table-bordered table-striped w-100">
           <thead class="text-white bg-primary w-100">
             <tr>
-                <th>Bil.</th>
-                <th scope="col">Nama Aktiviti</th>
-                <th scope="col" >Tindakan</th>
+                <th class="text-center">Bil.</th>
+                <th class="text-center" scope="col">Nama Pengguna</th>
+                <th class="text-center" scope="col">Wilayah</th>
+                <th class="text-center" scope="col">Rancangan</th>
+                <th class="text-center" scope="col">Tindakan</th>
             </tr>
           </thead>
+          @php
+              $index = 1;
+              $lastName = '';
+          @endphp
           <tbody>
-
+            {{-- @dd($jwpnParameter[0]->users->wilayah->nama) --}}
+            @foreach ($jwpnParameter as $jwpn)
+                @if ($jwpn->users->nama != $lastName)
+                    <tr>
+                        <td class="text-center arial-N">{{$index}}</td>
+                        <td class="text-center arial-N">{{$jwpn->users->nama}}</td>
+                        <td class="text-center arial-N">{{$jwpn->users->rancangan_id->nama}}</td>
+                        <td class="text-center arial-N">{{$jwpn->users->wilayah_id->nama}}</td>
+                        <td class="text-center col-sm-auto w-25">
+                            <a href="/pelaporan/report/{{$aktiviti->id}}/{{$jwpn->users->id}}" class="btn btn-info">
+                            Lihat
+                            </a>
+                        </td>
+                    </tr>
+                @php
+                $index++;
+                $lastName = $jwpn->users->nama;
+                @endphp
+                @endif
+            @endforeach
           </tbody>
         </table>
       </div>
@@ -116,82 +141,8 @@
     cursor:pointer;
     background: url("/SVG/bin.svg")
   }
-  
   </style>
-<script type="text/javascript">
-  $('.kemaskini-datatable').DataTable({
-              processing: true,
-              serverSide: true,
-              responsive: true,
-              language: {
-                  "search": "Carian:",
-                  "lengthMenu": "Tunjuk _MENU_ Aktiviti",
-                  "info": "Tunjuk _START_ ke _END_ dari _TOTAL_ Aktiviti",
-                  "paginate": {
-                      "first": "Pertama",
-                      "last": "Akhir",
-                      "next": "Seterusnya",
-                      "previous": "Sebelum"
-                  },
-                  "zeroRecords": "Carian tidak dijumpai",
-                  "infoEmpty": "Tiada maklumat",
-                  "infoFiltered": "(carian dari _MAX_ jumlah rekod)"
 
-
-
-              },
-              ajax: "/pelaporan/aktvitiList/".$idKemaskini,
-              columns: [{
-                      data: 'DT_RowIndex',
-                      name: 'DT_RowIndex',
-                      className: "text-center arial-N"
-                  },
-                  {
-                      data: 'nama',
-                      name: 'nama',
-                      className: "text-center arial-N"
-                  },
-                  {
-                      data: 'tindakan',
-                      name: 'tindakan',
-                      className: "text-center col-sm-auto w-25"
-                  },                    
-
-              ]
-          });
-  </script>
-  
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-{{-- <script type="text/javascript" src='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.js'></script>
-<link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.css' />
-<link media="screen" rel="stylesheet" href='https://cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.css' />
-<script>
-  function confirmation(ev) {
-    ev.preventDefault();
-    var urlToRedirect = ev.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i tag and not a tag causing the href to be empty
-    console.log(urlToRedirect); // verify if this is the right URL
-    swal({
-          title: 'Anda Pasti Mahu Padam Modul?',
-          showCancelButton: true,
-          showConfirmButton: true,
-          confirmButtonText: 'Ya',
-          cancelButtonText: 'Tidak',
-          confirmButtonClass: 'btn btn-success',
-          cancelButtonClass: 'btn btn-danger',
-          type: 'warning',
-          buttonsStyling: true
-      }).then(function (yes) {
-          // Called if you click Yes.
-          if (yes) {
-            window.location.href = urlToRedirect;
-          }
-      },
-      function (no) {
-          // Called if you click No.
-          if (no == 'cancel') {
-              swal('Tidak Di Padam', '', 'error');
-          }
-      });
-    }
-</script> --}}
+
 @endsection
