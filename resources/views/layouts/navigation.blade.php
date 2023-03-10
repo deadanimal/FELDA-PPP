@@ -108,7 +108,7 @@
                 @else
                     <li class="sidebar-item">
                         <a data-bs-target="#pelaporan" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
-                            <i class="align-middle me-2 fa-solid fa-chart-column"></i> <span class="align-middle">PELAPORAN</span>
+                            <i class="align-middle me-2 fas fa-fw fa-file-invoice"></i> <span class="align-middle">PELAPORAN</span>
                         </a>
                     <ul id="pelaporan" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">          
                 @endif

@@ -27,7 +27,7 @@ class ModulController extends Controller
 
     public function modul_add_page()
     {
-        $menuModul = Modul::where('status', 'Active')->get();
+        $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 

@@ -1,73 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Responsive Bootstrap 4 Admin &amp; Dashboard Template">
+        <meta name="author" content="Bootlab">
 
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="description" content="Responsive Bootstrap 4 Admin &amp; Dashboard Template">
-	<meta name="author" content="Bootlab">
+        <title>Felda - Program Pembangunan Peneroka</title>
 
-	<title>Felda - Program Pembangunan Peneroka</title>
+        <!-- PICK ONE OF THE STYLES BELOW -->
+        <link href="{{ URL::asset('css/modern.css') }}" rel="stylesheet">
 
-	<!-- PICK ONE OF THE STYLES BELOW -->
-    <link href="{{ URL::asset('css/modern.css') }}" rel="stylesheet">
+        @yield('styles')
+        <!-- END SETTINGS -->
+    </head>
 
-	@yield('styles')
-	<!-- END SETTINGS -->
-</head>
+    <body>
+        @include('sweetalert::alert')
+        <script src="/js/app.js"></script>
+        <div class="wrapper" >
+            @include('layouts.navigation')
+            <div class="main">
+                <nav class="navbar navbar-expand navbar-theme">
+                    <a class="sidebar-toggle d-flex me-2">
+                        <i class="hamburger align-self-center"></i>
+                    </a>
 
-<body>
-    @include('sweetalert::alert')
-    <script src="/js/app.js"></script>
-    <div class="wrapper" >
-        @include('layouts.navigation')
-        <div class="main">
-			<nav class="navbar navbar-expand navbar-theme">
-				<a class="sidebar-toggle d-flex me-2">
-					<i class="hamburger align-self-center"></i>
-				</a>
+                    <div class="navbar-collapse collapse">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item dropdown ms-lg-2">
+                                <a class="nav-link dropdown-toggle position-relative" href="#" id="userDropdown" data-bs-toggle="dropdown">
+                                    <i class="align-middle fas fa-cog"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="/users/info"><i class="align-middle me-1 fas fa-fw fa-user"></i>Kemaskini Profil</a>
+                                    <div class="dropdown-divider"></div>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <a class="dropdown-item" :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" style="cursor: pointer;"><i class="align-middle me-1 fas fa-fw fa-arrow-alt-circle-right"></i>Log Keluar</a>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
 
-				<div class="navbar-collapse collapse">
-					<ul class="navbar-nav ms-auto">
-						<li class="nav-item dropdown ms-lg-2">
-							<a class="nav-link dropdown-toggle position-relative" href="#" id="userDropdown" data-bs-toggle="dropdown">
-								<i class="align-middle fas fa-cog"></i>
-							</a>
-							<div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-								<a class="dropdown-item" href="/users/info"><i class="align-middle me-1 fas fa-fw fa-user"></i>Kemaskini Profil</a>
-								<div class="dropdown-divider"></div>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-								    <a class="dropdown-item" :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();" style="cursor: pointer;"><i class="align-middle me-1 fas fa-fw fa-arrow-alt-circle-right"></i>Log Keluar</a>
-                                </form>
-                            </div>
-						</li>
-					</ul>
-				</div>
+                </nav>
+                <main class="content">
+                    <style>
+                        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+                        @font-face{
+                            font-family:'Eina01-SemiBold';
+                            src: url('/fonts/Eina01-SemiBold.ttf');
+                        }
+                        @font-face{
+                            font-family:'Arial-N';
+                            src: url('/fonts/Arial-Narrow.ttf');
+                        }
+                    </style>
+                    @yield('innercontent')
 
-			</nav>
-            <main class="content">
-                <style>
-                    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
-                    @font-face{
-                        font-family:'Eina01-SemiBold';
-                        src: url('/fonts/Eina01-SemiBold.ttf');
-                    }
-                    @font-face{
-                        font-family:'Arial-N';
-                        src: url('/fonts/Arial-Narrow.ttf');
-                    }
-                </style>
-                @yield('innercontent')
-
-			</main>
-    </div>
-
-</body>
-
-{{-- </html>
-<body>
+                </main>
+            </div>
+        </div>
+    </body>
+</html>
+{{-- <body>
     
     <header class="header">
         <div class="frame9396-frame9274">
