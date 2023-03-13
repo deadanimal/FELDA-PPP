@@ -325,7 +325,7 @@ display: flex;
           <form action="/moduls/jenisTernakan/update" method="POST" class="frame9402-frame9278">
             @csrf
             @method("PUT")
-            <input type="hidden" name="kemaskiniID" value="{{$jenisTernakan->id}}">
+            <input type="hidden" name="jenisTernakanID" value="{{$jenisTernakan->id}}">
             <input type="hidden" name="prosesId" value="{{$proses->id}}">
             <input type="hidden" name="modulId" value="{{$modul->id}}">
             <table class="table table-borderless">

@@ -500,7 +500,7 @@ class ModulController extends Controller
     public function jenisTernakan_update(Request $request){
 
         $jenis_ternakan = jenis_ternakan::find($request->jenisTernakanID);
-        $prosesId = $jenis_ternakan->proses_id;
+        $prosesId = $request->prosesId;
         $jenis_ternakan->nama = $request->namaJenis;
         $jenis_ternakan->proses_id = $prosesId;
         $jenis_ternakan->save();
@@ -513,10 +513,10 @@ class ModulController extends Controller
         $audit->save();
 
         $modul = Modul::find($request->modulId);
-        $borangs = Borang::where('proses', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $tugasans = Senarai_tugasan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $jenisTernakan = jenis_ternakan::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
-        $users = User::where('status', 1)->get();
+        $borangs = Borang::where('proses', $prosesId)->orderBy("updated_at", "DESC")->get();
+        $tugasans = Senarai_tugasan::where('proses_id', $prosesId)->orderBy("updated_at", "DESC")->get();
+        $kemaskini = JenisKemaskini::where('id_jenisTernakans', $request->jenisTernakanID)->orderBy("updated_at", "DESC")->get();
+        $jenisTernakan = jenis_ternakan::find($request->jenisTernakanID);
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -524,7 +524,7 @@ class ModulController extends Controller
 
         Alert::success('Kemaskini Jenis Ternakan/Tanaman Berjaya.', 'Kemaskini Jenis Ternakan/Tanaman telah berjaya.');
 
-        return view('pengurusanModul.editTernakan', compact('borangs', 'proses', 'modul', 'tugasans', 'users',  'menuModul', 'menuProses', 'menuBorang', 'jenisTernakan'));
+        return view('pengurusanModul.editTernakan', compact('borangs', 'proses', 'modul', 'tugasans', 'menuModul', 'menuProses', 'menuBorang', 'kemaskini','jenisTernakan'));
 
     }
 
@@ -552,7 +552,7 @@ class ModulController extends Controller
 
         Alert::success('Padam Jenis Kemaskini Berjaya.', 'Padam Jenis Kemaskini telah berjaya.');
 
-        return view('pengurusanModul.editTernakan', compact('proses', 'modul', 'borangs','tugasans', 'users',  'menuModul', 'menuProses', 'menuBorang', 'jenisTernakan'));
+        return view('pengurusanModul.senaraiBorang', compact('proses', 'modul', 'borangs','tugasans', 'users',  'menuModul', 'menuProses', 'menuBorang', 'jenisTernakan'));
 
     }
     
@@ -572,7 +572,7 @@ class ModulController extends Controller
 
         $modul = Modul::find($request->modulId);
         $proses = Proses::find($request->prosesId);
-        $kemaskini = JenisKemaskini::where('proses_id', $request->prosesId)->orderBy("updated_at", "DESC")->get();
+        $kemaskini = JenisKemaskini::where('id_jenisTernakans', $request->ternakanaID)->orderBy("updated_at", "DESC")->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
