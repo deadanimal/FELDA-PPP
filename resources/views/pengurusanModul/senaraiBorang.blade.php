@@ -589,8 +589,8 @@ function closeFormKemas() {
     text-decoration: none;
   }
   .frame9402-kotaknama {
-    width: 350px;
-    height: 45px;
+    width: 95%;
+    height: 80%;
     position: relative;
     box-sizing: content-box;
     border-color: rgba(140, 38, 60, 1);
