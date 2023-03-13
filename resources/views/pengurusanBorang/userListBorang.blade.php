@@ -8,7 +8,7 @@
 
   <div class="header">
     <h1 class="header-title">
-        Senarai Permohon Bagi {{$oneBorang->namaBorang}}
+        Senarai Permohonan Bagi {{$oneBorang->namaBorang}}
     </h1>
   </div>
   
@@ -23,7 +23,7 @@
         <table class="table table-bordered table-striped w-100">
           <thead class="text-white bg-primary w-100" style="text-align: center;">
             <tr>
-                <th scope="col" class="arial">Nama Permohon</th>
+                <th scope="col" class="arial">Nama Pemohon</th>
                 <th scope="col" class="arial">Status</th>
                 <th scope="col" class="arial">Tindakan</th>
             </tr>
