@@ -660,7 +660,7 @@ function closeFormKemas() {
   }
   .frame9403-kotaknama3 {
       top: 0px;
-      width: 50%;
+      width: 65%;
       height: 50px;
       position: relative;
       box-sizing: content-box;
