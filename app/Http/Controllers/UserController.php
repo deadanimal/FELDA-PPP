@@ -267,13 +267,20 @@ class UserController extends Controller
 
     public function forgotPenggunaClicked(Request $request) {
         $user = User::where('email',$request->email)->first();
-        $new_password = Hash::make('Saya<3FeldaPPP');
-        $user->password = $new_password;
-        $user->save();
+        if($user != null){
+            $new_password = Hash::make('Saya<3FeldaPPP');
+            $user->password = $new_password;
+            $user->save();
 
-        Mail::to($user->email)->send(new ResetPassword('Saya<3FeldaPPP'));
-        Alert::success('Lupa Kata Laluan', 'Sila Semak E-mel Anda');   
-        return back();
+            Mail::to($user->email)->send(new ResetPassword('Saya<3FeldaPPP'));
+            Alert::success('Lupa Kata Laluan', 'Sila Semak E-mel Anda');   
+            return back();
+        }
+        else{
+            session()->flash('message','Email yang anda masukkan tidak wujud di dalam sistem');
+            return back();
+        }
+        
     }
 
     public function category_list(Request $request)

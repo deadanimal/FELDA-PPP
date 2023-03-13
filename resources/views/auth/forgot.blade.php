@@ -4,7 +4,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,600;0,700;1,500;1,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-<body>
+<link href="css/modern.css" rel="stylesheet">
+
+<body style="background-color: rgba(0, 0, 0, 0)" >
     <div class="log-masuk-log-masuk">
         <div class="log-masuk-logmasuk1">
             <form method="POST" action="/forgot">
@@ -16,6 +18,16 @@
                         Sila masukkan alamat ID Pengguna 
                         </span>
                     </div>
+                    @if(session()->has('message'))
+                      <div class="alert alert-danger alert-outline-coloured alert-dismissible" role="alert">
+                          <div class="alert-icon">
+                              <i class="far fa-fw fa-bell"></i>
+                          </div>
+                          <div class="alert-message">
+                              <strong>{{session('message')}}</strong>
+                          </div>
+                      </div>
+                    @endif
                     <div class="log-masuk-frame9">
                         <div class="log-masuk-frame12">
                         <span class="log-masuk-text04">E-mel</span>
