@@ -49,7 +49,7 @@
                         </a>
                       @else
                         <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->user->id}}/view/{{$tahapLulus}}" style="color: white; text-decoration:none;">
-                          Papar Borang Permohon
+                          Papar Borang Pemohon
                         </a>
                       @endif
                     </td>
