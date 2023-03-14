@@ -281,6 +281,9 @@ class BorangController extends Controller
         if($proseskelulusan != null){
             $tahapKelulusan = Tahap_kelulusan::where('prosesKelulusan_id', $proseskelulusan->id)->orderBy("sequence", "ASC")->get();
             $lulusBorangs = Kelulusan_borang::with('tahap_kelulusan')->orderBy('created_at', 'DESC')->get();
+            $noLulusBorang = [];
+            $borangJwpns =  Jawapan::where('id', 0.1)->get();
+            $tahapLulus = 0;
             for($x=0; $x<count($tahapKelulusan); $x++){
                 if($x==0){
                     if($tahapKelulusan[$x]->user_id == Auth::user()->id && $tahapKelulusan[$x]->sequence == 1){
@@ -313,6 +316,7 @@ class BorangController extends Controller
             //         $tahapLulus = $tKelulusan->id;
             //     }
             // }
+
             $menuModul = Modul::where('status', 'Go-live')->get();
             $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
             $menuBorang = Borang::where('status', 1)->get();
