@@ -132,7 +132,8 @@ Route::get('/pelaporan/kemaskiniList/{ternakan_id}', [PelaporanController::class
 Route::get('/pelaporan/aktvitiList/{kemaskini_id}', [PelaporanController::class, 'aktiviti_list']);
 Route::get('/pelaporan/userList/{aktiviti_id}', [PelaporanController::class, 'user_list']);
 Route::post('/pelaporan/userSearchList/{aktiviti_id}', [PelaporanController::class, 'userSearch_list']);
-Route::get('/pelaporan/report/{aktiviti_id}/{user_id}', [PelaporanController::class, 'report_list']);
+Route::get('/pelaporan/report/{aktiviti_id}/{user_id}', [PelaporanController::class, 'user_report']);
+Route::get('/pelaporan/report/print/{aktiviti_id}/{user_id}', [PelaporanController::class, 'report_print']);
 
 Route::get('/test', function () {
     return view('pengurusanBorang.TemplatePermohonanPerolehanIbuPejabatWilayah_');

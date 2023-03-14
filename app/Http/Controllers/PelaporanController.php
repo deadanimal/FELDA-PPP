@@ -15,6 +15,7 @@ use App\Models\AktivitiParameter;
 use App\Models\Aktiviti;
 use App\Models\Jawapan_parameter;
 use DataTables;
+use PDF;
 
 class PelaporanController extends Controller
 {
@@ -164,19 +165,33 @@ class PelaporanController extends Controller
         return view('pelaporan.senaraiUser', compact('aktiviti', 'jwpnParameter', 'idAktiviti', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
-    public function report_list(Request $request)
+    public function user_report(Request $request)
     {
         $idAktiviti = (int)$request->route('aktiviti_id');
         $idUser = (int)$request->route('user_id');
         $user = user::find($idUser);
         $aktiviti = Aktiviti::find($idAktiviti);
-        $jwpnParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->where('user_id', $idUser)->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->orderBy('user_id')->get();
+        $jwpnParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->where('user_id', $idUser)->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->orderBy('created_at')->get();
         
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('pelaporan.reportUser', compact('aktiviti', 'jwpnParameter', 'user', 'idAktiviti', 'menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function report_print(Request $request)
+    {
+        $idAktiviti = (int)$request->route('aktiviti_id');
+        $idUser = (int)$request->route('user_id');
+        $user = user::find($idUser);
+        $aktiviti = Aktiviti::find($idAktiviti);
+        $jwpnParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->where('user_id', $idUser)->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->orderBy('created_at')->get();
+
+        $data = compact('aktiviti', 'jwpnParameter', 'user');
+        $pdf = PDF::loadView('pelaporan.pelaporanPdf', $data)->setPaper('a4', 'landscape');;
+
+        return $pdf->download('Report_'.$aktiviti->nama.'_'.$user->nama.'.pdf');
     }
     
 }
