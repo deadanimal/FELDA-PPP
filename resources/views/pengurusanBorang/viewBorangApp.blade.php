@@ -101,30 +101,14 @@
                                     </div>
                                     <form method="post" action="/user/borang_app/update">
                                         @csrf
+                                        <div class="modal-header">
+                                            <p>Anda Pasti Tidak Melulus Permohonan {{$borangJwpn->user->nama}}?<p>
+                                        </div>
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="mb-3">
                                                     <h5 for="exampleFormControlTextarea1">Ulasan: </h5>
                                                     <textarea type="text" class="form-control" name="ulasan" id="ulasan" required></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="mb-3">
-                                                    <table>
-                                                        <tr  style="background: none;">
-                                                            <td style="border: none;"><h5 style="text-align: right;">Pembetulan:</h5></td>
-                                                            <td style="border: none;">
-                                                                <div class="custom-control custom-radio">
-                                                                    <input type="radio" id="Pembetulan{{$borangJwpn->id}}" name="pembetulan" value="1" class="custom-control-input">
-                                                                    <label class="custom-control-label" for="Pembetulan{{$borangJwpn->id}}">Ya</label>
-                                                                </div>
-                                                                <div class="custom-control custom-radio">
-                                                                    <input type="radio" id="Pembetulan1{{$borangJwpn->id}}" name="pembetulan" value="0" class="custom-control-input">
-                                                                    <label class="custom-control-label" for="Pembetulan1{{$borangJwpn->id}}">Tidak</label>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +118,7 @@
                                             <input type="hidden" name="jawapanID" value="{{$borangJwpn->id}}">
                                             <input type="hidden" name="borangID" value="{{$borangJwpn->borangs->id}}">
                                             <input type="hidden" name="userID" value="{{$borangJwpn->userid}}">
-                                            <input type="hidden" name="stat" value="Gagal">   
+                                            <input type="hidden" name="status" value="Gagal">   
                                             <button type="submit" class="btn btn-danger">Ya</button>
                                         </div>
                                     </form>
