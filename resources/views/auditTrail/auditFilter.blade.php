@@ -61,8 +61,8 @@
             @foreach ($audits as $audit)
                 <tr>
                   <td>{{$count}}</td>
-                  <td>{{$audit->user->idPengguna}}</td>
-                  <td>{{$audit->user->nama}}</td>
+                  <td>{{$audit->users->idPengguna}}</td>
+                  <td>{{$audit->users->nama}}</td>
                   <td>{{$audit->action}}</td>
                   <td>{{$audit->created_at}}</td>
                 </tr>

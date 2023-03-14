@@ -411,36 +411,38 @@ class UserController extends Controller
         $to_date = $request->to_date;
 
        if($idPengguna != null && $action != null && $from_date !=null && $to_date !=null){
-        $user = User::where('idPengguna', 'LIKE', '%'.$idPengguna.'%')->first();
 
-        $audits = Audit::Where('user_id', 'LIKE', $user->id)
+        $audits = Audit::whereRelation('users','idPengguna', 'LIKE', '%'.$idPengguna.'%')
             ->Where('action', 'LIKE', '%'.$action.'%')
             ->WhereBetween('created_at', [$from_date , $to_date])
             ->orderBy("created_at", "DESC")->get();
         }
         elseif($idPengguna != null && $action != null){
-            $user = User::where('idPengguna', 'LIKE', '%'.$idPengguna.'%')->first();
 
-            $audits = Audit::Where('user_id', 'LIKE', $user->id)
-                ->Where('action', 'LIKE', '%'.$action.'%')
+            $audits = Audit::whereRelation('users','idPengguna', 'LIKE', '%'.$idPengguna.'%')
+                ->where('action', 'LIKE', '%'.$action.'%')
+                ->orderBy("created_at", "DESC")->get();
+        }
+        elseif($action != null && $from_date !=null && $to_date !=null){
+            
+            $audits = Audit::where('action', 'LIKE', '%'.$action.'%')
+                ->whereBetween('created_at', [$from_date , $to_date])
                 ->orderBy("created_at", "DESC")->get();
         }
         elseif($idPengguna != null){
-            $user = User::where('idPengguna', 'LIKE', '%'.$idPengguna.'%')->first();
-
-            $audits = Audit::orWhere('user_id', 'LIKE', $user->id)
-                ->orWhereBetween('created_at', [$from_date , $to_date])
-                ->orWhere('action', 'LIKE', '%'.$action.'%')
-                ->orderBy("created_at", "DESC")->get();
+            $audits = Audit::whereRelation('users','idPengguna', 'LIKE', '%'.$idPengguna.'%')->orderBy("created_at", "DESC")->get();
         }
         elseif($action != null ){
-            $audits = Audit::where('action', 'LIKE', '%'.$action.'%')
-            ->orWhereBetween('created_at', [$from_date , $to_date])
-            ->orderBy("created_at", "DESC")->get();
+            $audits = Audit::where('action', 'LIKE', '%'.$action.'%')->orderBy("created_at", "DESC")->get();
 
         }
         elseif($from_date != null){
-            $audits = Audit::whereBetween('created_at', [$from_date , $to_date])
+            $audits = Audit::whereBetween('created_at', [$from_date , $to_date])->orderBy("created_at", "DESC")->get();
+        }
+        else{
+            $audits = Audit::whereRelation('users','idPengguna', 'LIKE', '%'.$idPengguna.'%')
+            ->orWhere('action', 'LIKE', '%'.$action.'%')
+            ->orWhereBetween('created_at', [$from_date , $to_date])
             ->orderBy("created_at", "DESC")->get();
         }
 

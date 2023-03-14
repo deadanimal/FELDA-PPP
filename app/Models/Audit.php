@@ -12,7 +12,7 @@ class Audit extends Model
     protected $table = 'Audits';
 
 
-    public function user() {
+    public function users() {
         return $this->belongsTo(User::class, 'user_id');
     }
 }
