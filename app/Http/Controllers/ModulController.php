@@ -278,7 +278,7 @@ class ModulController extends Controller
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Padam Proses ".$prosess->nama;
+        $audit->action = "Padam Proses ".$proses->nama;
         $audit->save();
 
         $proses->delete();
