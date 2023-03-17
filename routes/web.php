@@ -5,10 +5,16 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ModulController;
 use App\Http\Controllers\BorangController;
 use App\Http\Controllers\PelaporanController;
+use App\Http\Controllers\WebController;
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/home', function () {
+    return view('home');
 });
+Route::get('/',  [WebController::class, 'landingPage']);
+
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
