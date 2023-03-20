@@ -40,22 +40,21 @@
                 <label for="title" class="frame9402-text04">
                     <strong>Tajuk Slider</strong>
                 </label>
-                <input type="text" class="frame9402-kotaknamaBorang" id="title" placeholder="Tajuk Slider" name="title" required>
+                <input type="text" class="frame9402-kotaknamaBorang" id="title" placeholder="Tajuk Slider" name="title" required oninput="this.value = this.value.toUpperCase()">
                 <label for="content" class="frame9402-text04">
                     <strong>Kandungan Slider</strong>
                 </label>
                 <textarea class="form-control" id="content" rows="5" name="content" placeholder="Kandungan Slider"></textarea>
-                <button type="submit" class="btn">Tambah</button>
+                <button type="submit" class="btn" style="margin-top:5%">Tambah</button>
                 <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
                 </form>
             </div>
             </div>
 
             {{-- senarai borang --}}
-
-            <table class="table table-striped table-sm">
-            @if (!$sliders->count()>0)
-                <thead>
+            @if (!$sliders->isEmpty())
+            <table class="table table-bordered table-striped w-100">
+                <thead class="text-white bg-primary w-100">                    
                     <tr class="text-center">
                         <th class="text-center">No.</th>
                         <th class="text-center">Tajuk Slider</th>
@@ -69,11 +68,11 @@
                         <td class="text-center">{{ $loop->iteration }}</td>
                         <td class="text-center arial-N">{{ $slider->title }}</td>
                         @if ($slider->content)
-                            <td class="text-center arial-N">{{ $slider->content }}</td>
+                            <td class="text-center arial-N"><textarea class="form-control" rows="5" readonly>{{ $slider->content }}</textarea></td>
                         @else
                             <td class="text-center arial-N">-</td>
                         @endif
-                        <td>
+                        <td style="margin: auto;">
                             <!-- Button trigger modal update-->
                             <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#exampleModalCenter{{$slider->id}}">
                                 <img src="/SVG/pencil.svg"/>
@@ -96,7 +95,7 @@
                                                 <label for="title" class="frame9402-text04">
                                                     <strong>Tajuk Slider</strong>
                                                 </label>
-                                                <input type="text" class="frame9402-kotaknamaBorang" value="{{$slider->title}}" name="title" required>
+                                                <input type="text" class="frame9402-kotaknamaBorang" value="{{$slider->title}}" name="title" required oninput="this.value = this.value.toUpperCase()">
                                                 <label for="content" class="frame9402-text04">
                                                     <strong>Kandungan Slider</strong>
                                                 </label>
@@ -104,7 +103,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
-                                                <input type="hidden" value="{{$slider->id}}" name="aktivId">
+                                                <input type="hidden" value="{{$slider->id}}" name="sliderId">
                                                 <button class="btn btn-danger">Kemaskini</button>
                                             </div>
                                         </form>
@@ -133,7 +132,7 @@
                                             <form method="post" action="/home/slider/delete">
                                             @csrf
                                             @method('DELETE')
-                                            <input type="hidden" name="sliderID" value="{{$slider->id}}"/>
+                                            <input type="hidden" name="sliderId" value="{{$slider->id}}"/>
                                             <button class="btn btn-danger">Ya</button>
                                             </form>
                                         </div>
@@ -143,10 +142,10 @@
                         </td>
                     </tr>
                     @endforeach 
-                @else
-                    <tr class="frame9402-input" style="background-color: #FFFFFF;"><h2 class="frame9402-text01" style="color:black;"> Tiada Slider </h2></tr>
-                @endif
-            </table>
+                </table>
+            @else
+            <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Slider </h2>
+            @endif
         </div>
 
       <div class="card">
@@ -168,7 +167,7 @@
 
         {{-- popup form Tambah Tugasan --}}
         <div class="divPopup">
-          <div class="formPopup" id="popupFormkad">
+          <div class="formPopup" id="popupFormKad">
             <form action="/home/card/add" method="POST" class="formContainer">
                 @csrf
                 <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA KAD</h2>
@@ -190,7 +189,7 @@
                             </label>
                         </td>
                         <td>
-                            <input type="text" class="frame9402-kotaknamaBorang" id="tajukKad" placeholder="Tajuk Kad" name="cardTitle" required>
+                            <input type="text" class="frame9402-kotaknamaBorang" id="tajukKad" placeholder="Tajuk Kad" name="cardTitle" required oninput="this.value = this.value.toUpperCase()">
                         </td>
                     </tr>
                     <tr>
@@ -215,7 +214,7 @@
                     </tr>
                 </table>
                 <button type="submit" class="btn">Cipta</button>
-                <button type="button" class="btn cancel" onclick="closeFormTugas()">Batal</button>
+                <button type="button" class="btn cancel" onclick="closeFormKad()">Batal</button>
             </form>
           </div>
         </div>
@@ -274,10 +273,14 @@
                                             @csrf
                                             @method('PUT')
                                             <div class="modal-body">
+                                                <label for="rows" class="frame9402-text04">
+                                                    <strong>Baris Kad</strong>
+                                                </label>
+                                                <input type="number" class="frame9402-kotaknamaBorang" id="rows" name="rows" value="{{$card->rows}}" required>
                                                 <label for="title" class="frame9402-text04">
                                                     <strong>Tajuk Kad</strong>
                                                 </label>
-                                                <input type="text" class="frame9402-kotaknamaBorang" value="{{$card->title}}" name="title" required>
+                                                <input type="text" class="frame9402-kotaknamaBorang" value="{{$card->title}}" name="title" required oninput="this.value = this.value.toUpperCase()">
                                                 <label for="content" class="frame9402-text04">
                                                     <strong>Kandungan Kad</strong>
                                                 </label>
@@ -292,7 +295,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
-                                                <input type="hidden" value="{{$card->id}}" name="aktivId">
+                                                <input type="hidden" value="{{$card->id}}" name="cardId">
                                                 <button class="btn btn-danger">Kemaskini</button>
                                             </div>
                                         </form>
@@ -318,10 +321,10 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
-                                            <form method="post" action="/home/slider/delete">
+                                            <form method="post" action="/home/card/delete">
                                             @csrf
                                             @method('DELETE')
-                                            <input type="hidden" name="sliderID" value="{{$slider->id}}"/>
+                                            <input type="hidden" name="cardId" value="{{$card->id}}"/>
                                             <button class="btn btn-danger">Ya</button>
                                             </form>
                                         </div>
@@ -637,7 +640,7 @@ function closeFormKad() {
       display: none;
       position: fixed;
       left: 50%;
-      top: 25%;
+      top: 5%;
       transform: translate(-50%, 5%);
       border: 4px solid #781E2A;
       border-radius: 8px;

@@ -578,7 +578,7 @@ class ModulController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        Alert::success('Cipta Jenis Kemaskini Berjaya.', 'Kemaskini Jenis Kemaskini telah berjaya.');
+        Alert::success('Cipta Jenis Kemaskini Berjaya.', 'Cipta Jenis Kemaskini telah berjaya.');
 
         return view('pengurusanModul.editTernakan', compact('jenisTernakan', 'proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
 
