@@ -40,11 +40,11 @@
                 <label for="title" class="frame9402-text04">
                     <strong>Tajuk Slider</strong>
                 </label>
-                <input type="text" class="frame9402-kotaknamaBorang" id="title" placeholder="Tajuk Slider" name="namaBorang" required>
-                <label for="remarks" class="frame9402-text04">
+                <input type="text" class="frame9402-kotaknamaBorang" id="title" placeholder="Tajuk Slider" name="title" required>
+                <label for="content" class="frame9402-text04">
                     <strong>Kandungan Slider</strong>
                 </label>
-                <textarea class="form-control" id="remarks" rows="5" name="remarks" placeholder="Kenyataan Slider"></textarea>
+                <textarea class="form-control" id="content" rows="5" name="content" placeholder="Kandungan Slider"></textarea>
                 <button type="submit" class="btn">Tambah</button>
                 <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
                 </form>
@@ -66,9 +66,13 @@
                 <tbody>          
                     @foreach ($sliders as $slider)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td class="text-center">{{ $loop->iteration }}</td>
                         <td class="text-center arial-N">{{ $slider->title }}</td>
-                        <td class="text-center arial-N">{{ $slider->remarks }}</td>
+                        @if ($slider->content)
+                            <td class="text-center arial-N">{{ $slider->content }}</td>
+                        @else
+                            <td class="text-center arial-N">-</td>
+                        @endif
                         <td>
                             <!-- Button trigger modal update-->
                             <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#exampleModalCenter{{$slider->id}}">
@@ -93,10 +97,10 @@
                                                     <strong>Tajuk Slider</strong>
                                                 </label>
                                                 <input type="text" class="frame9402-kotaknamaBorang" value="{{$slider->title}}" name="title" required>
-                                                <label for="remarks" class="frame9402-text04">
+                                                <label for="content" class="frame9402-text04">
                                                     <strong>Kandungan Slider</strong>
                                                 </label>
-                                                <textarea class="form-control" id="remarks" rows="5" name="remarks" placeholder="Kandungan Slider">{{ $slider->remarks }}</textarea>
+                                                <textarea class="form-control" id="content" rows="5" name="content" placeholder="Kandungan Slider">{{ $slider->content }}</textarea>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
@@ -116,13 +120,13 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Padam Slider {{$borang->namaBorang}}</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Padam Slider {{$slider->title}}</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Anda Pasti Mahu Padam Slider {{$slider->namaBorang}}?<p>
+                                            <p>Anda Pasti Mahu Padam Slider {{$slider->title}}?<p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
@@ -171,6 +175,16 @@
                 <table class="table table-borderless">
                     <tr>
                         <td>
+                            <label for="rows" class="frame9402-text04">
+                            <strong>Baris Kad</strong>
+                            </label>
+                        </td>
+                        <td>
+                            <input type="number" class="frame9402-kotaknamaBorang" id="rows" name="rows" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <label for="tajukKad" class="frame9402-text04">
                             <strong>Tajuk Kad</strong>
                             </label>
@@ -211,15 +225,18 @@
         <table class="table table-bordered table-striped w-100">
           <thead class="text-white bg-primary w-100">
             <tr class="text-center">
+                <th class="text-center">No.</th>
                 <th scope="col" class="text-center">Tajuk Kad</th>
                 <th scope="col" class="text-center">Kadungan Kad</th>
                 <th scope="col" class="text-center">Gambar</th>
+                <th scope="col" class="text-center">Baris Kad</th>
                 <th scope="col">Tindakan</th>
             </tr>
           </thead>
           <tbody>
                 @foreach ($cards as $card)
                     <tr>
+                        <td class="text-center"> {{ $loop->iteration }}</td>
                         <td class="text-center arial-N" style="text-transform: uppercase;">{{$card->title}}</td>
 
                         @if ($card->content)
@@ -236,6 +253,7 @@
                             <td class="text-center arial-N">-</td>
                         @endif
 
+                        <td class="text-center arial-N">{{ $cards->rows }}</td>
                         <td>
                             <!-- Button trigger modal update-->
                             <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#ModalCenter{{$card->id}}">

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\sliders;
+use App\Models\cards;
 use App\Models\Modul;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,4 +17,5 @@ class WebController extends Controller
 
         return view('home', compact ('totalModul', 'totalPeneroka'));
     }
+
 }

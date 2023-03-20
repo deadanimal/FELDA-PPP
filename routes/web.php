@@ -38,6 +38,9 @@ Route::middleware(['auth'])->group(function () {
 // });
 Route::get('/dashboard',  [UserController::class, 'dashboard']);
 
+Route::get('/home',  [WebController::class, 'homeSetting']);
+
+
 Route::get('/users/info',  [UserController::class, 'user_info']);
 Route::put('/users/update',  [UserController::class, 'user_info_update']);
 Route::get('/users',  [UserController::class, 'user_list']);
