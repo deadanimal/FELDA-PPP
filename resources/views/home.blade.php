@@ -59,11 +59,20 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="/">LAMAN UTAMA</a></li>
-          <li><a class="nav-link scrollto" href="">HELPDESK</a></li>
-          <li><a class="nav-link scrollto" href="">PAUTAN</a></li>
-          <li><a class="nav-link scrollto " href="">FAQ</a></li>
-          <li><a class="nav-link scrollto" href="">PENYATAAN DAN PENAFIAN</a></li>
+            <li><a class="nav-link scrollto active" href="/">LAMAN UTAMA</a></li>
+            <li><a class="nav-link scrollto" href="#contact">HELPDESK</a></li>
+            <li><a class="nav-link scrollto" href="#services">PAUTAN</a></li>
+            <li><a class="nav-link scrollto " href="#faq">FAQ</a></li>
+            <li><a class="nav-link scrollto" href="">PENYATAAN DAN PENAFIAN</a></li>
+            @if (Route::has('login'))
+                <li>
+                    @auth
+                        <a class="nav-link scrollto" href="{{ url('/dashboard') }}">PAPAN PEMUKA</a>
+                    @else
+                        <a class="nav-link scrollto" href="{{ route('login') }}">LOG MASUK</a>
+                    @endauth
+                </li>
+            @endif
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -120,7 +129,7 @@
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up">
             <div class="icon-box">
               <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4 class="title"><a href="">card Felda</a></h4>
+              <h4 class="title">card Felda</h4>
               <p class="description">FELDA KL</p>
             </div>
           </div>
@@ -128,7 +137,7 @@
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-file"></i></div>
-              <h4 class="title"><a href="">card Felda</a></h4>
+              <h4 class="title">card Felda</h4>
               <p class="description">Felda Pahang</p>
             </div>
           </div>
@@ -136,7 +145,7 @@
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-tachometer"></i></div>
-              <h4 class="title"><a href="">card Felda</a></h4>
+              <h4 class="title">card Felda</h4>
               <p class="description">Felda Kedah</p>
             </div>
           </div>
@@ -144,7 +153,7 @@
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="300">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-layer"></i></div>
-              <h4 class="title"><a href="">Card Felda</a></h4>
+              <h4 class="title">Card Felda</h4>
               <p class="description">Felda Perak</p>
             </div>
           </div>
@@ -386,9 +395,9 @@
             <h4>Useful Links</h4>
             <ul>
               <li><i class="bx bx-chevron-right"></i> <a href="/">Laman Utama</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Helpdesk</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Pautan</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">FAQ</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#contact">Helpdesk</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#services">Pautan</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#faq">FAQ</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Penyataan dan Penafian</a></li>
             </ul>
           </div>
@@ -416,8 +425,6 @@
               <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
               <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
               <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
             </div>
           </div>
 

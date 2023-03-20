@@ -4,7 +4,7 @@
 }
 </style>
 <nav id="sidebar" class="sidebar" style="max-width: auto; min-width:auto;">
-    <a class="sidebar-brand" href="/dashboard" style="background:#781E2A;">
+    <a class="sidebar-brand" href="/" style="background:#781E2A;">
         <img src="/Image/logo.png" style="max-width: 230px; background:#ffff; border-radius:4px;"/>
     </a>
     <div class="sidebar-content">
@@ -21,7 +21,7 @@
             <li class="sidebar-item">
             @endif
                 <a  class="sidebar-link" href="/dashboard">
-                    <i class="align-middle me-2 fas fa-fw fa-home"></i> <span class="align-middle">LAMAN UTAMA</span>
+                    <i class="align-middle me-2 fas fa-fw fa-home"></i> <span class="align-middle">PAPAN PEMUKA</span>
                 </a>
             </li>
             @if (Request::is('user/tugasan') || Request::is('user/tugasan/*'))
