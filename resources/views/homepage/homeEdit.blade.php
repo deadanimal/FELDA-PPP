@@ -68,7 +68,9 @@
                         <td class="text-center">{{ $loop->iteration }}</td>
                         <td class="text-center arial-N">{{ $slider->title }}</td>
                         @if ($slider->content)
-                            <td class="text-center arial-N"><textarea class="form-control" rows="5" readonly>{{ $slider->content }}</textarea></td>
+                            <td class="arial-N">
+                                {!! nl2br(e($slider->content)) !!}
+                            </td>
                         @else
                             <td class="text-center arial-N">-</td>
                         @endif
@@ -239,7 +241,7 @@
                         <td class="text-center arial-N" style="text-transform: uppercase;">{{$card->title}}</td>
 
                         @if ($card->content)
-                            <td class="text-center arial-N"><textarea class="form-control" rows="5" readonly>{{ $card->content }}</textarea></td>
+                            <td class="text-center arial-N">{!! nl2br(e($card->content)) !!}</td>
                         @else
                             <td class="text-center arial-N">-</td>
                         @endif

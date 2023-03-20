@@ -25,6 +25,12 @@
   <!-- Template Main CSS File -->
   <link href="/css/style.css" rel="stylesheet">
 </head>
+<style>
+    .gambar{
+        width: 100%;
+        height: auto;
+    }
+</style>
 
 <body>
 
@@ -85,30 +91,19 @@
     <div id="heroCarousel" data-bs-interval="5000" class="container carousel carousel-fade" data-bs-ride="carousel">
         
       <!-- Slider loop -->
-      @foreach($sliders as $slider)
-        <div class="carousel-item active">
-            <div class="carousel-container">
-            <h2 class="animate__animated animate__fadeInDown">{{$slider->title}}</h2>
-            <p class="animate__animated animate__fadeInUp"><x-markdown>{{$slider->content}}</x-markdown></p>
+      @if (!$sliders->isEmpty())
+        @foreach($sliders as $slider)
+            <div class="carousel-item active">
+                <div class="carousel-container">
+                <h2 class="animate__animated animate__fadeInDown">{{$slider->title}}</h2>
+                <p class="animate__animated animate__fadeInUp">
+                        {!! nl2br(e($slider->content)) !!}
+                </p>
+                </div>
             </div>
-        </div>
-      @endforeach
-      <!-- Slide 2 -->
-      <div class="carousel-item">
-        <div class="carousel-container">
-          <h2 class="animate__animated animate__fadeInDown">Felda 1</h2>
-          <p class="animate__animated animate__fadeInUp">Program Pembangunan Peneroka adalah usaha Felda untuk memajukan peneroka</p>
-        </div>
-      </div>
-
-      <!-- Slide 3 -->
-      <div class="carousel-item">
-        <div class="carousel-container">
-          <h2 class="animate__animated animate__fadeInDown">Felda 2</h2>
-          <p class="animate__animated animate__fadeInUp">Program Pembangunan Peneroka adalah usaha Felda untuk memajukan peneroka</p>
-        </div>
-      </div>
-
+        @endforeach
+      @endif
+      
       <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
         <span class="carousel-control-prev-icon bx bx-chevron-left" aria-hidden="true"></span>
       </a>
@@ -122,45 +117,34 @@
 
   <main id="main">
 
-    <!-- ======= Icon Boxes Section ======= -->
+    <!-- ======= Card Section ======= -->
     <section id="icon-boxes" class="icon-boxes">
       <div class="container">
+        @if (!$sliders->isEmpty())
+            @for($x=1; $x<= $cardsTotalRows; $x++)
+                <div class="row" style="margin-bottom: 5%">
+                    @foreach($cards as $card)
+                        @if($card->rows == $x)
+                            <div class="col-sm-4 d-flex align-items-stretch">
+                                <div class="icon-box">
+                                @if($card->picture)
+                                    <div>
+                                        <img src="{{$card->picture}}" class="gambar">
+                                    </div>
+                                @endif
 
-        <div class="row">
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4 class="title">card Felda</h4>
-              <p class="description">FELDA KL</p>
-            </div>
-          </div>
+                                <h4 class="title">{{$card->title}}</h4>
 
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-file"></i></div>
-              <h4 class="title">card Felda</h4>
-              <p class="description">Felda Pahang</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-tachometer"></i></div>
-              <h4 class="title">card Felda</h4>
-              <p class="description">Felda Kedah</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon-box">
-              <div class="icon"><i class="bx bx-layer"></i></div>
-              <h4 class="title">Card Felda</h4>
-              <p class="description">Felda Perak</p>
-            </div>
-          </div>
-
-        </div>
-
+                                @if($card->content)
+                                    <p class="description">{!! nl2br(e($card->content)) !!}</p>
+                                @endif
+                                </div>
+                            </div>
+                            @endif
+                    @endforeach
+                </div>
+            @endfor
+        @endif
       </div>
     </section><!-- End Icon Boxes Section -->
 

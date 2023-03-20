@@ -12,6 +12,7 @@ use App\Models\Borang;
 use App\Models\Audit;
 use Illuminate\Http\Request;
 use Alert;
+use Illuminate\Support\Facades\Mail;
 
 class WebController extends Controller
 {
