@@ -120,7 +120,7 @@
     <!-- ======= Card Section ======= -->
     <section id="icon-boxes" class="icon-boxes">
       <div class="container">
-        @if (!$sliders->isEmpty())
+        @if (!$cards->isEmpty())
             @for($x=1; $x<= $cardsTotalRows; $x++)
                 <div class="row" style="margin-bottom: 5%">
                     @foreach($cards as $card)
