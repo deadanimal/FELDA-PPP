@@ -83,15 +83,16 @@
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex justify-cntent-center align-items-center">
     <div id="heroCarousel" data-bs-interval="5000" class="container carousel carousel-fade" data-bs-ride="carousel">
-
-      <!-- Slide 1 -->
-      <div class="carousel-item active">
-        <div class="carousel-container">
-          <h2 class="animate__animated animate__fadeInDown">Selamat Datang ke <span>Felda - Program Pembangunan Peneroka</span></h2>
-          <p class="animate__animated animate__fadeInUp">Program Pembangunan Peneroka adalah usaha Felda untuk memajukan peneroka</p>
+        
+      <!-- Slider loop -->
+      @foreach($sliders as $slider)
+        <div class="carousel-item active">
+            <div class="carousel-container">
+            <h2 class="animate__animated animate__fadeInDown">{{$slider->title}}</h2>
+            <p class="animate__animated animate__fadeInUp"><x-markdown>{{$slider->content}}</x-markdown></p>
+            </div>
         </div>
-      </div>
-
+      @endforeach
       <!-- Slide 2 -->
       <div class="carousel-item">
         <div class="carousel-container">

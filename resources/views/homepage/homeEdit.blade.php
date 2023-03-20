@@ -31,7 +31,7 @@
                 </table>
             </div>
 
-            {{-- popup form Tambah Borang --}}
+            {{-- popup form Tambah Slider --}}
             <div class="divPopup">
             <div class="formPopup" id="popupForm">
                 <form action="/home/slider/add" method="POST" class="formContainer">
@@ -51,7 +51,7 @@
             </div>
             </div>
 
-            {{-- senarai borang --}}
+            {{-- senarai Slider --}}
             @if (!$sliders->isEmpty())
             <table class="table table-bordered table-striped w-100">
                 <thead class="text-white bg-primary w-100">                    
@@ -72,7 +72,7 @@
                         @else
                             <td class="text-center arial-N">-</td>
                         @endif
-                        <td style="margin: auto;">
+                        <td class="text-center align-middle">
                             <!-- Button trigger modal update-->
                             <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#exampleModalCenter{{$slider->id}}">
                                 <img src="/SVG/pencil.svg"/>
@@ -112,7 +112,7 @@
                             </div>
                             
                             <!-- Button trigger modal delete -->
-                            <button type="button" class="frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModal{{$slider->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                            <button type="button" class="frame9402-rectangle828246" style="margin-left: 10%" data-toggle="modal" data-target="#exampleModal{{$slider->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{$slider->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -165,10 +165,10 @@
           </table>
         </div>
 
-        {{-- popup form Tambah Tugasan --}}
+        {{-- popup form Tambah Kad --}}
         <div class="divPopup">
           <div class="formPopup" id="popupFormKad">
-            <form action="/home/card/add" method="POST" class="formContainer">
+            <form action="/home/card/add" method="POST" class="formContainer" enctype="multipart/form-data">
                 @csrf
                 <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA KAD</h2>
                 <table class="table table-borderless">
@@ -189,7 +189,7 @@
                             </label>
                         </td>
                         <td>
-                            <input type="text" class="frame9402-kotaknamaBorang" id="tajukKad" placeholder="Tajuk Kad" name="cardTitle" required oninput="this.value = this.value.toUpperCase()">
+                            <input type="text" class="frame9402-kotaknamaBorang" id="tajukKad" placeholder="Tajuk Kad" name="title" required oninput="this.value = this.value.toUpperCase()">
                         </td>
                     </tr>
                     <tr>
@@ -209,7 +209,7 @@
                             </label>
                         </td>
                         <td>
-                            <input type="file" accept="image/*" name="picture"/>
+                            <input id="picture" type="file" accept="image/*" name="picture"/>
                         </td>
                     </tr>
                 </table>
@@ -218,8 +218,8 @@
             </form>
           </div>
         </div>
-        {{-- senarai Tugasan --}}
 
+        {{-- senarai Kad --}}
         @if (!$cards->isEmpty())
         <table class="table table-bordered table-striped w-100">
           <thead class="text-white bg-primary w-100">
@@ -239,21 +239,21 @@
                         <td class="text-center arial-N" style="text-transform: uppercase;">{{$card->title}}</td>
 
                         @if ($card->content)
-                            <td class="text-center arial-N">{{$card->content}}</td>
+                            <td class="text-center arial-N"><textarea class="form-control" rows="5" readonly>{{ $card->content }}</textarea></td>
                         @else
                             <td class="text-center arial-N">-</td>
                         @endif
 
                         @if ($card->picture)
                             <td class="text-center arial-N">
-                                <img class="img-fluid img-thumbnail" src="{{ $card->picture }}" alt="" />
+                                <a href="{{ $card->picture }}">Gambar</a>
                             </td>
                         @else
                             <td class="text-center arial-N">-</td>
                         @endif
 
-                        <td class="text-center arial-N">{{ $cards->rows }}</td>
-                        <td>
+                        <td class="text-center arial-N">{{ $card->rows }}</td>
+                        <td class="text-center align-middle">
                             <!-- Button trigger modal update-->
                             <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#ModalCenter{{$card->id}}">
                                 <img src="/SVG/pencil.svg"/>
@@ -269,7 +269,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                         </div>
-                                        <form method="post" action="/home/card/update">
+                                        <form method="post" action="/home/card/update" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
                                             <div class="modal-body">
@@ -277,14 +277,17 @@
                                                     <strong>Baris Kad</strong>
                                                 </label>
                                                 <input type="number" class="frame9402-kotaknamaBorang" id="rows" name="rows" value="{{$card->rows}}" required>
+                                                <br>
                                                 <label for="title" class="frame9402-text04">
                                                     <strong>Tajuk Kad</strong>
                                                 </label>
                                                 <input type="text" class="frame9402-kotaknamaBorang" value="{{$card->title}}" name="title" required oninput="this.value = this.value.toUpperCase()">
+                                                <br>
                                                 <label for="content" class="frame9402-text04">
                                                     <strong>Kandungan Kad</strong>
                                                 </label>
                                                 <textarea class="form-control" id="content" rows="5" name="content">{{ $card->content }}</textarea>
+                                                <br>
                                                 <label for="picture" class="frame9402-text04">
                                                     <strong>Gambar</strong>
                                                 </label>
@@ -304,7 +307,7 @@
                             </div>
                             
                             <!-- Button trigger modal delete -->
-                            <button type="button" class="frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalKad{{$slider->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                            <button type="button" class="frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalKad{{$card->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModalKad{{$card->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -776,10 +779,10 @@ function closeFormKad() {
   .frame9402-rectangle828245 {
     width: 32px;
     height: 30px;
-    position: relative;
     box-sizing: border-box;
-    margin-right: 10px;
+    padding-right: 10px;
     border: none;
+    background-color: rgba(0, 0, 0, 0)
   }
   .frame9402-rectangle8282452 {
     width: 32px;

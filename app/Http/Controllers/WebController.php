@@ -17,16 +17,20 @@ class WebController extends Controller
 {
     public function landingPage()
     {
+        $sliders = Slider::all();
+        $cardsTotalRows = cards::max('rows');
+        $cards = cards::orderBy('rows', 'ASC')->get();
+
         $totalModul = Count(Modul::where('status', 'Go-live')->get());
         $totalPeneroka = Count(User::whereRelation('kategori', 'nama', '=', 'Peserta')->get());
 
-        return view('home', compact ('totalModul', 'totalPeneroka'));
+        return view('home', compact ('totalModul', 'totalPeneroka', 'sliders', 'cardsTotalRows', 'cards'));
     }
 
     public function homeSetting()
     {
         $sliders = Slider::all();
-        $cards = cards::orderBy('rows')->get();
+        $cards = cards::orderBy('rows', 'ASC')->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -82,6 +86,74 @@ class WebController extends Controller
         $slider->delete();
 
         Alert::success('Padam Slider Berjaya.', 'Slider telah berjaya dipadam.');
+
+        return redirect('/home');
+    }
+
+    public function cardAdd(Request $request)
+    {
+        $card = new cards;
+        $card->title = $request->title;
+        if($request->content){
+            $card->content = $request->content;
+        }
+        if($request->file()) {
+            $picture = time().'.'.$request->picture->extension();  
+            $request->picture->move(public_path('upload'), $picture);
+            $card->picture = '/upload/' . $picture;
+        }
+        $card->rows = $request->rows;
+        $card->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Membuat Kad ".$card->title;
+        $audit->save();
+
+        Alert::success('Cipta Kad Berjaya.', 'Kad telah berjaya dicipta.');
+
+        return redirect('/home');
+    }
+
+    public function cardUpdate(Request $request)
+    {
+        $IdCard = $request->cardId;
+        $card = cards::find($IdCard);
+        $card->title = $request->title;
+        if($request->content){
+            $card->content = $request->content;
+        }
+        if($request->file()) {
+            $picture = time().'.'.$request->picture->extension();  
+            $request->picture->move(public_path('upload'), $picture);
+            $card->picture = '/upload/' . $picture;
+        }
+        $card->rows = $request->rows;
+        $card->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Membuat Kad ".$card->title;
+        $audit->save();
+
+        Alert::success('Kemaskini Kad Berjaya.', 'Kad telah berjaya diKemaskini.');
+
+        return redirect('/home');
+    }
+
+    public function cardDelete(Request $request)
+    {
+        $IdCard = $request->cardId;
+        $card = cards::find($IdCard);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Kad ".$card->title;
+        $audit->save();
+
+        $card->delete();
+
+        Alert::success('Padam Kad Berjaya.', 'Kad telah berjaya dipadam.');
 
         return redirect('/home');
     }

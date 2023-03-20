@@ -44,6 +44,9 @@ Route::post('/home/slider/add',  [WebController::class, 'sliderAdd']);
 Route::put('/home/slider/update',  [WebController::class, 'sliderUpdate']);
 Route::delete('/home/slider/delete',  [WebController::class, 'sliderDelete']);
 
+Route::post('/home/card/add',  [WebController::class, 'cardAdd']);
+Route::put('/home/card/update',  [WebController::class, 'cardUpdate']);
+Route::delete('/home/card/delete',  [WebController::class, 'cardDelete']);
 
 Route::get('/users/info',  [UserController::class, 'user_info']);
 Route::put('/users/update',  [UserController::class, 'user_info_update']);
