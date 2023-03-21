@@ -1,6 +1,6 @@
 Felda,
 
-{!! nl2br(e($message)) !!}
+{{$message}}
 
 Yang Benar,
 {{$name}}
