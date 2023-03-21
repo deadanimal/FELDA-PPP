@@ -221,7 +221,7 @@ class WebController extends Controller
         $subject = $request->subject;
         $message = $request->message;
 
-        Mail::to('daniel.anuar@pipeline-network.com')->send(new contactUs($name, $email, $subject,$message));
+        Mail::to('daniel.anuar@pipeline-network.com')->send(new contactUs($name, $email, $subject, $message));
 
         Alert::success('Emel Berjaya Dihantar.', 'Emel berjaya dihantar.');
 
