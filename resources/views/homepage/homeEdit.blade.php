@@ -400,7 +400,7 @@
                         <td class="text-center">{{ $loop->iteration }}</td>
                         <td class="text-center arial-N">{{ $faq->question }}</td>
                         <td class="arial-N">
-                            {!! nl2br(e($slider->content)) !!}
+                            {!! nl2br(e($faq->answer)) !!}
                         </td>
                         <td class="text-center align-middle">
                             <!-- Button trigger modal update-->
