@@ -127,17 +127,21 @@
                         @if($card->rows == $x)
                             <div class="col-sm d-flex align-items-stretch">
                                 <div class="icon-box">
-                                @if($card->picture)
-                                <picture>
-                                    <img src="{{$card->picture}}" class="gambar">
-                                </picture>
-                                @endif
+                                    @if($card->picture)
+                                    <picture>
+                                        <img src="{{$card->picture}}" class="gambar">
+                                    </picture>
+                                    @else
+                                    <div class="icon">
+                                        <i class="bx bx-file"></i>
+                                    </div>
+                                    @endif
 
-                                <h4 class="title">{{$card->title}}</h4>
+                                    <h4 class="title">{{$card->title}}</h4>
 
-                                @if($card->content)
-                                    <p class="description">{!! nl2br(e($card->content)) !!}</p>
-                                @endif
+                                    @if($card->content)
+                                        <p class="description">{!! nl2br(e($card->content)) !!}</p>
+                                    @endif
                                 </div>
                             </div>
                             @endif
@@ -321,7 +325,7 @@
                 <div class="form-group mt-3">
                     <textarea class="form-control" name="message" rows="5" placeholder="Pesanan" required></textarea>
                 </div>
-                <div class="text-center"><button type="submit" class="hantar">Hantar</button></div>
+                <div class="text-center" style="margin-top:2%"><button type="submit" class="hantar">Hantar</button></div>
             </form>
 
           </div>
