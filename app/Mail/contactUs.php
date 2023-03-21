@@ -37,7 +37,7 @@ class contactUs extends Mailable
      *
      * @return \Illuminate\Mail\Mailables\Envelope
      */
-    public function envelope()
+    public function envelope():Envelope
     {
         return new Envelope(
             from: new Address($this->email, $this->name),

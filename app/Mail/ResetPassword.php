@@ -37,6 +37,7 @@ class ResetPassword extends Mailable
     public function envelope()
     {
         return new Envelope(
+            from: new Address('feldaPPP@gmail.com', 'admin Felda'),
             subject: 'Reset Password',
         );
     }
