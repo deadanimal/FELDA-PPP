@@ -125,12 +125,12 @@
                 <div class="row" style="margin-bottom: 5%">
                     @foreach($cards as $card)
                         @if($card->rows == $x)
-                            <div class="col-sm-4 d-flex align-items-stretch">
+                            <div class="col-sm d-flex align-items-stretch">
                                 <div class="icon-box">
                                 @if($card->picture)
-                                    <div>
-                                        <img src="{{$card->picture}}" class="gambar">
-                                    </div>
+                                <picture>
+                                    <img src="{{$card->picture}}" class="gambar">
+                                </picture>
                                 @endif
 
                                 <h4 class="title">{{$card->title}}</h4>
@@ -242,7 +242,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Frequently Asked Questions</h2>
+          <h2>Soalan-Soalan Lazim (FAQ)</h2>
         </div>
 
         <div class="faq-list">

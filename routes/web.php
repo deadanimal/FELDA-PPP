@@ -48,6 +48,10 @@ Route::post('/home/card/add',  [WebController::class, 'cardAdd']);
 Route::put('/home/card/update',  [WebController::class, 'cardUpdate']);
 Route::delete('/home/card/delete',  [WebController::class, 'cardDelete']);
 
+Route::post('/home/faq/add',  [WebController::class, 'faqAdd']);
+Route::put('/home/faq/update',  [WebController::class, 'faqUpdate']);
+Route::delete('/home/faq/delete',  [WebController::class, 'faqDelete']);
+
 Route::get('/users/info',  [UserController::class, 'user_info']);
 Route::put('/users/update',  [UserController::class, 'user_info_update']);
 Route::get('/users',  [UserController::class, 'user_list']);
