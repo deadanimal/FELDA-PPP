@@ -15,6 +15,8 @@ Route::get('/home', function () {
 });
 Route::get('/',  [WebController::class, 'landingPage']);
 
+Route::post('/home/contact',  [WebController::class, 'contact']);
+
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
@@ -51,6 +53,7 @@ Route::delete('/home/card/delete',  [WebController::class, 'cardDelete']);
 Route::post('/home/faq/add',  [WebController::class, 'faqAdd']);
 Route::put('/home/faq/update',  [WebController::class, 'faqUpdate']);
 Route::delete('/home/faq/delete',  [WebController::class, 'faqDelete']);
+
 
 Route::get('/users/info',  [UserController::class, 'user_info']);
 Route::put('/users/update',  [UserController::class, 'user_info_update']);

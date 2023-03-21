@@ -143,8 +143,9 @@
                             </div>
                         </td>
                     </tr>
-                    @endforeach 
-                </table>
+                    @endforeach
+                </tbody>
+            </table>
             @else
             <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Slider </h2>
             @endif
@@ -224,17 +225,17 @@
             {{-- senarai Kad --}}
             @if (!$cards->isEmpty())
             <table class="table table-bordered table-striped w-100">
-            <thead class="text-white bg-primary w-100">
-                <tr class="text-center">
-                    <th class="text-center">No.</th>
-                    <th scope="col" class="text-center">Tajuk Kad</th>
-                    <th scope="col" class="text-center">Kadungan Kad</th>
-                    <th scope="col" class="text-center">Gambar</th>
-                    <th scope="col" class="text-center">Baris Kad</th>
-                    <th scope="col">Tindakan</th>
-                </tr>
-            </thead>
-            <tbody>
+                <thead class="text-white bg-primary w-100">
+                    <tr class="text-center">
+                        <th class="text-center">No.</th>
+                        <th scope="col" class="text-center">Tajuk Kad</th>
+                        <th scope="col" class="text-center">Kadungan Kad</th>
+                        <th scope="col" class="text-center">Gambar</th>
+                        <th scope="col" class="text-center">Baris Kad</th>
+                        <th scope="col">Tindakan</th>
+                    </tr>
+                </thead>
+                <tbody>
                     @foreach ($cards as $card)
                         <tr>
                             <td class="text-center"> {{ $loop->iteration }}</td>
@@ -339,7 +340,7 @@
                             </td>
                         </tr>
                     @endforeach 
-            </tbody>
+                </tbody>
             </table>
             @else
             <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Kad </h2>
@@ -372,7 +373,7 @@
                 <label for="question" class="frame9402-text04">
                     <strong>Soalan</strong>
                 </label>
-                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset"  id="question" placeholder="Soalan" name="question" required>
+                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset; width:-webkit-fill-available"  id="question" placeholder="Soalan" name="question" required>
                 <label for="answer" class="frame9402-text04">
                     <strong>Jawapan Soalan Tersebut</strong>
                 </label>
@@ -425,7 +426,7 @@
                                                 <label for="question" class="frame9402-text04">
                                                     <strong>Soalan</strong>
                                                 </label>
-                                                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset" value="{{$faq->question}}" name="question" required>
+                                                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset; width:-webkit-fill-available" value="{{$faq->question}}" name="question" required>
                                                 <label for="answer" class="frame9402-text04">
                                                     <strong>Jawapan Soalan Tersebut</strong>
                                                 </label>
@@ -474,7 +475,8 @@
                         </td>
                     </tr>
                     @endforeach 
-                </table>
+                </tbody>
+            </table>
             @else
             <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Soalan Lazim </h2>
             @endif

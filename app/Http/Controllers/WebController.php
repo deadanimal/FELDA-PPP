@@ -11,6 +11,7 @@ use App\Models\Proses;
 use App\Models\Borang;
 use App\Models\Audit;
 use App\Models\Faq;
+use App\Mail\contactUs;
 use Illuminate\Http\Request;
 use Alert;
 use Illuminate\Support\Facades\Mail;
@@ -211,5 +212,19 @@ class WebController extends Controller
         Alert::success('Padam Soalan Lazim Berjaya.', 'Slider Soalan Lazim berjaya dipadam.');
 
         return redirect('/home');
+    }
+
+    public function contact(Request $request)
+    {
+        $name = $request->name;
+        $email = $request->email;
+        $subject = $request->subject;
+        $message = $request->message;
+
+        Mail::to('daniel.anuar@pipeline-network.com')->send(new contactUs($name, $email, $subject,$message));
+
+        Alert::success('Emel Berjaya Dihantar.', 'Emel berjaya dihantar.');
+
+        return back();
     }
 }

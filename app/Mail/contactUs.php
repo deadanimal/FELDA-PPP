@@ -3,15 +3,14 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailables\Address;
-
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
-class ResetPassword extends Mailable
+class contactUs extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -20,13 +19,13 @@ class ResetPassword extends Mailable
      *
      * @return void
      */
-
-    public $katalaluan;
-
-    public function __construct($katalaluan)
+    public function __construct($name, $email, $subject,$message)
     {
         //
-        $this->katalaluan = $katalaluan;
+        $this->name = $name;
+        $this->email = $email;
+        $this->subject = $subject;
+        $this->message = $message;
     }
 
     /**
@@ -37,7 +36,8 @@ class ResetPassword extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Reset Password',
+            from: new Address($this->email, $this->name),
+            subject: $this->subject,
         );
     }
 
@@ -49,7 +49,11 @@ class ResetPassword extends Mailable
     public function content()
     {
         return new Content(
-            view: 'emails.reset',
+            view: 'emails.contact',
+            with: [
+                'message'=> $this->message,
+                'name'=>$this->name
+            ]
         );
     }
 
