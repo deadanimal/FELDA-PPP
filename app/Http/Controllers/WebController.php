@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Proses;
 use App\Models\Borang;
 use App\Models\Audit;
+use App\Models\Faq;
 use Illuminate\Http\Request;
 use Alert;
 use Illuminate\Support\Facades\Mail;
@@ -21,23 +22,25 @@ class WebController extends Controller
         $sliders = Slider::all();
         $cardsTotalRows = cards::max('rows');
         $cards = cards::orderBy('rows', 'ASC')->get();
+        $faqs = Faq::orderBy('updated_at', 'DESC')->get();
 
         $totalModul = Count(Modul::where('status', 'Go-live')->get());
         $totalPeneroka = Count(User::whereRelation('kategori', 'nama', '=', 'Peserta')->get());
 
-        return view('home', compact ('totalModul', 'totalPeneroka', 'sliders', 'cardsTotalRows', 'cards'));
+        return view('home', compact ('totalModul', 'totalPeneroka', 'sliders', 'cardsTotalRows', 'cards', 'faqs'));
     }
 
     public function homeSetting()
     {
         $sliders = Slider::all();
         $cards = cards::orderBy('rows', 'ASC')->get();
+        $faqs = Faq::orderBy('updated_at', 'DESC')->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.homeEdit', compact ('sliders', 'cards', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.homeEdit', compact ('sliders', 'cards', 'faqs', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function sliderAdd(Request $request)
@@ -155,6 +158,57 @@ class WebController extends Controller
         $card->delete();
 
         Alert::success('Padam Kad Berjaya.', 'Kad telah berjaya dipadam.');
+
+        return redirect('/home');
+    }
+
+    public function faqAdd(Request $request)
+    {
+        $faq = new Faq;
+        $faq->question = $request->question;
+        $faq->answer = $request->answer;
+        $faq->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Soalan Lazim ".$faq->title;
+        $audit->save();
+
+        Alert::success('Cipta Soalan Lazim Berjaya.', 'Soalan Lazim telah berjaya dicipta.');
+
+        return redirect('/home');
+    }
+
+    public function faqUpdate(Request $request)
+    {
+        $faq = Faq::find($request->faqId);
+        $faq->question = $request->question;
+        $faq->answer = $request->answer;
+        $faq->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Soalan Lazim ".$faq->question;
+        $audit->save();
+
+        Alert::success('Kemaskini Soalan Lazim Berjaya.', 'Soalan Lazim telah berjaya dikemaskini.');
+
+        return redirect('/home');
+    }
+
+    public function faqDelete(Request $request)
+    {
+        $Idfaq = $request->faqId;
+        $faq = Faq::find($Idfaq);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Soalan Lazim ".$faq->question;
+        $audit->save();
+
+        $faq->delete();
+
+        Alert::success('Padam Soalan Lazim Berjaya.', 'Slider Soalan Lazim berjaya dipadam.');
 
         return redirect('/home');
     }

@@ -372,7 +372,7 @@
                 <label for="question" class="frame9402-text04">
                     <strong>Soalan</strong>
                 </label>
-                <input type="text" class="frame9402-kotaknamaBorang" id="question" placeholder="Soalan" name="question" required>
+                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset"  id="question" placeholder="Soalan" name="question" required>
                 <label for="answer" class="frame9402-text04">
                     <strong>Jawapan Soalan Tersebut</strong>
                 </label>
@@ -391,7 +391,7 @@
                         <th class="text-center">No.</th>
                         <th class="text-center">Soalan</th>
                         <th class="text-center">Jawapan</th>
-                        <th class="text-center">Tindakan</th>
+                        <th class="text-center" style="width: 15%;">Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>          
@@ -425,7 +425,7 @@
                                                 <label for="question" class="frame9402-text04">
                                                     <strong>Soalan</strong>
                                                 </label>
-                                                <input type="text" class="frame9402-kotaknamaBorang" value="{{$faq->question}}" name="question" required>
+                                                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset" value="{{$faq->question}}" name="question" required>
                                                 <label for="answer" class="frame9402-text04">
                                                     <strong>Jawapan Soalan Tersebut</strong>
                                                 </label>
@@ -476,7 +476,7 @@
                     @endforeach 
                 </table>
             @else
-            <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Slider </h2>
+            <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Soalan Lazim </h2>
             @endif
         </div>
     </div>
