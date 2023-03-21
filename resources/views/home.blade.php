@@ -33,7 +33,7 @@
 </style>
 
 <body>
-
+    @include('sweetalert::alert')
   <!-- ======= Top Bar ======= -->
   <div id="topbar" class="fixed-top d-flex align-items-center ">
     <div class="container d-flex align-items-center justify-content-center justify-content-md-between">
@@ -323,7 +323,7 @@
                     <input type="text" class="form-control" name="subject" id="subject" placeholder="Perkara" required>
                 </div>
                 <div class="form-group mt-3">
-                    <textarea class="form-control" name="message" rows="5" placeholder="Pesanan" required></textarea>
+                    <textarea class="form-control text" name="pesanan" rows="5" placeholder="Pesanan" required></textarea>
                 </div>
                 <div class="text-center" style="margin-top:2%"><button type="submit" class="hantar">Hantar</button></div>
             </form>

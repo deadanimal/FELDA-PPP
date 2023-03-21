@@ -17,19 +17,19 @@ class contactUs extends Mailable
     public $name;
     public $email;
     public $subject;
-    public $message;
+    public $pesanan;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($name, $email, $subject, $message)
+    public function __construct($name, $email, $subject, $pesanan)
     {
         //
         $this->name = $name;
         $this->email = $email;
         $this->subject = $subject;
-        $this->message = $message;
+        $this->pesanan = $pesanan;
     }
 
     /**
@@ -55,7 +55,7 @@ class contactUs extends Mailable
         return new Content(
             view: 'emails.contact',
             with: [
-                'message'=> $this->message,
+                'pesanan'=> $this->pesanan,
                 'name'=>$this->name
             ]
         );
