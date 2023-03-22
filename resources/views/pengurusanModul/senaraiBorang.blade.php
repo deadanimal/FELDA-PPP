@@ -195,7 +195,7 @@
                 <tr>
                   <td>
                     <label for="jenisTugas" class="frame9402-text04">
-                      <strong>Traikh</strong>
+                      <strong>Tarikh</strong>
                     </label>
                   </td>
                   <td>

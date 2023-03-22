@@ -121,8 +121,10 @@
     <section id="icon-boxes" class="icon-boxes">
       <div class="container">
         @if (!$cards->isEmpty())
+        <!-- loop for card row -->
             @for($x=1; $x<= $cardsTotalRows; $x++)
                 <div class="row" style="margin-bottom: 5%">
+                    <!-- loop card -->
                     @foreach($cards as $card)
                         @if($card->rows == $x)
                             <div class="col-sm d-flex align-items-stretch">
