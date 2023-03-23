@@ -280,10 +280,16 @@ class BorangController extends Controller
         $proseskelulusan = ProsesKelulusan::where('borang_id', $borangId)->first();
         if($proseskelulusan != null){
             $tahapKelulusan = Tahap_kelulusan::where('prosesKelulusan_id', $proseskelulusan->id)->orderBy("sequence", "ASC")->get();
+            
             $lulusBorangs = Kelulusan_borang::with('tahap_kelulusan')->orderBy('created_at', 'DESC')->get();
+            
             $noLulusBorang = [];
+
+            //to make $borangJwpns as empty
             $borangJwpns =  Jawapan::where('id', 0.1)->get();
+            
             $tahapLulus = 0;
+
             for($x=0; $x<count($tahapKelulusan); $x++){
                 if($x==0){
                     if($tahapKelulusan[$x]->user_id == Auth::user()->id && $tahapKelulusan[$x]->sequence == 1){

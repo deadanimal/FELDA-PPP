@@ -21,13 +21,13 @@
         
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="nama">Nama</label>
+                            <label for="nama" class="labeltext">Nama</label>
                             <input type="text" class="form-control frame9403-kotaknama" maxlength="100" size="100"
                             value="{{ Auth::user()->nama }}" name="nama" id="nama"
                             @if (Auth::user()->kategoripengguna != 1) readonly @endif >
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="idPengguna">ID Pengguna</label>
+                            <label for="idPengguna" class="labeltext">ID Pengguna</label>
                             <input type="text" class="form-control frame9403-kotaknama" maxlength="12" size="12"
                             value="{{ Auth::user()->idPengguna }}" name="idPengguna" id="idPengguna" required
                             @if(Auth::user()->kategoripengguna !="4"){
@@ -38,25 +38,25 @@
                     </div>
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="email">Email</label>
+                            <label for="email" class="labeltext">Emel</label>
                             <input type="email" class="form-control frame9403-kotaknama" value="{{ Auth::user()->email }}" name="email" id="email">
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="noTelefon">No. Telefon</label>
+                            <label for="noTelefon" class="labeltext">No. Telefon</label>
                             <input type="text" class="form-control frame9403-kotaknama" id="noTelefon" name="noTelefon" data-mask="000-000 0000" autocomplete="off"  maxlength="11" size="11"
                             value="{{ Auth::user()->notelefon }}" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="nokadpengenalan">No. Kad Pengenalan</label>
+                            <label for="nokadpengenalan" class="labeltext">No. Kad Pengenalan</label>
                             <input type="text" class="form-control frame9403-kotaknama" id="nokadpengenalan" name="nokadpengenalan" maxlength="12"
                             size="12" data-mask="000000-00-0000" data-reverse="true"
                             value="{{ Auth::user()->nokadpengenalan }}" required
                             @if (Auth::user()->kategoripengguna != 1) readonly @endif>
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="wilayah">Peringkat</label>
+                            <label for="wilayah" class="labeltext">Peringkat</label>
                         @if (Auth::user()->kategoripengguna == 1)
                             <select name="wilayah" id="wilayah" class="form-control frame9403-kotaknama3">
                                 <option value="{{ Auth::user()->wilayah }}" selected style="display:none">
@@ -74,7 +74,7 @@
                     </div>
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="inputLastName">Kategori Pengguna</label>
+                            <label for="inputLastName" class="labeltext">Kategori Pengguna</label>
                             @if (Auth::user()->kategoripengguna == 1)
                                 <select name="kategoripengguna" name="kategoriPengguna" class="form-control frame9403-kotaknama3">
                                     <option value="{{ Auth::user()->kategoripengguna }}" selected style="display:none">
@@ -90,7 +90,7 @@
                             @endif
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="rancangan">Rancangan</label>
+                            <label for="rancangan" class="labeltext">Rancangan</label>
                         @if (Auth::user()->kategoripengguna == 1)
                             <select name="rancangan" id="rancangan" class="form-control frame9403-kotaknama3" required>
                                 <option value="{{ Auth::user()->rancangan }}" selected style="display:none">
@@ -105,7 +105,7 @@
                     </div>
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="passcode">Kata Laluan</label>
+                            <label for="passcode" class="labeltext">Kata Laluan</label>
                             <div style="display: flex; flex-direction: row; align-items: center;">
                                 <input type="password" id="passcode" class="form-control frame9403-kotaknama" name="password" minlength="8">
                                 <i class="far fa-eye" onclick="showPassFunction()" id="iconPass" style="margin-left: 10px"></i>
@@ -214,6 +214,9 @@ display: flex;
     margin-right: 0;
     margin-bottom: 0;
 } 
+.labeltext{
+    font-family:'Poppins';
+}
 </style>
 <script src="/js/jquery.js"></script>
 <script>

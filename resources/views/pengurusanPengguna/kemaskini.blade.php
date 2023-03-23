@@ -18,36 +18,36 @@
           @method('PUT')
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="nama">Nama</label>
+                  <label for="nama" class="labeltext">Nama</label>
                   <input type="text" class="form-control frame9403-kotaknama" maxlength="100" size="100"
                   value="{{ $user->nama }}" name="nama" id="nama">
               </div>
               <div class="mb-3 col-md-6">
-                  <label for="idPengguna">ID Pengguna</label>
+                  <label for="idPengguna" class="labeltext">ID Pengguna</label>
                   <input type="text" class="form-control frame9403-kotaknama" maxlength="12" size="12"
                   value="{{ $user->idPengguna }}" name="idPengguna" id="idPengguna">
               </div>
           </div>
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="email">Email</label>
+                  <label for="email" class="labeltext">Emel</label>
                   <input type="email" class="form-control frame9403-kotaknama" value="{{ $user->email }}" name="email" id="email">
               </div>
               <div class="mb-3 col-md-6">
-                  <label for="noTelefon">No. Telefon</label>
+                  <label for="noTelefon" class="labeltext">No. Telefon</label>
                   <input type="text" class="form-control frame9403-kotaknama" id="noTelefon" name="noTelefon" data-mask="000-000 0000" autocomplete="off"  maxlength="11" size="11"
                   value="{{ $user->notelefon }}" required>
               </div>
           </div>
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="nokadpengenalan">No. Kad Pengenalan</label>
+                  <label for="nokadpengenalan" class="labeltext">No. Kad Pengenalan</label>
                   <input type="text" class="form-control frame9403-kotaknama" id="nokadpengenalan" name="nokadpengenalan" maxlength="12"
                   size="12" data-mask="000000-00-0000" data-reverse="true"
                   value="{{ $user->nokadpengenalan }}" required>
               </div>
               <div class="mb-3 col-md-6">
-                  <label for="wilayah">Peringkat</label>
+                  <label for="wilayah" class="labeltext">Peringkat</label>
                   <select name="wilayah" id="wilayah" class="form-control frame9403-kotaknama3 ">
                     <option value="{{ $user->wilayah }}" selected style="display:none">
                         {{ $user->wilayah_id->nama }}</option>
@@ -59,7 +59,7 @@
           </div>
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="inputLastName">Kategori Pengguna</label>
+                  <label for="inputLastName" class="labeltext">Kategori Pengguna</label>
                   <select name="kategoripengguna" name="kategoriPengguna" class="form-control frame9403-kotaknama3 ">
                       <option value="{{ $user->kategoripengguna }}" selected style="display:none">
                           {{ $user->kategori->nama }}</option>
@@ -69,7 +69,7 @@
                   </select>
               </div>
               <div class="mb-3 col-md-6">
-                <label for="rancangan">Rancangan</label>
+                <label for="rancangan" class="labeltext">Rancangan</label>
                 <select name="rancangan" id="rancangan" class="form-control frame9403-kotaknama3 " required>
                     <option value="{{ $user->rancangan }}" selected style="display:none">
                         {{ $user->rancangan_id->nama }}</option>
@@ -78,7 +78,7 @@
           </div>
           <div class="row">
               <div class="mb-3 col-md-6">
-                <label for="passcode">Kata Laluan</label>
+                <label for="passcode" class="labeltext">Kata Laluan</label>
                 <div style="display: flex; flex-direction: row; align-items: center;">
                   <input type="password" id="passcode" class="form-control frame9403-kotaknama" name="password" minlength="8">
                   <i class="far fa-eye" onclick="showPassFunction()" id="iconPass" style="margin-left: 10px"></i>
@@ -100,6 +100,9 @@
   </div>
 </div>
 <style>
+  .labeltext{
+    font-family: 'Poppins';
+  }
   .frame9403-kotaknama {
     top: 0px;
     width: 454px;
