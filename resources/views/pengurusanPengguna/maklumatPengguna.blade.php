@@ -11,7 +11,7 @@
             <div class="col-12">
                 <div class="card">
             <div class="card-header">
-                <h5 class="card-title mb-0">Sila isikan maklumat anda berikut dengan betul.</h5>
+                <h5 class="card-title mb-0">Sila isi maklumat anda dengan betul.</h5>
             </div>
             <div class="card-body">
                 <form action="/users/update" method="post" enctype="multipart/form-data">

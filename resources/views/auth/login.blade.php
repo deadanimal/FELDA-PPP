@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <link href="css/modern.css" rel="stylesheet">
 
+
 <body style="background-color: rgba(0, 0, 0, 0)" >
     <main class="main h-100 w-100 d-flex align-items-center justify-content-center">
 		<div class="container h-100 d-flex align-items-center justify-content-center">
@@ -19,7 +20,7 @@
                                     <div class="log-masuk-frame9398">
                                         <span class="log-masuk-text">Daftar Masuk</span>
                                         <span class="log-masuk-text02">
-                                            Sila masukkan alamat ID Pengguna dan kata laluan
+                                            Sila masukkan Emel dan Kata Laluan anda
                                         </span>
                                     </div>
                                     @if(session()->has('message'))
@@ -34,7 +35,7 @@
                                     @endif
                                     <div class="log-masuk-frame9">
                                         <div class="log-masuk-frame12">
-                                            <span class="log-masuk-text04">E-mel</span>
+                                            <span class="log-masuk-text04">Emel</span>
                                             <label>
                                                 <input class="log-masuk-rectangle46" type="email" name="email"
                                                     placeholder="eg:aliabu@gmail.com" />
@@ -237,7 +238,7 @@
 
     .log-masuk-text04 {
         color: rgba(255, 255, 255, 1);
-        width: 100px;
+        width: auto;
         height: auto;
         font-size: 15px;
         align-self: auto;

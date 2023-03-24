@@ -273,11 +273,12 @@ class UserController extends Controller
             $user->save();
 
             Mail::to($user->email)->send(new ResetPassword('Saya<3FeldaPPP'));
-            Alert::success('Lupa Kata Laluan', 'Sila Semak E-mel Anda');   
-            return back();
+            session()->flash('message','Sila Semak Emel Anda');
+  
+            return redirect('/login');
         }
         else{
-            session()->flash('message','Email yang anda masukkan tidak wujud di dalam sistem');
+            session()->flash('message','Emel yang anda masukkan tidak wujud di dalam sistem');
             return back();
         }
         
