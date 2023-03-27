@@ -44,7 +44,7 @@
     <div class="card-body" style="width: auto;">
       <div class="row d-flex justify-content-center">
         
-        <table class="table table-bordered table-striped  w-100 audit-datatable" id="example">
+        <table class="table table-bordered table-striped  w-100" id="example">
           <thead class="text-white bg-primary w-100">
             <tr>
               <th>Bil.</th>
@@ -55,20 +55,14 @@
             </tr>
           </thead>
           <tbody>
-            @php
-                $count=1;
-            @endphp
             @foreach ($audits as $audit)
                 <tr>
-                  <td>{{$count}}</td>
+                  <td>{{$loop->iteration}}</td>
                   <td>{{$audit->users->idPengguna}}</td>
                   <td>{{$audit->users->nama}}</td>
                   <td>{{$audit->action}}</td>
                   <td>{{$audit->created_at}}</td>
                 </tr>
-                @php
-                    $count++;
-                @endphp
             @endforeach
 
           </tbody>

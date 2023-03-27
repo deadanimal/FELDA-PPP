@@ -107,7 +107,7 @@
 
                   <!-- Modal -->
                   <div class="modal fade" id="exampleModal{{$i}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Padam Borang {{$borang->namaBorang}}</h5>
@@ -342,7 +342,7 @@
 
                   <!-- Modal -->
                   <div class="modal fade" id="exampleModaltugas{{$jenisTernakan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
                               <h5 class="modal-title" id="exampleModalLabel">Padam Jenis Ternakan/Tanaman {{$jenisTernakan->nama}}</h5>

@@ -31,8 +31,8 @@
               </tr>
               <tr style="border: none;">
                 <td style="border: none;"><p class="text04">Tarikh</p></td>
-                <td style="border: none;"><input type="date" name="from_date" class="form-control" placeholder="ID Pengguna"/></td>
-                <td style="border: none;"><input type="date" name="to_date" class="form-control" placeholder="ID Pengguna"/></td>
+                <td style="border: none;"><input type="date" name="from_date" class="form-control" id="min" /></td>
+                <td style="border: none;"><input type="date" name="to_date" class="form-control" id="max" /></td>
                 <td style="border: none;"></td>
               </tr>
             </tbody>
@@ -57,20 +57,14 @@
             </tr>
           </thead>
           <tbody>
-            @php
-                $count=1;
-            @endphp
             @foreach ($audits as $audit)
                 <tr>
-                  <td>{{$count}}</td>
+                  <td>{{$loop->iteration}}</td>
                   <td>{{$audit->users->idPengguna}}</td>
                   <td>{{$audit->users->nama}}</td>
                   <td>{{$audit->action}}</td>
                   <td>{{$audit->created_at}}</td>
                 </tr>
-                @php
-                    $count++;
-                @endphp
             @endforeach
 
           </tbody>
@@ -95,4 +89,16 @@
   text-decoration: none;
 }
 </style>
+<script>
+  $(document).ready(function() {
+    // Create date inputs
+    minDate = new DateTime($('#min'), {
+        format: 'YYYY-MM-DD'
+    });
+    maxDate = new DateTime($('#max'), {
+        format: 'YYYY-MM-DD'
+    });
+  
+});
+</script>
 @endsection

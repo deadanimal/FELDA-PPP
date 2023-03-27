@@ -224,9 +224,10 @@ display: flex;
 $(document).ready(function(){
   $('select[name="wilayah"]').on('change',function(){
       var wilayahid= $(this).val();
+      var newUrl = window.location.protocol + "//" + window.location.host;
       if (wilayahid) {
         $.ajax({
-          url: "{{url('/getRancangan/')}}/"+wilayahid,
+            url: newUrl+"/getRancangan/"+wilayahid,
         type: "GET",
         dataType: "json",
         success: function(data){

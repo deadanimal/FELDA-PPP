@@ -67,7 +67,7 @@
                             <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Tempoh Kitaran" name="cycle" required></td>
                           </tr>
                           <tr>
-                            <td><p class="frame9402-text04">Sasaran Pendapatan</p></td>
+                            <td><p class="frame9402-text04">Sasaran</p></td>
                             <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Sasaran Pendapatan" name="sasaran"></td>
                           </tr>
                           <tr>
@@ -97,7 +97,7 @@
                       <th scope="col" class="text-center">Unit</th>                      
                       <th scope="col" class="text-center">Jenis Data</th>                      
                       <th scope="col" class="text-center">Tempoh Kitaran</th>                      
-                      <th scope="col" class="text-center">Sasaran Pendapatan</th>                      
+                      <th scope="col" class="text-center">Sasaran</th>                      
                       <th scope="col" class="text-center">Kategori</th>                      
                       <th scope="col" class="text-center">Tindakan</th>                      
                   </tr>
@@ -109,7 +109,7 @@
                     <td><p class="text-center arial-N" style="text-align: left; text-transform:uppercase;">{{$param->unit}}</p></td>
                     <td><p class="text-center arial-N" style="text-align: left; text-transform:uppercase;">{{$param->jenisData}}</p></td>
                     <td><p class="text-center arial-N" style="text-align: left; text-transform:uppercase;">{{$param->cycle}}</p></td>
-                    <td><p class="text-center arial-N" style="text-align: left; text-transform:uppercase;">{{$param->sasaran_pendapatan}}</p></td>
+                    <td><p class="text-center arial-N" style="text-align: left; text-transform:uppercase;">{{$param->sasaran}}</p></td>
                     <td><p class="text-center arial-N" style="text-align: left; text-transform:uppercase;">{{$param->category}}</p></td>
                     <td style="justify-content: center; display: flex; flex-wrap: wrap; align-items: center;">
                     <!-- Button trigger modal update-->
@@ -155,7 +155,7 @@
                                         </tr>
                                         <tr>
                                           <td style="vertical-align: middle;"><p class="frame9402-text04">Sasaran Pendapatan</p></td>
-                                          <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->sasaran_pendapatan}}" name="sasaran"></td>
+                                          <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->sasaran}}" name="sasaran"></td>
                                         </tr>
                                         <tr>
                                           <td style="vertical-align: middle;"><p class="frame9402-text04">Kategori</p></td>
@@ -186,7 +186,7 @@
 
                     <!-- Modal delete-->
                     <div class="modal fade" id="exampleModalcheck{{$param->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Padam Parameter {{$param->nama}}</h5>

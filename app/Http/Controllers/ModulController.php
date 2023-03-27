@@ -793,7 +793,7 @@ class ModulController extends Controller
         $param->unit = $request->unit;
         $param->jenisData = $request->jenisData;
         $param->cycle = $request->cycle;
-        $param->sasaran_pendapatan = $request->sasaran;
+        $param->sasaran = $request->sasaran;
         $param->category = $request->category;
         $param->aktiviti = $request->aktivitiId;
         $param->save();
@@ -827,7 +827,7 @@ class ModulController extends Controller
         $param->unit = $request->unit;
         $param->jenisData = $request->jenisData;
         $param->cycle = $request->cycle;
-        $param->sasaran_pendapatan = $request->sasaran;
+        $param->sasaran = $request->sasaran;
         $param->category = $request->category;
         $param->aktiviti = $request->aktivitiId;
         $param->save();

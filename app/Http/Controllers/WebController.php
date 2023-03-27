@@ -49,6 +49,11 @@ class WebController extends Controller
         $slider = new Slider;
         $slider->title = $request->title;
         $slider->content = $request->content;
+        if($request->file()) {
+            $picture = time().'.'.$request->picture->extension();  
+            $request->picture->move(public_path('upload'), $picture);
+            $slider->picture = '/upload/' . $picture;
+        }        
         $slider->save();
 
         $audit = new Audit;
@@ -66,6 +71,11 @@ class WebController extends Controller
         $slider = Slider::find($request->sliderId);
         $slider->title = $request->title;
         $slider->content = $request->content;
+        if($request->file()) {
+            $picture = time().'.'.$request->picture->extension();  
+            $request->picture->move(public_path('upload'), $picture);
+            $slider->picture = '/upload/' . $picture;
+        } 
         $slider->save();
 
         $audit = new Audit;

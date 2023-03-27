@@ -45,6 +45,11 @@
                     <strong>Kandungan Slider</strong>
                 </label>
                 <textarea class="form-control" id="content" rows="5" name="content" placeholder="Kandungan Slider"></textarea>
+                <br>
+                <label for="picture" class="frame9402-text04">
+                    <strong>Muat Naik Gambar</strong>
+                </label>
+                <input id="picture" type="file" accept="image/*" name="picture"/>
                 <button type="submit" class="btn" style="margin-top:5%">Tambah</button>
                 <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
                 </form>
@@ -59,6 +64,7 @@
                         <th class="text-center">No.</th>
                         <th class="text-center">Tajuk Slider</th>
                         <th class="text-center">Kandungan Slider</th>
+                        <th class="text-center">Gambar</th>
                         <th class="text-center">Tindakan</th>
                     </tr>
                 </thead>
@@ -74,6 +80,15 @@
                         @else
                             <td class="text-center arial-N">-</td>
                         @endif
+
+                        @if ($slider->picture)
+                            <td class="text-center arial-N">
+                                <a href="{{ $card->picture }}">Gambar</a>
+                            </td>
+                        @else
+                            <td class="text-center arial-N">-</td>
+                        @endif
+
                         <td class="text-center align-middle">
                             <!-- Button trigger modal update-->
                             <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#exampleModalCenter{{$slider->id}}">
@@ -102,6 +117,12 @@
                                                     <strong>Kandungan Slider</strong>
                                                 </label>
                                                 <textarea class="form-control" id="content" rows="5" name="content" placeholder="Kandungan Slider">{{ $slider->content }}</textarea>
+                                                <br>
+                                                @if ($slider->picture)
+                                                    <img class="img-fluid img-thumbnail" src="{{ $slider->picture }}" alt=""/>
+                                                @endif
+                                                <br>
+                                                <input id="picture" type="file" accept="image/*" name="picture"/>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
@@ -323,7 +344,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Anda Pasti Mahu Kad Slider {{$card->title}}?</p>
+                                                <p>Anda Pasti Mahu Kad {{$card->title}}?</p>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
