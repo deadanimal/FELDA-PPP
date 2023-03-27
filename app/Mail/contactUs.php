@@ -40,7 +40,6 @@ class contactUs extends Mailable
     public function envelope():Envelope
     {
         return new Envelope(
-            from: new Address($this->email, $this->name),
             subject: $this->subject,
         );
     }
@@ -55,6 +54,8 @@ class contactUs extends Mailable
         return new Content(
             view: 'emails.contact',
             with: [
+                'email'=> $this->email,
+                'name' =>$this->name,
                 'pesanan'=> $this->pesanan,
                 'name'=>$this->name
             ]

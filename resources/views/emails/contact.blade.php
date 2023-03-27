@@ -1,4 +1,8 @@
 <html>
+Nama:{{$name}} <br>
+Emel: {{$email}}
+<br>
+<br>
 Felda,<br>
 <br>
 {{$pesanan}}<br>
