@@ -21,7 +21,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <button class="frame9403-frame7445"  onclick="openForm()">
+          <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAddProses">
             <div class="frame9403-frame7293">
             <span class="frame9403-text21"><span>Tambah</span></span>
             <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
@@ -29,24 +29,35 @@
           </button>
         </div>
 
-        {{-- popup form Tambah proses --}}
-        <div class="loginPopup">
-          <div class="formPopup" id="popupForm">
-            <form action="/moduls/proses/add" method="POST" class="formContainer">
-              @csrf
-              <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA PROSES</h2>
-              <label for="namaProses" class="frame9402-text04">
-                <strong>Nama Proses</strong>
-              </label>
-              <input type="text" class="frame9402-kotaknamaProses" id="namaProses" placeholder="Nama Proses" name="namaProses" required>
-              <input type="hidden" value="{{$modul->id}}" name="modulId">
-              <input type="hidden" value="{{count($prosess)+1}}" name="sequence">
-              <button type="submit" class="btn">Tambah</button>
-              <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
-            </form>
+        {{-- Modal form Tambah proses --}}
+        <div class="modal fade" id="exampleModalAddProses" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA PROSESM</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="/moduls/proses/add" method="POST">
+                @csrf
+                <div class="modal-body">
+                  <label for="namaProses" class="frame9402-text04">
+                    <strong>Nama Proses</strong>
+                  </label>
+                  <input type="text" class="frame9402-kotaknamaProses" id="namaProses" placeholder="Nama Proses" name="namaProses" required oninput="this.value = this.value.toUpperCase()">
+                  <input type="hidden" value="{{$modul->id}}" name="modulId">
+                  <input type="hidden" value="{{count($prosess)+1}}" name="sequence">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button class="btn btn-primary">Tambah</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-
+      
         {{-- senarai proses --}}
         <table style="overflow: auto; height: auto; max-height: 750px; width:100%;">
           @if (!$prosess->isEmpty())
@@ -105,7 +116,7 @@
 
                   <!-- Modal -->
                   <div class="modal fade" id="exampleModal{{$i}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
                       <div class="modal-content">
                       <div class="modal-header">
                           <h5 class="modal-title" id="exampleModalLabel">Padam Proses {{$proses->nama}}</h5>
@@ -183,7 +194,7 @@
     margin-right: 0;
     border-radius: 3.461621046066284px;
     margin-bottom: 0;
-    font-family: 'Arial-N', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-size: 18px;
     padding-left:10px;
     box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2);

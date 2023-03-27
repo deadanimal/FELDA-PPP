@@ -20,7 +20,7 @@
                         <div class="row">
                             <div class="mb-3">
                                 <label for="nama" style="font-family:'Poppins'">NAMA</label>
-                                <input type="text" class="form-control" style="text-transform: uppercase;" name="nama" id="nama">
+                                <input type="text" class="form-control" style="text-transform: uppercase;" name="nama" id="nama" required oninput="this.value = this.value.toUpperCase()">
                             </div>
                         </div>
                         <div class="row">

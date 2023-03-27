@@ -340,7 +340,7 @@ display: flex;
             <table class="table table-borderless">
                 <tr>
                     <td><span class="frame9402-text04">Nama Jenis Kemaskini: </span></td>
-                    <td><input type="text" class="frame9402-kotaknama arial-N" name="namaKemas" value="{{$kemaskini->nama}}" required/></td>
+                    <td><input type="text" class="frame9402-kotaknama arial-N" name="namaKemas" value="{{$kemaskini->nama}}" required oninput="this.value = this.value.toUpperCase()"/></td>
                 </tr>
             </table>
             <button type="submit" class="frame9403-frame7445">
@@ -374,7 +374,7 @@ display: flex;
                         <table>
                         <tr>
                             <td><p class="frame9402-text04">Nama Aktiviti</p></td>
-                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Nama Aktiviti" name="namaAktiviti" required></td>
+                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Nama Aktiviti" name="namaAktiviti" required oninput="this.value = this.value.toUpperCase()"></td>
                         </tr>
                         </table>
                         <input type="hidden" name="kemaskiniID" value="{{$kemaskini->id}}">
@@ -420,7 +420,7 @@ display: flex;
                                         <label for="namaBorang" class="frame9402-text04">
                                         <strong>Nama Aktiviti</strong>
                                         </label>
-                                        <input type="text" class="frame9402-kotaknamaBorang" value="{{$act->nama}}" name="namaAktivitiUp" required>
+                                        <input type="text" class="frame9402-kotaknamaBorang" value="{{$act->nama}}" name="namaAktivitiUp" required oninput="this.value = this.value.toUpperCase()">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>

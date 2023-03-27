@@ -46,22 +46,22 @@
     <div class="card-body" style="width: auto;">
       <div class="row d-flex justify-content-center">
         
-        <table class="table table-bordered table-striped  w-100">
+        <table class="table table-bordered table-striped w-100 Arial">
           <thead class="text-white bg-primary w-100">
             <tr>
-              <th>Bil.</th>
-              <th scope="col"><span>ID Pengguna</span></th>
-              <th scope="col"><span>Nama Pengguna</span></th>
-              <th scope="col"><span>Keterangan</span></th>
-              <th scope="col"><span>Tarikh Tindakan</span></th>
+              <th style="width: 1%">Bil.</th>
+              <th scope="col" style="width: 15%"><span>ID Pengguna</span></th>
+              <th scope="col" style="width: 24%"><span>Nama Pengguna</span></th>
+              <th scope="col" style="width: 50%"><span>Keterangan</span></th>
+              <th scope="col" style="width: 10%"><span>Tarikh Tindakan</span></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="Arial">
             @foreach ($audits as $audit)
                 <tr>
                   <td>{{$loop->iteration}}</td>
                   <td>{{$audit->users->idPengguna}}</td>
-                  <td>{{$audit->users->nama}}</td>
+                  <td class="text-upp">{{$audit->users->nama}}</td>
                   <td>{{$audit->action}}</td>
                   <td>{{$audit->created_at}}</td>
                 </tr>
@@ -74,6 +74,13 @@
   </div>
 </div>
 <style>
+  .Arial{
+    font-family: 'Arial', sans-serif;
+}
+
+.text-upp{
+    text-transform: uppercase;
+  }
   .text04 {
   color: black;
   height: auto;

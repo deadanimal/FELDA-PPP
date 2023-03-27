@@ -63,8 +63,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user-categories',[UserController::class, 'category_list']);
     Route::post('/user-categories',[UserController::class, 'category_add']);
-    Route::get('/user-categories/{id}',[UserController::class, 'category_detail']);
-    Route::put('/user-categories',[UserController::class, 'category_update']);
+    Route::put('/user-categories/update',[UserController::class, 'category_update']);
     Route::get('/user-categories/{id}/delete',[UserController::class, 'category_delete']);
 
     Route::get('/audit', [UserController::class, 'user_audit']);

@@ -16,7 +16,7 @@
     </div>
     <div class="card-body" style="width: auto;">
       <div class="row d-flex justify-content-center">
-        <table class="table table-bordered table-striped w-100 proses-datatable">
+        <table class="table table-bordered table-striped w-100 proses-datatable arial">
           <thead class="text-white bg-primary w-100">
             <tr>
                 <th>Bil.</th>
@@ -33,9 +33,8 @@
   </div>
 </div>
 <style>
-  .arial-N{
-      font-family: 'Arial-N', sans-serif;
-      font-size: 18px;
+  .arial{
+      font-family: 'Arial', sans-serif;
       text-transform: uppercase;
   }
   .frame9402-frame9281 {
@@ -156,12 +155,12 @@
               columns: [{
                       data: 'DT_RowIndex',
                       name: 'DT_RowIndex',
-                      className: "text-center arial-N"
+                      className: "text-center arial"
                   },
                   {
                       data: 'nama',
                       name: 'nama',
-                      className: "text-center arial-N"
+                      className: "text-center arial"
                   },
                   {
                       data: 'tindakan',

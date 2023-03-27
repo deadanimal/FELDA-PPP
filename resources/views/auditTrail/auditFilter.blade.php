@@ -17,20 +17,20 @@
             <tbody>
               <tr style="border: none;">
                 <td style="border: none;"><p class="text04">ID Pengguna</p></td>
-                <td style="border: none;"><input type="text" name="idPengguna" class="form-control" placeholder="ID Pengguna" value=""/></td>
+                <td style="border: none;"><input type="text" name="idPengguna" class="form-control" placeholder="ID Pengguna" value="{{$idPengguna ?? ""}}"/></td>
                 <td style="border: none;"></td>
                 <td style="border: none;"></td>
               </tr>
               <tr style="border: none;">
                 <td style="border: none;"><p class="text04">Aktiviti</p></td>
-                <td style="border: none;"><input type="text" name="action" class="form-control" placeholder="Aktiviti" value=""/></td>
+                <td style="border: none;"><input type="text" name="action" class="form-control" placeholder="Aktiviti" value="{{$action ?? ""}}"/></td>
                 <td style="border: none;"></td>
                 <td style="border: none;"><button type="submit" name="filter" id="filter" class="btn btn-primary" style="margin-right: 0%; margin-left:auto;">Cari</button></td>
               </tr>
               <tr style="border: none;">
                 <td style="border: none;"><p class="text04">Tarikh</p></td>
-                <td style="border: none;"><input type="date" name="from_date" id="min" class="form-control"/></td>
-                <td style="border: none;"><input type="date" name="to_date" id="max" class="form-control"/></td>
+                <td style="border: none;"><input type="date" name="from_date" id="min" class="form-control" value="{{$from_date ?? ""}}"/></td>
+                <td style="border: none;"><input type="date" name="to_date" id="max" class="form-control" value="{{$to_date ?? ""}}"/></td>
                 <td style="border: none;"></td>
               </tr>
             </tbody>
@@ -44,14 +44,14 @@
     <div class="card-body" style="width: auto;">
       <div class="row d-flex justify-content-center">
         
-        <table class="table table-bordered table-striped  w-100" id="example">
+        <table class="table table-bordered table-striped  w-100 arial" id="example">
           <thead class="text-white bg-primary w-100">
             <tr>
-              <th>Bil.</th>
-              <th scope="col"><span>ID Pengguna</span></th>
-              <th scope="col"><span>Nama Pengguna</span></th>
-              <th scope="col"><span>Keterangan</span></th>
-              <th scope="col"><span>Tarikh Tindakan</span></th>
+              <th style="width: 1%">Bil.</th>
+              <th scope="col"  style="width: 15%"><span>ID Pengguna</span></th>
+              <th scope="col" style="width: 24%"><span>Nama Pengguna</span></th>
+              <th scope="col"  style="width: 50%"><span>Keterangan</span></th>
+              <th scope="col"  style="width: 10%"><span>Tarikh Tindakan</span></th>
             </tr>
           </thead>
           <tbody>
@@ -72,6 +72,9 @@
   </div>
 </div>
 <style>
+  .Arial{
+    font-family: 'Arial', sans-serif;
+  }
   .text04 {
   color: black;
   height: auto;

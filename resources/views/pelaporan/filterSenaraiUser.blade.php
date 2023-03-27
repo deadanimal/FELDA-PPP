@@ -16,7 +16,7 @@
       </div>
     <div class="card-body" style="width: auto;">
       <div class="row d-flex justify-content-center">
-        <table class="table table-bordered table-striped w-100">
+        <table class="table table-bordered table-striped w-100 arial-N">
           <thead class="text-white bg-primary w-100">
             <tr>
                 <th class="text-center">Bil.</th>
@@ -59,8 +59,7 @@
 </div>
 <style>
   .arial-N{
-      font-family: 'Arial-N', sans-serif;
-      font-size: 18px;
+      font-family: 'Arial', sans-serif;
       text-transform: uppercase;
   }
   .frame9402-frame9281 {

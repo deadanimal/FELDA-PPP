@@ -59,7 +59,7 @@
                                         </label>
                                       </td>
                                       <td>
-                                        <input class="form-control" id="nama" placeholder="Nama Perkara Tugasan" name="namaTugas" required>
+                                        <input class="form-control" id="nama" placeholder="Nama Perkara Tugasan" name="namaTugas" required oninput="this.value = this.value.toUpperCase()">
                                       </td>
                                     </tr>
                                     <tr style="border: none;">
@@ -84,7 +84,7 @@
                     </div>          
                 <div class="card-body">
                     @if (!$tugasan_item->isEmpty())
-                    <table class="table table-bordered table-striped w-100">
+                    <table class="table table-bordered table-striped w-100 Arial">
                         <thead class="text-white bg-primary w-100">
                           <tr class="text-center">
                               <th scope="col">Perkara Tugasan</th>
@@ -95,9 +95,9 @@
                         <tbody>
                             @foreach ($tugasan_item as $item)
                             <tr>
-                                <td class="text-center arial-N" style="text-transform: uppercase;">{{$item->nama}}</td>
-                                <td class="text-center arial-N">{{$item->plan_date}}</td>
-                                <td class="text-center arial-N">
+                                <td class="text-center Arial" style="text-transform: uppercase;">{{$item->nama}}</td>
+                                <td class="text-center Arial">{{$item->plan_date}}</td>
+                                <td class="text-center Arial">
                                     <a class="btn btn-success" href="/user/tugasan/{{$tugasans->id}}/tugas_item/{{$item->id}}/progress_list" style="color: white; text-decoration:none;">
                                         Kemaskini
                                     </a>
@@ -113,6 +113,9 @@
     </div>
 </div>
 <style>
+  .Arial{
+    font-family: 'Arial', sans-serif;
+}
     .frame9403-frame7445 {
     width: 125px;
     height: 44px;

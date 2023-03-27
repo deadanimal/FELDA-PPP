@@ -20,11 +20,11 @@
                     <tr>
                     <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Slider</h1></td>
                     <td>
-                        <button class="frame9403-frame7445"  onclick="openForm()">
-                        <div class="frame9403-frame7293">
-                        <span class="frame9403-text21"><span>Tambah Slider</span></span>
-                        <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                        </div>
+                        <button class="frame9403-frame7445"  data-toggle="modal" data-target="#modalCenterAddSlider">
+                            <div class="frame9403-frame7293">
+                                <span class="frame9403-text21"><span>Tambah Slider</span></span>
+                                <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                            </div>
                         </button>
                     </td>
                     </tr>
@@ -32,28 +32,38 @@
             </div>
 
             {{-- popup form Tambah Slider --}}
-            <div class="divPopup">
-            <div class="formPopup" id="popupForm">
-                <form action="/home/slider/add" method="POST" class="formContainer">
-                @csrf
-                <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA SLIDER</h2>
-                <label for="title" class="frame9402-text04">
-                    <strong>Tajuk Slider</strong>
-                </label>
-                <input type="text" class="frame9402-kotaknamaBorang" id="title" placeholder="Tajuk Slider" name="title" required oninput="this.value = this.value.toUpperCase()">
-                <label for="content" class="frame9402-text04">
-                    <strong>Kandungan Slider</strong>
-                </label>
-                <textarea class="form-control" id="content" rows="5" name="content" placeholder="Kandungan Slider"></textarea>
-                <br>
-                <label for="picture" class="frame9402-text04">
-                    <strong>Muat Naik Gambar</strong>
-                </label>
-                <input id="picture" type="file" accept="image/*" name="picture"/>
-                <button type="submit" class="btn" style="margin-top:5%">Tambah</button>
-                <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
-                </form>
-            </div>
+            <div class="modal fade" id="modalCenterAddSlider" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA SLIDER</h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="/home/slider/add" method="POST"  enctype="multipart/form-data">
+                            <div class="modal-body">
+                                <label for="title" class="frame9402-text04">
+                                    <strong>Tajuk Slider</strong>
+                                </label>
+                                <input type="text" class="frame9402-kotaknamaBorang" id="title" placeholder="Tajuk Slider" name="title" required oninput="this.value = this.value.toUpperCase()">
+                                <label for="content" class="frame9402-text04">
+                                    <strong>Kandungan Slider</strong>
+                                </label>
+                                <textarea class="form-control" id="content" rows="5" name="content" placeholder="Kandungan Slider"></textarea>
+                                <br>
+                                <label for="picture" class="frame9402-text04">
+                                    <strong>Muat Naik Gambar</strong>
+                                </label>
+                                <input id="picture" type="file" accept="image/*" name="picture"/>
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                            <button class="btn btn-primary">Kemaskini</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {{-- senarai Slider --}}
@@ -61,9 +71,9 @@
             <table class="table table-bordered table-striped w-100">
                 <thead class="text-white bg-primary w-100">                    
                     <tr class="text-center">
-                        <th class="text-center">No.</th>
+                        <th class="text-center" style="width: 1%">No.</th>
                         <th class="text-center">Tajuk Slider</th>
-                        <th class="text-center">Kandungan Slider</th>
+                        <th class="text-center" style="width: 50%">Kandungan Slider</th>
                         <th class="text-center">Gambar</th>
                         <th class="text-center">Tindakan</th>
                     </tr>
@@ -125,9 +135,9 @@
                                                 <input id="picture" type="file" accept="image/*" name="picture"/>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                                                 <input type="hidden" value="{{$slider->id}}" name="sliderId">
-                                                <button class="btn btn-danger">Kemaskini</button>
+                                                <button class="btn btn-primary">Kemaskini</button>
                                             </div>
                                         </form>
                                     </div>
@@ -139,7 +149,7 @@
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal{{$slider->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Padam Slider {{$slider->title}}</h5>
@@ -178,69 +188,80 @@
                 <tr>
                 <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Kad</h1></td>
                 <td>
-                    <button class="frame9403-frame7445"  onclick="openFormKad()">
-                    <div class="frame9403-frame7293">
-                    <span class="frame9403-text21"><span>Cipta Kad</span></span>
-                    <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                    </div>
+                    <button class="frame9403-frame7445" data-toggle="modal" data-target="#ModalCenterTambahKad">
+                        <div class="frame9403-frame7293">
+                            <span class="frame9403-text21"><span>Cipta Kad</span></span>
+                            <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                        </div>
                     </button>
                 </td>
                 </tr>
             </table>
             </div>
 
-            {{-- popup form Tambah Kad --}}
-            <div class="divPopup">
-            <div class="formPopup" id="popupFormKad">
-                <form action="/home/card/add" method="POST" class="formContainer" enctype="multipart/form-data">
-                    @csrf
-                    <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA KAD</h2>
-                    <table class="table table-borderless">
-                        <tr>
-                            <td>
-                                <label for="rows" class="frame9402-text04">
-                                <strong>Baris Kad</strong>
-                                </label>
-                            </td>
-                            <td>
-                                <input type="number" class="frame9402-kotaknamaBorang" id="rows" name="rows" required>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="tajukKad" class="frame9402-text04">
-                                <strong>Tajuk Kad</strong>
-                                </label>
-                            </td>
-                            <td>
-                                <input type="text" class="frame9402-kotaknamaBorang" id="tajukKad" placeholder="Tajuk Kad" name="title" required oninput="this.value = this.value.toUpperCase()">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="content" class="frame9402-text04">
-                                <strong>Kadungan Kad</strong>
-                                </label>
-                            </td>
-                            <td>
-                                <textarea class="form-control" id="content" rows="5" name="content" placeholder="Kadungan Kad"></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="picture" class="frame9402-text04">
-                                <strong>Muat Naik Gambar</strong>
-                                </label>
-                            </td>
-                            <td>
-                                <input id="picture" type="file" accept="image/*" name="picture"/>
-                            </td>
-                        </tr>
-                    </table>
-                    <button type="submit" class="btn">Cipta</button>
-                    <button type="button" class="btn cancel" onclick="closeFormKad()">Batal</button>
-                </form>
-            </div>
+            {{-- modal Tambah Kad --}}
+            <div class="modal fade" id="ModalCenterTambahKad" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA KAD</h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="/home/card/add" method="POST"  enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-body">
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td>
+                                            <label for="rows" class="frame9402-text04">
+                                            <strong>Baris Kad</strong>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="frame9402-kotaknamaBorang" id="rows" name="rows" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="tajukKad" class="frame9402-text04">
+                                            <strong>Tajuk Kad</strong>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="frame9402-kotaknamaBorang" id="tajukKad" placeholder="Tajuk Kad" name="title" required oninput="this.value = this.value.toUpperCase()">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="content" class="frame9402-text04">
+                                            <strong>Kadungan Kad</strong>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <textarea class="form-control" id="content" rows="5" name="content" placeholder="Kadungan Kad"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="picture" class="frame9402-text04">
+                                            <strong>Muat Naik Gambar</strong>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <input id="picture" type="file" accept="image/*" name="picture"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                <button class="btn btn-primary">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
 
             {{-- senarai Kad --}}
@@ -248,9 +269,9 @@
             <table class="table table-bordered table-striped w-100">
                 <thead class="text-white bg-primary w-100">
                     <tr class="text-center">
-                        <th class="text-center">No.</th>
+                        <th class="text-center" style="width: 1%">No.</th>
                         <th scope="col" class="text-center">Tajuk Kad</th>
-                        <th scope="col" class="text-center">Kadungan Kad</th>
+                        <th scope="col" class="text-center" style="width: 50%">Kadungan Kad</th>
                         <th scope="col" class="text-center">Gambar</th>
                         <th scope="col" class="text-center">Baris Kad</th>
                         <th scope="col">Tindakan</th>
@@ -321,9 +342,9 @@
                                                     <input type="file" accept="image/*" name="picture"/>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                                                     <input type="hidden" value="{{$card->id}}" name="cardId">
-                                                    <button class="btn btn-danger">Kemaskini</button>
+                                                    <button class="btn btn-primary">Kemaskini</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -335,7 +356,7 @@
 
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModalKad{{$card->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabel">Padam Kad {{$card->title}}</h5>
@@ -372,37 +393,48 @@
             <div class="card-header">
                 <table style="width: 100%">
                     <tr>
-                    <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Soalan Lazim</h1></td>
-                    <td>
-                        <button class="frame9403-frame7445"  onclick="openFormLazim()">
-                        <div class="frame9403-frame7293">
-                        <span class="frame9403-text21"><span>Tambah Soalan Lazim</span></span>
-                        <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                        </div>
-                        </button>
-                    </td>
+                        <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Soalan Lazim</h1></td>
+                        <td>
+                            <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladdFAQ">
+                                <div class="frame9403-frame7293">
+                                    <span class="frame9403-text21"><span>Tambah Soalan Lazim</span></span>
+                                    <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                                </div>
+                            </button>
+                        </td>
                     </tr>
                 </table>
             </div>
 
-            {{-- popup form Tambah Slider --}}
-            <div class="divPopup">
-            <div class="formPopup" id="popupFormLazim">
-                <form action="/home/faq/add" method="POST" class="formContainer">
-                @csrf
-                <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA SOALAN LAZIM</h2>
-                <label for="question" class="frame9402-text04">
-                    <strong>Soalan</strong>
-                </label>
-                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset; width:-webkit-fill-available"  id="question" placeholder="Soalan" name="question" required>
-                <label for="answer" class="frame9402-text04">
-                    <strong>Jawapan Soalan Tersebut</strong>
-                </label>
-                <textarea class="form-control" id="answer" rows="5" name="answer" placeholder="Jawapan Soalan"></textarea>
-                <button type="submit" class="btn" style="margin-top:5%">Tambah</button>
-                <button type="button" class="btn cancel" onclick="closeFormLazim()">Batal</button>
-                </form>
-            </div>
+            {{-- Modal Tambah Soalan Lazim --}}
+            <div class="modal fade" id="exampleModaladdFAQ" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA SOALAN LAZIM</h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="/home/faq/add" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                                <label for="question" class="frame9402-text04">
+                                    <strong>Soalan</strong>
+                                </label>
+                                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset; width:-webkit-fill-available"  id="question" placeholder="Soalan" name="question" required>
+                                <label for="answer" class="frame9402-text04">
+                                    <strong>Jawapan Soalan Tersebut</strong>
+                                </label>
+                                <textarea class="form-control" id="answer" rows="5" name="answer" placeholder="Jawapan Soalan"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                <button class="btn btn-primary">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
 
             {{-- senarai Slider --}}
@@ -454,9 +486,9 @@
                                                 <textarea class="form-control" id="content" rows="5" name="answer">{{ $faq->answer }}</textarea>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                                                 <input type="hidden" value="{{$faq->id}}" name="faqId">
-                                                <button class="btn btn-danger">Kemaskini</button>
+                                                <button class="btn btn-primary">Kemaskini</button>
                                             </div>
                                         </form>
                                     </div>
@@ -468,7 +500,7 @@
 
                             <!-- Modal -->
                             <div class="modal fade" id="deleteModalFaq{{$faq->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Padam Soalan Lazim</h5>
@@ -507,33 +539,12 @@
 </div>
 
 <script src="/js/jquery.js"></script>
-<script>
-function openForm() {
-  document.getElementById("popupForm").style.display = "block";
-}
-function closeForm() {
-  document.getElementById("popupForm").style.display = "none";
-}
-function openFormKad() {
-  document.getElementById("popupFormKad").style.display = "block";
-}
-function closeFormKad() {
-  document.getElementById("popupFormKad").style.display = "none";
-}
-function openFormLazim() {
-  document.getElementById("popupFormLazim").style.display = "block";
-}
-function closeFormLazim() {
-  document.getElementById("popupFormLazim").style.display = "none";
-}
-</script>
-   
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <style>
   .arial-N{
       font-family: 'Arial-N', sans-serif;
-      font-size: 18px;
   }
   .frame9402-frame9402 {
     width: 100%;

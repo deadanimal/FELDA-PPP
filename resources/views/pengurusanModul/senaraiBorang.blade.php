@@ -48,7 +48,7 @@
               <label for="namaBorang" class="frame9402-text04">
                 <strong>Nama Borang</strong>
               </label>
-              <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama borang" name="namaBorang" required>
+              <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama borang" name="namaBorang" required oninput="this.value = this.value.toUpperCase()">
               <input type="hidden" value="{{$proses->id}}" name="prosesId">
               <input type="hidden" value="{{$modul->id}}" name="modulId">
               <button type="submit" class="btn">Tambah</button>
@@ -70,7 +70,7 @@
                 <tr class="frame9402-input" style="background-color: rgba(162, 50, 93, 0.08);"> 
               @endif
                 <td class="frame9402-text30">Nama Borang:</td>
-                <td class="frame9402-text31"><input type="text" id="nama{{$i}}" class="frame9402-kotaknama" value="{{$borang->namaBorang}}"></td>
+                <td class="frame9402-text31"><input type="text" id="nama{{$i}}" class="frame9402-kotaknama" value="{{$borang->namaBorang}}" oninput="this.value = this.value.toUpperCase()"></td>
                 <td class="frame9402-text32">
                   <select name="status" id="status{{$i}}" class="frame9403-kotaknama3">
                   @if ($borang->status == 1)
@@ -175,7 +175,7 @@
                     </label>
                   </td>
                   <td>
-                    <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama Tugasan" name="namaTugas" required>
+                    <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama Tugasan" name="namaTugas" required oninput="this.value = this.value.toUpperCase()">
                   </td>
                 </tr>
                 <tr>
@@ -304,7 +304,7 @@
                 <label for="namaJenis" class="frame9402-text04">
                   <strong>Jenis Ternakan/Tanaman</strong>
                 </label>
-                <input type="text" class="frame9402-kotaknamaBorang" id="namaJenis" placeholder="Jenis Ternakan/Tanaman" name="namaJenis" required>
+                <input type="text" class="frame9402-kotaknamaBorang" id="namaJenis" placeholder="Jenis Ternakan/Tanaman" name="namaJenis" required oninput="this.value = this.value.toUpperCase()">
                   
                 <input type="hidden" value="{{$proses->id}}" name="prosesId">
                 <input type="hidden" value="{{$modul->id}}" name="modulId">

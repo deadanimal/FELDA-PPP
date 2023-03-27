@@ -20,19 +20,19 @@
         </div>
         @if (!$borangJwpns->isEmpty())
         {{-- senarai borang --}}
-        <table class="table table-bordered table-striped w-100">
+        <table class="table table-bordered table-striped w-100 Arial">
           <thead class="text-white bg-primary w-100" style="text-align: center;">
             <tr>
-                <th scope="col" class="arial">Nama Pemohon</th>
-                <th scope="col" class="arial">Status</th>
-                <th scope="col" class="arial">Tindakan</th>
+                <th scope="col" class="Arial">Nama Pemohon</th>
+                <th scope="col" class="Arial">Status</th>
+                <th scope="col" class="Arial">Tindakan</th>
             </tr>
           </thead>
           <tbody>
             @foreach ($borangJwpns as $borangJwpn)
                 <tr>
-                    <td class="text-center arial-N">{{$borangJwpn->user->nama}}</td>
-                    <td class="text-center arial-N">
+                    <td class="text-center Arial">{{$borangJwpn->user->nama}}</td>
+                    <td class="text-center Arial">
                     @if (!$lulusBorangs->isEmpty())
                         @foreach ($lulusBorangs as $lulusBorang)
                             @if ($borangJwpn->id == $lulusBorang->jawapan_id)
@@ -110,9 +110,8 @@ function closeFormKemas() {
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <style>
-    .arial-N{
-        font-family: 'Arial-N', sans-serif;
-        font-size: 18px;
+    .Arial{
+        font-family: 'Arial', sans-serif;
         text-transform: uppercase;
     }
   .frame9402-frame9402 {

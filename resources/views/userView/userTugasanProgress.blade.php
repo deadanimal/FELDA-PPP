@@ -56,7 +56,7 @@
                                         </label>
                                       </td>
                                       <td>
-                                        <input class="form-control" id="progress" name="progress" required>
+                                        <input class="form-control" id="progress" name="progress" required oninput="this.value = this.value.toUpperCase()">
                                       </td>
                                     </tr>
                                     <tr style="border: none;">
@@ -83,7 +83,7 @@
                 <div class="card-body">
                     @if (!$item_progress->isEmpty())
                     <table class="table table-bordered table-striped w-100">
-                        <thead class="text-white bg-primary w-100">
+                        <thead class="text-white bg-primary w-100 Arial">
                           <tr class="text-center">
                               <th scope="col">Progress</th>
                               <th scope="col">Tarikh Dilakukan</th>
@@ -92,8 +92,8 @@
                         <tbody>
                             @foreach ($item_progress as $item_progress)
                             <tr>
-                                <td class="text-center arial-N" style="text-transform: uppercase;">{{$item_progress->progress}}</td>
-                                <td class="text-center arial-N">{{$item_progress->actual_date}}</td>
+                                <td class="text-center Arial" style="text-transform: uppercase;">{{$item_progress->progress}}</td>
+                                <td class="text-center Arial">{{$item_progress->actual_date}}</td>
                             </tr>
                             @endforeach 
                         </tbody>
@@ -107,6 +107,9 @@
     </div>
 </div>
 <style>
+  .Arial{
+    font-family: 'Arial', sans-serif;
+}
     .frame9403-frame7445 {
     width: 125px;
     height: 44px;

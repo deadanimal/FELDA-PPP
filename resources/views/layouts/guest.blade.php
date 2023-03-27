@@ -57,6 +57,10 @@
                             font-family:'Arial-N';
                             src: url('/fonts/Arial-Narrow.ttf');
                         }
+                        @font-face{
+                            font-family:'Arial';
+                            src: url('/fonts/arial.ttf');
+                        }
                     </style>
                     @yield('innercontent')
 

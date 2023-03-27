@@ -225,7 +225,7 @@ display: flex;
         <div class="frame9402-frame7301">
             <div class="frame9402-frame7188">
                 <span class="frame9402-text04"><span>Nama Modul: </span></span>
-                <input type="text" class="frame9402-kotaknama" name="namaModul" id="namaModul" value="{{$modul->nama}}" onkeyup="changeTheColorOfButton()"/>
+                <input type="text" class="frame9402-kotaknama" name="namaModul" id="namaModul" value="{{$modul->nama}}" onkeyup="changeTheColorOfButton()" oninput="this.value = this.value.toUpperCase()"/>
             </div>
         </div>
         <div class="frame9402-frame7188">

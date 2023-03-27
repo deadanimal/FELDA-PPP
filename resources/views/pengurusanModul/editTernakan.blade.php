@@ -331,7 +331,7 @@ display: flex;
             <table class="table table-borderless">
                 <tr>
                     <td><span class="frame9402-text04">Nama Jenis Ternakan/Tanaman: </span></td>
-                    <td><input type="text" class="frame9402-kotaknama arial-N" name="namaJenis" value="{{$jenisTernakan->nama}}" required/></td>
+                    <td><input type="text" class="frame9402-kotaknama arial-N" name="namaJenis" value="{{$jenisTernakan->nama}}" required oninput="this.value = this.value.toUpperCase()"/></td>
                 </tr>
             </table>
             <button type="submit" class="frame9403-frame7445">
@@ -365,7 +365,7 @@ display: flex;
                         <table>
                         <tr>
                             <td><p class="frame9402-text04">Nama Jenis Kemaskini</p></td>
-                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Nama Jenis Kemaskini" name="namaKemas" required></td>
+                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Nama Jenis Kemaskini" name="namaKemas" required oninput="this.value = this.value.toUpperCase()"></td>
                         </tr>
                         </table>
                         <input type="hidden" value="{{$jenisTernakan->id}}" name="ternakanaID">

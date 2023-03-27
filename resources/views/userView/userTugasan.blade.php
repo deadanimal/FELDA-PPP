@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-body">
                     @if (!$tugasans->isEmpty())
-                    <table class="table table-bordered table-striped w-100">
+                    <table class="table table-bordered table-striped w-100 arial">
                         <thead class="text-white bg-primary w-100">
                           <tr class="text-center">
                               <th scope="col">Nama Tugasan</th>
@@ -27,9 +27,9 @@
                         <tbody>
                             @foreach ($tugasans as $tugasan)
                             <tr>
-                                <td class="text-center arial-N" style="text-transform: uppercase;">{{$tugasan->nama}}</td>
-                                <td class="text-center arial-N">{{$tugasan->due_date}}</td>
-                                <td class="text-center arial-N">
+                                <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->nama}}</td>
+                                <td class="text-center arial">{{$tugasan->due_date}}</td>
+                                <td class="text-center arial">
                                     <a class="btn btn-success" href="/user/tugasan/{{$tugasan->id}}/item_list" style="color: white; text-decoration:none;">
                                     Semak Tugasan
                                     </a>
@@ -50,6 +50,9 @@
 </div>
 
 <style>
+  .arial{
+    font-family: 'Arial', sans-serif;
+}
     .frame9403-frame7445 {
     width: 125px;
     height: 44px;

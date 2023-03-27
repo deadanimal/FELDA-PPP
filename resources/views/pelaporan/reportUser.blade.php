@@ -66,8 +66,7 @@
 </div>
 <style>
   .arial-N{
-      font-family: 'Arial-N', sans-serif;
-      font-size: 18px;
+      font-family: 'Arial', sans-serif;
       text-transform: uppercase;
   }
   .frame9402-frame9281 {

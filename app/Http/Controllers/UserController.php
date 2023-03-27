@@ -170,7 +170,7 @@ class UserController extends Controller
 
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal'.$user->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Padam Pengguna '.$user->nama.'</h5>
@@ -293,30 +293,58 @@ class UserController extends Controller
                 return DataTables::collection($kategoriPenggunas)
                 ->addIndexColumn()   
                 ->addColumn('tindakan', function (KategoriPengguna $kategoriPengguna) {
-                    $url = '/user-categories/'.$kategoriPengguna->id;
                     $url1 = '/user-categories/'.$kategoriPengguna->id.'/delete';
-                    return '<a href="'.$url.'" class="btn btn-xs btn-primary frame9402-rectangle828245" title="Kemaskini"></a>
+                    return '<button class="btn btn-primary frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#exampleModalUpdate'.$kategoriPengguna->id.'"></button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalUpdate'.$kategoriPengguna->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <form method="POST" action="/user-categories/update">
+                                        '.csrf_field().'                                        
+                                        <input type="hidden" name="_method" value="PUT">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Kemaskini Ketegori Pengguna '.$kategoriPengguna->nama.'</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="frame9403-group71881">
+                                                <span class="frame9403-text04">Nama kategori</span>
+                                                <input type="text" class="frame9403-kotaknama" value="'.$kategoriPengguna->nama.'" name="kategoriPengguna">
+                                            </div>
+                                            <input type="hidden" value="'.$kategoriPengguna->id.'" name="kategoriId">                                    
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-primary">Kemaskini</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                     <button type="button" class="btn btn-primary frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModal'.$kategoriPengguna->id.'" title="Padam"></button>
 
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal'.$kategoriPengguna->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Padam Ketegori Pengguna '.$kategoriPengguna->nama.'</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Padam Ketegori Pengguna '.$kategoriPengguna->nama.'</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Anda Pasti Mahu Padam Ketegori Pengguna '.$kategoriPengguna->nama.'?<p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>
+                                        <a href="'.$url1.'" class="btn btn-danger">Ya</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                                <p>Anda Pasti Mahu Padam Ketegori Pengguna '.$kategoriPengguna->nama.'?<p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>
-                                <a href="'.$url1.'" class="btn btn-danger">Ya</a>
-                            </div>
-                            </div>
-                        </div>
                         </div>';
                 })                  
                 ->rawColumns(['tindakan'])                          
@@ -344,18 +372,6 @@ class UserController extends Controller
         Alert::success('Tambah Kategori pengguna berjaya.', 'Kategori pengguna berjaya ditambah.');   
         
         return redirect('/user-categories');
-    }
-
-    public function category_detail(Request $request)
-    {
-        $id = (int)$request->route('id');
-        $kategoriPengguna = KategoriPengguna::find($id);
-
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
-
-        return view('pengurusanPengguna.editKategoriPengguna', compact('kategoriPengguna', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function category_update(Request $request)
@@ -451,7 +467,7 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('auditTrail.auditFilter', compact('audits', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('auditTrail.auditFilter', compact('audits', 'menuModul', 'menuProses', 'menuBorang', 'idPengguna', 'action', 'from_date', 'to_date'));
     }
     
     public function tugasList_app(Request $request)

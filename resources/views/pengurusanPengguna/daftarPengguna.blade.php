@@ -28,7 +28,7 @@
           <div class="row">
               <div class="mb-3 col-md-6">
                   <label for="nama" style="font-family:'Poppins'">Nama</label>
-                  <input type="text" class="form-control frame9403-kotaknama" maxlength="100" size="100" name="nama" id="nama" required>
+                  <input type="text" class="form-control frame9403-kotaknama" maxlength="100" size="100" name="nama" id="nama" required oninput="this.value = this.value.toUpperCase()">
               </div>
               <div class="mb-3 col-md-6">
                   <label for="idPengguna" style="font-family:'Poppins'">ID Pengguna</label>
@@ -232,6 +232,10 @@
     margin-right: 0;
     margin-bottom: 0;
   } 
+  .Arial{
+    font-family: 'Arial', sans-serif;
+}
+
   </style>
 <script src="/js/jquery.js"></script>
 <script>

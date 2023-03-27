@@ -19,8 +19,8 @@
           <div class="row">
               <div class="mb-3 col-md-6">
                   <label for="nama" class="labeltext">Nama</label>
-                  <input type="text" class="form-control frame9403-kotaknama" maxlength="100" size="100"
-                  value="{{ $user->nama }}" name="nama" id="nama">
+                  <input type="text" class="form-control frame9403-kotaknama text-upp" maxlength="100" size="100"
+                  value="{{ $user->nama }}" name="nama" id="nama" oninput="this.value = this.value.toUpperCase()">
               </div>
               <div class="mb-3 col-md-6">
                   <label for="idPengguna" class="labeltext">ID Pengguna</label>
@@ -31,7 +31,7 @@
           <div class="row">
               <div class="mb-3 col-md-6">
                   <label for="email" class="labeltext">Emel</label>
-                  <input type="email" class="form-control frame9403-kotaknama" value="{{ $user->email }}" name="email" id="email">
+                  <input type="email" class="form-control frame9403-kotaknama " value="{{ $user->email }}" name="email" id="email">
               </div>
               <div class="mb-3 col-md-6">
                   <label for="noTelefon" class="labeltext">No. Telefon</label>
@@ -102,6 +102,9 @@
 <style>
   .labeltext{
     font-family: 'Poppins';
+  }
+  .text-upp{
+    text-transform: uppercase;
   }
   .frame9403-kotaknama {
     top: 0px;

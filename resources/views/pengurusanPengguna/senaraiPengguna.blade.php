@@ -36,10 +36,10 @@
                 <tr>
                     <th>Bil.</th>
                     <th scope="col">ID Pengguna</th>
-                    <th scope="col">Nama Pengguna</th>
+                    <th scope="col" class="text-upp">Nama Pengguna</th>
                     <th scope="col">Wilayah</th>
                     <th scope="col">Rancangan</th>
-                    <th scope="col" style="width: 100%">Tindakan</th>
+                    <th scope="col">Tindakan</th>
 
                 </tr>
               </thead>
@@ -54,9 +54,12 @@
   </div>
 </div>
 <style>
-.arial-N{
-      font-family: 'Arial-N', sans-serif;
-      font-size: 18px;
+.Arial{
+    font-family: 'Arial', sans-serif;
+}
+
+.text-upp{
+    text-transform: uppercase;
   }
 .frame9402-frame9281 {
     display: flex;
@@ -171,6 +174,9 @@
   cursor:pointer;
   background: url("/SVG/bin.svg")
 }
+.text-upp{
+  text-transform: uppercase;
+}
 </style>
 <script type="text/javascript">
   $('.user-datatable').DataTable({
@@ -198,32 +204,32 @@
               columns: [{
                       data: 'DT_RowIndex',
                       name: 'DT_RowIndex',
-                      className: "text-center arial-N"
+                      className: "text-center Arial"
                   },
                   {
                       data: 'idPengguna',
                       name: 'idPengguna',
-                      className: "text-center arial-N"
+                      className: "text-center Arial"
                   },
                   {
                       data: 'nama',
                       name: 'nama',
-                      className: "arial-N"
+                      className: "Arial text-upp"
                   },
                   {
                       data: 'wilayah', 
                       name: 'wilayah',
-                      className: "arial-N"
+                      className: "Arial"
                   },
                   {
                       data: 'rancangan',
                       name: 'rancangan',
-                      className: "arial-N"
+                      className: "Arial"
                   },
                   {
                       data: 'tindakan',
                       name: 'tindakan',
-                      className: "text-center col-sm-auto w-25 arial-N"
+                      className: "text-center col-sm-auto w-15 Arial"
                   },                    
 
               ]

@@ -39,9 +39,8 @@
   </div>
 </div>
 <style>
-  .arial-N{
-      font-family: 'Arial-N', sans-serif;
-      font-size: 18px;
+  .arial{
+      font-family: 'Arial', sans-serif;
       text-transform: uppercase;
   }
   .frame9402-frame9281 {
@@ -162,32 +161,32 @@
               columns: [{
                       data: 'DT_RowIndex',
                       name: 'DT_RowIndex',
-                      className: "text-center arial-N"
+                      className: "text-center arial"
                   },
                   {
                       data: 'nama',
                       name: 'nama',
-                      className: "arial-N"
+                      className: "arial"
                   },
                   {
                       data: 'status',
                       name: 'status',
-                      className: "arial-N"
+                      className: "arial"
                   },
                   {
                       data: 'diciptaOleh', 
                       name: 'diciptaOleh',
-                      className: "text-center arial-N"
+                      className: "text-center arial"
                   },
                   {
                       data: 'dikemaskiniOleh',
                       name: 'dikemaskiniOleh',
-                      className: "text-center arial-N"
+                      className: "text-center arial"
                   },
                   {
                       data: 'tindakan',
                       name: 'tindakan',
-                      className: "text-center col-sm-auto w-25 arial-N"
+                      className: "text-center col-sm-auto w-25 arial"
                   },                    
 
               ]

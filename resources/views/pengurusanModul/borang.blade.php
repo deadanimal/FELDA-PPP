@@ -597,7 +597,7 @@ display: flex;
               <table class="table" style="padding: 5%;">
                 <tr>
                   <td class="frame9402-text04"><p class="text-xs-center" style="margin: auto;">Nama Medan</p></td>
-                  <td><input type="text" class="frame9402-kotaknama" placeholder="Nama Medan" name="nama" required></td>
+                  <td><input type="text" class="frame9402-kotaknama" placeholder="Nama Medan" name="nama" required oninput="this.value = this.value.toUpperCase()"></td>
                 </tr>
                 <tr>
                   <td class="frame9402-text04"><p class="text-xs-center"  style="margin: auto;">Jenis Data</p></td>
@@ -640,7 +640,7 @@ display: flex;
                 <form action="/moduls/borang_field/update" method="POST">
                   @csrf
                   @method('PUT')
-                  <td class="frame9402-text31">Nama Medan:<input type="text" name="nama" class="frame9402-kotaknama" value="{{$medan->nama}}"></td>
+                  <td class="frame9402-text31">Nama Medan:<input type="text" name="nama" class="frame9402-kotaknama" value="{{$medan->nama}}" oninput="this.value = this.value.toUpperCase()"></td>
                   <td class="frame9402-text30">Jenis Data:
                     <select name="datatype" class="frame9403-kotaknama3">
                       @if ($medan->datatype == "string" )

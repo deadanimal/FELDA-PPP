@@ -20,7 +20,7 @@
                 <div class="frame9402-frame7188">
                     <span class="frame9402-text04"><span>Nama Modul: </span></span>
                     <input type="text" class="frame9402-kotaknama" name="namaModul" id="namaModul"
-                        onkeyup="changeTheColorOfButton()" />
+                        onkeyup="changeTheColorOfButton()" oninput="this.value = this.value.toUpperCase()" />
                 </div>
                 <div class="frame9402-frame7188">
                     <span class="frame9402-text04"><span>Status Modul: </span></span>

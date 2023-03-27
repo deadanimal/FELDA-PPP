@@ -47,11 +47,11 @@
                         <table>
                           <tr>
                               <td><p class="frame9402-text04">Nama Paremeter</p></td>
-                              <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Nama Parameter" name="namaParam" required></td>
+                              <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Nama Parameter" name="namaParam" required oninput="this.value = this.value.toUpperCase()"></td>
                           </tr>
                           <tr>
                             <td><p class="frame9402-text04">Unit</p></td>
-                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Unit" name="unit" required></td>
+                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Unit" name="unit" required oninput="this.value = this.value.toUpperCase()"></td>
                           </tr>
                           <tr>
                             <td><p class="frame9402-text04">Jenis Data</p></td>

@@ -32,18 +32,18 @@
         </div>
 
         {{-- senarai borang --}}
-        <table class="table table-bordered table-striped w-100">
+        <table class="table table-bordered table-striped w-100 Arial">
           <thead class="text-white bg-primary w-100" style="text-align: center;">
             <tr>
-                <th scope="col" class="arial">Nama Borang</th>
-                <th scope="col" class="arial">Tindakan</th>
+                <th scope="col" class="Arial">Nama Borang</th>
+                <th scope="col" class="Arial">Tindakan</th>
             </tr>
           </thead>
           <tbody>
             @foreach ($borangs as $borang)
                 <tr>
-                    <td class="text-center arial-N">{{$borang->namaBorang}}</td>
-                    <td class="text-center arial-N">
+                    <td class="text-center Arial">{{$borang->namaBorang}}</td>
+                    <td class="text-center Arial">
                         <a class="btn btn-success" href="/user/borang_app/{{$borang->id}}/user_list" style="color: white; text-decoration:none;">
                             Senarai Pemohon
                         </a>
@@ -102,9 +102,8 @@ function closeFormKemas() {
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <style>
-    .arial-N{
-        font-family: 'Arial-N', sans-serif;
-        font-size: 18px;
+    .Arial{
+        font-family: 'Arial', sans-serif;
         text-transform: uppercase;
     }
   .frame9402-frame9402 {

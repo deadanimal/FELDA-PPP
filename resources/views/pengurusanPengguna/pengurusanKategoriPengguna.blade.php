@@ -16,7 +16,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <button class="btn float-end frame9402-frame7445" onclick="openForm()">
+          <button class="btn float-end frame9402-frame7445"  data-toggle="modal" data-target="#ModalCenterAddKategori">
             <div class="frame9402-frame72931">
               <span class="frame9402-text08"><span>Tambah</span></span>
               <img
@@ -27,25 +27,36 @@
           </a>
         </div>
         
-        {{-- popup form Tambah proses --}}
-        <div class="loginPopup">
-          <div class="formPopup" id="popupForm">
-            <form action="/user-categories" method="POST" class="formContainer">
-              @csrf
-              <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA KATEGORI PENGGUNA</h2>
-              <label for="namaProses" class="frame9402-text04">
-                <strong>Nama Kategori Pengguna</strong>
-              </label>
-              <input type="text" class="frame9402-kotaknamaProses" id="namaProses" placeholder="Sila Masuk Kategori Pengguna" name="namaKategoriPengguna" required>
-              <button type="submit" class="btn">Tambah</button>
-              <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
-            </form>
+        {{-- Modal Tambah Kategori --}}
+        <div class="modal fade" id="ModalCenterAddKategori" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="frame9402-text01 modal-title" id="exampleModalLabel">CIPTA KATEGORI PENGGUNA</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="/user-categories" method="POST" >
+                @csrf
+                  <label for="namaKategori" class="frame9402-text04">
+                    <strong>Nama Kategori Pengguna</strong>
+                  </label>
+                  <input type="text" class="frame9402-kotaknamaProses" id="namaKategori" placeholder="Sila Masuk Kategori Pengguna" name="namaKategoriPengguna" required>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                <button class="btn btn-primary">Kemaskini</button>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="card-body">
           <div class="row d-flex justify-content-center">
-            <table class="table table-bordered table-striped w-100 category-datatable">
+            <table class="table table-bordered table-striped w-100 Arial category-datatable">
               <thead class="text-white bg-primary w-100">
                 <tr>
                   <th>Bil.</th>
@@ -66,7 +77,6 @@
 <style>
 .arial-N{
       font-family: 'Arial-N', sans-serif;
-      font-size: 18px;
 }
 .frame9402-rectangle828245 {
   width: 32px;
@@ -149,27 +159,6 @@
   cursor:pointer;
   background: url("/SVG/bin.svg")
 }
-.loginPopup {
-    position: relative;
-    text-align: center;
-    width: 100%;
-  }
-  .formPopup {
-    display: none;
-    position: fixed;
-    left: 50%;
-    top: 25%;
-    transform: translate(-50%, 5%);
-    border: 4px solid #781E2A;
-    border-radius: 8px;
-    z-index: 9;
-  }
-  .formContainer {
-    max-width: 550px;
-    padding: 15px;
-    background-color: #fff;
-    border-radius: 8px;
-  }
   .frame9402-kotaknamaProses {
   width: 303px;
   height: 50px;
@@ -185,6 +174,42 @@
   font-family: 'Eina01-SemiBold', sans-serif;
   font-size: 18px;
   padding-left:10px;
+}
+
+.frame9403-group71881 {
+  display: flex;
+  padding: 0;
+  position: relative;
+  align-self: auto;
+  box-sizing: border-box;
+  align-items: center;
+  flex-shrink: 1;
+  border-color: transparent;
+  border-style: none;
+  border-width: 0;
+  margin-right: 0;
+  border-radius: 0px 0px 0px 0px;
+  margin-bottom: 0;
+  flex-direction: row;
+  justify-content: flex-start;
+  background-color: transparent;
+}
+
+.frame9403-kotaknama {
+  width: 454px;
+  height: 50px;
+  position: relative;
+  box-sizing: content-box;
+  border-color: rgba(140, 38, 60, 1);
+  border-style: solid;
+  border-width: 0.865405261516571px;
+  border-radius: 3.461621046066284px;
+  color: #161616;
+  font-family: 'Eina01-SemiBold', sans-serif;
+  font-size: 17.3081px;
+  padding-left:10px;
+  text-transform: uppercase;
+  box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)
 }
 .frame9402-text04 {
   color: black;
@@ -217,6 +242,13 @@
   .openButton:hover {
     opacity: 1;
   }
+  .Arial{
+    font-family: 'Arial', sans-serif;
+}
+
+  .text-upp{
+    text-transform: uppercase;
+  }
 </style>
 <script type="text/javascript">
   $('.category-datatable').DataTable({
@@ -244,29 +276,20 @@
               columns: [{
                       data: 'DT_RowIndex',
                       name: 'DT_RowIndex',
-                      className: "text-center arial-N"
+                      className: "text-center Arial"
                   },
                   {
                       data: 'nama',
                       name: 'nama',
-                      className: 'arial-N'
+                      className: 'Arial text-upp'
                   },
                   {
                       data: 'tindakan',
                       name: 'tindakan',
-                      className: "text-center col-sm-auto w-25 arial-N"
+                      className: "text-center col-sm-auto w-25 Arial"
                   },                    
 
               ]
           });
 </script>
-<script>
-  function openForm() {
-    document.getElementById("popupForm").style.display = "block";
-  }
-  function closeForm() {
-    document.getElementById("popupForm").style.display = "none";
-  }
-</script>
-
 @endsection

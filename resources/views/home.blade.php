@@ -93,12 +93,15 @@
       <!-- Slider loop -->
       @if (!$sliders->isEmpty())
         @foreach($sliders as $slider)
-            <div class="carousel-item active">
+            <div class="carousel-item 
+                @if($loop->iteration == 1)
+                active 
+                @endif ">
                 <div class="carousel-container">
-                <h2 class="animate__animated animate__fadeInDown">{{$slider->title}}</h2>
-                <p class="animate__animated animate__fadeInUp">
-                        {!! nl2br(e($slider->content)) !!}
-                </p>
+                    <h2 class="animate__animated animate__fadeInDown">{{$slider->title}}</h2>
+                    <p class="animate__animated animate__fadeInUp">
+                            {!! nl2br(e($slider->content)) !!}
+                    </p>
                 </div>
             </div>
         @endforeach
