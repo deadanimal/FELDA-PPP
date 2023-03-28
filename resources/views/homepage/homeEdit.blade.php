@@ -75,7 +75,7 @@
                         <th class="text-center">Tajuk Slider</th>
                         <th class="text-center" style="width: 50%">Kandungan Slider</th>
                         <th class="text-center">Gambar</th>
-                        <th class="text-center" style="width: 10%">Tindakan</th>
+                        <th class="text-center" style="width: 11%">Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>          
