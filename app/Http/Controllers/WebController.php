@@ -32,6 +32,19 @@ class WebController extends Controller
 
         return view('home', compact ('totalModul', 'totalPeneroka', 'sliders', 'cardsTotalRows', 'cards', 'faqs'));
     }
+    public function statementList()
+    {
+        $stats = statement::orderBy('updated_at', 'DESC')->get();
+
+        return view('penyataan', compact ('stats'));
+    }
+
+    public function documentList()
+    {
+        $docs = document::orderBy('updated_at', 'DESC')->get();
+
+        return view('home', compact ('docs'));
+    }
 
     public function homeSetting()
     {
