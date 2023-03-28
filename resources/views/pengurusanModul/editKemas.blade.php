@@ -353,11 +353,11 @@ display: flex;
         </div>
         <div class="card box-shadow">
             <div class="card-header">
-                <table style="width: 100%">
+              <table style="width: 100%">
                 <tr>
                     <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">SENARAI AKTIVITI</h1></td>
                     <td>
-                    <button class="frame9403-frame7445"  onclick="openForm()">
+                    <button class="frame9403-frame7445" data-toggle="modal" data-target="#exampleModaladdAktiviti" >
                         <div class="frame9403-frame7293">
                         <span class="frame9403-text21">Tambah</span>
                         <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
@@ -365,27 +365,41 @@ display: flex;
                     </button>
                     </td>
                 </tr>
-                </table>
-                <div class="divPopup">
-                <div class="formPopup" id="popupForm">
-                    <form action="/moduls/jenisKemas/aktiviti/add" method="POST" class="formContainer">
-                        @csrf
-                        <h2 class="frame9402-text01" style="margin-top: 0px;">TAMBAH AKTIVITI</h2>
-                        <table>
-                        <tr>
-                            <td><p class="frame9402-text04">Nama Aktiviti</p></td>
-                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Nama Aktiviti" name="namaAktiviti" required oninput="this.value = this.value.toUpperCase()"></td>
-                        </tr>
-                        </table>
-                        <input type="hidden" name="kemaskiniID" value="{{$kemaskini->id}}">
-                        <input type="hidden" value="{{$jenisTernakan->id}}" name="ternakanaID">
-                        <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                        <input type="hidden" value="{{$modul->id}}" name="modulId">
-                        <button type="submit" class="btn" style="margin-top: 6%;">Tambah</button>
-                        <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
-                    </form>
+              </table>
+
+              {{-- Modal Tambah Jenis Kemaskini --}}
+              <div class="modal fade" id="exampleModaladdAktiviti" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">TAMBAH AKTIVITI</h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="/moduls/jenisKemas/aktiviti/add" method="POST">
+                          @csrf
+                          <div class="modal-body">
+                            <table>
+                              <tr>
+                                  <td><p class="frame9402-text04">Nama Aktiviti</p></td>
+                                  <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Nama Aktiviti" name="namaAktiviti" required oninput="this.value = this.value.toUpperCase()"></td>
+                              </tr>
+                            </table>
+                          </div>
+                          <div class="modal-footer">
+                            <input type="hidden" name="kemaskiniID" value="{{$kemaskini->id}}">
+                            <input type="hidden" value="{{$jenisTernakan->id}}" name="ternakanaID">
+                            <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                            <input type="hidden" value="{{$modul->id}}" name="modulId">
+
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                            <button class="btn btn-primary">Tambah</button>
+                          </div>
+                        </form>
+                    </div>
                 </div>
-                </div>
+              </div>
             </div>
             @if (!$aktivitis->isEmpty())
             <table class="table table-borderless table-striped">

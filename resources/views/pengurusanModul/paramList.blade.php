@@ -26,11 +26,11 @@
       <div class="col-12">
         <div class="card box-shadow">
             <div class="card-header">
-                <table style="width: 100%">
+              <table style="width: 100%">
                 <tr>
                     <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">SENARAI AKTIVITI</h1></td>
                     <td>
-                    <button class="frame9403-frame7445"  onclick="openForm()">
+                    <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAddParameter">
                         <div class="frame9403-frame7293">
                         <span class="frame9403-text21">Tambah</span>
                         <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
@@ -38,12 +38,21 @@
                     </button>
                     </td>
                 </tr>
-                </table>
-                <div class="divPopup">
-                <div class="formPopup" id="popupForm">
-                    <form action="/moduls/jenisKemas/aktiviti/Param/add" method="POST" class="formContainer">
-                        @csrf
-                        <h2 class="frame9402-text01" style="margin-top: 0px;">TAMBAH PARAMETER</h2>
+              </table>
+
+              {{-- Modal Tambah Parameter --}}
+              <div class="modal fade" id="exampleModalAddParameter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">TAMBAH PARAMETER</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="/moduls/jenisKemas/aktiviti/Param/add" method="POST">
+                      @csrf
+                      <div class="modal-body">
                         <table>
                           <tr>
                               <td><p class="frame9402-text04">Nama Paremeter</p></td>
@@ -83,11 +92,15 @@
                         <input type="hidden" value="{{$aktiviti->id}}" name="aktivitiId">
                         <input type="hidden" value="{{$proses->id}}" name="prosesId">
                         <input type="hidden" value="{{$modul->id}}" name="modulId">
-                        <button type="submit" class="btn" style="margin-top: 6%;">Tambah</button>
-                        <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
-                    </form>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                          <button class="btn btn-primary">Tambah</button>
+                      </div>
+                    </form> 
+                  </div>  
                 </div>
-                </div>
+              </div>
             </div>
             @if (!$params->isEmpty())
               <table class="table table-bordered table-striped w-100">
@@ -128,54 +141,54 @@
                                 </button>
                                 </div>
                                 <form method="post" action="/moduls/jenisKemas/aktiviti/Param/update">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="modal-body">
-                                      <table>
-                                        <tr>
-                                            <td style="vertical-align: middle;"><p class="frame9402-text04">Nama Paremeter</p></td>
-                                            <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->nama}}" name="namaParam" required></td>
-                                        </tr>
-                                        <tr>
-                                          <td style="vertical-align: middle;"><p class="frame9402-text04">Unit</p></td>
-                                          <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->unit}}" name="unit" required></td>
-                                        </tr>
-                                        <tr>
-                                          <td style="vertical-align: middle;"><p class="frame9402-text04">Jenis Data</p></td>
-                                          <td>
-                                            <select name="jenisData" class="frame9402-kotaknamaBorang">
-                                              <option value="Alfanumerik" @if($param->jenisData == "Alfanumerik") selected @endif>Alfanumerik</option>
-                                              <option value="Numerikal" @if($param->jenisData == "Numerikal") selected @endif>Numerikal</option>
-                                            </select>
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td style="vertical-align: middle;"><p class="frame9402-text04">Tempoh Kitaran</p></td>
-                                          <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->cycle}}" name="cycle" required></td>
-                                        </tr>
-                                        <tr>
-                                          <td style="vertical-align: middle;"><p class="frame9402-text04">Sasaran Pendapatan</p></td>
-                                          <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->sasaran}}" name="sasaran"></td>
-                                        </tr>
-                                        <tr>
-                                          <td style="vertical-align: middle;"><p class="frame9402-text04">Kategori</p></td>
-                                          <td>
-                                            <select name="category" class="frame9402-kotaknamaBorang">
-                                              <option value="Pendapatan" @if($param->category == "Pendapatan") selected @endif>Pendapatan</option>
-                                              <option value="Perbelanjaan" @if($param->category == "Perbelanjaan") selected @endif>Perbelanjaan</option>
-                                            </select>
-                                          </td>
-                                        </tr>
-                                      </table>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
-                                        <input type="hidden" value="{{$param->id}}" name="paramId">
-                                        <input type="hidden" value="{{$aktiviti->id}}" name="aktivitiId">
-                                        <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                                        <input type="hidden" value="{{$modul->id}}" name="modulId">
-                                        <button class="btn btn-danger">Kemaskini</button>
-                                    </div>
+                                  @csrf
+                                  @method('PUT')
+                                  <div class="modal-body">
+                                    <table class="table table-borderless">
+                                      <tr style="background-color: rgba(0,0,0,0)">
+                                          <td style="vertical-align: middle;"><p class="frame9402-text04">Nama Paremeter</p></td>
+                                          <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->nama}}" name="namaParam" required></td>
+                                      </tr>
+                                      <tr style="background-color: rgba(0,0,0,0)">
+                                        <td style="vertical-align: middle;"><p class="frame9402-text04">Unit</p></td>
+                                        <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->unit}}" name="unit" required></td>
+                                      </tr>
+                                      <tr style="background-color: rgba(0,0,0,0)">
+                                        <td style="vertical-align: middle;"><p class="frame9402-text04">Jenis Data</p></td>
+                                        <td>
+                                          <select name="jenisData" class="frame9402-kotaknamaBorang">
+                                            <option value="Alfanumerik" @if($param->jenisData == "Alfanumerik") selected @endif>Alfanumerik</option>
+                                            <option value="Numerikal" @if($param->jenisData == "Numerikal") selected @endif>Numerikal</option>
+                                          </select>
+                                        </td>
+                                      </tr>
+                                      <tr style="background-color: rgba(0,0,0,0)">
+                                        <td style="vertical-align: middle;"><p class="frame9402-text04">Tempoh Kitaran</p></td>
+                                        <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->cycle}}" name="cycle" required></td>
+                                      </tr>
+                                      <tr style="background-color: rgba(0,0,0,0)">
+                                        <td style="vertical-align: middle;"><p class="frame9402-text04">Sasaran Pendapatan</p></td>
+                                        <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->sasaran}}" name="sasaran"></td>
+                                      </tr>
+                                      <tr style="background-color: rgba(0,0,0,0)">
+                                        <td style="vertical-align: middle;"><p class="frame9402-text04">Kategori</p></td>
+                                        <td>
+                                          <select name="category" class="frame9402-kotaknamaBorang">
+                                            <option value="Pendapatan" @if($param->category == "Pendapatan") selected @endif>Pendapatan</option>
+                                            <option value="Perbelanjaan" @if($param->category == "Perbelanjaan") selected @endif>Perbelanjaan</option>
+                                          </select>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Batal</button>
+                                      <input type="hidden" value="{{$param->id}}" name="paramId">
+                                      <input type="hidden" value="{{$aktiviti->id}}" name="aktivitiId">
+                                      <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                                      <input type="hidden" value="{{$modul->id}}" name="modulId">
+                                      <button class="btn btn-danger">Kemaskini</button>
+                                  </div>
                                 </form>
                             </div>
                         </div>

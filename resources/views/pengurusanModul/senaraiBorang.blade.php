@@ -27,7 +27,7 @@
             <tr>
               <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Borang</h1></td>
               <td>
-                <button class="frame9403-frame7445"  onclick="openForm()">
+                <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAddBorang">
                   <div class="frame9403-frame7293">
                   <span class="frame9403-text21"><span>Tambah Borang</span></span>
                   <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
@@ -39,21 +39,33 @@
           
         </div>
 
-        {{-- popup form Tambah Borang --}}
-        <div class="divPopup">
-          <div class="formPopup" id="popupForm">
-            <form action="/moduls/borang/add" method="POST" class="formContainer">
-              @csrf
-              <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA Borang</h2>
-              <label for="namaBorang" class="frame9402-text04">
-                <strong>Nama Borang</strong>
-              </label>
-              <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama borang" name="namaBorang" required oninput="this.value = this.value.toUpperCase()">
-              <input type="hidden" value="{{$proses->id}}" name="prosesId">
-              <input type="hidden" value="{{$modul->id}}" name="modulId">
-              <button type="submit" class="btn">Tambah</button>
-              <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
-            </form>
+        {{-- Modal Tambah Borang --}}
+        <div class="modal fade" id="exampleModalAddBorang" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA BORANG</h2>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <form action="/moduls/borang/add" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <label for="namaBorang" class="frame9402-text04">
+                      <strong>Nama Borang</strong>
+                    </label>
+                    <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama borang" name="namaBorang" required oninput="this.value = this.value.toUpperCase()">
+                    
+                <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                <input type="hidden" value="{{$modul->id}}" name="modulId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button class="btn btn-primary">Cipta</button>
+                </div>
+              </form> 
+            </div>  
           </div>
         </div>
 
@@ -150,7 +162,7 @@
             <tr>
               <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Tugasan</h1></td>
               <td>
-                <button class="frame9403-frame7445"  onclick="openFormTugas()">
+                <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAddTugasan">
                   <div class="frame9403-frame7293">
                   <span class="frame9403-text21"><span>Cipta Tugasan</span></span>
                   <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
@@ -161,60 +173,71 @@
           </table>
         </div>
 
-        {{-- popup form Tambah Tugasan --}}
-        <div class="divPopup">
-          <div class="formPopup" id="popupFormTugas">
-            <form action="/moduls/tugasan/add" method="POST" class="formContainer">
+        {{-- ModalTambah Tugasan --}}
+        <div class="modal fade" id="exampleModalAddTugasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="min-width: fit-content;">
+              <div class="modal-header">
+                <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA TUGASAN</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="/moduls/tugasan/add" method="POST">
                 @csrf
-                <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA TUGASAN</h2>
-                <table class="table table-borderless">
-                <tr>
-                  <td>
-                    <label for="namaTugas" class="frame9402-text04">
-                      <strong>Nama Tugasan</strong>
-                    </label>
-                  </td>
-                  <td>
-                    <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama Tugasan" name="namaTugas" required oninput="this.value = this.value.toUpperCase()">
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <label for="user" class="frame9402-text04">
-                      <strong>Pengguna Ditugaskan</strong>
-                    </label>
-                  </td>
-                  <td>
-                    <select name="user" class="frame9402-kotaknamaBorang" id="user">
-                      @foreach($users as $user)
-                        <option value="{{$user->id}}">{{$user->nama}}</option>
-                      @endforeach
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <label for="jenisTugas" class="frame9402-text04">
-                      <strong>Tarikh</strong>
-                    </label>
-                  </td>
-                  <td>
-                    <input type="date" class="frame9402-kotaknamaBorang" id="tarikh" name="tarikh" required>
-                  </td>
-                </tr>
-                </table>
+                <div class="modal-body">
+                  <table>
+                    <tr>
+                      <td>
+                        <label for="namaTugas" class="frame9402-text04">
+                          <strong>Nama Tugasan</strong>
+                        </label>
+                      </td>
+                      <td>
+                        <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama Tugasan" name="namaTugas" required oninput="this.value = this.value.toUpperCase()">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="user" class="frame9402-text04">
+                          <strong>Pengguna Ditugaskan</strong>
+                        </label>
+                      </td>
+                      <td>
+                        <select name="user" class="frame9402-kotaknamaBorang" id="user">
+                          @foreach($users as $user)
+                            <option value="{{$user->id}}">{{$user->nama}}</option>
+                          @endforeach
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="jenisTugas" class="frame9402-text04">
+                          <strong>Tarikh</strong>
+                        </label>
+                      </td>
+                      <td>
+                        <input type="date" class="frame9402-kotaknamaBorang" id="tarikh" name="tarikh" required>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
                 <input type="hidden" value="{{$proses->id}}" name="prosesId">
                 <input type="hidden" value="{{$modul->id}}" name="modulId">
-                <button type="submit" class="btn">Cipta</button>
-                <button type="button" class="btn cancel" onclick="closeFormTugas()">Batal</button>
-            </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button class="btn btn-primary">Cipta</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-        {{-- senarai Tugasan --}}
 
+        {{-- senarai Tugasan --}}
         @if (!$tugasans->isEmpty())
-        <table class="table table-bordered table-striped w-100">
-          <thead class="text-white bg-primary w-100">
+        <table class="table table-bordered table-striped w-100 arial">
+          <thead class="text-white bg-primary w-100 arial">
             <tr class="text-center">
                 <th scope="col" class="text-center">Nama Tugasan</th>
                 <th scope="col" class="text-center">Pengguna Ditugaskan</th>
@@ -225,10 +248,10 @@
           <tbody>
               @foreach ($tugasans as $tugasan)
               <tr>
-                <td class="text-center arial-N" style="text-transform: uppercase;">{{$tugasan->nama}}</td>
-                <td class="text-center arial-N" style="text-transform: uppercase;">{{$tugasan->user->nama}}</td>
-                <td class="text-center arial-N">{{$tugasan->due_date}}</td>
-                {{-- <td class="text-center arial-N">
+                <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->nama}}</td>
+                <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->user->nama}}</td>
+                <td class="text-center arial">{{$tugasan->due_date}}</td>
+                {{-- <td class="text-center arial">
                   <form action="/moduls/tugasan/edit" method="GET">
                     <input type="hidden" name="tugasanID" value="{{$tugasan->id}}">
                     <input type="hidden" name="prosesId" value="{{$proses->id}}">
@@ -284,7 +307,7 @@
             <tr>
               <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Ternakan/Tanaman</h1></td>
               <td>
-                <button class="frame9403-frame7445"  onclick="openFormKemas()">
+                <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladdTernakan">
                   <div class="frame9403-frame7293">
                   <span class="frame9403-text21"><span>Cipta Ternakan/Tanaman</span></span>
                   <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
@@ -295,29 +318,39 @@
           </table>
         </div>
 
-        {{-- popup form jensi kemaskini  --}}
-        <div class="divPopup">
-          <div class="formPopup" id="popupFormKemas">
-            <form action="/moduls/jenisTernakan/add" method="POST" class="formContainer">
-                @csrf
-                <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA JENIS TERNAKAN/TANAMAN</h2>
-                <label for="namaJenis" class="frame9402-text04">
-                  <strong>Jenis Ternakan/Tanaman</strong>
-                </label>
-                <input type="text" class="frame9402-kotaknamaBorang" id="namaJenis" placeholder="Jenis Ternakan/Tanaman" name="namaJenis" required oninput="this.value = this.value.toUpperCase()">
-                  
-                <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                <input type="hidden" value="{{$modul->id}}" name="modulId">
-                <button type="submit" class="btn">Cipta</button>
-                <button type="button" class="btn cancel" onclick="closeFormKemas()">Batal</button>
-            </form>
+        <div class="modal fade" id="exampleModaladdTernakan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA JENIS TERNAKAN/TANAMAN</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/moduls/jenisTernakan/add" method="POST">
+                  @csrf
+                  <div class="modal-body">
+                    <label for="namaJenis" class="frame9402-text04">
+                      <strong>Jenis Ternakan/Tanaman</strong>
+                    </label>
+                    <input type="text" class="frame9402-kotaknamaBorang" id="namaJenis" placeholder="Jenis Ternakan/Tanaman" name="namaJenis" required oninput="this.value = this.value.toUpperCase()">
+                      
+                    <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                    <input type="hidden" value="{{$modul->id}}" name="modulId">
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                      <button class="btn btn-primary">Cipta</button>
+                  </div>
+                </form>
+              </div>  
           </div>
         </div>
 
         {{-- senarai jensi kemaskini --}}
         @if (!$jenisTernakan->isEmpty())
-        <table class="table table-bordered table-striped w-100">
-          <thead class="text-white bg-primary w-100">
+        <table class="table table-bordered table-striped w-100 arial">
+          <thead class="text-white bg-primary w-100 arial">
             <tr>
                 <th scope="col" class="text-center">Jenis Ternakan/Tanaman</th>
                 <th scope="col" class="text-center">Tindakan</th>
@@ -326,8 +359,8 @@
           <tbody style="back">
               @foreach ($jenisTernakan as $jenisTernakan)
               <tr>
-                <td class="text-center arial-N" style="text-transform: uppercase;">{{$jenisTernakan->nama}}</td>
-                <td class="text-center arial-N">
+                <td class="text-center arial" style="text-transform: uppercase;">{{$jenisTernakan->nama}}</td>
+                <td class="text-center arial">
                   <form action="/moduls/jenisTernakan/edit" method="GET">
                     <input type="hidden" name="jenisTernakanID" value="{{$jenisTernakan->id}}">
                     <input type="hidden" name="prosesId" value="{{$proses->id}}">
@@ -425,9 +458,8 @@ function closeFormKemas() {
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <style>
-  .arial-N{
-      font-family: 'Arial-N', sans-serif;
-      font-size: 18px;
+  .arial{
+      font-family: 'Arial', sans-serif;
   }
   .frame9402-frame9402 {
     width: 100%;
@@ -716,7 +748,7 @@ function closeFormKemas() {
       margin-bottom: 0px;
     }
     .frame9402-kotaknamaBorang {
-    width: 299px;
+    width: -webkit-fill-available;
     height: 50px;
     position: relative;
     box-sizing: content-box;
