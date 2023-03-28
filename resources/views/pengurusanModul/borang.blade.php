@@ -361,7 +361,7 @@ display: flex;
 }
 .frame9402-text32 {
   color: #494949;
-  width: 13%;
+  width: 14%;
   height: auto;
   font-size: 15px;
   margin-left: auto;
