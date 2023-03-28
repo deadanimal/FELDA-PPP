@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Borang;
 use App\Models\Modul;
+use App\Models\Wilayah;
 use App\Models\Proses;
 use App\Models\Medan;
 use App\Models\Audit;
@@ -186,14 +187,14 @@ class BorangController extends Controller
     {
         $idBorang = (int)$request->route('idBorang');
         $borang = Borang::find($idBorang);
-
+        $wilayah = Wilayah::all()->pluck('nama','id');
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('userView.userBorang', compact('borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userBorang', compact('wilayah','borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function userBorang_submit(Request $request)
@@ -209,6 +210,8 @@ class BorangController extends Controller
         $ans->ic = $request->ic;
         $ans->user_id = Auth::user()->id;
         $ans->borang_id = $borangid;
+        $ans->wilayah = $request->wilayah;
+        $ans->rancangan = $request->rancangan;
         $ans->save();
 
         $jawapan_id= $ans->id;

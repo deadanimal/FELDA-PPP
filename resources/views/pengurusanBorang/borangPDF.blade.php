@@ -26,6 +26,16 @@
                         <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Poppins'; text-transform: uppercase;">NO KAD PENGENALAN: {{$borangJwpn->ic}}</label>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Poppins'; text-transform: uppercase;">WILAYAH: {{$borangJwpn->wilayahs->nama}}</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Poppins'; text-transform: uppercase;">NO KAD PENGENALAN: {{$borangJwpn->rancangans->nama}}</label>
+                    </div>
+                </div>
             @foreach($jawapanMedan as $jwpnMedan)
                 <div class="row">
                     <div class="mb-3">

@@ -30,6 +30,25 @@
                                 size="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="E.g: 750922140122" required>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="mb-3">
+                                <label for="wilayah" style="font-family:'Poppins'">Peringkat</label>
+                                <select name="wilayah" id="wilayah" class="form-control">
+                                  <option value="" selected disabled>Pilih Peringkat</option>
+                                  @foreach ($wilayah as $key => $value)
+                                      <option value="{{ $key }}">{{ $value }}</option>
+                                  @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3">
+                                <label for="rancangan" style="font-family:'Poppins'">Rancangan</label>
+                                <select name="rancangan" id="rancangan" class="form-control" required>
+                                    <option value="" selected disabled>Pilih Rancangan</option>
+                                </select>
+                            </div>
+                        </div>
                         @foreach($medans as $medan)
                             <div class="row">
                                 <div class="mb-3">
@@ -68,7 +87,31 @@
         </div>
     </div>
 </div>
-
+<script src="/js/jquery.js"></script>
+<script>
+  $(document).ready(function(){
+  $('select[name="wilayah"]').on('change',function(){
+      var wilayahid= $(this).val();
+      var newUrl = window.location.protocol + "//" + window.location.host;
+      if (wilayahid) {
+        $.ajax({
+          url: newUrl+"/getRancangan/"+wilayahid,
+        type: "GET",
+        dataType: "json",
+        success: function(data){
+          console.log(data);
+          $('select[name="rancangan"]').empty();
+          $.each(data,function(key,value){
+              $('select[name="rancangan"]').append('<option value="'+key+'">'+value+'</option>');
+          });
+        }
+        });
+      }else {
+            $('select[name="rancangan"]').empty();
+      }
+  });
+});
+</script>
 <style>
     .frame9403-frame7445 {
     width: 125px;

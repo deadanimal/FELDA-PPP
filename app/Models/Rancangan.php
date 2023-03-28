@@ -16,5 +16,9 @@ class Rancangan extends Model
     public function user() {
         return $this->hasMany(User::class);
     }
+
+    public function jawapan(){
+        return $this->hasMany(Jawapan::class);
+    }
     
 }

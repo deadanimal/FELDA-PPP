@@ -18,6 +18,14 @@ class Jawapan extends Model
         return $this->belongsTo(Borang::class, 'borang_id');
     }
 
+    public function wilayahs(){
+        return $this->belongsTo(Wilayah::class, 'wilayah');
+    }
+
+    public function rancangans(){
+        return $this->belongsTo(Rancangan::class, 'rancangan');
+    }
+
     public function jawapanMedan(){
         return $this->hasMany(Jawapan_medan::class);
     }

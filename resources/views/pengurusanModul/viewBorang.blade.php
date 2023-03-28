@@ -33,23 +33,37 @@
                     <input type="text" class="form-control" maxlength="100" size="100" name="" id="nama" readonly>
                 </div>
               </div>
-                    @foreach($medans as $medan)
-                    <div class="row">
-                        <div class="mb-3">
-                            <label for="nama" style="font-family:'Poppins'; text-transform:uppercase;">{{$medan->nama}}</label>
-                            <input type="text" class="form-control" maxlength="100" size="100" name="" id="nama" readonly>
-                        </div>
-                    </div>
-                    @endforeach
-                    <button type="submit" class="frame9403-frame7445" disabled>
-                        <div class="frame9403-frame7293">
-                          <span class="frame9403-text21"><span>Hantar</span></span>
-                          <img
-                          src="/SVG/kemaskini.svg"
-                          class="frame9403-group7527"
-                          />
-                        </div>
-                    </button>
+              <div class="row">
+                <div class="mb-3">
+                    <label for="wilayah" style="font-family:'Poppins'; text-transform: uppercase;">WILAYAH</label>
+                    <input class="form-control" name="wilayah" id="wilayah" readonly>
+                </div>
+              </div>
+              <div class="row">
+                <div class="mb-3">
+                    <label for="rancangan" style="font-family:'Poppins'; text-transform: uppercase;">RANCANGAN</label>
+                    <input class="form-control" name="rancangan" id="rancangan" readonly>
+                </div>
+              </div>
+
+              @foreach($medans as $medan)
+              <div class="row">
+                  <div class="mb-3">
+                      <label for="nama" style="font-family:'Poppins'; text-transform:uppercase;">{{$medan->nama}}</label>
+                      <input type="text" class="form-control" maxlength="100" size="100" name="" id="nama" readonly>
+                  </div>
+              </div>
+              @endforeach
+
+              <button type="submit" class="frame9403-frame7445" disabled>
+                  <div class="frame9403-frame7293">
+                    <span class="frame9403-text21"><span>Hantar</span></span>
+                    <img
+                    src="/SVG/kemaskini.svg"
+                    class="frame9403-group7527"
+                    />
+                  </div>
+              </button>
             </div>
         </div>
     </div>

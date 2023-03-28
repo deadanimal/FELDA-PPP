@@ -31,6 +31,18 @@
                         <input class="form-control" name="ic" id="ic" value="{{$borangJwpns->ic}}" readonly style="text-transform: uppercase;">
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="mb-3">
+                        <label for="wilayah" style="font-family:'Poppins'; text-transform: uppercase;">WILAYAH</label>
+                        <input class="form-control" name="wilayah" id="wilayah" value="{{$borangJwpns->wilayahs->nama}}" readonly style="text-transform: uppercase;">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="mb-3">
+                        <label for="rancangan" style="font-family:'Poppins'; text-transform: uppercase;">RANCANGAN</label>
+                        <input class="form-control" name="rancangan" id="rancangan" value="{{$borangJwpns->rancangans->nama}}" readonly style="text-transform: uppercase;">
+                    </div>
+                  </div>
                   @foreach($jawapanMedans as $jwpnMed)
                     <div class="row">
                       <div class="mb-3">
