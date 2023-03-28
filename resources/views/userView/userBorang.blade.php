@@ -71,8 +71,15 @@
                                 </div>
                             </div>
                         @endforeach
-                        <input type="hidden" name="borangID" value="{{$borang->id}}">
-                        <button type="submit" class="frame9403-frame7445">
+                        @if ($borang->consent != null || $borang->consent != "")
+                            <input type="checkbox" id="consent" name="const" onchange="document.getElementById('hantar').disabled = !this.checked;">
+                            <label for="consent">{{$borang->consent}}</label><br>
+                            <input type="hidden" name="borangID" value="{{$borang->id}}">
+                            <button type="submit" class="frame9403-frame7445" id="hantar" disabled>
+                        @else
+                            <input type="hidden" name="borangID" value="{{$borang->id}}">
+                            <button type="submit" class="frame9403-frame7445" id="hantar">
+                        @endif
                             <div class="frame9403-frame7293">
                                 <span class="frame9403-text21"><span>Hantar</span></span>
                                 <img
@@ -113,6 +120,9 @@
 });
 </script>
 <style>
+    .frame9403-frame7445:disabled {
+        background-color: rgba(162, 51, 93, 0.75);
+    }
     .frame9403-frame7445 {
     width: 125px;
     height: 44px;

@@ -55,6 +55,10 @@
               </div>
               @endforeach
 
+              @if ($borang->consent != null || $borang->consent != "")
+                <input type="checkbox" id="consent" name="const" disabled>
+                <label for="consent">{{$borang->consent}}</label><br>
+              @endif
               <button type="submit" class="frame9403-frame7445" disabled>
                   <div class="frame9403-frame7293">
                     <span class="frame9403-text21"><span>Hantar</span></span>

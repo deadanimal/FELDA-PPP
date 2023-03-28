@@ -581,5 +581,20 @@ class BorangController extends Controller
         
         return view('pengurusanModul.prosesKelulusan', compact('tahapKelulusan','proseskelulusan','users', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
     }
-    
+
+    public function borangConsent_add(Request $request)
+    {
+        $idBorang = $request->borangId;
+        $borang = Borang::find($idBorang);
+        $borang->consent = $request->consent;
+        $borang->save(); 
+        
+        $idModul = $request->modulId;
+        $idProses = $request->prosesId;
+
+        Alert::success('Kemaskini Persetujuan Berjaya.', 'Persetujuan telah berjaya diKemaskini.');
+
+        return redirect('/moduls/'.$idModul.'/'.$idProses.'/borang/'.$idBorang.'');
+    }
+
 }

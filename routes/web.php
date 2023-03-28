@@ -95,6 +95,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/moduls/borang/viewBorang', [BorangController::class, 'borang_view']);
     Route::get('/moduls/{modul_id}/{proses_id}/borang/{borang_id}', [BorangController::class, 'borang_detail']);
 
+    Route::put('/moduls/borang/consent/add', [BorangController::class, 'borangConsent_add']);
+
     Route::get('/moduls/borang/kelulusan', [BorangController::class, 'borang_kelulusan']);
     Route::post('/moduls/borang/kelulusan/add', [BorangController::class, 'tahapKelulusan_add']);
     Route::put('/moduls/borang/kelulusan/update', [BorangController::class, 'tahapKelulusan_update']);
