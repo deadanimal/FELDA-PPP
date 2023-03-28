@@ -56,7 +56,7 @@
               @endforeach
 
               @if ($borang->consent != null || $borang->consent != "")
-                <input type="checkbox" id="consent" name="const">
+                <input type="checkbox" id="consent" name="const" disabled>
                 <label for="consent">{{$borang->consent}}</label><br>
               @endif
               <button type="submit" class="frame9403-frame7445" disabled>
