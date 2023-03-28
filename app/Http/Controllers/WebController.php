@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Slider;
 use App\Models\cards;
+use App\Models\document;
+use App\Models\statement;
 use App\Models\Modul;
 use App\Models\User;
 use App\Models\Proses;
@@ -24,7 +26,7 @@ class WebController extends Controller
         $cardsTotalRows = cards::max('rows');
         $cards = cards::orderBy('rows', 'ASC')->get();
         $faqs = Faq::orderBy('updated_at', 'DESC')->get();
-
+        
         $totalModul = Count(Modul::where('status', 'Go-live')->get());
         $totalPeneroka = Count(User::whereRelation('kategori', 'nama', '=', 'Peserta')->get());
 
@@ -36,12 +38,13 @@ class WebController extends Controller
         $sliders = Slider::all();
         $cards = cards::orderBy('rows', 'ASC')->get();
         $faqs = Faq::orderBy('updated_at', 'DESC')->get();
+        $stats = statement::orderBy('updated_at', 'DESC')->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.homeEdit', compact ('sliders', 'cards', 'faqs', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.homeEdit', compact ('sliders', 'cards', 'faqs', 'stats' ,'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function sliderAdd(Request $request)
@@ -182,7 +185,7 @@ class WebController extends Controller
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Cipta Soalan Lazim ".$faq->title;
+        $audit->action = "Cipta Soalan Lazim ".$faq->question;
         $audit->save();
 
         Alert::success('Cipta Soalan Lazim Berjaya.', 'Soalan Lazim telah berjaya dicipta.');
@@ -236,5 +239,56 @@ class WebController extends Controller
         Alert::success('Emel Berjaya Dihantar.', 'Emel berjaya dihantar.');
 
         return back();
+    }
+
+    public function statementAdd(Request $request)
+    {
+        $stat = new statement;
+        $stat->title = $request->title;
+        $stat->statement = $request->statement;
+        $stat->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Penyataan dan Penafian ".$stat->title;
+        $audit->save();
+
+        Alert::success('Cipta Penyataan dan Penafian Berjaya.', 'Penyataan dan Penafian telah berjaya dicipta.');
+
+        return redirect('/home');
+    }
+
+    public function statementUpdate(Request $request)
+    {
+        $stat = statement::find($request->statId);
+        $stat->title = $request->title;
+        $stat->statement = $request->statement;
+        $stat->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Penyataan dan Penafian ".$stat->title;
+        $audit->save();
+
+        Alert::success('Kemaskini Penyataan dan Penafian Berjaya.', 'Penyataan dan Penafian telah berjaya dikemaskini.');
+
+        return redirect('/home');
+    }
+
+    public function statementDelete(Request $request)
+    {
+        $IdStat = $request->statId;
+        $stat = statement::find($IdStat);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Penyataan dan Penafian ".$stat->title;
+        $audit->save();
+
+        $stat->delete();
+
+        Alert::success('Padam Penyataan dan Penafian Berjaya.', 'Slider Penyataan dan Penafian berjaya dipadam.');
+
+        return redirect('/home');
     }
 }

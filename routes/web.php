@@ -50,6 +50,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/home/faq/add',  [WebController::class, 'faqAdd']);
     Route::put('/home/faq/update',  [WebController::class, 'faqUpdate']);
     Route::delete('/home/faq/delete',  [WebController::class, 'faqDelete']);
+    
+    Route::get('/penyataan',  [WebController::class, 'statementList']);
+
+    Route::post('/home/statement/add',  [WebController::class, 'statementAdd']);
+    Route::put('/home/statement/update',  [WebController::class, 'statementUpdate']);
+    Route::delete('/home/statement/delete',  [WebController::class, 'statementDelete']);
 
 
     Route::get('/users/info',  [UserController::class, 'user_info']);

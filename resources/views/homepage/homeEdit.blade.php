@@ -75,7 +75,7 @@
                         <th class="text-center">Tajuk Slider</th>
                         <th class="text-center" style="width: 50%">Kandungan Slider</th>
                         <th class="text-center">Gambar</th>
-                        <th class="text-center">Tindakan</th>
+                        <th class="text-center" style="width: 10%">Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>          
@@ -274,7 +274,7 @@
                         <th scope="col" class="text-center" style="width: 50%">Kadungan Kad</th>
                         <th scope="col" class="text-center">Gambar</th>
                         <th scope="col" class="text-center">Baris Kad</th>
-                        <th scope="col">Tindakan</th>
+                        <th scope="col" style="width: 10%">Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -284,7 +284,7 @@
                             <td class="text-center arial-N" style="text-transform: uppercase;">{{$card->title}}</td>
 
                             @if ($card->content)
-                                <td class="text-center arial-N">{!! nl2br(e($card->content)) !!}</td>
+                                <td class="arial-N">{!! nl2br(e($card->content)) !!}</td>
                             @else
                                 <td class="text-center arial-N">-</td>
                             @endif
@@ -442,10 +442,10 @@
             <table class="table table-bordered table-striped w-100">
                 <thead class="text-white bg-primary w-100">                    
                     <tr class="text-center">
-                        <th class="text-center">No.</th>
-                        <th class="text-center">Soalan</th>
+                        <th class="text-center" style="width: 1%">No.</th>
+                        <th class="text-center"  style="width: 30%">Soalan</th>
                         <th class="text-center">Jawapan</th>
-                        <th class="text-center" style="width: 15%;">Tindakan</th>
+                        <th class="text-center" style="width: 10%;">Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>          
@@ -534,6 +534,152 @@
             <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Soalan Lazim </h2>
             @endif
         </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <table style="width: 100%">
+                    <tr>
+                        <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Penyataan dan Penafian</h1></td>
+                        <td>
+                            <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladdStat">
+                                <div class="frame9403-frame7293">
+                                    <span class="frame9403-text21"><span>Tambah Penyataan dan Penafian</span></span>
+                                    <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                                </div>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            {{-- Modal Tambah Soalan Lazim --}}
+            <div class="modal fade" id="exampleModaladdStat" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA PENYATAAN DAN PENAFIAN</h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="/home/statement/add" method="POST">
+                            @csrf
+                            <div class="modal-body">
+                                <label for="title" class="frame9402-text04">
+                                    <strong>Penyataan</strong>
+                                </label>
+                                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset; width:-webkit-fill-available"  id="title" placeholder="Penyataan" name="title" required>
+                                <label for="statement" class="frame9402-text04">
+                                    <strong>Penafian</strong>
+                                </label>
+                                <textarea class="form-control" id="statement" rows="5" name="statement" placeholder="Penafian"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                <button class="btn btn-primary">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            {{-- senarai Slider --}}
+            @if (!$stats->isEmpty())
+            <table class="table table-bordered table-striped w-100">
+                <thead class="text-white bg-primary w-100">                    
+                    <tr class="text-center">
+                        <th class="text-center" style="width: 1%">No.</th>
+                        <th class="text-center"  style="width: 30%">Penyataan</th>
+                        <th class="text-center">Penafian</th>
+                        <th class="text-center" style="width: 10%;">Tindakan</th>
+                    </tr>
+                </thead>
+                <tbody>          
+                    @foreach ($stats as $stat)
+                    <tr>
+                        <td class="text-center">{{ $loop->iteration }}</td>
+                        <td class="text-center arial-N">{{ $stat->title }}</td>
+                        <td class="arial-N">
+                            {!! nl2br(e($stat->statement)) !!}
+                        </td>
+                        <td class="text-center align-middle">
+                            <!-- Button trigger modal update-->
+                            <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#exampleModalUpdateStat{{$stat->id}}">
+                                <img src="/SVG/pencil.svg"/>
+                            </button>
+        
+                            <!-- Modal update-->
+                            <div class="modal fade" id="exampleModalUpdateStat{{$stat->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">KEMASKINI {{$stat->title}}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <form method="post" action="/home/statement/update">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-body">
+                                                <label for="title" class="frame9402-text04">
+                                                    <strong>Penyataan</strong>
+                                                </label>
+                                                <input type="text" class="frame9402-kotaknamaBorang" id="title" style="text-transform: unset; width:-webkit-fill-available" value="{{$stat->title}}" name="title" required>
+                                                <label for="statement" class="frame9402-text04">
+                                                    <strong>Penafian</strong>
+                                                </label>
+                                                <textarea class="form-control" id="statement" rows="5" name="statement">{{ $stat->statement }}</textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                                <input type="hidden" value="{{$stat->id}}" name="statId">
+                                                <button class="btn btn-primary">Kemaskini</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Button trigger modal delete -->
+                            <button type="button" class="frame9402-rectangle828246" style="margin-left: 10%" data-toggle="modal" data-target="#deleteModalStat{{$stat->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="deleteModalStat{{$stat->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Padam Penyataan dan Penafian</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Anda Pasti Mahu Padam Penyataan dan Penafian?</p>
+                                            <p>Penyataan: {{$stat->title}}</p>
+                                            <p>Penafian: {{$stat->statement}}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                                            <form method="post" action="/home/statement/delete">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="statId" value="{{$stat->id}}"/>
+                                            <button class="btn btn-danger">Ya</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach 
+                </tbody>
+            </table>
+            @else
+            <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Penyataan dan Penafian </h2>
+            @endif
+        </div>
     </div>
   </div>
 </div>
@@ -544,7 +690,7 @@
 
 <style>
   .arial-N{
-      font-family: 'Arial-N', sans-serif;
+      font-family: 'Arial', sans-serif;
   }
   .frame9402-frame9402 {
     width: 100%;
