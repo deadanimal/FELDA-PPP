@@ -361,7 +361,7 @@ display: flex;
 }
 .frame9402-text32 {
   color: #494949;
-  width: 14%;
+  width: 15%;
   height: auto;
   font-size: 15px;
   margin-left: auto;
@@ -370,7 +370,7 @@ display: flex;
   line-height: 15.477937698364258px;
   font-stretch: normal;
   text-decoration: none;
-  margin-left: 2%;
+  margin-left: 1%;
 }
 .frame9402-text33 {
   color: #494949;
