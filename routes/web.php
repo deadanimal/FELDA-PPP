@@ -12,6 +12,8 @@ use App\Http\Controllers\WebController;
 // });
 
 Route::get('/',  [WebController::class, 'landingPage']);
+Route::get('/penyataan',  [WebController::class, 'statementList']);
+Route::get('/document',  [WebController::class, 'documentList']);
 
 Route::post('/home/contact',  [WebController::class, 'contact']);
 
@@ -51,11 +53,13 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/home/faq/update',  [WebController::class, 'faqUpdate']);
     Route::delete('/home/faq/delete',  [WebController::class, 'faqDelete']);
     
-    Route::get('/penyataan',  [WebController::class, 'statementList']);
-
     Route::post('/home/statement/add',  [WebController::class, 'statementAdd']);
     Route::put('/home/statement/update',  [WebController::class, 'statementUpdate']);
     Route::delete('/home/statement/delete',  [WebController::class, 'statementDelete']);
+
+    Route::post('/home/document/add',  [WebController::class, 'documentAdd']);
+    Route::put('/home/document/update',  [WebController::class, 'documentUpdate']);
+    Route::delete('/home/document/delete',  [WebController::class, 'documentDelete']);
 
 
     Route::get('/users/info',  [UserController::class, 'user_info']);

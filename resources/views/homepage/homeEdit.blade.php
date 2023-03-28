@@ -55,7 +55,7 @@
                                 <label for="picture" class="frame9402-text04">
                                     <strong>Muat Naik Gambar</strong>
                                 </label>
-                                <input id="picture" type="file" accept="image/*" name="picture"/>
+                                <input class="form-control" id="picture" type="file" accept="image/*" name="picture"/>
                             </div>
                         </form>
                         <div class="modal-footer">
@@ -250,7 +250,7 @@
                                             </label>
                                         </td>
                                         <td>
-                                            <input id="picture" type="file" accept="image/*" name="picture"/>
+                                            <input id="picture" type="file" accept="image/*" name="picture" class="form-control"/>
                                         </td>
                                     </tr>
                                 </table>
@@ -274,7 +274,7 @@
                         <th scope="col" class="text-center" style="width: 50%">Kadungan Kad</th>
                         <th scope="col" class="text-center">Gambar</th>
                         <th scope="col" class="text-center">Baris Kad</th>
-                        <th scope="col" style="width: 10%">Tindakan</th>
+                        <th scope="col" style="width: 11%">Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -339,7 +339,7 @@
                                                     @if ($card->picture)
                                                         <img class="img-fluid img-thumbnail" src="{{ $card->picture }}" alt=""/>
                                                     @endif
-                                                    <input type="file" accept="image/*" name="picture"/>
+                                                    <input type="file" accept="image/*" name="picture" class="form-control"/>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
@@ -437,7 +437,7 @@
                 </div>
             </div>
 
-            {{-- senarai Slider --}}
+            {{-- senarai Soalan Lazim --}}
             @if (!$faqs->isEmpty())
             <table class="table table-bordered table-striped w-100">
                 <thead class="text-white bg-primary w-100">                    
@@ -445,7 +445,7 @@
                         <th class="text-center" style="width: 1%">No.</th>
                         <th class="text-center"  style="width: 30%">Soalan</th>
                         <th class="text-center">Jawapan</th>
-                        <th class="text-center" style="width: 10%;">Tindakan</th>
+                        <th class="text-center" style="width: 11%;">Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>          
@@ -552,7 +552,7 @@
                 </table>
             </div>
 
-            {{-- Modal Tambah Soalan Lazim --}}
+            {{-- Modal Tambah Statement --}}
             <div class="modal fade" id="exampleModaladdStat" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -583,7 +583,7 @@
                 </div>
             </div>
 
-            {{-- senarai Slider --}}
+            {{-- senarai Statement --}}
             @if (!$stats->isEmpty())
             <table class="table table-bordered table-striped w-100">
                 <thead class="text-white bg-primary w-100">                    
@@ -591,7 +591,7 @@
                         <th class="text-center" style="width: 1%">No.</th>
                         <th class="text-center"  style="width: 30%">Penyataan</th>
                         <th class="text-center">Penafian</th>
-                        <th class="text-center" style="width: 10%;">Tindakan</th>
+                        <th class="text-center" style="width: 11%;">Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>          
@@ -678,6 +678,152 @@
             </table>
             @else
             <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Penyataan dan Penafian </h2>
+            @endif
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <table style="width: 100%">
+                    <tr>
+                        <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Dokumen</h1></td>
+                        <td>
+                            <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladdDoc">
+                                <div class="frame9403-frame7293">
+                                    <span class="frame9403-text21"><span>Tambah Dokumen</span></span>
+                                    <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                                </div>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            {{-- Modal Tambah Doc --}}
+            <div class="modal fade" id="exampleModaladdDoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">TAMBAH DOKUMEN</h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="/home/document/add" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-body">
+                                <label for="title" class="frame9402-text04">
+                                    <strong>Tajuk Dokumen</strong>
+                                </label>
+                                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset; width:-webkit-fill-available"  id="title" placeholder="Tajuk" name="name" required>
+                                <label for="document" class="frame9402-text04">
+                                    <strong>Muat Naik Dokumen</strong>
+                                </label>
+                                <input class="form-control" id="document" type="file" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf" name="file"/>
+                            
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                <button class="btn btn-primary">Tambah</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            {{-- senarai Slider --}}
+            @if (!$docs->isEmpty())
+            <table class="table table-bordered table-striped w-100">
+                <thead class="text-white bg-primary w-100">                    
+                    <tr class="text-center">
+                        <th class="text-center" style="width: 1%">No.</th>
+                        <th class="text-center"  style="width: 40%">Tajuk</th>
+                        <th class="text-center">Dokumen</th>
+                        <th class="text-center" style="width: 11%;">Tindakan</th>
+                    </tr>
+                </thead>
+                <tbody>          
+                    @foreach ($docs as $doc)
+                    <tr>
+                        <td class="text-center">{{ $loop->iteration }}</td>
+                        <td class="text-center arial-N">{{ $doc->name }}</td>
+                        <td class="text-center arial-N">
+                                <a href="{{ $doc->file }}">Lihat Dokumen</a>
+                        </td>
+                        <td class="text-center align-middle">
+                            <!-- Button trigger modal update-->
+                            <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#updateModalDoc{{$doc->id}}">
+                                <img src="/SVG/pencil.svg"/>
+                            </button>
+        
+                            <!-- Modal update-->
+                            <div class="modal fade" id="updateModalDoc{{$doc->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">KEMASKINI {{$doc->question}}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <form method="post" action="/home/document/update" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-body">
+                                                <label for="title" class="frame9402-text04">
+                                                    <strong>Tajuk</strong>
+                                                </label>
+                                                <input type="text" class="frame9402-kotaknamaBorang" id="title" style="text-transform: unset; width:-webkit-fill-available" value="{{$doc->name}}" name="name" required>
+                                                <label for="document" class="frame9402-text04">
+                                                    <strong>Muat Naik Dokumen</strong>
+                                                </label>
+                                                <p><a href="{{ $doc->file }}">Lihat dokumen</a> yang telah dimuat naik</p>
+                                                <input id="document" type="file" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf" name="file"/>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                                <input type="hidden" value="{{$doc->id}}" name="docId">
+                                                <button class="btn btn-primary">Kemaskini</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Button trigger modal delete -->
+                            <button type="button" class="frame9402-rectangle828246" style="margin-left: 10%" data-toggle="modal" data-target="#deleteModalDoc{{$doc->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="deleteModalDoc{{$doc->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Padam Dokumen</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Anda Pasti Mahu Dokumen {{$doc->name}}?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                                            <form method="post" action="/home/document/delete">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="docId" value="{{$doc->id}}"/>
+                                            <button class="btn btn-danger">Ya</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach 
+                </tbody>
+            </table>
+            @else
+            <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Dokumen </h2>
             @endif
         </div>
     </div>

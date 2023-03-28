@@ -39,12 +39,13 @@ class WebController extends Controller
         $cards = cards::orderBy('rows', 'ASC')->get();
         $faqs = Faq::orderBy('updated_at', 'DESC')->get();
         $stats = statement::orderBy('updated_at', 'DESC')->get();
-
+        $docs = document::orderBy('updated_at', 'DESC')->get();
+        
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.homeEdit', compact ('sliders', 'cards', 'faqs', 'stats' ,'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.homeEdit', compact ('docs','sliders', 'cards', 'faqs', 'stats' ,'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function sliderAdd(Request $request)
@@ -288,6 +289,65 @@ class WebController extends Controller
         $stat->delete();
 
         Alert::success('Padam Penyataan dan Penafian Berjaya.', 'Slider Penyataan dan Penafian berjaya dipadam.');
+
+        return redirect('/home');
+    }
+
+    public function documentAdd(Request $request)
+    {
+        $doc = new document;
+        $doc->name = $request->name;
+        if($request->file()) {
+            $files = time().'.'.$request->file->extension();  
+            $request->file->move(public_path('dokumen'), $files);
+            $doc->file = '/dokumen/' . $files;
+        }
+        $doc->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Dokumen ".$doc->title;
+        $audit->save();
+
+        Alert::success('Cipta Dokumen Berjaya.', 'Dokumen telah berjaya dicipta.');
+
+        return redirect('/home');
+    }
+
+    public function documentUpdate(Request $request)
+    {
+        $doc = document::find($request->docId);
+        $doc->name = $request->name;
+        if($request->file()) {
+            $files = time().'.'.$request->files->extension();  
+            $request->file->move(public_path('dokumen'), $files);
+            $doc->file = '/dokumen/' . $files;
+        }
+        $doc->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Dokumen ".$doc->title;
+        $audit->save();
+
+        Alert::success('Kemaskini Dokumen Berjaya.', 'Dokumen telah berjaya dikemaskini.');
+
+        return redirect('/home');
+    }
+
+    public function documentDelete(Request $request)
+    {
+        $IdDoc = $request->docId;
+        $doc = document::find($IdDoc);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Dokumen ".$doc->title;
+        $audit->save();
+
+        $doc->delete();
+
+        Alert::success('Padam Dokumen Berjaya.', 'Slider Dokumen berjaya dipadam.');
 
         return redirect('/home');
     }

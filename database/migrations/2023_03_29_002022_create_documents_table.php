@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('doc');
+            $table->string('name');
+            $table->string('file');
             $table->timestamps();
         });
     }
