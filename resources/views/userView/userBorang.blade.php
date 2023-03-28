@@ -66,7 +66,7 @@
                                     @if ($medan->nama != 'emel')
                                         style="text-transform: uppercase;"
                                     @endif
-                                    class="form-control" maxlength="100" size="100" name="jawapan[]" id="jawapan{{$medan->id}}">
+                                    class="form-control" maxlength="{{$medan->max}}" minlength="{{$medan->min}}" name="jawapan[]" id="jawapan{{$medan->id}}">
                                     <input type="hidden" name="medanID[]" value="{{$medan->id}}">
                                 </div>
                             </div>

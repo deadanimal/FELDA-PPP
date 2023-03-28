@@ -66,6 +66,8 @@ class BorangController extends Controller
         $medan->nama = $request->nama;
         $medan->datatype = $request->datatype;
         $medan->pilihan = $request->pilihan;
+        $medan->min = $request->min;
+        $medan->max = $request->max;
         $medan->borang_id = $request->borangId;
         $medan->sequence = $request->sequence;
         $medan->save();
@@ -102,6 +104,8 @@ class BorangController extends Controller
         $medan->nama = $request->nama;
         $medan->datatype = $request->datatype;
         $medan->pilihan = $request->pilihan;
+        $medan->min = $request->min;
+        $medan->max = $request->max;
         $medan->borang_id = $request->borangId;
         $medan->sequence = $request->sequence;
         $medan->save();

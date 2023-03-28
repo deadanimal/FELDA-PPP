@@ -361,17 +361,33 @@ display: flex;
 }
 .frame9402-text32 {
   color: #494949;
-  width: 30%;
+  width: 13%;
+  height: auto;
+  font-size: 15px;
+  margin-left: auto;
+  font-family: 'Eina01-SemiBold', sans-serif;
+  font-weight: 400;
+  line-height: 15.477937698364258px;
+  font-stretch: normal;
+  text-decoration: none;
+  margin-left: 2%;
+}
+.frame9402-text33 {
+  color: #494949;
+  width:15%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
   height: auto;
   font-size: 17px;
-  align-items: center;
+  align-self: auto;
+  text-align: left;
   font-family: 'Eina01-SemiBold', sans-serif;
   font-weight: 400;
   line-height: 15.477937698364258px;
   font-stretch: normal;
   margin-bottom: 0;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 2%;
   text-decoration: none;
 }
 .frame9402-frame8727 {
@@ -547,8 +563,7 @@ display: flex;
     </nav>
   </div>
   <div class="row">
-    <div class="col-12">
-      <div class="card">
+      <div class="card mb-3">
         <div class="card-header">
           <table style="overflow: auto; height: auto; max-height: 750px; width:100%;">
             <tr>
@@ -617,7 +632,7 @@ display: flex;
                 </div>
               </td>
               <td>
-                <button class="frame9403-frame7445"  onclick="openForm()">
+                <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladdMedan">
                   <div class="frame9403-frame7293">
                   <span class="frame9403-text21"><span>Tambah Medan</span></span>
                   <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
@@ -627,48 +642,66 @@ display: flex;
             </tr>
           </table>
         </div>
-
-        {{-- popup form Tambah Medan --}}
-        <div class="divPopup">
-          <div class="formPopup" id="popupForm">
-            <form action="/moduls/borang_field/add" method="POST" class="formContainer">
-              @csrf
-              <h2 class="frame9402-text01" style="margin-top: 0px;">CIPTA MEDAN</h2>
-              <table class="table" style="padding: 5%;">
-                <tr>
-                  <td class="frame9402-text04"><p class="text-xs-center" style="margin: auto;">Nama Medan</p></td>
-                  <td><input type="text" class="frame9402-kotaknama" placeholder="Nama Medan" name="nama" required oninput="this.value = this.value.toUpperCase()"></td>
-                </tr>
-                <tr>
-                  <td class="frame9402-text04"><p class="text-xs-center"  style="margin: auto;">Jenis Data</p></td>
-                  <td>
-                    <select name="datatype" class="frame9403-kotaknama3">
-                      <option value="string">Alfanumerik</option>
-                      <option value="integer">Numerikal</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="frame9402-text04"><p class="text-xs-center"  style="margin: auto;">Pilihan</p></td>
-                  <td>
-                    <select name="pilihan" class="frame9403-kotaknama3">
-                      <option value="required">Mandatori</option>
-                      <option value="optional">Pilihan</option>
-                    </select>
-                  </td>
-                </tr>
-              </table>
-              @php
-              $count = count($medans);
-              @endphp
-              <input type="hidden" value="{{$count = $count+1}}" name="sequence">
-              <input type="hidden" value="{{$proses->id}}" name="prosesId">
-              <input type="hidden" value="{{$modul->id}}" name="modulId">
-              <input type="hidden" value="{{$borang->id}}" name="borangId">
-
-              <button type="submit" class="btn">Tambah</button>
-              <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
-            </form>
+        
+        {{-- Modal Tambah Medan --}}
+        <div class="modal fade" id="exampleModaladdMedan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA MEDAN</h2>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <form action="/moduls/borang_field/add" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                      <table class="table table-borderless">
+                        <tr>
+                          <td class="frame9402-text04"><p class="text-xs-center" style="margin: auto;">Nama Medan</p></td>
+                          <td><input type="text" class="frame9402-kotaknama" placeholder="Nama Medan" name="nama" required oninput="this.value = this.value.toUpperCase()"></td>
+                        </tr>
+                        <tr>
+                          <td class="frame9402-text04"><p class="text-xs-center"  style="margin: auto;">Jenis Data</p></td>
+                          <td>
+                            <select name="datatype" class="frame9403-kotaknama3">
+                              <option value="string">Alfanumerik</option>
+                              <option value="integer">Numerikal</option>
+                            </select>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="frame9402-text04"><p class="text-xs-center"  style="margin: auto;">Minimum Angka/Perkataan</p></td>
+                          <td><input type="number" class="frame9402-kotaknama" placeholder="Minimum" name="min" required></td>
+                        </tr>
+                        <tr>
+                          <td class="frame9402-text04"><p class="text-xs-center"  style="margin: auto;">Maksimum Angka/Perkataan</p></td>
+                          <td><input type="number" class="frame9402-kotaknama" placeholder="Maksimum" name="max" required></td>
+                        </tr>
+                        <tr>
+                          <td class="frame9402-text04"><p class="text-xs-center"  style="margin: auto;">Pilihan</p></td>
+                          <td>
+                            <select name="pilihan" class="frame9403-kotaknama3">
+                              <option value="required">Mandatori</option>
+                              <option value="optional">Pilihan</option>
+                            </select>
+                          </td>
+                        </tr>
+                      </table>
+                      @php
+                      $count = count($medans);
+                      @endphp
+                      <input type="hidden" value="{{$count = $count+1}}" name="sequence">
+                      <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                      <input type="hidden" value="{{$modul->id}}" name="modulId">
+                      <input type="hidden" value="{{$borang->id}}" name="borangId">        
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                      <button class="btn btn-primary">Tambah</button>
+                    </div>
+                  </form>
+              </div>
           </div>
         </div>
 
@@ -703,8 +736,24 @@ display: flex;
                       @endif
                     </select>
                   </td>
-                  <td class="frame9402-text30">Turutan:
-                    <select name="sequence" class="frame9403-kotaknama3" style="width: 50%;">
+                  <td class="frame9402-text32">
+                    @if ($medan->datatype == "string" )
+                      Minimum Perkataan
+                    @else
+                      Minimum Angka
+                    @endif
+                    <input type="number" name="min" class="frame9403-kotaknama3" value="{{$medan->min}}">
+                  </td>
+                  <td class="frame9402-text32">
+                    @if ($medan->datatype == "string" )
+                      Maksimum Perkataan
+                    @else
+                      Maksimum Angka
+                    @endif
+                    <input type="number" name="max" class="frame9403-kotaknama3" value="{{$medan->max}}">
+                  </td>
+                  <td class="frame9402-text33">Turutan:
+                    <select name="sequence" class="frame9403-kotaknama3">
                     @for($x=1; $x<=count($medans); $x++)
                       <option value="{{$x}}" @if($x == $medan->sequence)selected @endif>{{$x}}</option>
                     @endfor
@@ -771,7 +820,6 @@ display: flex;
       </div>
     </div> --}}
     </div>
-  </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
