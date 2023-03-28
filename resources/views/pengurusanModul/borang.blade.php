@@ -563,7 +563,7 @@ display: flex;
     </nav>
   </div>
   <div class="row">
-      <div class="card mb-3">
+      <div class="card mb-3" style="padding-left: 0px; padding-right: 0px;">
         <div class="card-header">
           <table style="overflow: auto; height: auto; max-height: 750px; width:100%;">
             <tr>
