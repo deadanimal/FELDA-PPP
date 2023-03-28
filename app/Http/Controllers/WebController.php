@@ -43,7 +43,7 @@ class WebController extends Controller
     {
         $docs = document::orderBy('updated_at', 'DESC')->get();
 
-        return view('home', compact ('docs'));
+        return view('downloadDoc', compact ('docs'));
     }
 
     public function homeSetting()

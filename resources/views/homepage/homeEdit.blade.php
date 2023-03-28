@@ -714,7 +714,7 @@
                                 <label for="title" class="frame9402-text04">
                                     <strong>Tajuk Dokumen</strong>
                                 </label>
-                                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset; width:-webkit-fill-available"  id="title" placeholder="Tajuk" name="name" required>
+                                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset; width:-webkit-fill-available"  id="title" placeholder="Tajuk" name="name" required oninput="this.value = this.value.toUpperCase()">
                                 <label for="document" class="frame9402-text04">
                                     <strong>Muat Naik Dokumen</strong>
                                 </label>
@@ -772,7 +772,7 @@
                                                 <label for="title" class="frame9402-text04">
                                                     <strong>Tajuk</strong>
                                                 </label>
-                                                <input type="text" class="frame9402-kotaknamaBorang" id="title" style="text-transform: unset; width:-webkit-fill-available" value="{{$doc->name}}" name="name" required>
+                                                <input type="text" class="frame9402-kotaknamaBorang" id="title" style="text-transform: unset; width:-webkit-fill-available" value="{{$doc->name}}" name="name" required oninput="this.value = this.value.toUpperCase()">
                                                 <label for="document" class="frame9402-text04">
                                                     <strong>Muat Naik Dokumen</strong>
                                                 </label>

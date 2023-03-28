@@ -135,7 +135,7 @@
           <div class="col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="400">
             <div class="icon-box">
               <i class="bi bi-brightness-high"></i>
-              <h4><a href="#">Muat Turun Dokumen</a></h4>
+              <h4><a href="/document">Muat Turun Dokumen</a></h4>
             </div>
           </div>
           <div class="col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="500">
