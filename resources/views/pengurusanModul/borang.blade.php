@@ -342,7 +342,7 @@ display: flex;
   font-stretch: normal;
   margin-bottom: 0;
   text-decoration: none;
-  margin-left: 2%;
+  margin-left: 1%;
 }
 .frame9402-text31 {
   color: #494949;
@@ -356,7 +356,7 @@ display: flex;
   line-height: 15.477937698364258px;
   font-stretch: normal;
   margin-bottom: 0;
-  margin-left: 10px;
+  margin-left: 1%;
   text-decoration: none;
 }
 .frame9402-text32 {
@@ -387,7 +387,7 @@ display: flex;
   line-height: 15.477937698364258px;
   font-stretch: normal;
   margin-bottom: 0;
-  margin-left: 2%;
+  margin-left: 1%;
   text-decoration: none;
 }
 .frame9402-frame8727 {

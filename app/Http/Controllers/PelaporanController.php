@@ -171,13 +171,14 @@ class PelaporanController extends Controller
         $idUser = (int)$request->route('user_id');
         $user = user::find($idUser);
         $aktiviti = Aktiviti::find($idAktiviti);
-        $jwpnParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->where('user_id', $idUser)->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->orderBy('created_at')->get();
-        
+        $expensesParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->where('user_id', $idUser)->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->whereRelation('AktivitiParameter', 'category', 'Perbelanjaan')->orderBy('created_at')->get();
+        $incomeParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->where('user_id', $idUser)->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->whereRelation('AktivitiParameter', 'category', 'Pendapatan')->orderBy('created_at')->get();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pelaporan.reportUser', compact('aktiviti', 'jwpnParameter', 'user', 'idAktiviti', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pelaporan.reportUser', compact('aktiviti', 'expensesParameter', 'incomeParameter', 'user', 'idAktiviti', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function report_print(Request $request)
@@ -186,9 +187,11 @@ class PelaporanController extends Controller
         $idUser = (int)$request->route('user_id');
         $user = user::find($idUser);
         $aktiviti = Aktiviti::find($idAktiviti);
-        $jwpnParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->where('user_id', $idUser)->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->orderBy('created_at')->get();
 
-        $data = compact('aktiviti', 'jwpnParameter', 'user');
+        $expensesParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->where('user_id', $idUser)->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->whereRelation('AktivitiParameter', 'category', 'Perbelanjaan')->orderBy('created_at')->get();
+        $incomeParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->where('user_id', $idUser)->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->whereRelation('AktivitiParameter', 'category', 'Pendapatan')->orderBy('created_at')->get();
+
+        $data = compact('aktiviti', 'expensesParameter', 'incomeParameter', 'user');
         $pdf = PDF::loadView('pelaporan.pelaporanPdf', $data)->setPaper('a4', 'landscape');;
 
         return $pdf->download('Report_'.$aktiviti->nama.'_'.$user->nama.'.pdf');

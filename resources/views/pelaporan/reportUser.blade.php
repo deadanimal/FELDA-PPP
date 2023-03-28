@@ -13,7 +13,7 @@
     <div class="card" style="width: auto;">
         <div class="card-body" style="width: auto;">
             <div class="row d-flex justify-content-center">
-                <table class="table table-bordered table-striped w-100">
+                <table class="table table-bordered w-100">
                         <thead class="text-white bg-primary w-100">
                         <tr>
                             <th class="text-center">Bil.</th>
@@ -22,39 +22,73 @@
                             <th class="text-center" scope="col">Tempoh Masa</th>
                             <th class="text-center" scope="col">Masa Dilaksanakan</th>
                             <th class="text-center" scope="col">Sasaran</th>
-                            <th colspan="2"></th>
-                        </tr>
-                        <tr>
-                            <th style="background-color: gray" colspan="6"></th>
                             <th class="text-center">Pendapatan</th>
                             <th class="text-center">Perbelanjaan</th>
                         </tr>
                     </thead>
                     @php
-                        $index = 1;
+                        $totalInc = 0;
+                        $totalExp = 0;
                     @endphp
                     <tbody>
-                        {{-- @dd($jwpnParameter[0]->users->wilayah->nama) --}}
-                        @foreach ($jwpnParameter as $jwpn)
+
+                        <tr style="background-color: #E9E9E9">
+                            <td></td>
+                            <td colspan="8" class="arial-N" >Pendapatan</td>
+                        </tr>
+                        {{-- loop for income parameter --}}
+                        @foreach ($incomeParameter as $jwpn)
                             <tr>
-                                <td class="text-center arial-N">{{$index}}</td>
+                                <td class="text-center arial-N">{{$loop->iteration}}</td>
                                 <td class="text-center arial-N">{{$jwpn->AktivitiParameter->nama}}</td>
                                 <td class="text-center arial-N">{{$jwpn->AktivitiParameter->unit}}</td>
                                 <td class="text-center arial-N">{{$jwpn->AktivitiParameter->cycle}}</td>
                                 <td class="text-center arial-N">{{date("d-m-Y",strtotime($jwpn->created_at))}}</td>
                                 <td class="text-center arial-N">{{$jwpn->AktivitiParameter->sasaran_pendapatan ?? ""}}</td>
-                                @if ($jwpn->AktivitiParameter->category == "Pendapatan")
-                                    <td class="text-center arial-N">{{$jwpn->value}}</td>
-                                    <td class="text-center arial-N"></td>
-                                @else
-                                    <td class="text-center arial-N"></td>
-                                    <td class="text-center arial-N">{{$jwpn->value}}</td>
-                                @endif
+                                <td class="text-center arial-N">{{$jwpn->value}}</td>
+                                <td class="text-center arial-N"></td>
                             </tr>
                             @php
-                            $index++;
+                            $totalInc += $jwpn->value;
                             @endphp
                         @endforeach
+
+                        <tr style="background-color: #99FFFF">
+                            <td class="text-center arial-N" colspan="2">Jumlah</td>
+                            <td colspan="4"></td>
+                            <td class="text-center arial-N">{{$totalInc}}</td>
+                            <td></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan = "8"></td>
+                        </tr>
+                        <tr style="background-color: #E9E9E9">
+                            <td></td>
+                            <td colspan="7" class="arial-N" >Perbelanjaan</td>
+                        </tr>
+                        {{-- loop for expenses parameter--}}
+                        @foreach ($expensesParameter as $jwpn)
+                            <tr>
+                                <td class="text-center arial-N">{{$loop->iteration}}</td>
+                                <td class="text-center arial-N">{{$jwpn->AktivitiParameter->nama}}</td>
+                                <td class="text-center arial-N">{{$jwpn->AktivitiParameter->unit}}</td>
+                                <td class="text-center arial-N">{{$jwpn->AktivitiParameter->cycle}}</td>
+                                <td class="text-center arial-N">{{date("d-m-Y",strtotime($jwpn->created_at))}}</td>
+                                <td class="text-center arial-N">{{$jwpn->AktivitiParameter->sasaran_pendapatan ?? ""}}</td>
+                                <td class="text-center arial-N"></td>
+                                <td class="text-center arial-N">{{$jwpn->value}}</td>
+                            </tr>
+                            @php
+                            $totalExp += $jwpn->value;
+                            @endphp
+                        @endforeach
+                        <tr style="background-color: #99FFFF">
+                            <td class="text-center arial-N" colspan="2">Jumlah</td>
+                            <td colspan="4"></td>
+                            <td></td>
+                            <td class="text-center arial-N">{{$totalExp}}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
