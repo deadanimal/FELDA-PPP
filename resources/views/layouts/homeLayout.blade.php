@@ -66,7 +66,7 @@
       <nav id="navbar" class="navbar">
         <ul>
             @if(Request::is('/'))
-                <li><a class="nav-link scrollto active" href="/">LAMAN UTAMA</a></li>
+                <li><a class="nav-link scrollto active" href="#hero">LAMAN UTAMA</a></li>
             @else
                 <li><a class="nav-link scrollto" href="/">LAMAN UTAMA</a></li>
             @endif
