@@ -35,9 +35,9 @@
                                     @endif
                                     <div class="log-masuk-frame9">
                                         <div class="log-masuk-frame12">
-                                            <span class="log-masuk-text04">Emel</span>
+                                            <span class="log-masuk-text04">Emel / Id Pengguna</span>
                                             <label>
-                                                <input class="log-masuk-rectangle46" type="email" name="email"
+                                                <input class="log-masuk-rectangle46" type="text" name="email"
                                                     placeholder="eg:aliabu@gmail.com" />
                                             </label>
                                         </div>

@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Mail;
 
 class WebController extends Controller
 {
+
+    
     public function landingPage()
     {
         $sliders = Slider::all();

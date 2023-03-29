@@ -32,6 +32,10 @@ class AuthenticatedSessionController extends Controller
     {
         $user = User::where('email', $request->email)->first();
 
+        if($user == null){
+            $user = User::where('idPengguna', $request->email)->first();
+        }
+
         if($user != null){
            if($user->status == "1") {
                 $request->authenticate();
