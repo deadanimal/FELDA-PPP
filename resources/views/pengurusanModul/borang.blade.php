@@ -705,6 +705,10 @@ display: flex;
           </div>
         </div>
 
+        @php
+            $var= 0;
+        @endphp
+
         <table style="overflow: scroll; max-height: 750px; width:100%;">
           @if (!$medans->isEmpty())
           <tbody>
@@ -757,8 +761,8 @@ display: flex;
                     @for($x=1; $x<=count($medans); $x++)
                       <option value="{{$x}}" @if($x == $medan->sequence)selected @endif>{{$x}}</option>
                     @endfor
-                    {{-- <input type="text" name="sequence" class="frame9403-kotaknama3" value="{{$medan->sequence}}"> --}}
                   </td>
+
                   <input type="hidden" name="medanID" value="{{$medan->id}}">
                   <input type="hidden" value="{{$proses->id}}" name="prosesId">
                   <input type="hidden" value="{{$modul->id}}" name="modulId">
@@ -798,6 +802,14 @@ display: flex;
                       </div>
                   </div>
                 </div>
+                
+                @php
+                  // popup alert for duplicate sequence
+                  if ($var == $medan->sequence) {
+                    Alert::error('Terdapat Duplikasi.', 'Terdapat duplikasi pada turutan medan.');   
+                  }
+                  $var = $medan->sequence;
+                @endphp
               </tr>
             @endforeach
           </tbody>

@@ -36,8 +36,9 @@
                 @if(!$kelulusanBorang->isEmpty())
                   @foreach($kelulusanBorang as $lulusBorang)
                     @if ($lulusBorang->jawapan_id == $borangJwpn->id)
-                        <td class="text-center arial">{{$lulusBorang->keputusan}}</td>
+                        <td class="text-center arial">{{$lulusBorang->keputusan}} di Peringkat {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}</td>
                         <td class="text-center arial">{{$lulusBorang->ulasan ?? ""}}</td>
+                        @break
                     @endif
                   @endforeach
                 @else
@@ -45,13 +46,13 @@
                     <td class="text-center arial"></td>
                 @endif
                 <td class="text-center arial">
-                    @if ($borangJwpn->pembetulan == 1)
+                    {{-- @if ($borangJwpn->pembetulan == 1)
                         <a href="/user/sub_borang/{{$borangJwpn->borang_id}}/edit" type="button" class="btn btn-primary">Kemaskini</a>
-                    @else
+                    @else --}}
                     <a class="btn btn-info" href="/user/sub_borang/{{$borangJwpn->borang_id}}/view" style="color: white; text-decoration:none;">
                         Papar Borang Permohon
                     </a>
-                    @endif
+                    {{-- @endif --}}
                 </td>
               </tr>
             @endforeach

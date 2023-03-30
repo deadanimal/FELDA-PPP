@@ -36,7 +36,7 @@
                     @if (!$lulusBorangs->isEmpty())
                         @foreach ($lulusBorangs as $lulusBorang)
                             @if ($borangJwpn->id == $lulusBorang->jawapan_id)
-                                {{$lulusBorang->keputusan}} Oleh {{$lulusBorang->tahap_kelulusan->user->nama}}<br>
+                                {{$lulusBorang->keputusan}} Oleh {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}<br>
                                 @break
                             @endif
                         @endforeach

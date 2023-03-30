@@ -17,6 +17,7 @@ use App\Models\Jawapan;
 use App\Models\Jawapan_medan;
 use App\Models\ProsesKelulusan;
 use App\Models\User;
+use App\Models\KategoriPengguna;
 use App\Models\Tahap_kelulusan;
 use App\Models\Kelulusan_borang;
 use Illuminate\Http\Request;
@@ -299,8 +300,10 @@ class BorangController extends Controller
 
             for($x=0; $x<count($tahapKelulusan); $x++){
                 if($x==0){
-                    if($tahapKelulusan[$x]->user_id == Auth::user()->id && $tahapKelulusan[$x]->sequence == 1){
-                        $borangJwpns = Jawapan::where('borang_id', $borangId)->get();
+                    if($tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == 1){
+                        $borangJwpns = Jawapan::where('borang_id', $borangId)
+                        ->where('wilayah', Auth::user()->wilayah)
+                        ->where('rancangan',  Auth::user()->rancangan)->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
                         $noLulusBorang = [];
                         if(!$borangJwpns->isEmpty()){
@@ -310,8 +313,9 @@ class BorangController extends Controller
                 }else{
                     $z = $x-1;
                     $y = $tahapKelulusan[$z]->sequence + 1;
-                    if($tahapKelulusan[$x]->user_id == Auth::user()->id && $tahapKelulusan[$x]->sequence == $y){
+                    if($tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $y){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
+                        ->where('wilayah', Auth::user()->wilayah )->where('rancangan',  Auth::user()->rancangan)
                         ->whereRelation('kelulusanBorang','keputusan', 'Lulus')
                         ->whereRelation('kelulusanBorang.tahap_kelulusan','sequence', $tahapKelulusan[$z]->sequence)->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
@@ -322,14 +326,12 @@ class BorangController extends Controller
                     }
                 }
             }
-
             // foreach($tahapKelulusan as $tKelulusan){
             //     if($tKelulusan->user_id == Auth::user()->id){
             //         $borangJwpns = Jawapan::where('borang_id', $borangId)->get();
             //         $tahapLulus = $tKelulusan->id;
             //     }
             // }
-
             $menuModul = Modul::where('status', 'Go-live')->get();
             $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
             $menuBorang = Borang::where('status', 1)->get();
@@ -399,10 +401,10 @@ class BorangController extends Controller
         $borangJwpns = Jawapan::where('user_id', $userId)->get();
         if (!$borangJwpns->isEmpty()) {
             foreach($borangJwpns as $jwpn ){
-                $kelulusanBorang = Kelulusan_borang::where('jawapan_id', $jwpn->id)->get();
+                $kelulusanBorang = Kelulusan_borang::with('tahap_kelulusan')->where('jawapan_id', $jwpn->id)->orderBy('created_at', 'DESC')->get();
             }
         }else{
-            $kelulusanBorang = Kelulusan_borang::where('jawapan_id', 0)->get();
+            $kelulusanBorang = Kelulusan_borang::with('tahap_kelulusan')->where('jawapan_id', 0)->orderBy('created_at', 'DESC')->get();
         }
         
         $menuModul = Modul::where('status', 'Go-live')->get();
@@ -494,20 +496,20 @@ class BorangController extends Controller
 
         $tahapKelulusan = Tahap_kelulusan::where('prosesKelulusan_id', $proseskelulusan->id)->get();
 
-        $users = User::where('status', 1)->get();
+        $category = KategoriPengguna::all();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('pengurusanModul.prosesKelulusan', compact('tahapKelulusan','proseskelulusan','users', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.prosesKelulusan', compact('tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function tahapKelulusan_add(Request $request)
     {
         $tkelulusan = new Tahap_kelulusan;
         $tkelulusan->sequence = $request->sequence;
-        $tkelulusan->user_id = $request->userid;
+        $tkelulusan->user_category = $request->userCategory;
         $tkelulusan->proseskelulusan_id = $request->proseskelulusanId;
         $tkelulusan->save();
 
@@ -523,20 +525,22 @@ class BorangController extends Controller
         $proseskelulusan = ProsesKelulusan::where('borang_id', $idBorang)->first();
 
         $tahapKelulusan = Tahap_kelulusan::where('prosesKelulusan_id', $proseskelulusan->id)->get();
-        $users = User::where('status', 1)->get();
+        $category = KategoriPengguna::all();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('pengurusanModul.prosesKelulusan', compact('tahapKelulusan','proseskelulusan','users', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+        Alert::success('Tambah Tahap Kelulusan Berjaya.', 'Tahap Kelulusan telah berjaya ditambah.');
+
+        return view('pengurusanModul.prosesKelulusan', compact('tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function tahapKelulusan_update(Request $request)
     {
         $tkelulusan = Tahap_kelulusan::find($request->tahapKelulusanID);
         $tkelulusan->sequence = $request->sequence;
-        $tkelulusan->user_id = $request->userid;
+        $tkelulusan->user_category = $request->userCategory;
         $tkelulusan->save();
 
         $idBorang = $request->borangId;
@@ -551,13 +555,15 @@ class BorangController extends Controller
         $proseskelulusan = ProsesKelulusan::where('borang_id', $idBorang)->first();
 
         $tahapKelulusan = Tahap_kelulusan::where('prosesKelulusan_id', $proseskelulusan->id)->get();
-        $users = User::where('status', 1)->get();
+        $category = KategoriPengguna::all();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('pengurusanModul.prosesKelulusan', compact('tahapKelulusan','proseskelulusan','users', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+        Alert::success('Kemaskini Tahap Kelulusan Berjaya.', 'Tahap Kelulusan telah berjaya dikemaskini.');
+
+        return view('pengurusanModul.prosesKelulusan', compact('tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function tahapKelulusan_delete(Request $request)
@@ -577,13 +583,15 @@ class BorangController extends Controller
         $proseskelulusan = ProsesKelulusan::where('borang_id', $idBorang)->first();
 
         $tahapKelulusan = Tahap_kelulusan::where('prosesKelulusan_id', $proseskelulusan->id)->get();
-        $users = User::where('status', 1)->get();
+        $category = KategoriPengguna::all();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('pengurusanModul.prosesKelulusan', compact('tahapKelulusan','proseskelulusan','users', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+        Alert::success('Padam Tahap Kelulusan Berjaya.', 'Tahap Kelulusan telah berjaya dipadama.');
+
+        return view('pengurusanModul.prosesKelulusan', compact('tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function borangConsent_add(Request $request)

@@ -26,7 +26,7 @@
           <table style="overflow: auto; height: auto; max-height: 750px; width:100%;">
             <tr>
               <td>
-                <button class="frame9403-frame7445"  onclick="openForm()">
+                <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalLulusAdd">
                   <div class="frame9403-frame7293">
                   <span class="frame9403-text21"><span>Tahap Kelulusan</span></span>
                   <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
@@ -37,23 +37,65 @@
           </table>
         </div>
 
+        <div class="modal fade" id="exampleModalLulusAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog  modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <form action="/moduls/borang/kelulusan/add" method="POST">
+                  @csrf
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Tambah Tahap Kelulusan</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                    <table class="table" style="padding: 5%;">
+                      <tr>
+                        <td class="frame9402-text04"><p class="text-xs-center" style="margin: auto;">Tahap Kelulusan</p></td>
+                        <td><input type="number" class="frame9402-kotaknama" name="sequence" required value="{{count($tahapKelulusan)+1}}"></td>
+                      </tr>
+                      <tr>
+                        <td class="frame9402-text04"><p class="text-xs-center"  style="margin: auto;">Dilulus Oleh</p></td>
+                        <td>
+                          <select name="userCategory" class="frame9403-kotaknama3">
+                              @foreach ($category as $cat)
+                                  <option value="{{$cat->id}}">{{$cat->nama}}</option>
+                              @endforeach                      
+                          </select>
+                        </td>
+                      </tr>
+                    </table>                
+
+                    <input type="hidden" value="{{$proseskelulusan->id}}" name="proseskelulusanId">
+                    <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                    <input type="hidden" value="{{$modul->id}}" name="modulId">
+                    <input type="hidden" value="{{$borang->id}}" name="borangId">
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button class="btn btn-primary">Tambah</button>                      
+                  </div>
+                </form>
+              </div>
+          </div>
+        </div>
         {{-- popup form Tambah --}}
         <div class="divPopup">
           <div class="formPopup" id="popupForm">
-            <form action="/moduls/borang/kelulusan/add" method="POST" class="formContainer">
               @csrf
-              <h2 class="frame9402-text01" style="margin-top: 0px;">Tambah Tahap Kelulusan</h2>
+              <h2 class="frame9402-text01" style="margin-top: 0px;"></h2>
               <table class="table" style="padding: 5%;">
                 <tr>
                   <td class="frame9402-text04"><p class="text-xs-center" style="margin: auto;">Tahap Kelulusan</p></td>
-                  <td><input type="number" class="frame9402-kotaknama" name="sequence" required value="{{count($tahapKelulusan)}}"></td>
+                  <td><input type="number" class="frame9402-kotaknama" name="sequence" required value="{{count($tahapKelulusan)+1}}"></td>
                 </tr>
                 <tr>
                   <td class="frame9402-text04"><p class="text-xs-center"  style="margin: auto;">Dilulus Oleh</p></td>
                   <td>
-                    <select name="userid" class="frame9403-kotaknama3">
-                        @foreach ($users as $user)
-                            <option value="{{$user->id}}">{{$user->nama}}</option>
+                    <select name="userCategory" class="frame9403-kotaknama3">
+                        @foreach ($category as $cat)
+                            <option value="{{$cat->id}}">{{$cat->nama}}</option>
                         @endforeach                      
                     </select>
                   </td>
@@ -80,12 +122,12 @@
                   @method('PUT')
                   <td class="frame9402-text31">Tahap Kelulusan:<input type="number" name="sequence" class="frame9402-kotaknama" value="{{$tKelulusan->sequence}}"></td>
                   <td class="frame9402-text30">Dilulus Oleh:
-                    <select name="userid" class="frame9403-kotaknama3">
-                        @foreach ($users as $user)
-                            <option value="{{$user->id}}" 
-                                @if($tKelulusan->user_id == $user->id)
+                    <select name="userCategory" class="frame9403-kotaknama3">
+                        @foreach ($category as $cat)
+                            <option value="{{$cat->id}}" 
+                                @if($tKelulusan->user_category == $cat->id)
                                 selected
-                                @endif >{{$user->nama}}
+                                @endif >{{$cat->nama}}
                             </option>
                         @endforeach 
                     </select>

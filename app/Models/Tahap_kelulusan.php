@@ -13,8 +13,8 @@ class Tahap_kelulusan extends Model
         return $this->belongsTo(ProsesKelulusan::class, 'prosesKelulusan_id');
     }
 
-    public function user(){
-        return $this->belongsTo(User::class, 'user_id');
+    public function kategoriPengguna(){
+        return $this->belongsTo(KategoriPengguna::class, 'user_category');
     }
 
     public function kelulusanBorang(){

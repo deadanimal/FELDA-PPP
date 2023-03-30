@@ -15,4 +15,7 @@ class KategoriPengguna extends Model
     public function tugasan() {
         return $this->hasMany(Tugasan::class);
     }
+    public function kelulusan() {
+        return $this->hasMany(Tahap_kelulusan::class);
+    }
 }
