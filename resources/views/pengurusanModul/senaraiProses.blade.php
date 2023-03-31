@@ -63,6 +63,7 @@
           @if (!$prosess->isEmpty())
             @php
               $i = 1;
+              $var = 0;
             @endphp
             @foreach ($prosess as $proses)
               @if ($i == 1 || $i% 2 == 1)
@@ -144,6 +145,10 @@
               </tr>
               @php
                 $i++;
+                if ($var == $proses->sequence) {
+                   Alert::error('Terdapat Duplikasi.', 'Terdapat duplikasi pada turutan proses.');   
+                }
+                $var = $proses->sequence;
               @endphp
             @endforeach 
           @else

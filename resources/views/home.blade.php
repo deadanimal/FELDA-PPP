@@ -46,7 +46,7 @@
                     @foreach($cards as $card)
                         @if($card->rows == $x)
                             <div class="col-sm d-flex align-items-stretch">
-                                <div class="icon-box">
+                                <div class="icon-box shadow">
                                     @if($card->picture)
                                     <picture>
                                         <img src="{{$card->picture}}" class="gambar">
@@ -60,7 +60,7 @@
                                     <h4 class="title">{{$card->title}}</h4>
 
                                     @if($card->content)
-                                        <p class="description">{!! nl2br(e($card->content)) !!}</p>
+                                        <p class="description justify">{!! nl2br(e($card->content)) !!}</p>
                                     @endif
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
               <li><i class="ri-check-double-line"></i> Rancangan</li>
             </ul>
           </div>
-          <div class="col-lg-6 pt-4 pt-lg-0">
+          <div class="col-lg-6 pt-4 pt-lg-0 justify">
             <p>
                 Skim-skim FELDA tidak hanya dikhaskan untuk membantu orang Melayu yang miskin malah beberapa buah FELDA terawal seperti Felda LBJ dan Felda Lurah Bilut menerima peneroka pelbagai kaum sperti kaum Cina dan kaum India, begitu juga FELDA di Sabah dan Sarawak yang mana peneroka terdiri 
                 dari pelbagai kaum dan keturunan yang membentuk sebilangan besar penduduk Malaysia. Sehingga tahun 2000, FELDA mengusahakan tanah sebanyak 9,000 kilometer persegi, kebanyakannya ladang kelapa sawit. Walaupun objektif utama FELDA adalah untuk mengurangkan kemiskinan di luar bandar melalui petempatan semula, 
@@ -110,47 +110,56 @@
     <!-- ======= Services Section ======= -->
     <section id="services" class="services">
       <div class="container" data-aos="fade-up">
-
+        <div class="section-title">
+            <h2>MAKLUMAT ASAS</h2>
+        </div>
         <div class="row">
-          <div class="col-sm-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-            <div class="icon-box">
-              <i class="bi bi-card-checklist"></i>
-              <h4>Jumlah Projek: {{$totalModul}}</h4>
+          <div class="col-sm-4 d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon-box box">
+                <i class="bi bi-clipboard-data" style="font-size: 60px;"></i><br>
+                <h3 style="margin: 0px;">Jumlah Projek</h3>
+                <h1 class="text" style="margin-left: 0px;">{{$totalModul}}</h1>
             </div>
           </div>
-          <div class="col-sm-4 d-flex align-items-stretch mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="200">
-            <div class="icon-box">
-              <i class="bi bi-bar-chart"></i>
-              <h4>Jumlah Peneroka: {{$totalPeneroka}}</h4>
+          <div class="col-sm-4 d-flex align-items-stretch mt-4 mt-md-0 center" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon-box box">
+              <i class="bi bi-person-square" style="font-size: 60px;"></i><br>
+              <h3 style="margin: 0px;">Jumlah Peneroka</h3>
+              <h1 class="text" style="margin-left: 0px;"> {{$totalPeneroka}}</h1>
             </div>
           </div>
-          <div class="col-sm-4 d-flex align-items-stretch mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon-box">
-              <i class="bi bi-binoculars"></i>
-              <h4>Jumlah Penyaluran Dana: RM 2.4M</h4>
+          <div class="col-sm-4 d-flex align-items-stretch mt-4 mt-md-0 center" data-aos="fade-up" data-aos-delay="300">
+            <div class="icon-box box">
+              <i class="bi bi-bank" style="font-size: 60px;"></i><br>
+              <h3 style="margin: 0px;">Jumlah Penyaluran Dana</h3>
+              <h1 class="text" style="margin-left: 0px; ">RM 2.4M</h1>
             </div>
           </div>
         </div>
+
+        <div class="section-title" style="margin-top: 10%">
+            <h2>PAUTAN LAIN</h2>
+        </div>
         <div class="row">
-          <div class="col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="400">
+          <div class="col d-flex align-items-stretch mt-4 mt-md-0 center" data-aos="fade-up" data-aos-delay="400">
             <div class="icon-box">
-              <i class="bi bi-brightness-high"></i>
+              <i class="bi bi-file-earmark-arrow-down"></i>
               <h4><a href="/document">Muat Turun Dokumen</a></h4>
             </div>
           </div>
-          <div class="col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="500">
+          <div class="col d-flex align-items-stretch mt-4 mt-md-0 center" data-aos="fade-up" data-aos-delay="500">
             <div class="icon-box">
               <i class="bi bi-calendar4-week"></i>
               <h4><a href="#">Penerbitan</a></h4>
             </div>
           </div>
-          <div class="col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="600">
+          <div class="col d-flex align-items-stretch mt-4 mt-md-0 center" data-aos="fade-up" data-aos-delay="600">
             <div class="icon-box">
               <i class="bi bi-briefcase"></i>
               <h4><a href="#">Data Terbuka</a></h4>
             </div>
           </div>
-          <div class="col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="600">
+          <div class="col d-flex align-items-stretch mt-4 mt-md-0 center" data-aos="fade-up" data-aos-delay="600">
             <div class="icon-box">
               <i class="bi bi-briefcase"></i>
               <h4><a href="#">e-Penyertaan</a></h4>
@@ -256,5 +265,26 @@
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
-
+<style>
+    .text{
+        margin-left: 0px;
+        font-weight: bold;
+        font-size: 50px;
+    }
+    .justify{
+        text-align: justify;
+        text-justify: inter-word;
+    }
+    .center{
+        justify-content: center;
+    }
+    .shadow{
+        box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    }
+    .box{
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+</style>
   @endsection
