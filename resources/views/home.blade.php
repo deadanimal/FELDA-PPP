@@ -203,7 +203,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h3>Hubungi Kami</h3>
+          <h2>Hubungi Kami</h2>
         </div>
 
         <div class="row mt-1 d-flex justify-content-end" data-aos="fade-right" data-aos-delay="100">
