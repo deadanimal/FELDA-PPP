@@ -13,6 +13,7 @@ use App\Models\Proses;
 use App\Models\Borang;
 use App\Models\Audit;
 use App\Models\Faq;
+use App\Models\Jawapan;
 use App\Mail\contactUs;
 use Illuminate\Http\Request;
 use Alert;
@@ -29,10 +30,11 @@ class WebController extends Controller
         $cards = cards::orderBy('rows', 'ASC')->get();
         $faqs = Faq::orderBy('updated_at', 'DESC')->get();
         
+        $totalDana = Count(Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->get());
         $totalModul = Count(Modul::where('status', 'Go-live')->get());
         $totalPeneroka = Count(User::whereRelation('kategori', 'nama', '=', 'Peserta')->get());
 
-        return view('home', compact ('totalModul', 'totalPeneroka', 'sliders', 'cardsTotalRows', 'cards', 'faqs'));
+        return view('home', compact ('totalDana','totalModul', 'totalPeneroka', 'sliders', 'cardsTotalRows', 'cards', 'faqs'));
     }
     public function statementList()
     {
@@ -310,13 +312,17 @@ class WebController extends Controller
 
     public function documentAdd(Request $request)
     {
+        $request->validate([
+            'file' => 'max:10000',
+        ]);
+
         $doc = new document;
         $doc->name = $request->name;
-        if($request->file()) {
-            $files = time().'.'.$request->file->extension();  
-            $request->file->move(public_path('dokumen'), $files);
-            $doc->file = '/dokumen/' . $files;
-        }
+        if($request->file('dokumen')) {
+            $files = time().'.'.$request->dokumen->extension();  
+            $request->dokumen->move(public_path('dokumen'), $files);
+            $doc->dokumen = '/dokumen/' . $files;
+        }  
         $doc->save();
 
         $audit = new Audit;
@@ -331,12 +337,14 @@ class WebController extends Controller
 
     public function documentUpdate(Request $request)
     {
+        
+
         $doc = document::find($request->docId);
         $doc->name = $request->name;
         if($request->file()) {
-            $files = time().'.'.$request->files->extension();  
-            $request->file->move(public_path('dokumen'), $files);
-            $doc->file = '/dokumen/' . $files;
+            $files = time().'.'.$request->dokumen->extension();  
+            $request->dokumen->move(public_path('dokumen'), $files);
+            $doc->dokumen = '/dokumen/' . $files;
         }
         $doc->save();
 

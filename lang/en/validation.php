@@ -161,6 +161,10 @@ return [
         'email' => [
             'unique'=> 'Emel sudah di daftar',
         ],
+
+        'file' =>[
+            'max' => 'Dokumen melebihi 2MB.'
+        ]
     ],
 
     /*

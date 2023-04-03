@@ -146,7 +146,7 @@
               @php
                 $i++;
                 if ($var == $proses->sequence) {
-                   Alert::error('Terdapat Duplikasi.', 'Terdapat duplikasi pada turutan proses.');   
+                   Alert::warning('Terdapat Duplikasi.', 'Terdapat duplikasi pada turutan proses.');   
                 }
                 $var = $proses->sequence;
               @endphp

@@ -4,8 +4,8 @@
 }
 </style>
 <nav id="sidebar" class="sidebar" style="max-width: auto; min-width:auto;">
-    <a class="sidebar-brand" href="/" style="background:#781E2A;">
-        <img src="/Image/logo.png" style="max-width: 230px; background:#ffff; border-radius:4px;"/>
+    <a class="sidebar-brand" href="/" style="background:#781E2A; display: flex;justify-content: center;">
+        <img src="/Image/logo.png" style="max-width: 245px; background:#ffff; border-radius:4px;"/>
     </a>
     <div class="sidebar-content">
         <div class="sidebar-user">

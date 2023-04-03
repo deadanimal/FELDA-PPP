@@ -698,6 +698,12 @@
                 </table>
             </div>
 
+            @php
+                foreach($errors->all() as $error) {
+                    Alert::error('Tidak Berjaya.', $error);   
+                }
+            @endphp
+
             {{-- Modal Tambah Doc --}}
             <div class="modal fade" id="exampleModaladdDoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -718,7 +724,7 @@
                                 <label for="document" class="frame9402-text04">
                                     <strong>Muat Naik Dokumen</strong>
                                 </label>
-                                <input class="form-control" id="document" type="file" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf" name="file"/>
+                                <input id="document" type="file" name="dokumen" required/>
                             
                             </div>
                             <div class="modal-footer">
@@ -747,7 +753,7 @@
                         <td class="text-center">{{ $loop->iteration }}</td>
                         <td class="text-center arial-N">{{ $doc->name }}</td>
                         <td class="text-center arial-N">
-                                <a href="{{ $doc->file }}">Lihat Dokumen</a>
+                                <a href="{{ $doc->dokumen }}">Lihat Dokumen</a>
                         </td>
                         <td class="text-center align-middle">
                             <!-- Button trigger modal update-->
@@ -776,8 +782,8 @@
                                                 <label for="document" class="frame9402-text04">
                                                     <strong>Muat Naik Dokumen</strong>
                                                 </label>
-                                                <p><a href="{{ $doc->file }}">Lihat dokumen</a> yang telah dimuat naik</p>
-                                                <input id="document" type="file" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf" name="file"/>
+                                                <p><a href="{{ $doc->dokumen }}">Lihat dokumen</a> yang telah dimuat naik</p>
+                                                <input id="document" type="file" name="dokumen"/>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>

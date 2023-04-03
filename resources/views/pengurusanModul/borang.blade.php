@@ -806,7 +806,7 @@ display: flex;
                 @php
                   // popup alert for duplicate sequence
                   if ($var == $medan->sequence) {
-                    Alert::error('Terdapat Duplikasi.', 'Terdapat duplikasi pada turutan medan.');   
+                    Alert::warning('Terdapat Duplikasi.', 'Terdapat duplikasi pada turutan medan.');   
                   }
                   $var = $medan->sequence;
                 @endphp

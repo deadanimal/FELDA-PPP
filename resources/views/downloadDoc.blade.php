@@ -35,7 +35,7 @@
                     @foreach($docs as $doc)
                     <tr>
                         <td class="text-center">{{$doc->name}}</td>
-                        <td class="text-center"><a href="{{$doc->file}}" download>Muat Turun</a></td>
+                        <td class="text-center"><a href="{{$doc->dokumen}}" download>Muat Turun</a></td>
                     </tr>
                     @endforeach
                 </tbody>

@@ -56,8 +56,8 @@
 
       <h1 class="logo">
         <a href="/">
-            <img src="/SVG/FELDA_logo.svg" style="height:200px; background:#ffff; border-radius:4px;"/>
-            <img src="/Image/logo.png" style="width: 100px; height:100px; background:#ffff; border-radius:4px;"/>
+            <img src="/SVG/FELDA_logo.svg" style="width: auto; height: 200px; min-height: 80px; background:#ffff; border-radius:4px;"/>
+            <img src="/Image/logo.png" style="width: auto; height: 200px; min-height: 80px; background:#ffff; border-radius:4px;"/>
         </a>
       </h1>
       <!-- Uncomment below if you prefer to use an image logo -->
@@ -98,9 +98,9 @@
     <footer id="footer">
         <div class="footer-top">
         <div class="container">
-            <div class="row">
+            <div class="row" style="display: flex;justify-content: center;">
 
-            <div class="col-lg-3 col-md-6 footer-links">
+            <div class="col-lg-3 col-md-6 footer-links size">
                 <h4>Useful Links</h4>
                 <ul>
                 <li><i class="bx bx-chevron-right"></i> <a href="/">Laman Utama</a></li>
@@ -111,7 +111,7 @@
                 </ul>
             </div>
 
-            <div class="col-lg-3 col-md-6 footer-contact">
+            <div class="col-lg-3 col-md-6 footer-contact size">
                 <h4>Hubungi Kami</h4>
                 <p>
                     Lembaga Kemajuan Tanah Persekutuan,<br>
@@ -126,9 +126,9 @@
 
             </div>
 
-            <div class="col-lg-3 col-md-6 footer-info">
+            <div class="col-lg-3 col-md-6 footer-info size">
                 <h3>Tentang Felda</h3>
-                <p>Lembaga Kemajuan Tanah Persekutuan (FELDA) (bahasa Inggeris: Federal Land Development Authority atau FELDA) 
+                <p style="size">Lembaga Kemajuan Tanah Persekutuan (FELDA) (bahasa Inggeris: Federal Land Development Authority atau FELDA) 
                     adalah satu agensi kerajaan Malaysia yang menangani penempatan semula penduduk luar bandar yang miskin ke kawasan-kawasan yang baru dibangun agar meningkatkan taraf ekonomi mereka.</p>
                 <div class="social-links mt-3">
                 <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -164,6 +164,9 @@
             border-radius: 50px;
             border: 2px solid #0880e8;
             background: #fff;
+        }
+        .size{
+            font-size: 12px;
         }
     </style>
 </body>

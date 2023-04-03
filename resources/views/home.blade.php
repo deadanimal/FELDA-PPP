@@ -132,7 +132,7 @@
             <div class="icon-box box">
               <i class="bi bi-bank" style="font-size: 60px;"></i><br>
               <h3 style="margin: 0px;">Jumlah Penyaluran Dana</h3>
-              <h1 class="text" style="margin-left: 0px; ">RM 2.4M</h1>
+              <h1 class="text" style="margin-left: 0px;">{{$totalDana}}</h1>
             </div>
           </div>
         </div>
@@ -203,7 +203,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Hubungi Kami</h2>
+          <h3>Hubungi Kami</h3>
         </div>
 
         <div class="row mt-1 d-flex justify-content-end" data-aos="fade-right" data-aos-delay="100">
@@ -252,7 +252,7 @@
                     <input type="text" class="form-control" name="subject" id="subject" placeholder="Perkara" required>
                 </div>
                 <div class="form-group mt-3">
-                    <textarea class="form-control text" name="pesanan" rows="5" placeholder="Pesanan" required></textarea>
+                    <textarea class="form-control" name="pesanan" rows="5" placeholder="Pesanan" required></textarea>
                 </div>
                 <div class="text-center" style="margin-top:2%"><button type="submit" class="hantar">Hantar</button></div>
             </form>
@@ -265,6 +265,7 @@
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
+ 
 <style>
     .text{
         margin-left: 0px;
