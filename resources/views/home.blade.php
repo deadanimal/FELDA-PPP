@@ -2,7 +2,7 @@
 
 @section('content')
   <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex justify-cntent-center align-items-center">
+  <section id="hero" class="d-flex justify-cntent-center align-items-center" >
     <div id="heroCarousel" data-bs-interval="5000" class="container carousel carousel-fade" data-bs-ride="carousel">
         
       <!-- Slider loop -->
@@ -33,7 +33,7 @@
     </div>
   </section><!-- End Hero -->
 
-  <main id="main">
+  <main id="main"  class="target">
 
     <!-- ======= Card Section ======= -->
     <section id="icon-boxes" class="icon-boxes">
@@ -265,7 +265,20 @@
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
- 
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script>
+    $('.text').each(function () {
+        $(this).prop('Counter',0).animate({
+            Counter: $(this).text()
+        }, {
+            duration: 2500,
+            easing: 'swing',
+            step: function (now) {
+                $(this).text(Math.ceil(now));
+            }
+        });
+    });
+  </script>
 <style>
     .text{
         margin-left: 0px;

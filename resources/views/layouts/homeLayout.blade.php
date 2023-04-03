@@ -87,9 +87,16 @@
                     @endauth
                 </li>
             @endif
+            
         </ul>
+        
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
+      <div style="margin-left: 2%;">
+        <a class="btn zoom"><i class="bi bi-zoom-in" style="color: #f6b024;font-size: 1.5em;"></i></a>
+        <a class="btn zoom-init"><i class="bi bi-arrow-clockwise" style="color: #f6b024;font-size: 1.5em;"></i></a>
+        <a class="btn zoom-out"><i class="bi bi-zoom-out" style="color: #f6b024;font-size: 1.5em;"></i></a>
+      </div>
 
     </div>
   </header><!-- End Header -->
@@ -156,6 +163,24 @@
 
     <!-- Template Main JS File -->
     <script src="/js/main.js"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+    <script>
+        	var zoom = 1;
+		
+		$('.zoom').on('click', function(){
+			zoom += 0.1;
+			$('.target').css('transform', 'scale(' + zoom + ')');
+		});
+		$('.zoom-init').on('click', function(){
+			zoom = 1;
+			$('.target').css('transform', 'scale(' + zoom + ')');
+		});
+		$('.zoom-out').on('click', function(){
+			zoom -= 0.1;
+			$('.target').css('transform', 'scale(' + zoom + ')');
+		});
+    </script>
     <style>
         .hantar{
             padding: 10px 32px;
