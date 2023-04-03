@@ -108,7 +108,7 @@
             <div class="row" style="display: flex;justify-content: center;">
 
             <div class="col-lg-3 col-md-6 footer-links size">
-                <h4>Useful Links</h4>
+                <h5>Useful Links</h5>
                 <ul>
                 <li><i class="bx bx-chevron-right"></i> <a href="/">Laman Utama</a></li>
                 <li><i class="bx bx-chevron-right"></i> <a href="#contact">Helpdesk</a></li>
@@ -119,8 +119,8 @@
             </div>
 
             <div class="col-lg-3 col-md-6 footer-contact size">
-                <h4>Hubungi Kami</h4>
-                <p>
+                <h5>Hubungi Kami</h5>
+                <p class="size">
                     Lembaga Kemajuan Tanah Persekutuan,<br>
                     Menara FELDA,<br>
                     Platinum Park, No. 11,<br>
@@ -134,8 +134,8 @@
             </div>
 
             <div class="col-lg-3 col-md-6 footer-info size">
-                <h3>Tentang Felda</h3>
-                <p style="size">Lembaga Kemajuan Tanah Persekutuan (FELDA) (bahasa Inggeris: Federal Land Development Authority atau FELDA) 
+                <h4>Tentang Felda</h4>
+                <p style="font-size:10px">Lembaga Kemajuan Tanah Persekutuan (FELDA) (bahasa Inggeris: Federal Land Development Authority atau FELDA) 
                     adalah satu agensi kerajaan Malaysia yang menangani penempatan semula penduduk luar bandar yang miskin ke kawasan-kawasan yang baru dibangun agar meningkatkan taraf ekonomi mereka.</p>
                 <div class="social-links mt-3">
                 <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -191,7 +191,7 @@
             background: #fff;
         }
         .size{
-            font-size: 12px;
+            font-size: 10px;
         }
     </style>
 </body>
