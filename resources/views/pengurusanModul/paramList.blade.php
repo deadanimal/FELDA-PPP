@@ -77,7 +77,7 @@
                           </tr>
                           <tr>
                             <td><p class="frame9402-text04">Sasaran</p></td>
-                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Sasaran Pendapatan" name="sasaran"></td>
+                            <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Sasaran" name="sasaran"></td>
                           </tr>
                           <tr>
                             <td><p class="frame9402-text04">Kategori</p></td>
