@@ -13,8 +13,16 @@
                 active 
                 @endif ">
                 <div class="carousel-container">
-                    <h2 class="animate__animated animate__fadeInDown">{{$slider->title}}</h2>
+                    @if($slider->title)
+                        <h2 class="animate__animated animate__fadeInDown">{{$slider->title}}</h2>
+                    @endif
+
                     <p class="animate__animated animate__fadeInUp">
+                        @if($slider->picture)
+                        <picture>
+                            <img src="{{$slider->picture}}" class="animate__animated animate__fadeInUp slider">
+                        </picture>
+                        @endif
                             {!! nl2br(e($slider->content)) !!}
                     </p>
                 </div>
@@ -280,6 +288,10 @@
     });
   </script>
 <style>
+    .slider{
+        width: 60%;
+        height: auto;
+    }
     .text{
         margin-left: 0px;
         font-weight: bold;

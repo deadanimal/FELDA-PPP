@@ -41,10 +41,10 @@
       </div>
       <div class="contact-info d-none d-md-block">
         <div class="social-links mt-3">
-            <a href="#" class="youtube"><i class="bx bxl-youtube" style="font-size: 3em"></i></a>
-            <a href="#" class="twitter"><i class="bx bxl-twitter" style="font-size: 3em"></i></a>
-            <a href="#" class="facebook"><i class="bx bxl-facebook" style="font-size: 3em"></i></a>
-            <a href="#" class="tiktok"><i class="bx bxl-tiktok" style="font-size: 3em"></i></a>
+            <a href="#" class="youtube"><i class="bx bxl-youtube" style="font-size: 2em"></i></a>
+            <a href="#" class="twitter"><i class="bx bxl-twitter" style="font-size: 2em"></i></a>
+            <a href="#" class="facebook"><i class="bx bxl-facebook" style="font-size: 2em"></i></a>
+            <a href="#" class="tiktok"><i class="bx bxl-tiktok" style="font-size: 2em"></i></a>
           </div>
       </div>
     </div>
@@ -94,8 +94,8 @@
       </nav><!-- .navbar -->
       <div style="margin-left: 2%;">
         <a class="btn zoom"><i class="bi bi-zoom-in" style="color: #f6b024;font-size: 1.5em;"></i></a>
-        <a class="btn zoom-init"><i class="bi bi-arrow-clockwise" style="color: #f6b024;font-size: 1.5em;"></i></a>
-        <a class="btn zoom-out"><i class="bi bi-zoom-out" style="color: #f6b024;font-size: 1.5em;"></i></a>
+        <a class="btn zoom-init"><i class="bi bi-arrow-clockwise" style="color: #105CCB;font-size: 1.5em;"></i></a>
+        <a class="btn zoom-out"><i class="bi bi-zoom-out" style="color: #1d311d;font-size: 1.5em;"></i></a>
       </div>
 
     </div>

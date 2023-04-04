@@ -42,11 +42,12 @@
                             </button>
                         </div>
                         <form action="/home/slider/add" method="POST"  enctype="multipart/form-data">
+                            @csrf
                             <div class="modal-body">
                                 <label for="title" class="frame9402-text04">
                                     <strong>Tajuk Slider</strong>
                                 </label>
-                                <input type="text" class="frame9402-kotaknamaBorang" id="title" placeholder="Tajuk Slider" name="title" required oninput="this.value = this.value.toUpperCase()">
+                                <input type="text" class="frame9402-kotaknamaBorang" id="title" placeholder="Tajuk Slider" name="title" oninput="this.value = this.value.toUpperCase()">
                                 <label for="content" class="frame9402-text04">
                                     <strong>Kandungan Slider</strong>
                                 </label>
@@ -57,11 +58,11 @@
                                 </label>
                                 <input class="form-control" id="picture" type="file" accept="image/*" name="picture"/>
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                <button class="btn btn-primary">Tambah</button>
+                            </div>
                         </form>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                            <button class="btn btn-primary">Kemaskini</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -82,7 +83,14 @@
                     @foreach ($sliders as $slider)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
-                        <td class="text-center arial-N">{{ $slider->title }}</td>
+                        @if ($slider->title)
+                            <td class=""text-center arial-N">
+                                {!! nl2br(e($slider->title)) !!}
+                            </td>
+                        @else
+                            <td class="text-center arial-N">-</td>
+                        @endif
+                        
                         @if ($slider->content)
                             <td class="arial-N">
                                 {!! nl2br(e($slider->content)) !!}
@@ -93,7 +101,7 @@
 
                         @if ($slider->picture)
                             <td class="text-center arial-N">
-                                <a href="{{ $card->picture }}">Gambar</a>
+                                <a href="{{ $slider->picture }}">Gambar</a>
                             </td>
                         @else
                             <td class="text-center arial-N">-</td>
@@ -122,7 +130,7 @@
                                                 <label for="title" class="frame9402-text04">
                                                     <strong>Tajuk Slider</strong>
                                                 </label>
-                                                <input type="text" class="frame9402-kotaknamaBorang" value="{{$slider->title}}" name="title" required oninput="this.value = this.value.toUpperCase()">
+                                                <input type="text" class="frame9402-kotaknamaBorang" value="{{$slider->title ?? ""}}" name="title" oninput="this.value = this.value.toUpperCase()">
                                                 <label for="content" class="frame9402-text04">
                                                     <strong>Kandungan Slider</strong>
                                                 </label>
