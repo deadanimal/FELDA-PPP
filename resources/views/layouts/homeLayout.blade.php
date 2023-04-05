@@ -93,9 +93,9 @@
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
       <div style="margin-left: 2%;">
-        <a class="btn zoom"><i class="bi bi-zoom-in" style="color: #f6b024;font-size: 1.5em;"></i></a>
+        <a class="btn zoom"><i class="bi bi-zoom-in" style="color: #105CCB;font-size: 1.5em;"></i></a>
         <a class="btn zoom-init"><i class="bi bi-arrow-clockwise" style="color: #105CCB;font-size: 1.5em;"></i></a>
-        <a class="btn zoom-out"><i class="bi bi-zoom-out" style="color: #1d311d;font-size: 1.5em;"></i></a>
+        <a class="btn zoom-out"><i class="bi bi-zoom-out" style="color: #105CCB;font-size: 1.5em;"></i></a>
       </div>
 
     </div>
