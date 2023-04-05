@@ -167,7 +167,7 @@
                                         <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->cycle}}" name="cycle" required></td>
                                       </tr>
                                       <tr style="background-color: rgba(0,0,0,0)">
-                                        <td style="vertical-align: middle;"><p class="frame9402-text04">Sasaran Pendapatan</p></td>
+                                        <td style="vertical-align: middle;"><p class="frame9402-text04">Sasaran</p></td>
                                         <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$param->sasaran}}" name="sasaran"></td>
                                       </tr>
                                       <tr style="background-color: rgba(0,0,0,0)">

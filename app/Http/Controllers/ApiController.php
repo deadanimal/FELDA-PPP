@@ -41,29 +41,54 @@ class ApiController extends Controller
                     'token'=> $user->createToken($request->email)->plainTextToken
                 ], 200);       
         }
+
+        public function home(Request $request) {
+            $user = $request->user();
+            $moduls = Modul::where('status', 'Go-live')->get();
+            return response()->json([
+                'data'=> [
+                    'user' => $user,
+                    'moduls' => $moduls,
+                ],
+                'message'=> ''
+            ], 200);                    
+        }         
         
-        public function list_projects(Request $request) {
+        public function modul_detail(Request $request) {
+            $id_modul = $request->route('id');
+            $modul = Modul::find( $id_modul);
                 return response()->json([
-                    'data'=> '',
+                    'data'=> [
+                        'modul' => $modul,
+                    ],
                     'message'=> ''
                 ], 200);                    
         } 
   
-        public function get_project(Request $request) {
+        public function jenis_laporan(Request $request) {
+                $id_ternakan = $request->route('id');
+                $jenisKemaskini = JenisKemaskini::where('id_jenisTernakans', $id_ternakan)->orderBy("updated_at", "DESC")->get();
                 return response()->json([
-                    'data'=> '',
+                    'data'=> [
+                        'jenisKemaskini' => $jenisKemaskini,
+                    ],
                     'message'=> ''
                 ], 200);          
         }   
   
-        public function search_project(Request $request) {
+        public function laporan(Request $request) {
+            $id_jenisKemaskini = $request->route('id');
+            $aktivitis = Aktiviti::where('id_jenisKemaskini', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
                 return response()->json([
-                    'data'=> '',
+                    'data'=> [
+                        'aktivitis'=> $aktivitis,
+                    ],
                     'message'=> ''
                 ], 200);                          
         }     
         
-        public function update_report(Request $request) {
+        public function laporan_add(Request $request) {
+
                 return response()->json([
                     'data'=> '',
                     'message'=> ''
