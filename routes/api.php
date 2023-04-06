@@ -13,8 +13,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/jenis_laporan/{id}', [ApiController::class, 'jenis_laporan']);
     Route::get('/laporan/{id}', [ApiController::class, 'laporan']);
     Route::post('/laporan/add', [ApiController::class, 'laporan_add']);
-
-
+    Route::get('/tugasan', [ApiController::class, 'tugasan']);
+    Route::get('/userReport', [ApiController::class, 'user_report']);
+    Route::post('/tugasan/update', [ApiController::class, 'tugasan_update']);
+    
+    
     Route::get('/projects', [ApiController::class, 'list_projects']);
     Route::post('/projects/search', [ApiController::class, 'search_project']);    
     Route::get('/projects/{project_id}', [ApiController::class, 'get_project']);    

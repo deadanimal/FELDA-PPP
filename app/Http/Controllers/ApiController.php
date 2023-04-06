@@ -79,34 +79,80 @@ class ApiController extends Controller
         public function laporan(Request $request) {
             $id_jenisKemaskini = $request->route('id');
             $aktivitis = Aktiviti::where('id_jenisKemaskini', $request->kemaskiniID)->orderBy("updated_at", "DESC")->get();
+            $aktiviti_parameter = AktivitiParameter::all();
+
                 return response()->json([
                     'data'=> [
                         'aktivitis'=> $aktivitis,
+                        'aktiviti_parameter' => $aktiviti_parameter,
                     ],
                     'message'=> ''
                 ], 200);                          
         }     
         
         public function laporan_add(Request $request) {
+            $id_aktiviti_parameter = $request->id_aktiviti_parameter;
+
+            try {
+                $parameter = new Jawapan_parameter;
+                $parameter->user_id = $request->user()->id;
+                $parameter->value = $request->value;
+                $parameter->aktivitiParameter_id = $id_aktiviti_parameter;
+                $parameter->save();
 
                 return response()->json([
                     'data'=> '',
-                    'message'=> ''
+                    'message'=> 'Laporan has successfully saved'
                 ], 201);                  
-        }   
-  
-        public function list_notifications(Request $request) {
+
+            } catch (\Throwable $th) {
                 return response()->json([
                     'data'=> '',
+                    'message'=> 'Laporan failed to saved'
+                ], 201);   
+            }
+                               
+        }   
+        public function user_report(Request $request) {
+            $id_user = $request->user()->id;
+            $id_aktiviti = $request->id_aktiviti;
+            $bulan = $request->bulan;
+
+            $jawapan_parameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')
+            ->where('user_id', $idUser)->whereRelation('AktivitiParameter.aktiviti','id', $id_aktiviti)
+            ->whereRelation('AktivitiParameter', 'category', $catgeory)
+            ->whereMonth('created_at', '=', $bulan)->orderBy('created_at')->get();
+                
+                return response()->json([
+                    'data'=> [
+                        'jawapan_parameter' => $jawapan_parameter,
+                    ],
                     'message'=> ''
                 ], 200);          
         }   
   
-        public function list_tasks(Request $request) {
+        public function tugasan(Request $request) {
+            $id_user = $request->user()->id;
+            $tugasan= Senarai_tugasan::where('user_id', $user)->get();
+
                 return response()->json([
-                    'data'=> '',
+                    'data'=> [
+                        'tugasan' => $tugasan,
+                    ],
                     'message'=> ''
-                ], 200);                          
+                ], 200);          
+        }   
+  
+        public function tugasan_detailed(Request $request) {
+                $id_tugasan = $request->route('id');
+                $perkara_tugasan = Perkara_Tugasan::where('tugasan_id', $id_tugasan)->get();
+
+                return response()->json([
+                    'data'=> [
+                        'perkara_tugasan' => $perkara_tugasan,
+                    ],
+                    'message'=> ''
+                ], 200);                               
         }   
   
         public function get_sitevisits(Request $request) {

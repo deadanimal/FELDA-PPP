@@ -392,6 +392,19 @@ class BorangController extends Controller
             }
             $lulusBorang->save();
         }
+
+        // check amount tahap lulus borang
+        $count = count(Tahap_kelulusan::whereRelation('prosesKelulusan','borang_id', '=', $borangId)->get());
+
+        // check amount kelulusan borang that if its final go into if condition
+        $count2 = count(Kelulusan_borang::whereRelation('tahap_kelulusan.prosesKelulusan','borang_id', '=', $borangId)->get());
+
+        if($count == $count2){
+            $jawapan = Jawapan::find($jawapanID);
+            $jawapan->status = "Lulus";
+            $jawapan->save();
+        }
+
         return redirect('/user/borang_app/'.$borangId.'/user_list');
     }
     
