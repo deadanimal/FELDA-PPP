@@ -21,6 +21,7 @@
     "dependencies": {
         "bootstrap-icons": "^1.10.2",
         "datatables.net": "^1.13.1",
-        "datatables.net-dt": "^1.13.1"
+        "datatables.net-dt": "^1.13.1",
+        "shiki": "^0.14.1"
     }
 }

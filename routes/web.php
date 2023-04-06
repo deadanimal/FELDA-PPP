@@ -112,6 +112,11 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/moduls/borang/kelulusan/update', [BorangController::class, 'tahapKelulusan_update']);
     Route::delete('/moduls/borang/kelulusan/delete', [BorangController::class, 'tahapKelulusan_delete']);
 
+    Route::get('/moduls/borang/suratKelulusan', [BorangController::class, 'surat_kelulusan']);
+    Route::post('/moduls/borang/suratKelulusan/add', [BorangController::class, 'suratKelulusan_add']);
+    Route::put('/moduls/borang/suratKelulusan/update', [BorangController::class, 'suratKelulusan_update']);
+    Route::get('/moduls/borang/suratKelulusan/view', [BorangController::class, 'suratKelulusan_view']);
+
     Route::post('/moduls/tugasan/add', [ModulController::class, 'tugasan_add']);
 
     Route::get('/userBorang/view/{idBorang}', [BorangController::class, 'userBorang_view']);

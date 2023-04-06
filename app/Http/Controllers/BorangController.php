@@ -13,6 +13,7 @@ use App\Models\Wilayah;
 use App\Models\Proses;
 use App\Models\Medan;
 use App\Models\Audit;
+use App\Models\Surat;
 use App\Models\Jawapan;
 use App\Models\Jawapan_medan;
 use App\Models\ProsesKelulusan;
@@ -510,6 +511,7 @@ class BorangController extends Controller
         $tahapKelulusan = Tahap_kelulusan::where('prosesKelulusan_id', $proseskelulusan->id)->get();
 
         $category = KategoriPengguna::all();
+        $surat = Surat::all();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -605,6 +607,88 @@ class BorangController extends Controller
         Alert::success('Padam Tahap Kelulusan Berjaya.', 'Tahap Kelulusan telah berjaya dipadama.');
 
         return view('pengurusanModul.prosesKelulusan', compact('tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function surat_kelulusan(Request $request)
+    {
+        $idBorang = $request->borangId;
+        $borang = Borang::find($idBorang);
+
+        $idModul = $request->modulId;
+        $modul = Modul::find($idModul);
+
+        $idProses = $request->prosesId;
+        $proses = Proses::find($idProses);
+
+        $id_tahapKelulusan = $request->tahapKelulusanID;
+        $surat = Surat::where('kelulusan_id', $id_tahapKelulusan)->first();
+        $tahapKelulusan = Tahap_kelulusan::find($id_tahapKelulusan);
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
+        return view('pengurusanModul.suratKelulusan', compact('surat','tahapKelulusan', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function suratKelulusan_add(Request $request)
+    {
+        $idBorang = $request->borangId;
+        $borang = Borang::find($idBorang);
+
+        $tahapKelulusanID = $request->tahapKelulusanID;
+        $tahapKelulusan = Tahap_kelulusan::find($tahapKelulusanID);
+
+        $surat = new Surat;
+        $surat->address = $request->address;
+        $surat->title = $request->title;
+        $surat->body = $request->body;
+        $surat->kelulusan_id = $id_tahapKelulusan;
+        $surat->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Surat Kelulusan ".$tahapKelulusan->kategoriPengguna->nama." pada Borang ".$borang->namaBorang;
+        $audit->save();
+
+        Alert::success('Cipta Surat Kelulusan Berjaya.', 'Surat kelulusan telah berjaya dicipta.');
+
+        return back();
+    }
+
+    public function suratKelulusan_update(Request $request)
+    {
+        $idBorang = $request->borangId;
+        $borang = Borang::find($idBorang);
+
+        $tahapKelulusanID = $request->tahapKelulusanID;
+        $tahapKelulusan = Tahap_kelulusan::find($tahapKelulusanID);
+
+        $surat = Surat::find($request->suratID);
+        $surat->address = $request->address;
+        $surat->title = $request->title;
+        $surat->body = $request->body;
+        $surat->kelulusan_id = $tahapKelulusanID;
+        $surat->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Surat Kelulusan ".$tahapKelulusan->kategoriPengguna->nama." pada Borang ".$borang->namaBorang;
+        $audit->save();
+
+        Alert::success('Kemaskini Surat Kelulusan Berjaya.', 'Surat kelulusan telah berjaya dikemaskini.');
+
+        return back();
+    }
+
+    public function suratKelulusan_view(Request $request)
+    {
+        $tahapKelulusanID = $request->tahapKelulusanID;
+        $tahapKelulusan = Tahap_kelulusan::find($tahapKelulusanID);
+
+        $surat = Surat::find($request->suratID);
+
+        return view('pengurusanModul.viewSurat', compact('surat','tahapKelulusan'));
     }
 
     public function borangConsent_add(Request $request)

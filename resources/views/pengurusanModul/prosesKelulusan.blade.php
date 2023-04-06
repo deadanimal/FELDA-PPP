@@ -15,7 +15,8 @@
         <li class="breadcrumb-item"><a href="/moduls">Modul </a></li>
         <li class="breadcrumb-item"><a href="/moduls/{{$modul->id}}/proses">{{$modul->nama}}</a></li>
         <li class="breadcrumb-item"><a href="/moduls/{{$modul->id}}/{{$proses->id}}/borang">{{$proses->nama}}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{$borang->namaBorang}}</li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/moduls/{{$modul->id}}/{{$proses->id}}/borang/{{$borang->id}}">{{$borang->namaBorang}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Kelulusan</li>
       </ol>
     </nav>
   </div>
@@ -64,13 +65,11 @@
                           </select>
                         </td>
                       </tr>
-                    </table>                
-
+                    </table>     
                     <input type="hidden" value="{{$proseskelulusan->id}}" name="proseskelulusanId">
                     <input type="hidden" value="{{$proses->id}}" name="prosesId">
                     <input type="hidden" value="{{$modul->id}}" name="modulId">
                     <input type="hidden" value="{{$borang->id}}" name="borangId">
-
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
@@ -80,38 +79,7 @@
               </div>
           </div>
         </div>
-        {{-- popup form Tambah --}}
-        <div class="divPopup">
-          <div class="formPopup" id="popupForm">
-              @csrf
-              <h2 class="frame9402-text01" style="margin-top: 0px;"></h2>
-              <table class="table" style="padding: 5%;">
-                <tr>
-                  <td class="frame9402-text04"><p class="text-xs-center" style="margin: auto;">Tahap Kelulusan</p></td>
-                  <td><input type="number" class="frame9402-kotaknama" name="sequence" required value="{{count($tahapKelulusan)+1}}"></td>
-                </tr>
-                <tr>
-                  <td class="frame9402-text04"><p class="text-xs-center"  style="margin: auto;">Dilulus Oleh</p></td>
-                  <td>
-                    <select name="userCategory" class="frame9403-kotaknama3">
-                        @foreach ($category as $cat)
-                            <option value="{{$cat->id}}">{{$cat->nama}}</option>
-                        @endforeach                      
-                    </select>
-                  </td>
-                </tr>
-              </table>
-              <input type="hidden" value="{{$proseskelulusan->id}}" name="proseskelulusanId">
-              <input type="hidden" value="{{$proses->id}}" name="prosesId">
-              <input type="hidden" value="{{$modul->id}}" name="modulId">
-              <input type="hidden" value="{{$borang->id}}" name="borangId">
-
-              <button type="submit" class="btn">Tambah</button>
-              <button type="button" class="btn cancel" onclick="closeForm()">Batal</button>
-            </form>
-          </div>
-        </div>
-
+        
         <table style="overflow: scroll; max-height: 750px; width:100%;">
           @if (!$tahapKelulusan->isEmpty())
           <tbody>
@@ -140,6 +108,21 @@
                     <button class="frame9402-rectangle828246" style="height: auto;" title="Simpan"><svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;margin-top: 5px;" viewBox="0 0 530 512" width="31px"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"></path></svg></button>
                   </td>
                 </form>
+                
+                {{-- Surat --}}
+                <td class="frame9402-frame8727">
+                  <form action="/moduls/borang/suratKelulusan" method="GET" style="margin-bottom: 0px;">
+                    <button type="submit" class="frame9402-rectangle828246" style="margin-left: auto; margin-right:auto;">
+                      <input type="hidden" name="tahapKelulusanID" value="{{$tKelulusan->id}}">
+                      <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                      <input type="hidden" value="{{$modul->id}}" name="modulId">
+                      <input type="hidden" value="{{$borang->id}}" name="borangId">
+                      <i class="fas fa-fw fa-envelope-open-text" style="color: #CD352A; font-size: 1.8em"></i>
+                    </button>
+                  </form>
+                </td>
+
+                {{-- Delete Kelulusan --}}
                 <td class="frame9402-frame8727">
                   <button type="button" class="frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModal{{$tKelulusan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
                 </td>
@@ -196,29 +179,6 @@
   </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-function openForm() {
-  document.getElementById("popupForm").style.display = "block";
-}
-function closeForm() {
-  document.getElementById("popupForm").style.display = "none";
-}
-</script>
-<script>
-    $(function () {
-        $("#graph_select").change(function() {
-            var val = $(this).val();
-            if(val === "pilot_form") {
-                $("#pilot_graph_form").show();
-                $("#client_graph_form").hide();
-            }
-            else if(val === "client_form") {
-                $("#client_graph_form").show();
-                $("#pilot_graph_form").hide();
-            }
-        });
-    });
-</script>
 <style>
     .frame9402-frame9402 {
       width: 100%;
