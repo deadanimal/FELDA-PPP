@@ -12,56 +12,18 @@
 <div class="container-fluid">
     <div class="header">
       <h1 class="header-title">
-          Jenis Kemaskini {{$jenisTernakan->nama}}
+          Muka Surat {{$page->nama}}
       </h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/home">Home </a></li>
-          {{-- <li class="breadcrumb-item"><a href="/moduls/{{$modul->id}}/proses">{{$modul->nama}}</a></li>
-          <li class="breadcrumb-item active" aria-current="page"><a href="/moduls/{{$modul->id}}/{{$proses->id}}/borang">{{$proses->nama}}</a></li> --}} --}}
+            <li class="breadcrumb-item active" aria-current="page">{{$page->nama}}</li>
         </ol>
       </nav>
     </div>
     
     <div class="row">
       <div class="col-12">
-        <div class="card frame9402-box">
-          <form action="/home/page/update" method="POST" class="frame9402-frame9278">
-            @csrf
-            @method("PUT")
-            <input type="hidden" name="pageId" value="{{$page->id}}">
-            <input type="hidden" name="prosesId" value="{{$proses->id}}">
-            <input type="hidden" name="modulId" value="{{$modul->id}}">
-            <table class="table table-borderless">
-                <tr>
-                    <td>
-                        <label for="pageName" class="frame9402-text04">
-                            <strong>Nama Muka Surat</strong>
-                        </label>
-                    </td>
-                    <td>
-                        <input type="text" class="frame9402-kotaknamaProses" id="pageName" value="{{$page->nama}}" name="pageName" required oninput="this.value = this.value.toUpperCase()">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="pageName" class="frame9402-text04">
-                            <strong>Urutan</strong>
-                        </label>
-                    </td>
-                    <td>
-                        <input type="text" class="frame9402-kotaknamaProses" id="pageName" value="{{$page->sequence}}" name="pageName" required oninput="this.value = this.value.toUpperCase()">
-                    </td>
-                </tr>
-            </table>
-            <button type="submit" class="frame9403-frame7445">
-              <div class="frame9403-frame7293">
-                <span class="frame9403-text21"><span>Kemaskini</span></span>
-                <img src="/SVG/kemaskini.svg" class="frame9403-group7527">
-              </div>
-            </button>
-          </form>
-        </div>
         <div class="card box-shadow">
             <div class="card-header">
                 <table style="width: 100%">
@@ -91,7 +53,7 @@
                           <form action="/home/page/item/add" method="POST">
                             @csrf
                               <div class="modal-body">
-                                <table>
+                                <table class="table table-borderless">
                                   <tr>
                                       <td><p class="frame9402-text04">Nama Item</p></td>
                                       <td><input type="text" class="frame9402-kotaknamaBorang" placeholder="Nama item" name="namaItem" required oninput="this.value = this.value.toUpperCase()"></td>
@@ -99,10 +61,10 @@
                                   <tr>
                                     <td><p class="frame9402-text04">Jenis Item</p></td>
                                     <td>
-                                        <select name="category" class="form-Control">
+                                        <select name="category" class="frame9402-kotaknamaBorang">
                                             <option value="Slider">Slider</option>
                                             <option value="Card">Card</option>
-                                            <option value="FAQ">FAQ</option>
+                                            <option value="Dropdown">Dropdown</option>
                                             <option value="Article">Article</option>
                                       </select>
                                     </td>
@@ -113,11 +75,9 @@
                                 </table>
                               </div>
                                 <input type="hidden" value="{{$page->id}}" name="pageId">
-                                <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                                <input type="hidden" value="{{$modul->id}}" name="modulId">
                               <div class="modal-footer">
                                   <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                  <button class="btn btn-primary">Tambah</button>
+                                  <button type="submit" class="btn btn-primary">Tambah</button>
                               </div>
                           </form>
                       </div>
@@ -144,14 +104,76 @@
                       <td class="text-center arial-N" style="text-transform: uppercase;">{{$item->row}}</td>
                       <td class="text-center">
                         <div class="btn-group btn-group-toggle ">
-                          <form action="/home/page/item/edit" method="GET">
-                            <input type="hidden" name="itemId" value="{{$item->id}}">
-                            <input type="hidden" name="jenisItem" value="{{$item->category}}">
-        
-                            <button class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Masuk">
-                              <img src="/SVG/pencil.svg" title="kemaskini"/>
-                            </button>
-                          </form>
+
+                            <a href="home/page/item/{{$item->id}}" class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Masuk">
+                                <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A; width: 32px; height: 30px;" viewBox="0 0 556 502"><path d="M88.7 223.8L0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z"/></svg>
+                            </a>
+
+                            <!-- Button trigger modal edit -->
+                            <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalEdit{{$item->id}}" title="Padam"><img src="/SVG/pencil.svg"/></button>
+
+                            <!-- Modal edit-->
+                            <div class="modal fade" id="exampleModalEdit{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Kemaskini Item {{$item->nama}}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form action="/home/page/item/update" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-body">
+                                            <table class="table table-borderless">
+                                                <tr style="background-color: #fff">
+                                                    <td><p class="frame9402-text04">Nama Item</p></td>
+                                                    <td><input type="text" class="frame9402-kotaknamaBorang" value="{{$item->nama}}" name="namaItem" required oninput="this.value = this.value.toUpperCase()"></td>
+                                                </tr>
+                                                <tr style="background-color: #fff">
+                                                    <td><p class="frame9402-text04">Jenis Item</p></td>
+                                                    <td>
+                                                        <select name="category" class="frame9402-kotaknamaBorang">
+                                                            <option value="Slider" 
+                                                            @if ($item->category == "Slider")
+                                                            selected 
+                                                            @endif>
+                                                            Slider</option>
+
+                                                            <option value="Card"
+                                                            @if ($item->category == "Card")
+                                                            selected 
+                                                            @endif>Card</option>
+
+                                                            <option value="Dropdown"
+                                                            @if ($item->category == "Dropdown")
+                                                            selected 
+                                                            @endif>Dropdown</option>
+
+                                                            <option value="Article"
+                                                            @if ($item->category == "Article")
+                                                            selected 
+                                                            @endif>Article</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr style="background-color: #fff">
+                                                    <td><p class="frame9402-text04">Baris Item</p></td>
+                                                    <td><input type="number" class="frame9402-kotaknamaBorang" value="{{$item->row}}" name="row" required oninput="this.value = this.value.toUpperCase()"></td>
+                                                </tr>
+                                            </table>
+                                            </div>
+                                            <input type="hidden" value="{{$page->id}}" name="pageId">
+                                            <input type="hidden" value="{{$item->id}}" name="itemId">
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                                <button class="btn btn-primary">Kemaskini</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
                           <!-- Button trigger modal delete -->
                           <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalDel{{$item->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
@@ -174,6 +196,7 @@
                                       <form method="post" action="/home/page/item/delete">
                                           @csrf
                                           @method('DELETE')
+                                          <input type="hidden" value="{{$page->id}}" name="pageId">
                                           <input type="hidden" value="{{$item->id}}" name="itemId">
                                           <button class="btn btn-danger">Ya</button>
                                       </form>
@@ -188,7 +211,7 @@
                 </tbody>
             </table>
             @else
-                <h2 class="frame9402-text01" style="color:black; margin-bottom:5%;"> Tiada Jenis Kemaskini </h2>
+                <h2 class="frame9402-text01" style="color:black; margin-bottom:5%;"> Tiada Item </h2>
             @endif
         </div>
       </div>
@@ -197,7 +220,7 @@
 
 <style>
     .arial-N{
-      font-family: 'Arial-N', sans-serif;
+      font-family: 'Arial', sans-serif;
       font-size: 18px;
     }
     .frame9402-box {
@@ -382,7 +405,7 @@
       justify-content: center;
       background-color: #A2335D;
       margin-left:auto;
-      margin-right: auto;
+      margin-right: 10%;
       margin-top: 20px;
       cursor: pointer;
     }
@@ -437,25 +460,6 @@
     font-size: 18px;
     padding-left:10px;
     text-transform: uppercase;
-    }
-    .formContainer .btn {
-        padding: 12px 20px;
-        border: none;
-        background-color: #8ebf42;
-        color: #fff;
-        font-family: 'Poppins', sans-serif;
-        font-weight: 600;
-        cursor: pointer;
-        width: 100%;
-        margin-bottom: 15px;
-        opacity: 0.8;
-    }
-    .formContainer .cancel {
-        background-color: #cc0000;
-    }
-    .formContainer .btn:hover,
-    .openButton:hover {
-        opacity: 1;
     }
     .frame9402-input {
     width: 100%;

@@ -113,17 +113,82 @@ class WebController extends Controller
         return redirect('/home');
     }
 
-    public function page_edit(Request $request)
+    public function item_list(Request $request)
     {
         $pageId = (int) $request->route('pageId');
+
         $page = Page::find($pageId);
+        $pageItems = Item::where('page_id', $pageId)->orderBy('row', 'ASC')->get();
         
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.page', compact ('page', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.pageItem', compact ('page','pageItems', 'menuModul', 'menuProses', 'menuBorang'));
     }
+
+    public function item_add(Request $request)
+    {
+        $page = Page::find($request->pageId);
+
+        $item = new Item;
+        $item->nama = $request->namaItem;
+        $item->category = $request->category;
+        $item->row = $request->row;
+        $item->page_id = $page->id;
+        $item->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Tambah item ".$item->nama.' pada Laman '.$page->nama;
+        $audit->save();
+
+        Alert::success('Cipta Muka Surat Berjaya.', 'Muka surat telah berjaya dicipta.');
+
+        return redirect('/home/page/'.$page->id.'/item');
+    }
+
+    public function item_update(Request $request)
+    {
+        $page = Page::find($request->pageId);
+
+        $item = Item::find($request->itemId);
+        $item->nama = $request->namaItem;
+        $item->category = $request->category;
+        $item->row = $request->row;
+        $item->page_id = $page->id;
+        $item->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini item ".$item->nama.' pada Laman '.$page->nama;
+        $audit->save();
+
+        Alert::success('Kemaskini Muka Surat Berjaya.', 'Muka surat telah berjaya dikemaskini.');
+
+        return redirect('/home/page/'.$page->id.'/item');
+    }
+    
+    public function item_delete(Request $request)
+    {
+        $page = Page::find($request->pageId);
+
+        $item = Item::find($request->itemId);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam page ".$page->nama.' pada Laman '.$page->nama;
+        $audit->save();
+
+        $item->delete();
+
+        Alert::success('Padam Muka Surat Berjaya.', 'Muka surat telah berjaya dipadam.');
+
+        return redirect('/home/page/'.$page->id.'/item');
+    }
+
+    
+
 
     public function homeSetting()
     {

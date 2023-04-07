@@ -46,7 +46,12 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/home/page/update',  [WebController::class, 'page_update']);
     Route::delete('/home/page/delete',  [WebController::class, 'page_delete']);
     
-    Route::get('/home/page/{pageId}/item',  [WebController::class, 'page_edit']);
+    Route::get('/home/page/{pageId}/item',  [WebController::class, 'item_list']);
+    Route::post('/home/page/item/add',  [WebController::class, 'item_add']);
+    Route::put('/home/page/item/update',  [WebController::class, 'item_update']);
+    Route::delete('/home/page/item/delete',  [WebController::class, 'item_delete']);
+    
+    Route::get('/home/page/item/{itemId}',  [WebController::class, 'item_category']);
 
     Route::post('/home/slider/add',  [WebController::class, 'sliderAdd']);
     Route::put('/home/slider/update',  [WebController::class, 'sliderUpdate']);

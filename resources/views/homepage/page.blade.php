@@ -8,7 +8,7 @@
 
   <div class="header">
     <h1 class="header-title">
-        Tetapan Muka Surat
+        Tetapan Laman
     </h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -34,7 +34,7 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">Cipta Muka Surat</h2>
+                <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">Cipta Laman</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -43,9 +43,9 @@
                 @csrf
                 <div class="modal-body">
                   <label for="pageName" class="frame9402-text04">
-                    <strong>Nama Muka Surat</strong>
+                    <strong>Nama Laman</strong>
                   </label>
-                  <input type="text" class="frame9402-kotaknamaProses" id="pageName" placeholder="Nama Muka Surat" name="pageName" required oninput="this.value = this.value.toUpperCase()">
+                  <input type="text" class="frame9402-kotaknamaProses" id="pageName" placeholder="Nama Laman" name="pageName" required oninput="this.value = this.value.toUpperCase()">
                   <input type="hidden" value="{{count($pages)+1}}" name="sequence">
                 </div>
                 <div class="modal-footer">
@@ -64,7 +64,7 @@
             <table class="table table-bordered table-striped w-100 arial">
             <thead class="text-white bg-primary w-100 arial">
                 <tr>
-                    <th scope="col" class="text-center">Nama</th>
+                    <th scope="col" class="text-center">Nama Laman</th>
                     <th scope="col" class="text-center">Urutan</th>
                     <th scope="col" class="text-center" style="width:20%">Tindakan</th>
                 </tr>
@@ -87,7 +87,7 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Padam Jenis Ternakan/Tanaman {{$page->nama}}</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Kemaskini Laman {{$page->nama}}</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                         </button>
@@ -137,13 +137,13 @@
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Padam Jenis Ternakan/Tanaman {{$page->nama}}</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Padam Laman {{$page->nama}}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Anda Pasti Mahu Padam Muka Surat {{$page->nama}}?<p>
+                                    <p>Anda Pasti Mahu Padam laman {{$page->nama}}?<p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
