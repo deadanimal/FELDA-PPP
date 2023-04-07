@@ -384,7 +384,7 @@
                               </button>
                           </div>
                           <div class="modal-body">
-                              <p>Anda Pasti Mahu Jenis Ternakan/Tanaman {{$jenisTernakan->nama}}?<p>
+                              <p>Anda Pasti Mahu Padam Jenis Ternakan/Tanaman {{$jenisTernakan->nama}}?<p>
                           </div>
                           <div class="modal-footer">
                               <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      

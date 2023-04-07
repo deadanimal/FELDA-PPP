@@ -30,10 +30,10 @@
                     </div>
 
                     <h2 class="entry-title">
-                        <a href="blog-single.html">{{$stat->title}}</a>
+                       {{$stat->title}}
                     </h2>
 
-                    <div class="entry-content">
+                    <div class="entry-content justify">
                         <p>{{$stat->statement}}</p>
                     </div>
 
@@ -49,4 +49,10 @@
     </section><!-- End Blog Section -->
 
   </main><!-- End #main -->
+
+<style>
+    .justify {
+    text-align: justify;
+    }
+</style>
 @endsection

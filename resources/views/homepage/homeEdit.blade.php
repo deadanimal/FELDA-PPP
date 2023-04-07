@@ -84,7 +84,7 @@
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
                         @if ($slider->title)
-                            <td class=""text-center arial-N">
+                            <td class="text-center arial-N">
                                 {!! nl2br(e($slider->title)) !!}
                             </td>
                         @else

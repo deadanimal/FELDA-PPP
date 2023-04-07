@@ -7,6 +7,8 @@ use App\Models\Slider;
 use App\Models\cards;
 use App\Models\document;
 use App\Models\statement;
+use App\Models\Page;
+use App\Models\Item;
 use App\Models\Modul;
 use App\Models\User;
 use App\Models\Proses;
@@ -50,12 +52,84 @@ class WebController extends Controller
         return view('downloadDoc', compact ('docs'));
     }
 
+    public function page_list()
+    {
+        $pages = Page::orderBy('sequence', 'ASC')->get();
+        
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('homepage.page', compact ('pages', 'menuModul', 'menuProses', 'menuBorang'));
+    }
+    
+    public function page_add(Request $request)
+    {
+        $page = new Page;
+        $page->nama = $request->pageName;
+        $page->sequence = $request->sequence;
+        $page->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Tambah page ".$page->nama.' pada tetapan laman utama';
+        $audit->save();
+
+        Alert::success('Cipta Muka Surat Berjaya.', 'Muka surat telah berjaya dicipta.');
+
+        return redirect('/home');
+    }
+
+    public function page_update(Request $request)
+    {
+        $page = Page::find($request->pageId);
+        $page->nama = $request->pageName;
+        $page->sequence = $request->sequence;
+        $page->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini page ".$page->nama.' pada tetapan laman utama';
+        $audit->save();
+
+        Alert::success('Kemaskini Muka Surat Berjaya.', 'Muka surat telah berjaya dikemaskini.');
+
+        return redirect('/home');
+    }
+    
+    public function page_delete(Request $request)
+    {
+        $page = Page::find($request->pageId);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam page ".$page->nama.' pada tetapan laman utama';
+        $audit->save();
+
+        $page->delete();
+
+        Alert::success('Padam Muka Surat Berjaya.', 'Muka surat telah berjaya dipadam.');
+
+        return redirect('/home');
+    }
+
+    public function page_edit(Request $request)
+    {
+        $pageId = (int) $request->route('pageId');
+        $page = Page::find($pageId);
+        
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('homepage.page', compact ('page', 'menuModul', 'menuProses', 'menuBorang'));
+    }
+
     public function homeSetting()
     {
         $sliders = Slider::all();
         $cards = cards::orderBy('rows', 'ASC')->get();
         $faqs = Faq::orderBy('updated_at', 'DESC')->get();
-        $stats = statement::orderBy('updated_at', 'DESC')->get();
         $docs = document::orderBy('updated_at', 'DESC')->get();
         
         $menuModul = Modul::where('status', 'Go-live')->get();

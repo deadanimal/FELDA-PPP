@@ -39,7 +39,14 @@ Route::middleware(['auth'])->group(function () {
     // });
     Route::get('/dashboard',  [UserController::class, 'dashboard']);
 
-    Route::get('/home',  [WebController::class, 'homeSetting']);
+    // Route::get('/home',  [WebController::class, 'homeSetting']);
+
+    Route::get('/home',  [WebController::class, 'page_list']);
+    Route::post('/home/page/add',  [WebController::class, 'page_add']);
+    Route::put('/home/page/update',  [WebController::class, 'page_update']);
+    Route::delete('/home/page/delete',  [WebController::class, 'page_delete']);
+    
+    Route::get('/home/page/{pageId}/item',  [WebController::class, 'page_edit']);
 
     Route::post('/home/slider/add',  [WebController::class, 'sliderAdd']);
     Route::put('/home/slider/update',  [WebController::class, 'sliderUpdate']);
