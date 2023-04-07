@@ -30,11 +30,13 @@
                         <tr>
                             <td><h1 class="card-title"> Surat Tahap Kelulusan {{$tahapKelulusan->kategoriPengguna->nama}} Bagi Borang {{$borang->namaBorang}}</h1></td>
                             <td class="text-end">
-                                <form action="/moduls/borang/suratKelulusan/view">
-                                    <input type="hidden" name="tahapKelulusanID" value="{{$tahapKelulusan->id}}">
-                                    <input type="hidden" name="suratID" value="{{$surat->id}}">
-                                    <button class="btn btn-primary btn-lg" style="background-color: #A2335D"><span class="arial">Papar Surat</span></button>
-                                </form>
+                                @if ($surat !=null)
+                                    <form action="/moduls/borang/suratKelulusan/view">
+                                        <input type="hidden" name="tahapKelulusanID" value="{{$tahapKelulusan->id}}">
+                                        <input type="hidden" name="suratID" value="{{$surat->id}}">
+                                        <button class="btn btn-primary btn-lg" style="background-color: #A2335D"><span class="arial">Papar Surat</span></button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     </table>

@@ -295,7 +295,7 @@
     .text{
         margin-left: 0px;
         font-weight: bold;
-        font-size: 50px;
+        font-size: 100px;
     }
     .justify{
         text-align: justify;
