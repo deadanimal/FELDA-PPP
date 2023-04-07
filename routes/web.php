@@ -52,7 +52,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/home/page/item/delete',  [WebController::class, 'item_delete']);
     
     Route::get('/home/page/item/{itemId}',  [WebController::class, 'item_category']);
-
+    
+    Route::get('/home/item/{itemId}/slider',  [WebController::class, 'slider_list']);
     Route::post('/home/slider/add',  [WebController::class, 'sliderAdd']);
     Route::put('/home/slider/update',  [WebController::class, 'sliderUpdate']);
     Route::delete('/home/slider/delete',  [WebController::class, 'sliderDelete']);

@@ -55,12 +55,13 @@ class WebController extends Controller
     public function page_list()
     {
         $pages = Page::orderBy('sequence', 'ASC')->get();
-        
+        $docs = document::orderBy('updated_at', 'DESC')->get();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.page', compact ('pages', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.page', compact ('docs','pages', 'menuModul', 'menuProses', 'menuBorang'));
     }
     
     public function page_add(Request $request)
@@ -72,10 +73,10 @@ class WebController extends Controller
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Tambah page ".$page->nama.' pada tetapan laman utama';
+        $audit->action = "Tambah laman ".$page->nama.' pada tetapan laman utama';
         $audit->save();
 
-        Alert::success('Cipta Muka Surat Berjaya.', 'Muka surat telah berjaya dicipta.');
+        Alert::success('Cipta Laman Berjaya.', 'Lamant telah berjaya dicipta.');
 
         return redirect('/home');
     }
@@ -89,7 +90,7 @@ class WebController extends Controller
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Kemaskini page ".$page->nama.' pada tetapan laman utama';
+        $audit->action = "Kemaskini laman ".$page->nama.' pada tetapan laman utama';
         $audit->save();
 
         Alert::success('Kemaskini Muka Surat Berjaya.', 'Muka surat telah berjaya dikemaskini.');
@@ -108,7 +109,7 @@ class WebController extends Controller
 
         $page->delete();
 
-        Alert::success('Padam Muka Surat Berjaya.', 'Muka surat telah berjaya dipadam.');
+        Alert::success('Padam Laman Berjaya.', 'Laman telah berjaya dipadam.');
 
         return redirect('/home');
     }
@@ -143,7 +144,7 @@ class WebController extends Controller
         $audit->action = "Tambah item ".$item->nama.' pada Laman '.$page->nama;
         $audit->save();
 
-        Alert::success('Cipta Muka Surat Berjaya.', 'Muka surat telah berjaya dicipta.');
+        Alert::success('Cipta Laman Berjaya.', 'Laman telah berjaya dicipta.');
 
         return redirect('/home/page/'.$page->id.'/item');
     }
@@ -164,7 +165,7 @@ class WebController extends Controller
         $audit->action = "Kemaskini item ".$item->nama.' pada Laman '.$page->nama;
         $audit->save();
 
-        Alert::success('Kemaskini Muka Surat Berjaya.', 'Muka surat telah berjaya dikemaskini.');
+        Alert::success('Kemaskini Laman Berjaya.', 'Laman telah berjaya dikemaskini.');
 
         return redirect('/home/page/'.$page->id.'/item');
     }
@@ -182,13 +183,55 @@ class WebController extends Controller
 
         $item->delete();
 
-        Alert::success('Padam Muka Surat Berjaya.', 'Muka surat telah berjaya dipadam.');
+        Alert::success('Padam item Berjaya.', 'Item telah berjaya dipadam.');
 
         return redirect('/home/page/'.$page->id.'/item');
     }
 
-    
+    public function item_category(Request $request)
+    {
+        $itemId = (int) $request->route('itemId');
 
+        $item = Item::find($itemId);
+
+        switch($item->category) {
+            case('Slider'):
+ 
+                return redirect('/home/item/'.$item->id.'/slider');
+  
+                break;
+            case('Card'):
+
+                return redirect('/home/item/'.$item->id.'/card');
+    
+                break;
+            case('Dropdown'):
+
+                return redirect('/home/item/'.$item->id.'/dropdown');
+
+                break;
+            case('Article'):
+
+                return redirect('/home/item/'.$item->id.'/Article');
+    
+                break;
+        }
+    }
+
+    public function slider_list(Request $request)
+    {
+        $itemId = (int) $request->route('itemId');
+
+        $item = Item::find($itemId);
+
+        $sliders = Slider::where('item_id', $itemId)->get();
+        
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('homepage.slider', compact ('sliders','item', 'menuModul', 'menuProses', 'menuBorang'));
+    }
 
     public function homeSetting()
     {
@@ -206,6 +249,8 @@ class WebController extends Controller
 
     public function sliderAdd(Request $request)
     {
+        $item = Item::find($request->itemId);
+
         $slider = new Slider;
         $slider->title = $request->title;
         $slider->content = $request->content;
@@ -213,7 +258,8 @@ class WebController extends Controller
             $picture = time().'.'.$request->picture->extension();  
             $request->picture->move(public_path('upload'), $picture);
             $slider->picture = '/upload/' . $picture;
-        }        
+        }   
+        $slider->item_id = $request->itemId;     
         $slider->save();
 
         $audit = new Audit;
@@ -223,11 +269,13 @@ class WebController extends Controller
 
         Alert::success('Cipta Slider Berjaya.', 'Slider telah berjaya dicipta.');
 
-        return redirect('/home');
+        return redirect('/home/item/'.$item->id.'/slider');
     }
 
     public function sliderUpdate(Request $request)
     {
+        $item = Item::find($request->itemId);
+
         $slider = Slider::find($request->sliderId);
         $slider->title = $request->title;
         $slider->content = $request->content;
@@ -245,11 +293,13 @@ class WebController extends Controller
 
         Alert::success('Kemaskini Slider Berjaya.', 'Slider telah berjaya dikemaskini.');
 
-        return redirect('/home');
+        return redirect('/home/item/'.$item->id.'/slider');
     }
 
     public function sliderDelete(Request $request)
     {
+        $item = Item::find($request->itemId);
+
         $IdSlider = $request->sliderId;
         $slider = Slider::find($IdSlider);
 
@@ -262,7 +312,7 @@ class WebController extends Controller
 
         Alert::success('Padam Slider Berjaya.', 'Slider telah berjaya dipadam.');
 
-        return redirect('/home');
+        return redirect('/home/item/'.$item->id.'/slider');
     }
 
     public function cardAdd(Request $request)

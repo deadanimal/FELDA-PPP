@@ -12,4 +12,20 @@ class Item extends Model
     public function page(){
         return $this->belongsTo(Page::class, 'page_id');
     }
+
+    public function card(){
+        return $this->hasMany(cards::class);
+    }
+
+    public function dropdown(){
+        return $this->hasMany(dropdown::class);
+    }
+
+    public function article(){
+        return $this->hasMany(article::class);
+    }
+
+    public function slider(){
+        return $this->hasMany(Slider::class);
+    }
 }
