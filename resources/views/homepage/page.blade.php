@@ -75,6 +75,7 @@
                     <tr>
                         <th scope="col" class="text-center">Nama Laman</th>
                         <th scope="col" class="text-center">Turutan</th>
+                        <th scope="col" class="text-center">Status</th>
                         <th scope="col" class="text-center" style="width:20%">Tindakan</th>
                     </tr>
                 </thead>
@@ -83,6 +84,7 @@
                     <tr>
                         <td class="text-center arial" style="text-transform: uppercase;">{{$page->nama}}</td>
                         <td class="text-center arial" style="text-transform: uppercase;">{{$page->sequence}}</td>
+                        <td class="text-center arial" style="text-transform: uppercase;">{{$page->status}}</td>
                         <td class="text-center arial">
 
                             <a href="home/page/{{$page->id}}/item" class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Masuk">
@@ -110,14 +112,33 @@
                                                     <tr scope="row" style="background-color: #fff">
                                                         <td>
                                                             <label for="pageName" class="frame9402-text04">
-                                                                <strong>Nama Muka Surat</strong>
+                                                                <strong>Nama Laman</strong>
                                                             </label>
                                                         </td>
                                                         <td>
                                                             <input type="text" class="frame9402-kotaknamaProses" id="pageName" value="{{$page->nama}}" name="pageName" required oninput="this.value = this.value.toUpperCase()">
                                                         </td>
                                                     </tr>
-                                                    <tr scope="row">
+                                                    <tr scope="row" style="background-color: #fff">
+                                                        <td>
+                                                            <label for="status" class="frame9402-text04">
+                                                                <strong>Status</strong>
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <select name="status" class="frame9402-kotaknamaProses">
+                                                                <option value="Active" 
+                                                                @if ($page->status == "Active")
+                                                                    selected
+                                                                @endif>Aktif</option>
+                                                                <option value="Inactive"
+                                                                @if ($page->status == "Inactive")
+                                                                    selected
+                                                                @endif>Tidak Aktif</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr scope="row" style="background-color: #fff">
                                                         <td>
                                                             <label for="pageSequence" class="frame9402-text04">
                                                                 <strong>Turutan</strong>
@@ -178,7 +199,7 @@
                 </tbody>
                 </table>
             @else
-                <h2 class="frame9402-text01" style="color:black; margin-bottom:5%;"> Tiada Muka Surat</h2>
+                <h2 class="frame9402-text01" style="color:black; margin-bottom:5%;"> Tiada Laman</h2>
             @endif
         </div>
 

@@ -8,13 +8,13 @@
 
   <div class="header">
     <h1 class="header-title">
-        Senarai Slider 
+        Senarai Kad 
     </h1>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/home">Home </a></li>
             <li class="breadcrumb-item"><a href="/home/page/{{$item->page_id}}/item">{{$item->page->nama}}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Slider</li>
+            <li class="breadcrumb-item active" aria-current="page">Kad</li>
         </ol>
       </nav>
   </div>
@@ -25,45 +25,74 @@
             <div class="card-header">
                 <table style="width: 100%">
                     <tr>
-                    <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Slider</h1></td>
-                    <td>
-                        <button class="frame9403-frame7445"  data-toggle="modal" data-target="#modalCenterAddSlider">
-                            <div class="frame9403-frame7293">
-                                <span class="frame9403-text21"><span>Tambah Slider</span></span>
-                                <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                            </div>
-                        </button>
-                    </td>
+                        <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Kad</h1></td>
+                        <td>
+                            <button class="frame9403-frame7445" data-toggle="modal" data-target="#ModalCenterTambahKad">
+                                <div class="frame9403-frame7293">
+                                    <span class="frame9403-text21"><span>Cipta Kad</span></span>
+                                    <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                                </div>
+                            </button>
+                        </td>
                     </tr>
                 </table>
             </div>
 
-            {{-- popup form Tambah Slider --}}
-            <div class="modal fade" id="modalCenterAddSlider" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            {{-- modal Tambah Kad --}}
+            <div class="modal fade" id="ModalCenterTambahKad" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA SLIDER</h2>
+                            <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA KAD</h2>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="/home/slider/add" method="POST"  enctype="multipart/form-data">
+                        <form action="/home/card/add" method="POST"  enctype="multipart/form-data">
                             @csrf
                             <div class="modal-body">
-                                <label for="title" class="frame9402-text04">
-                                    <strong>Tajuk Slider</strong>
-                                </label>
-                                <input type="text" class="frame9402-kotaknamaBorang" id="title" placeholder="Tajuk Slider" name="title" oninput="this.value = this.value.toUpperCase()">
-                                <label for="content" class="frame9402-text04">
-                                    <strong>Kandungan Slider</strong>
-                                </label>
-                                <textarea class="form-control" id="content" rows="5" name="content" placeholder="Kandungan Slider"></textarea>
-                                <br>
-                                <label for="picture" class="frame9402-text04">
-                                    <strong>Muat Naik Gambar</strong>
-                                </label>
-                                <input class="form-control" id="picture" type="file" accept="image/*" name="picture"/>
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td>
+                                            <label for="rows" class="frame9402-text04">
+                                            <strong>Baris Kad</strong>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="frame9402-kotaknamaBorang" id="rows" name="rows" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="tajukKad" class="frame9402-text04">
+                                            <strong>Tajuk Kad</strong>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="frame9402-kotaknamaBorang" id="tajukKad" placeholder="Tajuk Kad" name="title" required oninput="this.value = this.value.toUpperCase()">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="content" class="frame9402-text04">
+                                            <strong>Kadungan Kad</strong>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <textarea class="form-control" id="content" rows="5" name="content" placeholder="Kadungan Kad"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="picture" class="frame9402-text04">
+                                            <strong>Muat Naik Gambar</strong>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <input id="picture" type="file" accept="image/*" name="picture" class="form-control"/>
+                                        </td>
+                                    </tr>
+                                </table>
                                 <input type="hidden" value="{{$item->id}}" name="itemId">
                             </div>
                             <div class="modal-footer">
@@ -75,132 +104,133 @@
                 </div>
             </div>
 
-            {{-- senarai Slider --}}
-            @if (!$sliders->isEmpty())
+            {{-- senarai Kad --}}
+            @if (!$cards->isEmpty())
             <table class="table table-bordered table-striped w-100">
-                <thead class="text-white bg-primary w-100">                    
+                <thead class="text-white bg-primary w-100">
                     <tr class="text-center">
                         <th class="text-center" style="width: 1%">No.</th>
-                        <th class="text-center">Tajuk Slider</th>
-                        <th class="text-center" style="width: 50%">Kandungan Slider</th>
-                        <th class="text-center">Gambar</th>
-                        <th class="text-center" style="width: 11%">Tindakan</th>
+                        <th scope="col" class="text-center">Tajuk Kad</th>
+                        <th scope="col" class="text-center" style="width: 50%">Kadungan Kad</th>
+                        <th scope="col" class="text-center">Gambar</th>
+                        <th scope="col" class="text-center">Baris Kad</th>
+                        <th scope="col" style="width: 11%">Tindakan</th>
                     </tr>
                 </thead>
-                <tbody>          
-                    @foreach ($sliders as $slider)
-                    <tr>
-                        <td class="text-center">{{ $loop->iteration }}</td>
-                        @if ($slider->title)
-                            <td class="text-center arial-N">
-                                {!! nl2br(e($slider->title)) !!}
-                            </td>
-                        @else
-                            <td class="text-center arial-N">-</td>
-                        @endif
-                        
-                        @if ($slider->content)
-                            <td class="arial-N">
-                                {!! nl2br(e($slider->content)) !!}
-                            </td>
-                        @else
-                            <td class="text-center arial-N">-</td>
-                        @endif
+                <tbody>
+                    @foreach ($cards as $card)
+                        <tr>
+                            <td class="text-center"> {{ $loop->iteration }}</td>
+                            <td class="text-center arial-N" style="text-transform: uppercase;">{{$card->title}}</td>
 
-                        @if ($slider->picture)
-                            <td class="text-center arial-N">
-                                <a href="{{ $slider->picture }}">Gambar</a>
-                            </td>
-                        @else
-                            <td class="text-center arial-N">-</td>
-                        @endif
+                            @if ($card->content)
+                                <td class="arial-N">{!! nl2br(e($card->content)) !!}</td>
+                            @else
+                                <td class="text-center arial-N">-</td>
+                            @endif
 
-                        <td class="text-center align-middle">
-                            <!-- Button trigger modal update-->
-                            <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#exampleModalCenter{{$slider->id}}">
-                                <img src="/SVG/pencil.svg"/>
-                            </button>
-        
-                            <!-- Modal update-->
-                            <div class="modal fade" id="exampleModalCenter{{$slider->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">KEMASKINI {{$slider->title}}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        </div>
-                                        <form method="post" action="/home/slider/update">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="modal-body">
-                                                <label for="title" class="frame9402-text04">
-                                                    <strong>Tajuk Slider</strong>
-                                                </label>
-                                                <input type="text" class="frame9402-kotaknamaBorang" value="{{$slider->title ?? ""}}" name="title" oninput="this.value = this.value.toUpperCase()">
-                                                <label for="content" class="frame9402-text04">
-                                                    <strong>Kandungan Slider</strong>
-                                                </label>
-                                                <textarea class="form-control" id="content" rows="5" name="content" placeholder="Kandungan Slider">{{ $slider->content }}</textarea>
-                                                <br>
-                                                @if ($slider->picture)
-                                                    <img class="img-fluid img-thumbnail" src="{{ $slider->picture }}" alt=""/>
-                                                @endif
-                                                <br>
-                                                <input id="picture" type="file" accept="image/*" name="picture"/>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                                <input type="hidden" value="{{$item->id}}" name="itemId">
-                                                <input type="hidden" value="{{$slider->id}}" name="sliderId">
-                                                <button class="btn btn-primary">Kemaskini</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Button trigger modal delete -->
-                            <button type="button" class="frame9402-rectangle828246" style="margin-left: 10%" data-toggle="modal" data-target="#exampleModal{{$slider->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                            @if ($card->picture)
+                                <td class="text-center arial-N">
+                                    <a href="{{ $card->picture }}">Gambar</a>
+                                </td>
+                            @else
+                                <td class="text-center arial-N">-</td>
+                            @endif
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal{{$slider->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Padam Slider {{$slider->title}}</h5>
+                            <td class="text-center arial-N">{{ $card->rows }}</td>
+                            <td class="text-center align-middle">
+                                <!-- Button trigger modal update-->
+                                <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#ModalCenter{{$card->id}}">
+                                    <img src="/SVG/pencil.svg"/>
+                                </button>
+            
+                                <!-- Modal update-->
+                                <div class="modal fade" id="ModalCenter{{$card->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">KEMASKINI {{$card->title}}</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
+                                                <span aria-hidden="true">&times;</span>
                                             </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>Anda Pasti Mahu Padam Slider {{$slider->title}}?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
-                                            <form method="post" action="/home/slider/delete">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input type="hidden" value="{{$item->id}}" name="itemId">
-                                            <input type="hidden" name="sliderId" value="{{$slider->id}}"/>
-                                            <button class="btn btn-danger">Ya</button>
+                                            </div>
+                                            <form method="post" action="/home/card/update" enctype="multipart/form-data">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="modal-body">
+                                                    <label for="rows" class="frame9402-text04">
+                                                        <strong>Baris Kad</strong>
+                                                    </label>
+                                                    <input type="number" class="frame9402-kotaknamaBorang" id="rows" name="rows" value="{{$card->rows}}" required>
+                                                    <br>
+                                                    <label for="title" class="frame9402-text04">
+                                                        <strong>Tajuk Kad</strong>
+                                                    </label>
+                                                    <input type="text" class="frame9402-kotaknamaBorang" value="{{$card->title}}" name="title" required oninput="this.value = this.value.toUpperCase()">
+                                                    <br>
+                                                    <label for="content" class="frame9402-text04">
+                                                        <strong>Kandungan Kad</strong>
+                                                    </label>
+                                                    <textarea class="form-control" id="content" rows="5" name="content">{{ $card->content }}</textarea>
+                                                    <br>
+                                                    <label for="picture" class="frame9402-text04">
+                                                        <strong>Gambar</strong>
+                                                    </label>
+                                                    @if ($card->picture)
+                                                        <img class="img-fluid img-thumbnail" src="{{ $card->picture }}" alt=""/>
+                                                    @endif
+                                                    <input type="file" accept="image/*" name="picture" class="form-control"/>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                                    <input type="hidden" value="{{$card->id}}" name="cardId">
+                                                    <input type="hidden" value="{{$item->id}}" name="itemId">
+                                                    <button class="btn btn-primary">Kemaskini</button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
+                                
+                                <!-- Button trigger modal delete -->
+                                <button type="button" class="frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalKad{{$card->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalKad{{$card->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Padam Kad {{$card->title}}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Anda Pasti Mahu Kad {{$card->title}}?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                                                <form method="post" action="/home/card/delete">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="hidden" value="{{$item->id}}" name="itemId">
+                                                <input type="hidden" name="cardId" value="{{$card->id}}"/>
+                                                <button class="btn btn-danger">Ya</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach 
                 </tbody>
             </table>
             @else
-            <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Slider </h2>
+            <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Kad </h2>
             @endif
         </div>
     </div>
-  </div>
 </div>
 
 <script src="/js/jquery.js"></script>

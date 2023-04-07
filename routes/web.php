@@ -58,13 +58,15 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/home/slider/update',  [WebController::class, 'sliderUpdate']);
     Route::delete('/home/slider/delete',  [WebController::class, 'sliderDelete']);
 
+    Route::get('/home/item/{itemId}/card',  [WebController::class, 'card_list']);
     Route::post('/home/card/add',  [WebController::class, 'cardAdd']);
     Route::put('/home/card/update',  [WebController::class, 'cardUpdate']);
     Route::delete('/home/card/delete',  [WebController::class, 'cardDelete']);
 
-    Route::post('/home/faq/add',  [WebController::class, 'faqAdd']);
-    Route::put('/home/faq/update',  [WebController::class, 'faqUpdate']);
-    Route::delete('/home/faq/delete',  [WebController::class, 'faqDelete']);
+    Route::get('/home/item/{itemId}/dropdown',  [WebController::class, 'dropdown_list']);
+    Route::post('/home/dropdown/add',  [WebController::class, 'dropdown_add']);
+    Route::put('/home/faq/update',  [WebController::class, 'dropdown_update']);
+    Route::delete('/home/faq/delete',  [WebController::class, 'fdropdown_delete']);
     
     Route::post('/home/statement/add',  [WebController::class, 'statementAdd']);
     Route::put('/home/statement/update',  [WebController::class, 'statementUpdate']);

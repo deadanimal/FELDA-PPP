@@ -86,6 +86,7 @@ class WebController extends Controller
         $page = Page::find($request->pageId);
         $page->nama = $request->pageName;
         $page->sequence = $request->sequence;
+        $page->status = $request->status;
         $page->save();
 
         $audit = new Audit;
@@ -93,7 +94,7 @@ class WebController extends Controller
         $audit->action = "Kemaskini laman ".$page->nama.' pada tetapan laman utama';
         $audit->save();
 
-        Alert::success('Kemaskini Muka Surat Berjaya.', 'Muka surat telah berjaya dikemaskini.');
+        Alert::success('Kemaskini Laman Berjaya.', 'Laman telah berjaya dikemaskini.');
 
         return redirect('/home');
     }
@@ -233,6 +234,36 @@ class WebController extends Controller
         return view('homepage.slider', compact ('sliders','item', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
+    public function card_list(Request $request)
+    {
+        $itemId = (int) $request->route('itemId');
+
+        $item = Item::find($itemId);
+
+        $cards = cards::where('item_id', $itemId)->orderBy('rows', 'ASC')->get();
+        
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('homepage.card', compact ('cards','item', 'menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function dropdown_list(Request $request)
+    {
+        $itemId = (int) $request->route('itemId');
+
+        $item = Item::find($itemId);
+
+        $cards = cards::where('item_id', $itemId)->orderBy('rows', 'ASC')->get();
+        
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('homepage.card', compact ('cards','item', 'menuModul', 'menuProses', 'menuBorang'));
+    }
+
     public function homeSetting()
     {
         $sliders = Slider::all();
@@ -283,7 +314,8 @@ class WebController extends Controller
             $picture = time().'.'.$request->picture->extension();  
             $request->picture->move(public_path('upload'), $picture);
             $slider->picture = '/upload/' . $picture;
-        } 
+        }
+        $slider->item_id = $request->itemId;      
         $slider->save();
 
         $audit = new Audit;
@@ -317,6 +349,8 @@ class WebController extends Controller
 
     public function cardAdd(Request $request)
     {
+        $item = Item::find($request->itemId);
+
         $card = new cards;
         $card->title = $request->title;
         if($request->content){
@@ -328,6 +362,7 @@ class WebController extends Controller
             $card->picture = '/upload/' . $picture;
         }
         $card->rows = $request->rows;
+        $card->item_id = $request->itemId;     
         $card->save();
 
         $audit = new Audit;
@@ -337,11 +372,13 @@ class WebController extends Controller
 
         Alert::success('Cipta Kad Berjaya.', 'Kad telah berjaya dicipta.');
 
-        return redirect('/home');
+        return redirect('/home/item/'.$item->id.'/card');
     }
 
     public function cardUpdate(Request $request)
     {
+        $item = Item::find($request->itemId);
+
         $IdCard = $request->cardId;
         $card = cards::find($IdCard);
         $card->title = $request->title;
@@ -354,6 +391,7 @@ class WebController extends Controller
             $card->picture = '/upload/' . $picture;
         }
         $card->rows = $request->rows;
+        $card->item_id = $request->itemId;     
         $card->save();
 
         $audit = new Audit;
@@ -363,11 +401,13 @@ class WebController extends Controller
 
         Alert::success('Kemaskini Kad Berjaya.', 'Kad telah berjaya diKemaskini.');
 
-        return redirect('/home');
+        return redirect('/home/item/'.$item->id.'/card');
     }
 
     public function cardDelete(Request $request)
     {
+        $item = Item::find($request->itemId);
+
         $IdCard = $request->cardId;
         $card = cards::find($IdCard);
 
@@ -380,7 +420,7 @@ class WebController extends Controller
 
         Alert::success('Padam Kad Berjaya.', 'Kad telah berjaya dipadam.');
 
-        return redirect('/home');
+        return redirect('/home/item/'.$item->id.'/card');
     }
 
     public function faqAdd(Request $request)
