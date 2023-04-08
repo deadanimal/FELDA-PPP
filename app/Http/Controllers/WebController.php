@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Slider;
 use App\Models\cards;
 use App\Models\document;
-use App\Models\statement;
+use App\Models\article;
 use App\Models\Page;
 use App\Models\Item;
 use App\Models\Modul;
@@ -213,12 +213,12 @@ class WebController extends Controller
                 break;
             case('Article'):
 
-                return redirect('/home/item/'.$item->id.'/Article');
+                return redirect('/home/item/'.$item->id.'/article');
     
                 break;
-            case('Article'):
+            case('Gallery'):
 
-                return redirect('/home/item/'.$item->id.'/Gallery');
+                return redirect('/home/item/'.$item->id.'/gallery');
     
                 break;
         }
@@ -260,13 +260,28 @@ class WebController extends Controller
 
         $item = Item::find($itemId);
 
-        $cards = cards::where('item_id', $itemId)->orderBy('rows', 'ASC')->get();
+        $dropdowns = dropdown::where('item_id', $itemId)->get();
         
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.card', compact ('cards','item', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.dropdown', compact ('dropdowns','item', 'menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function article_list(Request $request)
+    {
+        $itemId = (int) $request->route('itemId');
+
+        $item = Item::find($itemId);
+
+        $articles = article::where('item_id', $itemId)->get();
+        
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('homepage.article', compact ('articles','item', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function homeSetting()
@@ -435,7 +450,7 @@ class WebController extends Controller
         $dropdown = new dropdown;
         $dropdown->title = $request->title;
         $dropdown->body = $request->body;
-        $dropdown->body = $item->id;
+        $dropdown->item_id = $item->id;
         $dropdown->save();
 
         $audit = new Audit;
@@ -455,7 +470,7 @@ class WebController extends Controller
         $dropdown = dropdown::find($request->dropdownId);
         $dropdown->title = $request->title;
         $dropdown->body = $request->body;
-        $dropdown->body = $item->id;
+        $dropdown->item_id = $item->id;
         $dropdown->save();
 
         $audit = new Audit;
@@ -500,55 +515,62 @@ class WebController extends Controller
         return back();
     }
 
-    public function statementAdd(Request $request)
+    public function article_add(Request $request)
     {
-        $stat = new statement;
-        $stat->title = $request->title;
-        $stat->statement = $request->statement;
-        $stat->save();
+        $item = Item::find($request->itemId);
+
+        $article = new article;
+        $article->title = $request->title;
+        $article->statement = $request->statement;
+        $article->item_id = $item->id;
+        $article->save();
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Cipta Penyataan dan Penafian ".$stat->title;
+        $audit->action = "Cipta Artikel ".$article->title;
         $audit->save();
 
-        Alert::success('Cipta Penyataan dan Penafian Berjaya.', 'Penyataan dan Penafian telah berjaya dicipta.');
+        Alert::success('Cipta Artikel Berjaya.', 'Artikel telah berjaya dicipta.');
 
-        return redirect('/home');
+        return redirect('/home/item/'.$item->id.'/article');
     }
 
-    public function statementUpdate(Request $request)
+    public function article_update(Request $request)
     {
-        $stat = statement::find($request->statId);
-        $stat->title = $request->title;
-        $stat->statement = $request->statement;
-        $stat->save();
+        $item = Item::find($request->itemId);
+
+        $article = article::find($request->articleId);
+        $article->title = $request->title;
+        $article->statement = $request->statement;
+        $article->item_id = $item->id;
+        $article->save();
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Kemaskini Penyataan dan Penafian ".$stat->title;
+        $audit->action = "Kemaskini Artikel ".$article->title;
         $audit->save();
 
-        Alert::success('Kemaskini Penyataan dan Penafian Berjaya.', 'Penyataan dan Penafian telah berjaya dikemaskini.');
+        Alert::success('Kemaskini Artikel Berjaya.', 'Artikel telah berjaya dikemaskini.');
 
-        return redirect('/home');
+        return redirect('/home/item/'.$item->id.'/article');
     }
 
-    public function statementDelete(Request $request)
+    public function article_delete(Request $request)
     {
-        $IdStat = $request->statId;
-        $stat = statement::find($IdStat);
+        $item = Item::find($request->itemId);
+
+        $article = article::find($request->articleId);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Padam Penyataan dan Penafian ".$stat->title;
+        $audit->action = "Padam Artikel ".$article->title;
         $audit->save();
 
-        $stat->delete();
+        $article->delete();
 
-        Alert::success('Padam Penyataan dan Penafian Berjaya.', 'Slider Penyataan dan Penafian berjaya dipadam.');
+        Alert::success('Padam Artikel Berjaya.', 'Artikel telah berjaya dipadam.');
 
-        return redirect('/home');
+        return redirect('/home/item/'.$item->id.'/article');
     }
 
     public function documentAdd(Request $request)

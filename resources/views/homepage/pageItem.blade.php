@@ -65,7 +65,7 @@
                                             <option value="Slider">Slider</option>
                                             <option value="Card">Card</option>
                                             <option value="Dropdown">Dropdown</option>
-                                            <option value="Article">Article</option>
+                                            <option value="Article">Artikel</option>
                                             <option value="Gallery">Galeri</option>
                                       </select>
                                     </td>
@@ -101,7 +101,15 @@
                     @foreach($pageItems as $item)
                     <tr>
                       <td class="text-center arial-N" style="text-transform: uppercase;">{{$item->nama}}</td>
-                      <td class="text-center arial-N" style="text-transform: uppercase;">{{$item->category}}</td>
+                      <td class="text-center arial-N" style="text-transform: uppercase;">
+                        @if ($item->category == "Article")
+                            Artikel
+                        @elseif($item->category == "Gallery")
+                            Galeri
+                        @else
+                            {{$item->category}}
+                        @endif    
+                      </td>
                       <td class="text-center arial-N" style="text-transform: uppercase;">{{$item->row}}</td>
                       <td class="text-center">
                         <div class="btn-group btn-group-toggle ">
@@ -155,7 +163,7 @@
                                                             <option value="Article"
                                                             @if ($item->category == "Article")
                                                             selected 
-                                                            @endif>Article</option>
+                                                            @endif>Artikel</option>
                                                             <option value="Gallery"
                                                             @if ($item->category == "Gallery")
                                                             selected 
