@@ -14,7 +14,7 @@ use App\Models\User;
 use App\Models\Proses;
 use App\Models\Borang;
 use App\Models\Audit;
-use App\Models\Faq;
+use App\Models\dropdown;
 use App\Models\Jawapan;
 use App\Mail\contactUs;
 use Illuminate\Http\Request;
@@ -214,6 +214,11 @@ class WebController extends Controller
             case('Article'):
 
                 return redirect('/home/item/'.$item->id.'/Article');
+    
+                break;
+            case('Article'):
+
+                return redirect('/home/item/'.$item->id.'/Gallery');
     
                 break;
         }
@@ -423,55 +428,62 @@ class WebController extends Controller
         return redirect('/home/item/'.$item->id.'/card');
     }
 
-    public function faqAdd(Request $request)
+    public function dropdown_add(Request $request)
     {
-        $faq = new Faq;
-        $faq->question = $request->question;
-        $faq->answer = $request->answer;
-        $faq->save();
+        $item = Item::find($request->itemId);
+
+        $dropdown = new dropdown;
+        $dropdown->title = $request->title;
+        $dropdown->body = $request->body;
+        $dropdown->body = $item->id;
+        $dropdown->save();
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Cipta Soalan Lazim ".$faq->question;
+        $audit->action = "Cipta Dropdown ".$dropdown->title;
         $audit->save();
 
-        Alert::success('Cipta Soalan Lazim Berjaya.', 'Soalan Lazim telah berjaya dicipta.');
+        Alert::success('Cipta Dropdown Berjaya.', 'Dropdown telah berjaya dicipta.');
 
-        return redirect('/home');
+        return redirect('/home/item/'.$item->id.'/dropdown');
     }
 
-    public function faqUpdate(Request $request)
+    public function dropdown_update(Request $request)
     {
-        $faq = Faq::find($request->faqId);
-        $faq->question = $request->question;
-        $faq->answer = $request->answer;
-        $faq->save();
+        $item = Item::find($request->itemId);
+
+        $dropdown = dropdown::find($request->dropdownId);
+        $dropdown->title = $request->title;
+        $dropdown->body = $request->body;
+        $dropdown->body = $item->id;
+        $dropdown->save();
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Kemaskini Soalan Lazim ".$faq->question;
+        $audit->action = "Kemaskini Dropdown ".$dropdown->title;
         $audit->save();
 
-        Alert::success('Kemaskini Soalan Lazim Berjaya.', 'Soalan Lazim telah berjaya dikemaskini.');
+        Alert::success('Kemaskini Dropdown Berjaya.', 'Dropdown telah berjaya dikemaskini.');
 
-        return redirect('/home');
+        return redirect('/home/item/'.$item->id.'/dropdown');
     }
 
-    public function faqDelete(Request $request)
+    public function dropdown_delete(Request $request)
     {
-        $Idfaq = $request->faqId;
-        $faq = Faq::find($Idfaq);
+        $item = Item::find($request->itemId);
+
+        $dropdown = dropdown::find($request->dropdownId);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Padam Soalan Lazim ".$faq->question;
+        $audit->action = "Padam Dropdown ".$dropdown->title;
         $audit->save();
 
-        $faq->delete();
+        $dropdown->delete();
 
-        Alert::success('Padam Soalan Lazim Berjaya.', 'Slider Soalan Lazim berjaya dipadam.');
+        Alert::success('Padam Dropdown Berjaya.', 'Slider Dropdown berjaya dipadam.');
 
-        return redirect('/home');
+        return redirect('/home/item/'.$item->id.'/dropdown');
     }
 
     public function contact(Request $request)

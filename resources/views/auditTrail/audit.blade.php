@@ -58,7 +58,7 @@
           </thead>
           <tbody class="Arial">
             @foreach ($audits as $audit)
-                <tr>
+                <tr  style="text-transform: uppercase">
                   <td>{{$loop->iteration}}</td>
                   <td>{{$audit->users->idPengguna}}</td>
                   <td class="text-upp">{{$audit->users->nama}}</td>

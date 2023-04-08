@@ -12,7 +12,7 @@
 <div class="container-fluid">
     <div class="header">
       <h1 class="header-title">
-          Muka Surat {{$page->nama}}
+          Laman {{$page->nama}}
       </h1>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -66,6 +66,7 @@
                                             <option value="Card">Card</option>
                                             <option value="Dropdown">Dropdown</option>
                                             <option value="Article">Article</option>
+                                            <option value="Gallery">Galeri</option>
                                       </select>
                                     </td>
                                   <tr>
@@ -155,6 +156,10 @@
                                                             @if ($item->category == "Article")
                                                             selected 
                                                             @endif>Article</option>
+                                                            <option value="Gallery"
+                                                            @if ($item->category == "Gallery")
+                                                            selected 
+                                                            @endif>Galeri</option>
                                                         </select>
                                                     </td>
                                                 </tr>

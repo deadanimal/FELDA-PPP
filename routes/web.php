@@ -66,11 +66,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home/item/{itemId}/dropdown',  [WebController::class, 'dropdown_list']);
     Route::post('/home/dropdown/add',  [WebController::class, 'dropdown_add']);
     Route::put('/home/faq/update',  [WebController::class, 'dropdown_update']);
-    Route::delete('/home/faq/delete',  [WebController::class, 'fdropdown_delete']);
+    Route::delete('/home/faq/delete',  [WebController::class, 'dropdown_delete']);
     
-    Route::post('/home/statement/add',  [WebController::class, 'statementAdd']);
-    Route::put('/home/statement/update',  [WebController::class, 'statementUpdate']);
-    Route::delete('/home/statement/delete',  [WebController::class, 'statementDelete']);
+    Route::get('/home/item/{itemId}/dropdown',  [WebController::class, 'article_list']);
+    Route::post('/home/article/add',  [WebController::class, 'article_add']);
+    Route::put('/home/article/update',  [WebController::class, 'article_update']);
+    Route::delete('/home/article/delete',  [WebController::class, 'article_delete']);
 
     Route::post('/home/document/add',  [WebController::class, 'documentAdd']);
     Route::put('/home/document/update',  [WebController::class, 'documentUpdate']);
