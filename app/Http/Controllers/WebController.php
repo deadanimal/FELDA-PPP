@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Slider;
 use App\Models\cards;
 use App\Models\document;
-use App\Models\article;
+use App\Models\Article;
+use App\Models\Gallery;
 use App\Models\Page;
 use App\Models\Item;
 use App\Models\Modul;
@@ -30,7 +31,7 @@ class WebController extends Controller
         $sliders = Slider::all();
         $cardsTotalRows = cards::max('rows');
         $cards = cards::orderBy('rows', 'ASC')->get();
-        $faqs = Faq::orderBy('updated_at', 'DESC')->get();
+        // $faqs = Faq::orderBy('updated_at', 'DESC')->get();
         
         $totalDana = Count(Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->get());
         $totalModul = Count(Modul::where('status', 'Go-live')->get());
@@ -284,6 +285,21 @@ class WebController extends Controller
         return view('homepage.article', compact ('articles','item', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
+    public function gallery_list(Request $request)
+    {
+        $itemId = (int) $request->route('itemId');
+
+        $item = Item::find($itemId);
+
+        $galleries = Gallery::where('item_id', $itemId)->get();
+        
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('homepage.gallery', compact ('galleries','item', 'menuModul', 'menuProses', 'menuBorang'));
+    }
+
     public function homeSetting()
     {
         $sliders = Slider::all();
@@ -496,7 +512,7 @@ class WebController extends Controller
 
         $dropdown->delete();
 
-        Alert::success('Padam Dropdown Berjaya.', 'Slider Dropdown berjaya dipadam.');
+        Alert::success('Padam Dropdown Berjaya.', 'Dropdown berjaya dipadam.');
 
         return redirect('/home/item/'.$item->id.'/dropdown');
     }
@@ -559,7 +575,7 @@ class WebController extends Controller
     {
         $item = Item::find($request->itemId);
 
-        $article = article::find($request->articleId);
+        $article = Article::find($request->articleId);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
@@ -571,6 +587,78 @@ class WebController extends Controller
         Alert::success('Padam Artikel Berjaya.', 'Artikel telah berjaya dipadam.');
 
         return redirect('/home/item/'.$item->id.'/article');
+    }
+
+    public function gallery_add(Request $request)
+    {
+        $item = Item::find($request->itemId);
+
+        $gallery = new Gallery;
+        $gallery->title = $request->title;
+        if($request->body){
+            $gallery->body = $request->body;
+        }
+        if($request->file()) {
+            $picture = time().'.'.$request->picture->extension();  
+            $request->picture->move(public_path('upload'), $picture);
+            $gallery->thumbnail = '/upload/' . $picture;
+        } 
+        $gallery->item_id = $item->id;
+        $gallery->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Galeri ".$gallery->title;
+        $audit->save();
+
+        Alert::success('Cipta Galeri Berjaya.', 'Galeri telah berjaya dicipta.');
+
+        return redirect('/home/item/'.$item->id.'/gallery');
+    }
+
+    public function gallery_update(Request $request)
+    {
+        $item = Item::find($request->itemId);
+
+        $gallery = Gallery::find($request->galleryId);
+        $gallery->title = $request->title;
+        if($request->body){
+            $gallery->body = $request->body;
+        }
+        if($request->file()) {
+            $picture = time().'.'.$request->picture->extension();  
+            $request->picture->move(public_path('upload'), $picture);
+            $gallery->thumbnail = '/upload/' . $picture;
+        }
+        $gallery->item_id = $item->id; 
+        $gallery->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini galeri ".$gallery->title;
+        $audit->save();
+
+        Alert::success('Kemaskini Galeri Berjaya.', 'Galeri telah berjaya dikemaskini.');
+
+        return redirect('/home/item/'.$item->id.'/gallery');
+    }
+
+    public function gallery_delete(Request $request)
+    {
+        $item = Item::find($request->itemId);
+
+        $gallery = Gallery::find($request->galleryId);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam galeri ".$gallery->title;
+        $audit->save();
+
+        $gallery->delete();
+
+        Alert::success('Padam Galeri Berjaya.', 'Galeri berjaya dipadam.');
+
+        return redirect('/home/item/'.$item->id.'/gallery');
     }
 
     public function documentAdd(Request $request)
@@ -600,8 +688,6 @@ class WebController extends Controller
 
     public function documentUpdate(Request $request)
     {
-        
-
         $doc = document::find($request->docId);
         $doc->name = $request->name;
         if($request->file()) {
@@ -633,7 +719,7 @@ class WebController extends Controller
 
         $doc->delete();
 
-        Alert::success('Padam Dokumen Berjaya.', 'Slider Dokumen berjaya dipadam.');
+        Alert::success('Padam Dokumen Berjaya.', 'Dokumen berjaya dipadam.');
 
         return redirect('/home');
     }
