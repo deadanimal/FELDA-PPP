@@ -59,7 +59,7 @@
                     </div>
                 </td>
                 <td style="width:20%; text-align: right ">
-                    <div id="google_translate_element"></div>
+                    <div id="google_translate_element" style="width:100%"></div>
                     {{-- <a href="/"><img src="/SVG/malaysia.svg" style="width: 25%;" /></a>
                     <a href="#"><img src="/SVG/uk.svg" style="width: 25%;  opacity: 0.5;"/></a> --}}
                 </td>
@@ -186,12 +186,12 @@
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script type="text/javascript">
         function googleTranslateElementInit() {
-          new google.translate.TranslateElement({pageLanguage: 'ms'}, 'google_translate_element');
+          new google.translate.TranslateElement({pageLanguage: 'ms', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
         }
         </script>
         
         <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script>
+        <script>
         	var zoom = 1;
 		
 		$('.zoom').on('click', function(){
