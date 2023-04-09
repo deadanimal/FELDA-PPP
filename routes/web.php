@@ -78,6 +78,11 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/home/gallery/update',  [WebController::class, 'gallery_update']);
     Route::delete('/home/gallery/delete',  [WebController::class, 'gallery_delete']);
 
+    Route::get('/home/item/{itemId}/gallery/{galleryId}/picture',  [WebController::class, 'picture_list']);
+    Route::post('/home/picture/add',  [WebController::class, 'picture_add']);
+    Route::put('/home/picture/update',  [WebController::class, 'picture_update']);
+    Route::delete('/home/picture/delete',  [WebController::class, 'picture_delete']);
+
     Route::post('/home/document/add',  [WebController::class, 'documentAdd']);
     Route::put('/home/document/update',  [WebController::class, 'documentUpdate']);
     Route::delete('/home/document/delete',  [WebController::class, 'documentDelete']);

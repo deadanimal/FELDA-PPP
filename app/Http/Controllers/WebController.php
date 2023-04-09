@@ -8,6 +8,7 @@ use App\Models\cards;
 use App\Models\document;
 use App\Models\Article;
 use App\Models\Gallery;
+use App\Models\Picture;
 use App\Models\Page;
 use App\Models\Item;
 use App\Models\Modul;
@@ -31,7 +32,7 @@ class WebController extends Controller
         $sliders = Slider::all();
         $cardsTotalRows = cards::max('rows');
         $cards = cards::orderBy('rows', 'ASC')->get();
-        // $faqs = Faq::orderBy('updated_at', 'DESC')->get();
+        $faqs = Faq::orderBy('updated_at', 'DESC')->get();
         
         $totalDana = Count(Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->get());
         $totalModul = Count(Modul::where('status', 'Go-live')->get());
@@ -661,6 +662,91 @@ class WebController extends Controller
         return redirect('/home/item/'.$item->id.'/gallery');
     }
 
+    public function picture_list(Request $request)
+    {
+        $itemId = (int) $request->route('itemId');
+        $item = Item::find($request->itemId);
+
+        $galleryId = (int) $request->route('galleryId');
+        $gallery = Gallery::find($galleryId);
+
+        $pictures = Picture::where('gallery_id', $galleryId)->get();
+        
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('homepage.picture', compact ('pictures','gallery', 'item' ,'menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function picture_add(Request $request)
+    {
+        $item = Item::find($request->itemId);
+
+        $gallery =  Gallery::find($request->galleryId);
+        
+        $pic = new Picture;
+        if($request->file()) {
+            $picture = time().'.'.$request->picture->extension();  
+            $request->picture->move(public_path('upload'), $picture);
+            $pic->picture = '/upload/' . $picture;
+        } 
+        $pic->gallery_id = $gallery->id;
+        $pic->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Muat naik gambar dalam galeri ".$gallery->title;
+        $audit->save();
+
+        Alert::success('Muat Naik Gambar Berjaya.', 'Gambar telah berjaya dimuat naik.');
+
+        return redirect('/home/item/'.$item->id.'/gallery/'.$gallery->id.'/picture');
+    }
+
+    public function picture_update(Request $request)
+    {
+        $item = Item::find($request->itemId);
+
+        $gallery =  Gallery::find($request->galleryId);
+        
+        $pic = Picture::find($request->pictureId);
+        if($request->file()) {
+            $picture = time().'.'.$request->picture->extension();  
+            $request->picture->move(public_path('upload'), $picture);
+            $pic->picture = '/upload/' . $picture;
+        } 
+        $pic->gallery_id = $gallery->id;
+        $pic->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini dan Muat naik gambar dalam galeri ".$gallery->title;
+        $audit->save();
+
+        Alert::success('Kemaskini Gambar Berjaya.', 'Gambar telah berjaya dikemaskini.');
+
+        return redirect('/home/item/'.$item->id.'/gallery/'.$gallery->id.'/picture');
+    }
+
+    public function picture_delete(Request $request)
+    {
+        $item = Item::find($request->itemId);
+
+        $gallery =  Gallery::find($request->galleryId);
+        
+        $pic = Picture::find($request->pictureId);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam gambar dalam galeri ".$gallery->title;
+        $audit->save();
+
+        $pic->delete();
+        Alert::success('Padam Gambar Berjaya.', 'Gambar telah berjaya dipadam.');
+
+        return redirect('/home/item/'.$item->id.'/gallery/'.$gallery->id.'/picture');
+    }
     public function documentAdd(Request $request)
     {
         $request->validate([
