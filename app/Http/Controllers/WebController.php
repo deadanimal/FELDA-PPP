@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Slider;
 use App\Models\cards;
+
+use App\Models\faq;
+
 use App\Models\document;
 use App\Models\Article;
 use App\Models\Gallery;
