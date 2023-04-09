@@ -45,7 +45,7 @@
                 <td style="text-align: right">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Carian">
-                        <button class="btn btn-primary" style="background-color: #3A5F3B">
+                        <button class="btn btn-primary" style="background-color: #3A5F3B; border: #3A5F3B;">
                             <i class="bi bi-search" style="color:white"></i>
                         </button>
                     </div>
