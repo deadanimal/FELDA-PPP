@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ms">
 
 <head>
   <meta charset="utf-8">
@@ -39,7 +39,7 @@
     <div class="container d-flex align-items-center justify-content-center justify-content-md-between" style="margin-right:0px">
       <div class="contact-info d-flex align-items-center">
       </div>
-      <div class="contact-info d-none d-md-block">
+      <div class="contact-info d-none d-md-block" style="width: 80%">
         <table class="w-100">
             <tr>
                 <td style="text-align: right">
@@ -50,7 +50,7 @@
                         </button>
                     </div>
                 </td>
-                <td style="width:15%; text-align: right">
+                <td style="width:25%; text-align: right">
                     <div class="social-links mt-3">
                         <a href="#" class="youtube"><i class="bx bxl-youtube" style="font-size: 2em"></i></a>
                         <a href="#" class="twitter"><i class="bx bxl-twitter" style="font-size: 2em"></i></a>
@@ -58,9 +58,10 @@
                         <a href="#" class="tiktok"><i class="bx bxl-tiktok" style="font-size: 2em"></i></a>
                     </div>
                 </td>
-                <td style="width:15%; text-align: right ">
-                    <a href="/"><img src="/SVG/malaysia.svg" style="width: 25%;" /></a>
-                    <a href="#"><img src="/SVG/uk.svg" style="width: 25%;  opacity: 0.5;"/></a>
+                <td style="width:20%; text-align: right ">
+                    <div id="google_translate_element"></div>
+                    {{-- <a href="/"><img src="/SVG/malaysia.svg" style="width: 25%;" /></a>
+                    <a href="#"><img src="/SVG/uk.svg" style="width: 25%;  opacity: 0.5;"/></a> --}}
                 </td>
             </tr>
         </table>
@@ -183,7 +184,13 @@
     <!-- Template Main JS File -->
     <script src="/js/main.js"></script>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({pageLanguage: 'ms'}, 'google_translate_element');
+        }
+        </script>
+        
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
         	var zoom = 1;
 		
