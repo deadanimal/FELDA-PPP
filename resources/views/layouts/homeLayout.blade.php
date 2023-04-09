@@ -59,8 +59,8 @@
                     </div>
                 </td>
                 <td style="width:15%; text-align: right ">
-                    <img src="/SVG/uk.svg" style="width: 25%;" />
-                    <img src="/SVG/malaysia.svg" style="width: 25%;" />
+                    <a href="/"><img src="/SVG/malaysia.svg" style="width: 25%;" /></a>
+                    <a href="#"><img src="/SVG/uk.svg" style="width: 25%;  opacity: 0.5;"/></a>
                 </td>
             </tr>
         </table>
