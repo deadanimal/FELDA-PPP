@@ -36,16 +36,35 @@
     @include('sweetalert::alert')
   <!-- ======= Top Bar ======= -->
   <div id="topbar" class="fixed-top d-flex align-items-center topbar-inner-pages ">
-    <div class="container d-flex align-items-center justify-content-center justify-content-md-between">
+    <div class="container d-flex align-items-center justify-content-center justify-content-md-between" style="margin-right:0px">
       <div class="contact-info d-flex align-items-center">
       </div>
       <div class="contact-info d-none d-md-block">
-        <div class="social-links mt-3">
-            <a href="#" class="youtube"><i class="bx bxl-youtube" style="font-size: 2em"></i></a>
-            <a href="#" class="twitter"><i class="bx bxl-twitter" style="font-size: 2em"></i></a>
-            <a href="#" class="facebook"><i class="bx bxl-facebook" style="font-size: 2em"></i></a>
-            <a href="#" class="tiktok"><i class="bx bxl-tiktok" style="font-size: 2em"></i></a>
-          </div>
+        <table class="w-100">
+            <tr>
+                <td style="text-align: right">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Carian">
+                        <button class="btn btn-primary" style="background-color: #3A5F3B">
+                            <i class="bi bi-search" style="color:white"></i>
+                        </button>
+                    </div>
+                </td>
+                <td style="width:15%; text-align: right">
+                    <div class="social-links mt-3">
+                        <a href="#" class="youtube"><i class="bx bxl-youtube" style="font-size: 2em"></i></a>
+                        <a href="#" class="twitter"><i class="bx bxl-twitter" style="font-size: 2em"></i></a>
+                        <a href="#" class="facebook"><i class="bx bxl-facebook" style="font-size: 2em"></i></a>
+                        <a href="#" class="tiktok"><i class="bx bxl-tiktok" style="font-size: 2em"></i></a>
+                    </div>
+                </td>
+                <td style="width:15%; text-align: right ">
+                    <img src="/SVG/uk.svg" style="width: 25%;" />
+                    <img src="/SVG/malaysia.svg" style="width: 25%;" />
+                </td>
+            </tr>
+        </table>
+        
       </div>
     </div>
   </div>

@@ -7,6 +7,7 @@ use App\Models\Slider;
 use App\Models\cards;
 
 use App\Models\Faq;
+use App\Models\Statement;
 
 use App\Models\document;
 use App\Models\Article;
