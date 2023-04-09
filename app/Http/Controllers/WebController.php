@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Slider;
 use App\Models\cards;
 
-use App\Models\faq;
+use App\Models\Faq;
 
 use App\Models\document;
 use App\Models\Article;
