@@ -207,7 +207,7 @@
             <div class="card-header">
                 <table style="width: 100%">
                     <tr>
-                        <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Dokumen</h1></td>
+                        <td><h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Senarai Dokumen</h1></td>
                         <td>
                             <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladdDoc">
                                 <div class="frame9403-frame7293">
@@ -367,7 +367,7 @@
     font-size: 17px;
     align-self: auto;
     text-align: left;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: normal;
     font-stretch: normal;
@@ -381,7 +381,7 @@
     font-size: 23px;
     align-self: auto;
     text-align: center;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: normal;
     font-stretch: normal;
@@ -443,7 +443,7 @@
     height: auto;
     font-size: 16px;
     align-self: auto;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     font-stretch: normal;
     margin-right: 10px;
@@ -474,7 +474,7 @@
       background-position:99% center;
       text-align: center;
       display:block;
-      font-family: 'Eina01-SemiBold', sans-serif;
+      font-family: 'Arial', sans-serif;
       font-size: 17.3081px;
       text-transform: uppercase;
     }
@@ -528,7 +528,7 @@
     border-radius: 3.461621046066284px;
     margin-top: 10px;
     margin-bottom: 30px;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-size: 18px;
     padding-left:10px;
   text-transform: uppercase;
@@ -538,7 +538,7 @@
       border: none;
       background-color: #8ebf42;
       color: #fff;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Arial', sans-serif;
       font-weight: 600;
       cursor: pointer;
       width: 100%;
@@ -575,7 +575,7 @@
     font-size: 17px;
     margin-left: auto;
     text-align: right;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: 15.477937698364258px;
     font-stretch: normal;
@@ -590,7 +590,7 @@
     font-size: 17px;
     align-self: auto;
     text-align: left;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: 15.477937698364258px;
     font-stretch: normal;
@@ -603,7 +603,7 @@
     height: auto;
     font-size: 17px;
     align-items: center;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: 15.477937698364258px;
     font-stretch: normal;

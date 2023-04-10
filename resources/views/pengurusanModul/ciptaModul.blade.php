@@ -72,7 +72,7 @@
         align-self: auto;
         font-style: Medium;
         text-align: left;
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Arial', sans-serif;
         font-weight: 500;
         line-height: normal;
         font-stretch: normal;
@@ -128,7 +128,7 @@
         align-self: auto;
         font-style: ☞;
         text-align: left;
-        font-family: 'Eina01-SemiBold', sans-serif;
+        font-family: 'Arial', sans-serif;
         font-weight: 400;
         line-height: normal;
         font-stretch: normal;
@@ -148,7 +148,7 @@
         margin-right: 0;
         border-radius: 3.461621046066284px;
         margin-bottom: 0;
-        font-family: 'Eina01-SemiBold';
+        font-family: 'Arial', sans-serif;
         font-size: 18px;
         padding-left: 10px;
         text-transform: uppercase;
@@ -205,7 +205,7 @@
         font-size: 16px;
         align-self: auto;
         text-align: left;
-        font-family: 'Eina01-SemiBold', sans-serif;
+        font-family: 'Arial', sans-serif;
         font-weight: 400;
         line-height: 34.39542007446289px;
         padding-left: 5px;
@@ -259,7 +259,7 @@
         background:url('/SVG/arrow2.svg') no-repeat;
         background-position:99% center;
         display:block;
-        font-family: 'Eina01-SemiBold', sans-serif;
+        font-family: 'Arial', sans-serif;
         font-size: 17.3081px;
         text-transform: uppercase;
         box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)

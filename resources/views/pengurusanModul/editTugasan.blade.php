@@ -36,7 +36,7 @@
         align-self: auto;
         font-style: Medium;
         text-align: left;
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Arial', sans-serif;
         font-weight: 500;
         line-height: normal;
         font-stretch: normal;
@@ -105,7 +105,7 @@
         margin-right: 0;
         border-radius: 3.461621046066284px;
         margin-bottom: 0;
-        font-family: 'Eina01-SemiBold';
+        font-family: 'Eina01-SemiBold', sans-serif;
         font-size: 18px;
         padding-left: 10px;
         text-transform: uppercase;
@@ -155,7 +155,7 @@ display: flex;
   font-size: 16px;
   align-self: auto;
   text-align: left;
-  font-family: Poppins;
+  font-family: 'Arial', sans-serif;
   font-weight: 600;
   line-height: 34.39542007446289px;
   font-stretch: normal;
@@ -253,7 +253,7 @@ display: flex;
       border: none;
       background-color: #8ebf42;
       color: #fff;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Arial', sans-serif;
       font-weight: 600;
       cursor: pointer;
       width: 100%;
@@ -496,7 +496,7 @@ display: flex;
                   <td class="text-center arial-N">{{$answer->kategori->nama}}</td>
                   <td class="text-center arial-N">{{$answer->tugasan->nama}}</td>
                   @if($answer->tugasan->jenisTugas == 'uploadDoc')
-                    <td class="text-center arial-N"><a href="{{$answer->value}}" style="font-family:'Arial'"> Papar Dokumen </a>                    </td>
+                    <td class="text-center arial-N"><a href="{{$answer->value}}" style="font-family:'Arial', sans-serif"> Papar Dokumen </a>                    </td>
                   @else
                     <td class="text-center arial-N">{{$answer->value}}</td>
                   @endif

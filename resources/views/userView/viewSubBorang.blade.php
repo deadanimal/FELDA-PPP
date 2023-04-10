@@ -21,32 +21,32 @@
                 <div class="card-body">
                   <div class="row">
                       <div class="mb-3">
-                          <label for="nama" style="font-family:'Poppins'; text-transform: uppercase;">NAMA</label>
+                          <label for="nama" style="font-family:'Arial', sans-serif; text-transform: uppercase;">NAMA</label>
                           <input class="form-control" name="nama" id="nama" value="{{$borangJwpns->nama}}" readonly style="text-transform: uppercase;">
                       </div>
                   </div>
                   <div class="row">
                     <div class="mb-3">
-                        <label for="ic" style="font-family:'Poppins'; text-transform: uppercase;">NO KAD PENGENALAN</label>
+                        <label for="ic" style="font-family:'Arial', sans-serif; text-transform: uppercase;">NO KAD PENGENALAN</label>
                         <input class="form-control" name="ic" id="ic" value="{{$borangJwpns->ic}}" readonly style="text-transform: uppercase;">
                     </div>
                   </div>
                   <div class="row">
                     <div class="mb-3">
-                        <label for="wilayah" style="font-family:'Poppins'; text-transform: uppercase;">WILAYAH</label>
+                        <label for="wilayah" style="font-family:'Arial', sans-serif; text-transform: uppercase;">WILAYAH</label>
                         <input class="form-control" name="wilayah" id="wilayah" value="{{$borangJwpns->wilayahs->nama}}" readonly style="text-transform: uppercase;">
                     </div>
                   </div>
                   <div class="row">
                     <div class="mb-3">
-                        <label for="rancangan" style="font-family:'Poppins'; text-transform: uppercase;">RANCANGAN</label>
+                        <label for="rancangan" style="font-family:'Arial', sans-serif; text-transform: uppercase;">RANCANGAN</label>
                         <input class="form-control" name="rancangan" id="rancangan" value="{{$borangJwpns->rancangans->nama}}" readonly style="text-transform: uppercase;">
                     </div>
                   </div>
                   @foreach($jawapanMedans as $jwpnMed)
                     <div class="row">
                       <div class="mb-3">
-                          <label for="jwpn{{$jwpnMed->id}}" style="font-family:'Poppins'; text-transform: uppercase;">{{$jwpnMed->medan->nama}}</label>
+                          <label for="jwpn{{$jwpnMed->id}}" style="font-family:'Arial', sans-serif; text-transform: uppercase;">{{$jwpnMed->medan->nama}}</label>
                           <input class="form-control" name="jwpn[]" id="jwpn{{$jwpnMed->id}}" value="{{$jwpnMed->jawapan}}" readonly style="text-transform: uppercase;">
                       </div>
                     </div>
@@ -102,7 +102,7 @@
     font-size: 16px;
     align-self: auto;
     text-align: left;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     line-height: 34.39542007446289px;
     font-stretch: normal;

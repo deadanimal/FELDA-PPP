@@ -76,7 +76,7 @@
 </div>
 <style>
 .arial-N{
-      font-family: 'Arial-N', sans-serif;
+      font-family: 'Arial', sans-serif;
 }
 .frame9402-rectangle828245 {
   width: 32px;
@@ -94,7 +94,7 @@
   font-size: 25px;
   align-self: auto;
   text-align: center;
-  font-family: 'Eina01-SemiBold', sans-serif;
+  font-family: 'Arial', sans-serif;
   font-weight: 800;
   line-height: normal;
   font-stretch: normal;
@@ -131,7 +131,7 @@
   font-size: 16px;
   align-self: auto;
   text-align: left;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Arial', sans-serif;
   font-weight: 600;
   line-height: 34.39542007446289px;
   font-stretch: normal;
@@ -171,7 +171,7 @@
   border-radius: 3.461621046066284px;
   margin-top: 10px;
   margin-bottom: 30px;
-  font-family: 'Eina01-SemiBold', sans-serif;
+  font-family: 'Arial', sans-serif;
   font-size: 18px;
   padding-left:10px;
 }
@@ -205,7 +205,7 @@
   border-width: 0.865405261516571px;
   border-radius: 3.461621046066284px;
   color: #161616;
-  font-family: 'Eina01-SemiBold', sans-serif;
+  font-family: 'Arial', sans-serif;
   font-size: 17.3081px;
   padding-left:10px;
   text-transform: uppercase;
@@ -217,7 +217,7 @@
   font-size: 17.30810546875px;
   align-self: auto;
   text-align: left;
-  font-family: 'Eina01-SemiBold', sans-serif;
+  font-family: 'Arial', sans-serif;
   line-height: normal;
   font-stretch: normal;
   margin-bottom: 0;
@@ -228,7 +228,7 @@
     border: none;
     background-color: #8ebf42;
     color: #fff;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     cursor: pointer;
     width: 100%;

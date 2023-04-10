@@ -25,7 +25,7 @@
         <div class="card-header">
           <table style="width: 100%">
             <tr>
-              <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Borang</h1></td>
+              <td><h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Senarai Borang</h1></td>
               <td>
                 <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAddBorang">
                   <div class="frame9403-frame7293">
@@ -160,7 +160,7 @@
         <div class="card-header">
           <table style="width: 100%">
             <tr>
-              <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Tugasan</h1></td>
+              <td><h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Senarai Tugasan</h1></td>
               <td>
                 <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAddTugasan">
                   <div class="frame9403-frame7293">
@@ -305,7 +305,7 @@
         <div class="card-header">
           <table style="width: 100%">
             <tr>
-              <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">Senarai Ternakan/Tanaman</h1></td>
+              <td><h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Senarai Ternakan/Tanaman</h1></td>
               <td>
                 <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladdTernakan">
                   <div class="frame9403-frame7293">
@@ -506,7 +506,7 @@ function closeFormKemas() {
     font-size: 30px;
     align-self: auto;
     text-align: left;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     line-height: 12.976823806762695px;
     font-stretch: normal;
@@ -521,7 +521,7 @@ function closeFormKemas() {
     align-self: auto;
     font-style: Medium;
     text-align: left;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 500;
     line-height: normal;
     font-stretch: normal;
@@ -584,7 +584,7 @@ function closeFormKemas() {
     font-size: 17px;
     align-self: auto;
     text-align: left;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: normal;
     font-stretch: normal;
@@ -598,7 +598,7 @@ function closeFormKemas() {
     font-size: 23px;
     align-self: auto;
     text-align: center;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: normal;
     font-stretch: normal;
@@ -612,7 +612,7 @@ function closeFormKemas() {
     font-size: 23px;
     align-self: auto;
     text-align: left;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: normal;
     font-stretch: normal;
@@ -631,7 +631,7 @@ function closeFormKemas() {
     margin-right: 0;
     border-radius: 3.461621046066284px;
     margin-bottom: 0;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-size: 18px;
     padding-left:10px;
     box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2);
@@ -674,7 +674,7 @@ function closeFormKemas() {
     height: auto;
     font-size: 16px;
     align-self: auto;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     font-stretch: normal;
     margin-right: 10px;
@@ -704,7 +704,7 @@ function closeFormKemas() {
       background-color:#FFFFFF;
       background-position:99% center;
       display:block;
-      font-family: 'Eina01-SemiBold', sans-serif;
+      font-family: 'Arial', sans-serif;
       font-size: 17.3081px;  
       text-transform: uppercase;
       text-align: center;
@@ -759,7 +759,7 @@ function closeFormKemas() {
     border-radius: 3.461621046066284px;
     margin-top: 10px;
     margin-bottom: 30px;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-size: 18px;
     padding-left:10px;  
     text-transform: uppercase;
@@ -769,7 +769,7 @@ function closeFormKemas() {
       border: none;
       background-color: #8ebf42;
       color: #fff;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Arial', sans-serif;
       font-weight: 600;
       cursor: pointer;
       width: 100%;
@@ -805,7 +805,7 @@ function closeFormKemas() {
     font-size: 17px;
     margin-left: auto;
     text-align: right;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: 15.477937698364258px;
     font-stretch: normal;
@@ -820,7 +820,7 @@ function closeFormKemas() {
     font-size: 17px;
     align-self: auto;
     text-align: left;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: 15.477937698364258px;
     font-stretch: normal;
@@ -833,7 +833,7 @@ function closeFormKemas() {
     height: auto;
     font-size: 17px;
     align-items: center;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: 15.477937698364258px;
     font-stretch: normal;

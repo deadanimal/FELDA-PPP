@@ -166,7 +166,7 @@
     font-size: 17px;
     align-self: auto;
     text-align: left;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: normal;
     font-stretch: normal;
@@ -180,7 +180,7 @@
     font-size: 23px;
     align-self: auto;
     text-align: center;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: normal;
     font-stretch: normal;
@@ -275,7 +275,7 @@
       background-position:99% center;
       text-align: center;
       display:block;
-      font-family: 'Eina01-SemiBold', sans-serif;
+      font-family: 'Arial', sans-serif;
       font-size: 17.3081px;
       text-transform: uppercase;
     }
@@ -329,7 +329,7 @@
     border-radius: 3.461621046066284px;
     margin-top: 10px;
     margin-bottom: 30px;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-size: 18px;
     padding-left:10px;
   text-transform: uppercase;
@@ -376,7 +376,7 @@
     font-size: 17px;
     margin-left: auto;
     text-align: right;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: 15.477937698364258px;
     font-stretch: normal;
@@ -391,7 +391,7 @@
     font-size: 17px;
     align-self: auto;
     text-align: left;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: 15.477937698364258px;
     font-stretch: normal;
@@ -404,7 +404,7 @@
     height: auto;
     font-size: 17px;
     align-items: center;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: 15.477937698364258px;
     font-stretch: normal;

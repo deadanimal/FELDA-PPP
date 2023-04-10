@@ -39,7 +39,7 @@
         align-self: auto;
         font-style: Medium;
         text-align: left;
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Arial', sans-serif;
         font-weight: 500;
         line-height: normal;
         font-stretch: normal;
@@ -93,7 +93,7 @@
         color: black;
         font-size: 19px;
         text-align: right;
-        font-family: 'Eina01-SemiBold', sans-serif;
+        font-family: 'Arial', sans-serif;
         margin-right: 17px;
         margin-bottom: 0;
     }
@@ -109,7 +109,7 @@
         margin-right: 0;
         border-radius: 3.461621046066284px;
         margin-bottom: 0;
-        font-family: 'Eina01-SemiBold';
+        font-family: 'Arial';
         font-size: 18px;
         padding-left: 10px;
         text-transform: uppercase;
@@ -137,7 +137,7 @@
         background:url('/SVG/arrow2.svg') no-repeat;
         background-position:99% center;
         display:block;
-        font-family: 'Eina01-SemiBold', sans-serif;
+        font-family: 'Arial', sans-serif;
         font-size: 17.3081px;
         box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)
     }
@@ -158,7 +158,7 @@ display: flex;
   font-size: 16px;
   align-self: auto;
   text-align: left;
-  font-family: Poppins;
+  font-family: 'Arial', sans-serif;
   font-weight: 600;
   line-height: 34.39542007446289px;
   font-stretch: normal;
@@ -226,7 +226,7 @@ display: flex;
     font-size: 23px;
     align-self: auto;
     text-align: center;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: normal;
     font-stretch: normal;
@@ -245,7 +245,7 @@ display: flex;
     margin-right: 0;
     border-radius: 3.461621046066284px;
     margin-top: 10px;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-size: 18px;
     padding-left:10px;
     text-transform: uppercase;
@@ -255,7 +255,7 @@ display: flex;
       border: none;
       background-color: #8ebf42;
       color: #fff;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Arial', sans-serif;
       font-weight: 600;
       cursor: pointer;
       width: 100%;
@@ -355,7 +355,7 @@ display: flex;
             <div class="card-header">
               <table style="width: 100%">
                 <tr>
-                    <td><h1 style="font-family: 'Eina01-SemiBold', sans-serif; font-size:23px;">SENARAI AKTIVITI</h1></td>
+                    <td><h1 style="font-family: 'Arial', sans-serif; font-size:23px;">SENARAI AKTIVITI</h1></td>
                     <td>
                     <button class="frame9403-frame7445" data-toggle="modal" data-target="#exampleModaladdAktiviti" >
                         <div class="frame9403-frame7293">

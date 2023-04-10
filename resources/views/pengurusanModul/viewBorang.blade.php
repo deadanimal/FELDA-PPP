@@ -23,25 +23,25 @@
             <div class="card-body">
               <div class="row">
                 <div class="mb-3">
-                    <label for="nama" style="font-family:'Poppins'">NAMA</label>
+                    <label for="nama" style="font-family:'Arial', sans-serif">NAMA</label>
                     <input type="text" class="form-control" maxlength="100" size="100" name="" id="nama" readonly>
                 </div>
               </div>
               <div class="row">
                 <div class="mb-3">
-                    <label for="nama" style="font-family:'Poppins'">NO KAD PENGENALAN</label>
+                    <label for="nama" style="font-family:'Arial', sans-serif">NO KAD PENGENALAN</label>
                     <input type="text" class="form-control" maxlength="100" size="100" name="" id="nama" readonly>
                 </div>
               </div>
               <div class="row">
                 <div class="mb-3">
-                    <label for="wilayah" style="font-family:'Poppins'; text-transform: uppercase;">WILAYAH</label>
+                    <label for="wilayah" style="font-family:'Arial', sans-serif; text-transform: uppercase;">WILAYAH</label>
                     <input class="form-control" name="wilayah" id="wilayah" readonly>
                 </div>
               </div>
               <div class="row">
                 <div class="mb-3">
-                    <label for="rancangan" style="font-family:'Poppins'; text-transform: uppercase;">RANCANGAN</label>
+                    <label for="rancangan" style="font-family:'Arial', sans-serif; text-transform: uppercase;">RANCANGAN</label>
                     <input class="form-control" name="rancangan" id="rancangan" readonly>
                 </div>
               </div>
@@ -49,7 +49,7 @@
               @foreach($medans as $medan)
               <div class="row">
                   <div class="mb-3">
-                      <label for="nama" style="font-family:'Poppins'; text-transform:uppercase;">{{$medan->nama}}</label>
+                      <label for="nama" style="font-family:'Arial', sans-serif; text-transform:uppercase;">{{$medan->nama}}</label>
                       <input type="text" class="form-control" maxlength="100" size="100" name="" id="nama" readonly>
                   </div>
               </div>
@@ -118,7 +118,7 @@
     font-size: 16px;
     align-self: auto;
     text-align: left;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     line-height: 34.39542007446289px;
     font-stretch: normal;

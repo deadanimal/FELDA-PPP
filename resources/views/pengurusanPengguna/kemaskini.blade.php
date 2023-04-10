@@ -101,7 +101,7 @@
 </div>
 <style>
   .labeltext{
-    font-family: 'Poppins';
+    font-family: 'Arial', sans-serif;
   }
   .text-upp{
     text-transform: uppercase;
@@ -116,7 +116,7 @@
     border-width: 0.865405261516571px;
     border-radius: 3.461621046066284px;
     color: #161616;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-size: 17.3081px;
     padding-left:10px;
     box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)
@@ -132,7 +132,7 @@
     border-radius: 3.461621046066284px;
     background:url('/SVG/arrow2.svg') no-repeat;
     background-position:99% center;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     display:block;
     font-size: 17.3081px;
     box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)

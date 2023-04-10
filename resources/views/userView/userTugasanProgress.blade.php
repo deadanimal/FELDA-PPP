@@ -155,7 +155,7 @@
     font-size: 16px;
     align-self: auto;
     text-align: left;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     font-stretch: normal;
     margin-right: 2px;
@@ -208,7 +208,7 @@
     height: auto;
     font-size: 16px;
     align-self: auto;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     font-stretch: normal;
     margin-right: 10px;
@@ -236,7 +236,7 @@
     border-radius: 3.461621046066284px;
     margin-top: 10px;
     margin-bottom: 30px;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-size: 18px;
     padding-left:10px;  
     text-transform: uppercase;

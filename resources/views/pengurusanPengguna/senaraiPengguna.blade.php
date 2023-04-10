@@ -80,7 +80,7 @@
     font-size: 80px;
     align-self: auto;
     text-align: center;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     line-height: 12.976823806762695px;
     font-stretch: normal;
@@ -97,7 +97,7 @@
     font-size: 25px;
     align-self: auto;
     text-align: center;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     line-height: 12.976823806762695px;
     font-stretch: normal;
@@ -136,7 +136,7 @@
   font-size: 16px;
   align-self: auto;
   text-align: left;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Arial', sans-serif;
   font-weight: 600;
   line-height: 34.39542007446289px;
   font-stretch: normal;

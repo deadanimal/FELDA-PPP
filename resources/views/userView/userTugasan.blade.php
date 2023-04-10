@@ -98,7 +98,7 @@
     font-size: 16px;
     align-self: auto;
     text-align: left;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     line-height: 34.39542007446289px;
     font-stretch: normal;

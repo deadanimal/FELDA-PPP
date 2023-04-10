@@ -27,33 +27,33 @@
           @csrf
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="nama" style="font-family:'Poppins'">Nama</label>
+                  <label for="nama" style="font-family:'Arial', sans-serif">Nama</label>
                   <input type="text" class="form-control frame9403-kotaknama" maxlength="100" size="100" name="nama" id="nama" required oninput="this.value = this.value.toUpperCase()">
               </div>
               <div class="mb-3 col-md-6">
-                  <label for="idPengguna" style="font-family:'Poppins'">ID Pengguna</label>
+                  <label for="idPengguna" style="font-family:'Arial', sans-serif">ID Pengguna</label>
                   <input type="text" class="form-control frame9403-kotaknama" maxlength="12" size="12" name="idPengguna" id="idPengguna" value="">
               </div>
           </div>
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="email" style="font-family:'Poppins'">Emel</label>
+                  <label for="email" style="font-family:'Arial', sans-serif">Emel</label>
                   <input type="email" class="form-control frame9403-kotaknama" name="email" id="email" required style="text-transform: none;">
               </div>
               <div class="mb-3 col-md-6">
-                  <label for="noTelefon" style="font-family:'Poppins'">No. Telefon</label>
+                  <label for="noTelefon" style="font-family:'Arial', sans-serif">No. Telefon</label>
                   <input type="text" class="form-control frame9403-kotaknama" id="noTelefon" name="noTelefon" 
                    maxlength="11" size="11" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="E.g: 01234567891" required>
               </div>
           </div>
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="nokadpengenalan" style="font-family:'Poppins'">No. Kad Pengenalan</label>
+                  <label for="nokadpengenalan" style="font-family:'Arial', sans-serif">No. Kad Pengenalan</label>
                   <input type="text" class="form-control frame9403-kotaknama" id="nokadpengenalan" name="nokadpengenalan" maxlength="12" minlength="12"
                   size="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="E.g: 750922140122" required>
               </div>
               <div class="mb-3 col-md-6">
-                  <label for="wilayah" style="font-family:'Poppins'">Peringkat</label>
+                  <label for="wilayah" style="font-family:'Arial', sans-serif">Peringkat</label>
                   <select name="wilayah" id="wilayah" class="form-control frame9403-kotaknama3 ">
                     <option value="" selected disabled>Pilih Peringkat</option>
                     @foreach ($wilayah as $key => $value)
@@ -64,7 +64,7 @@
           </div>
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="inputLastName" style="font-family:'Poppins'">Kategori Pengguna</label>
+                  <label for="inputLastName" style="font-family:'Arial', sans-serif">Kategori Pengguna</label>
                   <div style="display: flex; flex-direction: row;">
                     <select name="kategoripengguna" name="kategoriPengguna" class="form-control frame9403-kotaknama3" style="width: 408px">
                         <option value="" selected disabled>Kategori Pengguna</option>
@@ -83,7 +83,7 @@
                   </div>
               </div>
               <div class="mb-3 col-md-6">
-                <label for="rancangan" style="font-family:'Poppins'">Rancangan</label>
+                <label for="rancangan" style="font-family:'Arial', sans-serif">Rancangan</label>
                 <select name="rancangan" id="rancangan" class="form-control frame9403-kotaknama3 " required>
                   <option value="" selected disabled>Pilih Rancangan</option>
                 </select>
@@ -91,7 +91,7 @@
           </div>
           <div class="row">
               <div class="mb-3 col-md-6">
-                  <label for="passcode" style="font-family:'Poppins'">Kata Laluan</label>
+                  <label for="passcode" style="font-family:'Arial', sans-serif">Kata Laluan</label>
                   <div style="display: flex; flex-direction: row; align-items: center;">
                     <input type="password" id="passcode" class="form-control frame9403-kotaknama" name="password" minlength="8" value="ppp@felda" required style="text-transform: none;">
                     <i class="far fa-eye" onclick="showPassFunction()" id="iconPass" style="margin-left: 10px"></i>
@@ -154,7 +154,7 @@
     border-width: 0.865405261516571px;
     border-radius: 3.461621046066284px;
     color: #161616;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-size: 17.3081px;
     padding-left:10px;
     text-transform: uppercase;
@@ -172,7 +172,7 @@
     background:url('/SVG/arrow2.svg') no-repeat;
     background-position:99% center;
     display:block;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-size: 17.3081px;
     text-transform: uppercase;
     box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)
@@ -215,7 +215,7 @@
     font-size: 16px;
     align-self: auto;
     text-align: left;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     line-height: 34.39542007446289px;
     font-stretch: normal;

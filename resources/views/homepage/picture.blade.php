@@ -163,7 +163,7 @@
     font-size: 23px;
     align-self: auto;
     text-align: center;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 400;
     line-height: normal;
     font-stretch: normal;
@@ -218,7 +218,7 @@
     height: auto;
     font-size: 16px;
     align-self: auto;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     font-stretch: normal;
     margin-right: 10px;

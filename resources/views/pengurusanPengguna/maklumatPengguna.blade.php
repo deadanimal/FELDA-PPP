@@ -23,16 +23,14 @@
                         <div class="mb-3 col-md-6">
                             <label for="nama" class="labeltext">Nama</label>
                             <input type="text" class="form-control frame9403-kotaknama" maxlength="100" size="100"
-                            value="{{ Auth::user()->nama }}" name="nama" id="nama"
-                            @if (Auth::user()->kategoripengguna != 1) readonly @endif >
+                            value="{{ Auth::user()->nama }}" name="nama" id="nama">
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="idPengguna" class="labeltext">ID Pengguna</label>
                             <input type="text" class="form-control frame9403-kotaknama" maxlength="12" size="12"
                             value="{{ Auth::user()->idPengguna }}" name="idPengguna" id="idPengguna" required
-                            @if(Auth::user()->kategoripengguna !="4"){
+                            @if(Auth::user()->kategoripengguna !="4")
                                 readonly
-                            }
                             @endif>
                         </div>
                     </div>
@@ -138,7 +136,7 @@
     border-style: solid;
     border-width: 0.865405261516571px;
     border-radius: 3.461621046066284px;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     color: #161616;
     padding-left:10px;
     box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)
@@ -154,7 +152,7 @@
     border-radius: 3.461621046066284px;
     background:url('/SVG/arrow2.svg') no-repeat;
     background-position:99% center;
-    font-family: 'Eina01-SemiBold', sans-serif;
+    font-family: 'Arial', sans-serif;
     display:block;
     font-size: 17.3081px;
     box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2)
@@ -197,7 +195,7 @@ display: flex;
     font-size: 16px;
     align-self: auto;
     text-align: left;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     line-height: 34.39542007446289px;
     font-stretch: normal;
@@ -215,7 +213,7 @@ display: flex;
     margin-bottom: 0;
 } 
 .labeltext{
-    font-family:'Poppins';
+    font-family:'Arial';
 }
 </style>
 <script src="/js/jquery.js"></script>

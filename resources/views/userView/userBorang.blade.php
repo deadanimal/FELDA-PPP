@@ -19,20 +19,20 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="mb-3">
-                                <label for="nama" style="font-family:'Poppins'">NAMA</label>
+                                <label for="nama" style="font-family:'Arial'">NAMA</label>
                                 <input type="text" class="form-control" style="text-transform: uppercase;" name="nama" id="nama" required oninput="this.value = this.value.toUpperCase()">
                             </div>
                         </div>
                         <div class="row">
                             <div class="mb-3">
-                                <label for="ic" style="font-family:'Poppins'">NO KAD PENGENALAN</label>
+                                <label for="ic" style="font-family:'Arial', sans-serif">NO KAD PENGENALAN</label>
                                 <input type="text" class="form-control" name="ic" id="ic" maxlength="12" minlength="12"
                                 size="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="E.g: 750922140122" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="mb-3">
-                                <label for="wilayah" style="font-family:'Poppins'">Peringkat</label>
+                                <label for="wilayah" style="font-family:'Arial', sans-serif">Peringkat</label>
                                 <select name="wilayah" id="wilayah" class="form-control">
                                   <option value="" selected disabled>Pilih Peringkat</option>
                                   @foreach ($wilayah as $key => $value)
@@ -43,7 +43,7 @@
                         </div>
                         <div class="row">
                             <div class="mb-3">
-                                <label for="rancangan" style="font-family:'Poppins'">Rancangan</label>
+                                <label for="rancangan" style="font-family:'Arial', sans-serif">Rancangan</label>
                                 <select name="rancangan" id="rancangan" class="form-control" required>
                                     <option value="" selected disabled>Pilih Rancangan</option>
                                 </select>
@@ -52,7 +52,7 @@
                         @foreach($medans as $medan)
                             <div class="row">
                                 <div class="mb-3">
-                                    <label for="jawapan{{$medan->id}}" style="font-family:'Poppins'; text-transform:uppercase">{{$medan->nama}}</label>
+                                    <label for="jawapan{{$medan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase">{{$medan->nama}}</label>
                                     <input 
                                     @if ($medan->datatype == "string")
                                         type="text" 
@@ -167,7 +167,7 @@
     font-size: 16px;
     align-self: auto;
     text-align: left;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Arial', sans-serif;
     font-weight: 600;
     line-height: 34.39542007446289px;
     font-stretch: normal;

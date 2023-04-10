@@ -18,28 +18,28 @@
             <div class="card-body">
                 <div class="row">
                     <div class="mb-3">
-                        <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Poppins'; text-transform: uppercase;">NAMA: {{$borangJwpn->nama}}</label>
+                        <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Arial'; text-transform: uppercase;">NAMA: {{$borangJwpn->nama}}</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="mb-3">
-                        <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Poppins'; text-transform: uppercase;">NO KAD PENGENALAN: {{$borangJwpn->ic}}</label>
+                        <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Arial'; text-transform: uppercase;">NO KAD PENGENALAN: {{$borangJwpn->ic}}</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="mb-3">
-                        <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Poppins'; text-transform: uppercase;">WILAYAH: {{$borangJwpn->wilayahs->nama}}</label>
+                        <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Arial'; text-transform: uppercase;">WILAYAH: {{$borangJwpn->wilayahs->nama}}</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="mb-3">
-                        <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Poppins'; text-transform: uppercase;">NO KAD PENGENALAN: {{$borangJwpn->rancangans->nama}}</label>
+                        <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Arial'; text-transform: uppercase;">NO KAD PENGENALAN: {{$borangJwpn->rancangans->nama}}</label>
                     </div>
                 </div>
             @foreach($jawapanMedan as $jwpnMedan)
                 <div class="row">
                     <div class="mb-3">
-                        <label for="jwpn{{$jwpnMedan->id}}" style="font-family:'Poppins'; text-transform: uppercase;">{{$jwpnMedan->medan->nama}}: {{$jwpnMedan->jawapan}}</label>
+                        <label for="jwpn{{$jwpnMedan->id}}" style="font-family:'Arial'; text-transform: uppercase;">{{$jwpnMedan->medan->nama}}: {{$jwpnMedan->jawapan}}</label>
                     </div>
                 </div>
             @endforeach
