@@ -61,11 +61,10 @@
                             
                             <br>
                             <label for="editor" class="form-label">Kandungan Surat</label>
-                            <div id="editor" style="height:100% ">
+                            <div id="editor">
                                 <x-markdown>
-                                    {{$surat->body}}
-                                    {{-- {!! nl2br(e($surat->body)) !!} --}}
-
+                                    {{-- {{$surat->body}} --}}
+                                    {!! nl2br(e($surat->body)) !!}
                                 </x-markdown>
                             </div>
                             <input type='hidden' name="body" id="content">
@@ -112,14 +111,20 @@
 
 </style>
 <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>  	
-<script>
-var editor = new FroalaEditor('#editor');	
-	
+<script type="text/javascript">
 </script>	
 <script type="text/javascript">
+
+    var editor = new FroalaEditor('#editor', {
+        height: 300,
+        toolbarButtons: ['bold', 'italic', 'underline', 'paragraphFormat', 'align','insertTable', 'undo', 'redo']
+    }, function () {
+        console.log(editor.html.get())
+    });	
+
     document.querySelector('#form').addEventListener('submit', e => {
     e.preventDefault();
-    document.querySelector('#content').value = editor.getMarkdown();
+    document.querySelector('#content').value = editor.FroalaEditor('html.get');
     e.target.submit();
 });
 </script>
