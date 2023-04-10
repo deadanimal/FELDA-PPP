@@ -9,7 +9,7 @@ class Article extends Model
 {
     use HasFactory;
 
-    protected $table = 'article';
+    protected $table = 'articles';
 
     public function item(){
         return $this->belongsTo(Item::class, 'item_id');

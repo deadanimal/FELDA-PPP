@@ -72,7 +72,7 @@
                 <tr class="frame9402-input" style="background-color: rgba(162, 50, 93, 0.08);"> 
               @endif
                 <td class="frame9402-text30">Nama Proses:</td>
-                <td class="frame9402-text31"><input type="text" id="nama{{$i}}" class="frame9402-kotaknama" value="{{$proses->nama}}"></td>
+                <td class="frame9402-text31"><input type="text" id="nama{{$i}}" class="frame9402-kotaknama" value="{{$proses->nama}}" oninput="this.value = this.value.toUpperCase()"></td>
                 <td class="frame9402-text32">Turutan Proses:
                   <select name="sequence" id="sequence{{$i}}" class="frame9403-kotaknama3">
                     @for($x=1; $x<=count($prosess); $x++)
