@@ -54,7 +54,7 @@
                                 <label for="title" class="frame9402-text04">
                                     <strong>Tajuk</strong>
                                 </label>
-                                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset; width:-webkit-fill-available"  id="title" placeholder="Tajuk" name="title" required>
+                                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset; width:-webkit-fill-available"  id="title" placeholder="Tajuk" name="title" required oninput="this.value = this.value.toUpperCase()">
                                 <label for="statement" class="frame9402-text04">
                                     <strong>Isi Kandungan</strong>
                                 </label>
@@ -85,7 +85,7 @@
                     @foreach ($articles as $article)
                     <tr>
                         <td class="text-center">{{ $loop->iteration }}</td>
-                        <td class="text-center arial-N">{{ $article->title }}</td>
+                        <td class="text-center arial-N" style="text-transform: uppercase">{{ $article->title }}</td>
                         <td class="arial-N">
                             {!! nl2br(e($article->statement)) !!}
                         </td>
@@ -148,13 +148,13 @@
                                             <p>Isi Kandungan: {{$article->statement}}</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
                                             <form method="post" action="/home/article/delete">
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" name="articleId" value="{{$article->id}}"/>
                                             <input type="hidden" value="{{$item->id}}" name="itemId">
-                                            <button class="btn btn-danger">Ya</button>
+                                            <button class="btn btn-danger">YA</button>
                                             </form>
                                         </div>
                                     </div>

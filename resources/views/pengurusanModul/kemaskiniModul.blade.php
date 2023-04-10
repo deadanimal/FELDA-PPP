@@ -175,7 +175,6 @@ display: flex;
   height: auto;
   font-size: 16px;
   align-self: auto;
-  font-style: SemiBold;
   text-align: left;
   font-family: 'Arial', sans-serif;
   font-weight: 600;

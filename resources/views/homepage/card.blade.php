@@ -206,16 +206,16 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Anda Pasti Mahu Kad {{$card->title}}?</p>
+                                                <p>Anda Pasti Mahu Padam Kad {{$card->title}}?</p>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
                                                 <form method="post" action="/home/card/delete">
                                                 @csrf
                                                 @method('DELETE')
                                                 <input type="hidden" value="{{$item->id}}" name="itemId">
                                                 <input type="hidden" name="cardId" value="{{$card->id}}"/>
-                                                <button class="btn btn-danger">Ya</button>
+                                                <button class="btn btn-danger">YA</button>
                                                 </form>
                                             </div>
                                         </div>

@@ -462,7 +462,7 @@ display: flex;
                               <p>Anda Pasti Mahu Padam Kotak Masuk {{$checkbox->nama}}?<p>
                           </div>
                           <div class="modal-footer">
-                              <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                              <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
                               <form method="post" action="/moduls/tugasan/checkbox/delete">
                                 @csrf
                                 @method('DELETE')
@@ -470,7 +470,7 @@ display: flex;
                                 <input type="hidden" value="{{$tugasan->id}}" name="tugasanID">
                                 <input type="hidden" value="{{$proses->id}}" name="prosesId">
                                 <input type="hidden" value="{{$modul->id}}" name="modulId">
-                                <button class="btn btn-danger">Ya</button>
+                                <button class="btn btn-danger">YA</button>
                               </form>
                           </div>
                         </div>

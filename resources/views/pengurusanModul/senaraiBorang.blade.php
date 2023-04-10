@@ -108,14 +108,14 @@
                     <input type="hidden" value="{{$modul->id}}" name="modulId">
                     <input type="hidden" name="prosesId" id="prosesId" value="{{$proses->id}}">
                     <input type="hidden" name="borangId" id="borangID" value="{{$borang->id}}">
-                    <button class="frame9402-rectangle828245" type="submit" onclick="save({{$i}})" style="margin-left: 7px;margin-top: 9px;background-color: transparent;border-color: transparent;" title="Simpan">                
+                    <button class="frame9402-rectangle828245" type="submit" onclick="save({{$i}})" style="margin-left: 7px;margin-top: 25%;background-color: transparent;border-color: transparent;" title="Simpan">                
                       <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 530 512" width="31px"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
                     </button>
                   </form>
                   {{-- <a href="/pengurusanModul/kemaskiniProses/{{$proses->id}}/{{}}" class="frame9402-rectangle8282452" id="kemaskini">
                     <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 548 612"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
                   </a> --}}
-                  <button type="button" class="frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModal{{$i}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                  <button type="button" class="frame9402-rectangle828246" style="margin-left: 10px; margin-top: -5px;" data-toggle="modal" data-target="#exampleModal{{$i}}" title="Padam"><img src="/SVG/bin.svg"/></button>
 
                   <!-- Modal -->
                   <div class="modal fade" id="exampleModal{{$i}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -131,14 +131,14 @@
                             <p>Anda Pasti Mahu Padam Borang {{$borang->namaBorang}}?<p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
                             <form method="post" action="/moduls/borang/delete">
                               @csrf
                               @method('DELETE')
                               <input type="hidden" value="{{$proses->id}}" name="prosesId">
                               <input type="hidden" value="{{$modul->id}}" name="modulId">
                               <input type="hidden" name="borangId" value="{{$borang->id}}"/>
-                              <button class="btn btn-danger">Ya</button>
+                              <button class="btn btn-danger">YA</button>
                             </form>
                         </div>
                       </div>
@@ -360,7 +360,7 @@
               @foreach ($jenisTernakan as $jenisTernakan)
               <tr>
                 <td class="text-center arial" style="text-transform: uppercase;">{{$jenisTernakan->nama}}</td>
-                <td class="text-center arial">
+                <td class="text-center arial" style="display: flex; justify-content: center;">
                   <form action="/moduls/jenisTernakan/edit" method="GET">
                     <input type="hidden" name="jenisTernakanID" value="{{$jenisTernakan->id}}">
                     <input type="hidden" name="prosesId" value="{{$proses->id}}">
@@ -387,14 +387,14 @@
                               <p>Anda Pasti Mahu Padam Jenis Ternakan/Tanaman {{$jenisTernakan->nama}}?<p>
                           </div>
                           <div class="modal-footer">
-                              <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                              <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
                               <form method="post" action="/moduls/jenisTernakan/delete">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" value="{{$jenisTernakan->id}}" name="jenisTernakanID">
                                 <input type="hidden" value="{{$proses->id}}" name="prosesId">
                                 <input type="hidden" value="{{$modul->id}}" name="modulId">
-                                <button class="btn btn-danger">Ya</button>
+                                <button class="btn btn-danger">ya</button>
                               </form>
                           </div>
                         </div>
@@ -860,7 +860,6 @@ function closeFormKemas() {
     width: 35px;
     height: 30px;
     padding: 0px;
-    margin-top: -5px;
     position: relative;
     box-sizing: border-box;
     background-color: transparent;

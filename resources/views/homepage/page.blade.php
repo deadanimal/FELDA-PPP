@@ -176,12 +176,12 @@
                                         <p>Anda Pasti Mahu Padam laman {{$page->nama}}?<p>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
                                         <form method="post" action="/home/page/delete">
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" value="{{$page->id}}" name="pageId">
-                                            <button class="btn btn-danger">Ya</button>
+                                            <button class="btn btn-danger">YA</button>
                                         </form>
                                     </div>
                                     </div>
@@ -331,15 +331,15 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Anda Pasti Mahu Dokumen {{$doc->name}}?</p>
+                                            <p>Anda Pasti Mahu Padam Dokumen {{$doc->name}}?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
                                             <form method="post" action="/home/document/delete">
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" name="docId" value="{{$doc->id}}"/>
-                                            <button class="btn btn-danger">Ya</button>
+                                            <button class="btn btn-danger">YA</button>
                                             </form>
                                         </div>
                                     </div>

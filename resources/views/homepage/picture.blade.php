@@ -97,13 +97,18 @@
                                                 </label>
                                                 <input id="picture" type="file" accept="image/*" name="picture" class="form-control" required/>
                                             </div>
-                                            <div class="modal-footer">
+                                            <div class="modal-footer" style="justify-content:normal;">
                                                 <input type="hidden" name="pictureId" value="{{$pic->id}}"/>
                                                 <input type="hidden" value="{{$gallery->id}}" name="galleryId">
                                                 <input type="hidden" value="{{$item->id}}" name="itemId">
-                                                <a class="frame9402-rectangle828246" data-toggle="modal" href="#deleteModal{{$pic->id}}" title="Padam"><img src="/SVG/bin.svg"/></a>
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                                <button class="btn btn-primary">Tambah</button>
+                                                <div style="align-content: flex-start">
+                                                    <a class="frame9402-rectangle828246" data-toggle="modal" href="#deleteModal{{$pic->id}}" title="Padam"><img src="/SVG/bin.svg"/></a>
+                                                </div>
+                                                <div class="mr-0 ml-auto">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                                    <button class="btn btn-primary">Tambah</button>
+                                                </div>
+                                                
                                             </div>
                                         </form>
                                     </div>
@@ -124,14 +129,14 @@
                                                 <img src="{{$pic->picture}}" class="card-img-top">
                                             </div>
                                             <div class="modal-footer">
-                                                <a href="#" class="btn btn-primary" data-dismiss="modal">Tidak</a>      
+                                                <a href="#" class="btn btn-primary" data-dismiss="modal">TIDAK</a>      
                                                 <form method="post" action="/home/picture/delete">
                                                 @csrf
                                                 @method('DELETE')
                                                 <input type="hidden" name="pictureId" value="{{$pic->id}}"/>
                                                 <input type="hidden" name="galleryId" value="{{$gallery->id}}"/>
                                                 <input type="hidden" value="{{$item->id}}" name="itemId">
-                                                <button class="btn btn-danger">Ya</button>
+                                                <button class="btn btn-danger">YA</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -175,7 +180,6 @@
     width: 35px;
     height: 30px;
     padding: 0px;
-    margin-top: -5px;
     position: relative;
     box-sizing: border-box;
     background-color: transparent;

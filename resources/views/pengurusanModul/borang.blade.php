@@ -788,7 +788,7 @@ display: flex;
                             <p>Anda Pasti Mahu Padam Medan {{$medan->nama}}?<p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
                             <form method="post" action="/moduls/borang_field/delete">
                               @csrf
                               @method('DELETE')
@@ -796,7 +796,7 @@ display: flex;
                               <input type="hidden" value="{{$proses->id}}" name="prosesId">
                               <input type="hidden" value="{{$modul->id}}" name="modulId">
                               <input type="hidden" value="{{$borang->id}}" name="borangId">
-                              <button class="btn btn-danger">Ya</button>
+                              <button class="btn btn-danger">YA</button>
                             </form>
                         </div>
                       </div>

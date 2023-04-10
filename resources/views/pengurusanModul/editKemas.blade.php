@@ -455,7 +455,7 @@ display: flex;
 
                     <!-- Modal delete-->
                     <div class="modal fade" id="exampleModalcheck{{$act->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Padam Aktiviti {{$act->nama}}</h5>
@@ -467,7 +467,7 @@ display: flex;
                                 <p>Anda Pasti Mahu Padam Aktiviti {{$act->nama}}?<p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
                                 <form method="post" action="/moduls/jenisKemas/aktiviti/delete">
                                     @csrf
                                     @method('DELETE')
@@ -476,7 +476,7 @@ display: flex;
                                     <input type="hidden" value="{{$jenisTernakan->id}}" name="ternakanaID">
                                     <input type="hidden" value="{{$proses->id}}" name="prosesId">
                                     <input type="hidden" value="{{$modul->id}}" name="modulId">
-                                    <button class="btn btn-danger">Ya</button>
+                                    <button class="btn btn-danger">YA</button>
                                 </form>
                             </div>
                             </div>

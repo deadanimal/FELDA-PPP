@@ -54,7 +54,7 @@
                                 <label for="title" class="frame9402-text04">
                                     <strong>Tajuk</strong>
                                 </label>
-                                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset; width:-webkit-fill-available"  id="title" placeholder="Tajuk" name="title" required>
+                                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset; width:-webkit-fill-available"  id="title" placeholder="Tajuk" name="title" required oninput="this.value = this.value.toUpperCase()">
                                 
                                 <label for="body" class="frame9402-text04">
                                     <strong>Isi Kandungan</strong>
@@ -91,7 +91,7 @@
                 <tbody>          
                     @foreach ($galleries as $gallery)
                     <tr>
-                        <td class="text-center arial-N">{{ $gallery->title }}</td>
+                        <td class="text-center arial-N" style="text-transform: uppercase">{{ $gallery->title }}</td>
                         <td class="arial-N">
                             @if ($gallery->thumbnail != null)
                                 {!! nl2br(e($gallery->body)) !!}
@@ -174,7 +174,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Anda Pasti Mahu Galeri?</p>
+                                            <p>Anda Pasti Mahu Padam Galeri?</p>
                                             <p>{{$gallery->title}}</p>
 
                                             @if ($gallery->body != null)
@@ -185,13 +185,13 @@
                                             @endif
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
                                             <form method="post" action="/home/gallery/delete">
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" name="galleryId" value="{{$gallery->id}}"/>
                                             <input type="hidden" value="{{$item->id}}" name="itemId">
-                                            <button class="btn btn-danger">Ya</button>
+                                            <button class="btn btn-danger">YA</button>
                                             </form>
                                         </div>
                                     </div>

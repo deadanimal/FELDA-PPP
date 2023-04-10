@@ -205,13 +205,13 @@
                                       <p>Anda Pasti Mahu Padam Item {{$item->nama}}?<p>
                                   </div>
                                   <div class="modal-footer">
-                                      <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
+                                      <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
                                       <form method="post" action="/home/page/item/delete">
                                           @csrf
                                           @method('DELETE')
                                           <input type="hidden" value="{{$page->id}}" name="pageId">
                                           <input type="hidden" value="{{$item->id}}" name="itemId">
-                                          <button class="btn btn-danger">Ya</button>
+                                          <button class="btn btn-danger">YA</button>
                                       </form>
                                   </div>
                                   </div>

@@ -115,8 +115,8 @@ class ModulController extends Controller
                                 <p style="text-align:left;">Anda Pasti Mahu Padam Modul '.$modul->nama.'?<p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>
-                                <a href="'.$url4.'" class="btn btn-danger">Ya</a>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>
+                                <a href="'.$url4.'" class="btn btn-danger">YA</a>
                             </div>
                             </div>
                         </div>
