@@ -281,7 +281,7 @@ class WebController extends Controller
 
         $item = Item::find($itemId);
 
-        $articles = article::where('item_id', $itemId)->get();
+        $articles = Article::where('item_id', $itemId)->get();
         
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
@@ -540,7 +540,7 @@ class WebController extends Controller
     {
         $item = Item::find($request->itemId);
 
-        $article = new article;
+        $article = new Article;
         $article->title = $request->title;
         $article->statement = $request->statement;
         $article->item_id = $item->id;
@@ -560,7 +560,7 @@ class WebController extends Controller
     {
         $item = Item::find($request->itemId);
 
-        $article = article::find($request->articleId);
+        $article = Article::find($request->articleId);
         $article->title = $request->title;
         $article->statement = $request->statement;
         $article->item_id = $item->id;
