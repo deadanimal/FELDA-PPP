@@ -22,8 +22,7 @@
                             <th class="text-center" scope="col">Tempoh Masa</th>
                             <th class="text-center" scope="col">Masa Dilaksanakan</th>
                             <th class="text-center" scope="col">Sasaran</th>
-                            <th class="text-center">Pendapatan</th>
-                            <th class="text-center">Perbelanjaan</th>
+                            <th class="text-center">Jumlah</th>
                         </tr>
                     </thead>
                     @php
@@ -34,19 +33,18 @@
 
                         <tr style="background-color: #E9E9E9">
                             <td></td>
-                            <td colspan="8" class="arial-N" >Pendapatan</td>
+                            <td colspan="6" class="arial-N" >Pendapatan</td>
                         </tr>
                         {{-- loop for income parameter --}}
                         @foreach ($incomeParameter as $jwpn)
                             <tr>
                                 <td class="text-center arial-N">{{$loop->iteration}}</td>
                                 <td class="text-center arial-N">{{$jwpn->AktivitiParameter->nama}}</td>
-                                <td class="text-center arial-N">{{$jwpn->AktivitiParameter->unit}}</td>
+            z                    <td class="text-center arial-N">{{$jwpn->AktivitiParameter->unit}}</td>
                                 <td class="text-center arial-N">{{$jwpn->AktivitiParameter->cycle}}</td>
                                 <td class="text-center arial-N">{{date("d-m-Y",strtotime($jwpn->created_at))}}</td>
                                 <td class="text-center arial-N">{{$jwpn->AktivitiParameter->sasaran_pendapatan ?? ""}}</td>
                                 <td class="text-center arial-N">{{$jwpn->value}}</td>
-                                <td class="text-center arial-N"></td>
                             </tr>
                             @php
                             $totalInc += $jwpn->value;
@@ -57,15 +55,17 @@
                             <td class="text-center arial-N" colspan="2">Jumlah</td>
                             <td colspan="4"></td>
                             <td class="text-center arial-N">{{$totalInc}}</td>
-                            <td></td>
                         </tr>
 
                         <tr>
-                            <td colspan = "8"></td>
+                            <td colspan = "7"></td>
+                        </tr>
+                        <tr>
+                            <td colspan = "7"></td>
                         </tr>
                         <tr style="background-color: #E9E9E9">
                             <td></td>
-                            <td colspan="7" class="arial-N" >Perbelanjaan</td>
+                            <td colspan="6" class="arial-N" >Perbelanjaan</td>
                         </tr>
                         {{-- loop for expenses parameter--}}
                         @foreach ($expensesParameter as $jwpn)
@@ -76,7 +76,6 @@
                                 <td class="text-center arial-N">{{$jwpn->AktivitiParameter->cycle}}</td>
                                 <td class="text-center arial-N">{{date("d-m-Y",strtotime($jwpn->created_at))}}</td>
                                 <td class="text-center arial-N">{{$jwpn->AktivitiParameter->sasaran_pendapatan ?? ""}}</td>
-                                <td class="text-center arial-N"></td>
                                 <td class="text-center arial-N">{{$jwpn->value}}</td>
                             </tr>
                             @php
@@ -86,7 +85,6 @@
                         <tr style="background-color: #99FFFF">
                             <td class="text-center arial-N" colspan="2">Jumlah</td>
                             <td colspan="4"></td>
-                            <td></td>
                             <td class="text-center arial-N">{{$totalExp}}</td>
                         </tr>
                     </tbody>
