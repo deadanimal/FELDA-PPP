@@ -25,7 +25,7 @@
             <div class="card-header">
                 <table style="width: 100%">
                     <tr>
-                    <td><h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Senarai Slider</h1></td>
+                    <td><h2 class="modal-title">Senarai Slider</h1></td>
                     <td>
                         <button class="frame9403-frame7445"  data-toggle="modal" data-target="#modalCenterAddSlider">
                             <div class="frame9403-frame7293">

@@ -11,9 +11,12 @@ use App\Http\Controllers\WebController;
 //     return view('welcome');
 // });
 
-Route::get('/',  [WebController::class, 'landingPage']);
+// Route::get('/',  [WebController::class, 'landingPage']);
 Route::get('/penyataan',  [WebController::class, 'statementList']);
 Route::get('/document',  [WebController::class, 'documentList']);
+
+Route::get('/',  [WebController::class, 'homePage']);
+Route::get('/page/{pageId}',  [WebController::class, 'page']);
 
 Route::post('/home/contact',  [WebController::class, 'contact']);
 

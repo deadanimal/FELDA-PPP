@@ -29,6 +29,45 @@ use Illuminate\Support\Facades\Mail;
 
 class WebController extends Controller
 {
+    public function homePage()
+    {
+        $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
+        
+        $sliders = Slider::all();
+        $cardsTotalRows = cards::max('rows');
+        $cards = cards::orderBy('rows', 'ASC')->get();
+        $faqs = Faq::orderBy('updated_at', 'DESC')->get();
+        
+        $totalDana = Count(Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->get());
+        $totalModul = Count(Modul::where('status', 'Go-live')->get());
+        $totalPeneroka = Count(User::whereRelation('kategori', 'nama', '=', 'Peserta')->get());
+
+        return view('homepage.home', compact ('totalDana','totalModul', 'totalPeneroka', 'pages', 'sliders', 'cardsTotalRows', 'cards', 'faqs'));
+    }
+
+    public function page(Request $request)
+    {
+        $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
+
+        $pageId = (int) $request->route('pageId');
+        $pg = Page::find($pageId);
+
+        $items = Item::where('page_id', $pageId)->get();
+
+        $cardsTotalRows = cards::whereRelation('item', 'page_id', '=', $pageId)->max('rows');
+        $cards = cards::whereRelation('item', 'page_id', '=', $pageId)->orderBy('rows', 'ASC')->get();
+        
+        $sliders = Slider::whereRelation('item', 'page_id', '=', $pageId)->get();
+        $galleries = Gallery::whereRelation('item', 'page_id', '=', $pageId)->orderBy('updated_at', 'DESC')->get();
+        $dropdowns = dropdown::whereRelation('item', 'page_id', '=', $pageId)->get();
+        $articles = Article::whereRelation('item', 'page_id', '=', $pageId)->get();
+
+        $totalDana = Count(Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->get());
+        $totalModul = Count(Modul::where('status', 'Go-live')->get());
+        $totalPeneroka = Count(User::whereRelation('kategori', 'nama', '=', 'Peserta')->get());
+
+        return view('homepage.page', compact ('totalDana','totalModul', 'totalPeneroka', 'pages', 'pg', 'items', 'cardsTotalRows', 'cards', 'galleries' ,'sliders','articles', 'dropdowns'));
+    }
 
     
     public function landingPage()
@@ -46,16 +85,18 @@ class WebController extends Controller
     }
     public function statementList()
     {
+        $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
         $stats = statement::orderBy('updated_at', 'DESC')->get();
 
-        return view('penyataan', compact ('stats'));
+        return view('penyataan', compact ('stats', 'pages'));
     }
 
     public function documentList()
     {
+        $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
         $docs = document::orderBy('updated_at', 'DESC')->get();
 
-        return view('downloadDoc', compact ('docs'));
+        return view('downloadDoc', compact ('docs', 'pages'));
     }
 
     public function page_list()
@@ -67,7 +108,7 @@ class WebController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.page', compact ('docs','pages', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.pageList', compact ('docs','pages', 'menuModul', 'menuProses', 'menuBorang'));
     }
     
     public function page_add(Request $request)

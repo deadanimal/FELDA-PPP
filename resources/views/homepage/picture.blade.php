@@ -27,7 +27,7 @@
             <div class="container">
                 <table class="w-100 mt-4">
                     <tr>
-                        <td><h1 class="fw-light text-center text-lg-start mb-0">Senarai Gambar</h1></td>
+                        <td><h1 class="modal-title">Senarai Gambar</h1></td>
                         <td>
                             <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladd">
                                 <div class="frame9403-frame7293">

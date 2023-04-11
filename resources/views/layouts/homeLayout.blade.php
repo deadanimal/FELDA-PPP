@@ -74,10 +74,9 @@
   <header id="header" class="fixed-top d-flex align-items-center header-inner-pages " style="height: 100px">
     <div class="container d-flex align-items-center justify-content-between" style="height: 100px">
 
-      <h1 class="logo">
-        <a href="/">
-            <img src="/SVG/FELDA_logo.svg" style="width: auto; height: 200px; min-height: 80px; background:#ffff; border-radius:4px;"/>
-            <img src="/Image/logo.png" style="width: auto; height: 200px; min-height: 80px; background:#ffff; border-radius:4px;"/>
+      <h1 style="height: -webkit-fill-available;">
+        <a href="/" >
+            <img src="/Image/logo.png" style="height: -webkit-fill-available;background:#ffff; border-radius:4px;"/>
         </a>
       </h1>
       <!-- Uncomment below if you prefer to use an image logo -->
@@ -86,18 +85,25 @@
       <nav id="navbar" class="navbar">
         <ul>
             @if(Request::is('/'))
-                <li><a class="nav-link scrollto active" href="#hero">LAMAN UTAMA</a></li>
+                <li><a class="nav-link scrollto active" href="#hero"  style="font-size:15px;">LAMAN UTAMA</a></li>
             @else
-                <li><a class="nav-link scrollto" href="/">LAMAN UTAMA</a></li>
+                <li><a class="nav-link scrollto" href="/"  style="font-size:15px;">LAMAN UTAMA</a></li>
             @endif
-            <li><a class="nav-link scrollto" href="#contact">HELPDESK</a></li>
-            <li><a class="nav-link scrollto" href="#services">PAUTAN</a></li>
-            <li><a class="nav-link scrollto " href="#faq">FAQ</a></li>
+
+            @foreach ($pages as $page)
+                @if(Request::is('/page/{{$page->id}}'))
+                    <li><a class="nav-link scrollto active"href="/page/{{$page->id}}">{{$page->nama}}</a></li>
+                @else
+                    <li><a class="nav-link scrollto" href="/page/{{$page->id}}">{{$page->nama}}</a></li>
+                @endif
+            @endforeach
+
             @if(Request::is('/penyataan'))
                 <li><a class="nav-link scrollto active" href="/penyataan">PENYATAAN DAN PENAFIAN</a></li>
             @else
                 <li><a class="nav-link scrollto" href="/penyataan">PENYATAAN DAN PENAFIAN</a></li>
             @endif
+
             @if (Route::has('login'))
                 <li>
                     @auth
@@ -120,7 +126,7 @@
 
     </div>
   </header><!-- End Header -->
-  @yield('content')
+      @yield('content')
     <!-- ======= Footer ======= -->
     <footer id="footer">
         <div class="footer-top">
@@ -128,7 +134,7 @@
             <div class="row" style="display: flex;justify-content: center;">
 
             <div class="col-lg-3 col-md-6 footer-links size">
-                <h5>Useful Links</h5>
+                <h4>Useful Links</h4>
                 <ul>
                 <li><i class="bx bx-chevron-right"></i> <a href="/">Laman Utama</a></li>
                 <li><i class="bx bx-chevron-right"></i> <a href="#contact">Helpdesk</a></li>
@@ -139,7 +145,7 @@
             </div>
 
             <div class="col-lg-3 col-md-6 footer-contact size">
-                <h5>Hubungi Kami</h5>
+                <h4>Hubungi Kami</h4>
                 <p class="size">
                     Lembaga Kemajuan Tanah Persekutuan,<br>
                     Menara FELDA,<br>
@@ -155,7 +161,7 @@
 
             <div class="col-lg-3 col-md-6 footer-info size">
                 <h4>Tentang Felda</h4>
-                <p style="font-size:10px">Lembaga Kemajuan Tanah Persekutuan (FELDA) (bahasa Inggeris: Federal Land Development Authority atau FELDA) 
+                <p style="font-size:12px">Lembaga Kemajuan Tanah Persekutuan (FELDA) (bahasa Inggeris: Federal Land Development Authority atau FELDA) 
                     adalah satu agensi kerajaan Malaysia yang menangani penempatan semula penduduk luar bandar yang miskin ke kawasan-kawasan yang baru dibangun agar meningkatkan taraf ekonomi mereka.</p>
                 <div class="social-links mt-3">
                 <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -217,7 +223,7 @@
             background: #fff;
         }
         .size{
-            font-size: 10px;
+            font-size: 12px;
         }
     </style>
 </body>

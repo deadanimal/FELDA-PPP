@@ -25,7 +25,7 @@
             <div class="card-header">
                 <table style="width: 100%">
                     <tr>
-                        <td><h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Senarai Galeri</h1></td>
+                        <td><h2 class="modal-title">Senarai Galeri</h2></td>
                         <td>
                             <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladd">
                                 <div class="frame9403-frame7293">
@@ -82,8 +82,8 @@
             <table class="table table-bordered table-striped w-100">
                 <thead class="text-white bg-primary w-100">                    
                     <tr class="text-center">
-                        <th class="text-center"  style="width: 30%">Tajuk</th>
-                        <th class="text-center">Isi Kandungan</th>
+                        <th class="text-center"  style="width: 20%">Tajuk</th>
+                        <th class="text-center" style="width: 50%;">Isi Kandungan</th>
                         <th class="text-center">Gambar Hadapan Galeri</th>
                         <th class="text-center" style="width: 20%;">Tindakan</th>
                     </tr>
