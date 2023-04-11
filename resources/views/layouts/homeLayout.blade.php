@@ -35,7 +35,7 @@
 <body>
     @include('sweetalert::alert')
   <!-- ======= Top Bar ======= -->
-  <div id="topbar" class="fixed-top d-flex align-items-center topbar-inner-pages ">
+  <div id="topbar" class="fixed-top d-flex align-items-center topbar-inner-pages " style="background: rgba(36, 61, 37, 1) !important">
     <div class="container d-flex align-items-center justify-content-center justify-content-md-between" style="margin-right:0px">
       <div class="contact-info d-flex align-items-center">
       </div>
