@@ -31,10 +31,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <table class="w-100">
-                        <tr>
-                            <td><h1 class="card-title"> Surat Tahap Kelulusan {{$tahapKelulusan->kategoriPengguna->nama}} Bagi Borang {{$borang->namaBorang}}</h1></td>
-                            <td class="text-end">
+                    <table class="table table-borderless w-100" style="border: 0px;">
+                        <tr style="border:0px">
+                            <td style="border:0px"><h1 class="card-title"> Surat Tahap Kelulusan {{$tahapKelulusan->kategoriPengguna->nama}} Bagi Borang {{$borang->namaBorang}}</h1></td>
+                            <td class="text-end" style="border:0px">
                                 @if ($surat !=null)
                                     <form action="/moduls/borang/suratKelulusan/view">
                                         <input type="hidden" name="tahapKelulusanID" value="{{$tahapKelulusan->id}}">
@@ -61,11 +61,10 @@
                             
                             <br>
                             <label for="editor" class="form-label">Kandungan Surat</label>
+                            <div class="card">
+                            {!!$surat->body!!}
+                            </div>
                             <div id="editor">
-                                <x-markdown>
-                                    {{-- {{$surat->body}} --}}
-                                    {!! nl2br(e($surat->body)) !!}
-                                </x-markdown>
                             </div>
                             <input type='hidden' name="body" id="content">
                             <div class="text-end">
@@ -108,23 +107,39 @@
         font-family: 'Arial', sans-serif;
         font-weight: 600;
     }
+    table, th, td, tr {
+        border: 1px solid black;
+    }
 
 </style>
 <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>  	
-<script type="text/javascript">
-</script>	
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/plugins/markdown.min.js"></script>
+{{-- <script type="text/javascript">
+
+    const Editor = toastui.Editor;
+
+    const editor = new Editor({
+  el: document.querySelector('#editor'),
+  height: '500px',
+  initialEditType: 'markdown',
+  previewStyle: 'vertical'
+});
+
+editor.getMarkdown();
+</script> --}}
+
 <script type="text/javascript">
 
     var editor = new FroalaEditor('#editor', {
         height: 300,
         toolbarButtons: ['bold', 'italic', 'underline', 'paragraphFormat', 'align','insertTable', 'undo', 'redo']
-    }, function () {
-        console.log(editor.html.get())
+    // }, function () {
+    //     console.log(editor.html.get())
     });	
 
     document.querySelector('#form').addEventListener('submit', e => {
     e.preventDefault();
-    document.querySelector('#content').value = editor.FroalaEditor('html.get');
+    document.querySelector('#content').value = editor.html.get();
     e.target.submit();
 });
 </script>

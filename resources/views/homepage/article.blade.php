@@ -149,7 +149,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
-                                            <form method="post" action="/home/article/delete">
+                                            <form method="post" action="/hme/article/delete">
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" name="articleId" value="{{$article->id}}"/>

@@ -658,6 +658,7 @@ class BorangController extends Controller
 
     public function suratKelulusan_update(Request $request)
     {
+        // dd($request->body);
         $idBorang = $request->borangId;
         $borang = Borang::find($idBorang);
 
