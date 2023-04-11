@@ -62,9 +62,12 @@
                             <br>
                             <label for="editor" class="form-label">Kandungan Surat</label>
                             <div class="card">
-                            {!!$surat->body!!}
+                            
                             </div>
                             <div id="editor">
+                                <x-markdown>
+                                    {!!$surat->body!!}
+                                </x-markdown>
                             </div>
                             <input type='hidden' name="body" id="content">
                             <div class="text-end">
