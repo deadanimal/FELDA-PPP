@@ -4,7 +4,7 @@
 <main id="main"  class="target">
 
   <!-- ======= Hero Section ======= -->
-  <section id="gambar" class="d-flex justify-cntent-center align-items-center">
+  <section id="hero" class="d-flex justify-cntent-center align-items-center" style=" background: url('../img/felda-2.jpg') no-repeat top center! important;">
     <div id="heroCarousel" data-bs-interval="5000" class="container carousel carousel-fade" data-bs-ride="carousel">
         
     </div>
