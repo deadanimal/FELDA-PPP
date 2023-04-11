@@ -1,14 +1,15 @@
 @extends('layouts.homeLayout')
 
 @section('content')
+<main id="main"  class="target">
+
   <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex justify-cntent-center align-items-center">
+  <section id="gambar" class="d-flex justify-cntent-center align-items-center">
     <div id="heroCarousel" data-bs-interval="5000" class="container carousel carousel-fade" data-bs-ride="carousel">
         
     </div>
   </section><!-- End Hero -->
 
-  <main id="main"  class="target">
 
     <!-- ======= About Us Section ======= -->
     <section id="about" class="about">

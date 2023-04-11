@@ -47,6 +47,7 @@ class WebController extends Controller
 
     public function page(Request $request)
     {
+        //nav bar menu
         $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
 
         $pageId = (int) $request->route('pageId');
@@ -67,6 +68,19 @@ class WebController extends Controller
         $totalPeneroka = Count(User::whereRelation('kategori', 'nama', '=', 'Peserta')->get());
 
         return view('homepage.page', compact ('totalDana','totalModul', 'totalPeneroka', 'pages', 'pg', 'items', 'cardsTotalRows', 'cards', 'galleries' ,'sliders','articles', 'dropdowns'));
+    }
+
+    public function gallery_pic(Request $request)
+    {
+        //nav bar menu
+        $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
+        
+        $galleryID = (int) $request->route('galleryID');
+        $gallery = Gallery::find($galleryID);
+
+        $pictures = Picture::where('gallery_id', $galleryID)->get();
+       
+        return view('homepage.galleryPic', compact ('pages', 'gallery', 'pictures'));
     }
 
     

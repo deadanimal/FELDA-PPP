@@ -209,7 +209,7 @@ h6 {
 }
 
 .topbar-inner-pages {
-  background: rgba(36, 61, 37, 0.9) !important;
+  background: rgba(36, 61, 37, 1) !important;
 }
 
 /*--------------------------------------------------------------
@@ -484,7 +484,7 @@ h6 {
   height: 80vh;
   overflow: hidden;
   position: relative;
-  background: url("../img/green-slate.jpg") top center;
+  background: url("../img/felda-2.jpg") top center;
   background-size: cover;
   position: relative;
   margin-bottom: -90px;
@@ -596,7 +596,7 @@ h6 {
   height: 80vh;
   overflow: hidden;
   position: relative;
-  background: url("../img/felda-2.jpg") top center;
+  background: url("../img/green-slate.jpg") top center;
   background-size: cover;
   position: relative;
   margin-bottom: -90px;

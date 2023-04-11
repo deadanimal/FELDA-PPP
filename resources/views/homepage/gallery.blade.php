@@ -82,10 +82,10 @@
             <table class="table table-bordered table-striped w-100">
                 <thead class="text-white bg-primary w-100">                    
                     <tr class="text-center">
-                        <th class="text-center"  style="width: 20%">Tajuk</th>
-                        <th class="text-center" style="width: 50%;">Isi Kandungan</th>
-                        <th class="text-center">Gambar Hadapan Galeri</th>
-                        <th class="text-center" style="width: 20%;">Tindakan</th>
+                        <th class="align-middle text-center"  style="width: 20%">Tajuk</th>
+                        <th class="align-middle text-center">Isi Kandungan</th>
+                        <th class="align-middle text-center" style="width: 15%;">Gambar Hadapan Galeri</th>
+                        <th class="align-middle text-center" style="width: 20%;">Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>          

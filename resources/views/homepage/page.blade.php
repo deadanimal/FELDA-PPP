@@ -1,8 +1,6 @@
 @extends('layouts.homeLayout')
 
 @section('content')
-<main id="main"  class="target">
-
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
 
@@ -13,47 +11,49 @@
 </section>
 
 @if (!$sliders->isEmpty())
-  <!-- ======= Slider Section ======= -->
-  <section id="gambar" class="d-flex justify-cntent-center align-items-center">
-    <div id="heroCarousel" data-bs-interval="5000" class="container carousel carousel-fade" data-bs-ride="carousel">
-    
-      <!-- Slider loop -->
-        @foreach($sliders as $slider)
-            <div class="carousel-item 
-                @if($loop->iteration == 1)
-                active 
-                @endif ">
-                <div class="carousel-container">
-                    @if($slider->title)
-                        <h2 class="animate__animated animate__fadeInDown">{{$slider->title}}</h2>
-                    @endif
-
-                    <p class="animate__animated animate__fadeInUp">
-                        @if($slider->picture)
-                        <picture>
-                            <img src="{{$slider->picture}}" class="animate__animated animate__fadeInUp slider">
-                        </picture>
+    <!-- ======= Slider Section ======= -->
+    <section id="hero" class="d-flex justify-cntent-center align-items-center">
+        <div id="heroCarousel" data-bs-interval="5000" class="container carousel carousel-fade" data-bs-ride="carousel">
+        
+        <!-- Slider loop -->
+            @foreach($sliders as $slider)
+                <div class="carousel-item 
+                    @if($loop->iteration == 1)
+                    active 
+                    @endif ">
+                    <div class="carousel-container">
+                        @if($slider->title)
+                            <h2 class="animate__animated animate__fadeInDown">{{$slider->title}}</h2>
                         @endif
-                            {!! nl2br(e($slider->content)) !!}
-                    </p>
+
+                        <p class="animate__animated animate__fadeInUp">
+                            @if($slider->picture)
+                            <picture>
+                                <img src="{{$slider->picture}}" class="animate__animated animate__fadeInUp slider">
+                            </picture>
+                            @endif
+                                {!! nl2br(e($slider->content)) !!}
+                        </p>
+                    </div>
                 </div>
-            </div>
-        @endforeach
-      
-      
-      <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon bx bx-chevron-left" aria-hidden="true"></span>
-      </a>
+            @endforeach
+        
+        
+        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bx bx-chevron-left" aria-hidden="true"></span>
+        </a>
 
-      <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
-        <span class="carousel-control-next-icon bx bx-chevron-right" aria-hidden="true"></span>
-      </a>
+        <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon bx bx-chevron-right" aria-hidden="true"></span>
+        </a>
 
-    </div>
-  </section><!-- End Hero -->
-  @endif
+        </div>
+    </section><!-- End Hero -->
+@endif
+
     <br><br><br><br><br>
-  <main id="main"  class="target">
+
+<main id="main"  class="target">
 
     @if (!$cards->isEmpty())
         <!-- ======= Card Section ======= -->
@@ -88,15 +88,14 @@
                                         @endif
                                     </div>
                                 </div>
-                                @endif
+                            @endif
                         @endforeach
                     </div>
                 @endfor
-            @endif
+            
         </div>
         </section><!-- End Icon Boxes Section -->
-        <br><br>
-
+    @endif
         @if (!$galleries->isEmpty())
         <!--  Gallery section -->
         <section id="portfolio" class="portfoio">
@@ -105,15 +104,13 @@
                     <div class="section-title">
                         <h2>{{$galleries[0]->item->nama}}</h2>
                     </div>
+                    @foreach($galleries->chunk(3) as $galleries)
+                        <div class="row portfolio-container">
 
-                    @foreach ($galleries as $gallery)
-
-                        @if($loop->index % 3 == 0) 
-                            <div class="row portfolio-container">
-                        @endif   
+                        @foreach ($galleries as $gallery)
 
                             <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                                <a href="/gallery/{galleryID}">
+                                <a href="/gallery/{{$gallery->id}}">
                                     <img src="{{$gallery->thumbnail}}" class="img-fluid" alt="">
                                     <div class="portfolio-info">
                                         <h4 class="text-center">{{$gallery->title}}</h4>
@@ -126,11 +123,11 @@
                                 </a>
                             </div>
 
-                        @if($loop->index % 3 == 0) 
+                        @endforeach  
+                        
                         </div>
-                        @endif 
+                    @endforeach
 
-                    @endforeach  
                 </div>
             </section><!--  end Gallery section -->
         @endif
@@ -166,7 +163,7 @@
         </section><!-- End Frequently Asked Questions Section -->
     @endif
 
-  </main><!-- End #main -->
+</main><!-- End #main -->
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script>
     $('.text').each(function () {

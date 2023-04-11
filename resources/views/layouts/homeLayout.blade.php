@@ -74,7 +74,7 @@
   <header id="header" class="fixed-top d-flex align-items-center header-inner-pages " style="height: 100px">
     <div class="container d-flex align-items-center justify-content-between" style="height: 100px">
 
-      <h1 style="height: -webkit-fill-available;">
+      <h1 style="height: -webkit-fill-available;margin: 0px;">
         <a href="/" >
             <img src="/Image/logo.png" style="height: -webkit-fill-available;background:#ffff; border-radius:4px;"/>
         </a>
@@ -118,7 +118,7 @@
         
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-      <div style="margin-left: 2%;">
+      <div style="margin-left: 2%; display: flex;">
         <a class="btn zoom"><i class="bi bi-zoom-in" style="color: #105CCB;font-size: 1.2em;"></i></a>
         <a class="btn zoom-init"><i class="bi bi-arrow-clockwise" style="color: #105CCB;font-size: 1.2em;"></i></a>
         <a class="btn zoom-out"><i class="bi bi-zoom-out" style="color: #105CCB;font-size: 1.2em;"></i></a>
