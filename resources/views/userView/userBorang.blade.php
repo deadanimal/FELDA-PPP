@@ -25,13 +25,6 @@
                         </div>
                         <div class="row">
                             <div class="mb-3">
-                                <label for="ic" style="font-family:'Arial', sans-serif">NO KAD PENGENALAN</label>
-                                <input type="text" class="form-control" name="ic" id="ic" maxlength="12" minlength="12"
-                                size="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="E.g: 750922140122" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="mb-3">
                                 <label for="wilayah" style="font-family:'Arial', sans-serif">Peringkat</label>
                                 <select name="wilayah" id="wilayah" class="form-control">
                                   <option value="" selected disabled>Pilih Peringkat</option>

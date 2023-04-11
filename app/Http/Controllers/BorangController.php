@@ -213,7 +213,6 @@ class BorangController extends Controller
 
         $ans = new Jawapan;
         $ans->nama = $request->nama;
-        $ans->ic = $request->ic;
         $ans->user_id = Auth::user()->id;
         $ans->borang_id = $borangid;
         $ans->wilayah = $request->wilayah;

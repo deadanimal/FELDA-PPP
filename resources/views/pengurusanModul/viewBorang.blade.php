@@ -29,12 +29,6 @@
               </div>
               <div class="row">
                 <div class="mb-3">
-                    <label for="nama" style="font-family:'Arial', sans-serif">NO KAD PENGENALAN</label>
-                    <input type="text" class="form-control" maxlength="100" size="100" name="" id="nama" readonly>
-                </div>
-              </div>
-              <div class="row">
-                <div class="mb-3">
                     <label for="wilayah" style="font-family:'Arial', sans-serif; text-transform: uppercase;">WILAYAH</label>
                     <input class="form-control" name="wilayah" id="wilayah" readonly>
                 </div>

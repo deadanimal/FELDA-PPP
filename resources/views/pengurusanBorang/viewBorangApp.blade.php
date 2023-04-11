@@ -31,12 +31,6 @@
                     </div>
                     <div class="row">
                         <div class="mb-3">
-                            <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Arial'; text-transform: uppercase;">NO KAD PENGENALAN</label>
-                            <input class="form-control" name="jwpn{{$borangJwpn->id}}" id="jwpn{{$borangJwpn->id}}" value="{{$borangJwpn->ic}}" readonly style="text-transform: uppercase;">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="mb-3">
                             <label for="wilayah" style="font-family:'Arial'; text-transform: uppercase;">WILAYAH</label>
                             <input class="form-control" name="wilayah" id="wilayah" value="{{$borangJwpn->wilayahs->nama}}" readonly style="text-transform: uppercase;">
                         </div>
