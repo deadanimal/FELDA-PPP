@@ -100,7 +100,7 @@ class WebController extends Controller
     public function statementList()
     {
         $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
-        $stats = statement::orderBy('updated_at', 'DESC')->get();
+        $stats = Statement::orderBy('updated_at', 'DESC')->get();
 
         return view('penyataan', compact ('stats', 'pages'));
     }

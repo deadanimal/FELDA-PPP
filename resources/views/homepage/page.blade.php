@@ -9,6 +9,7 @@
 
     </div>
 </section>
+<main id="main"  class="target">
 
 @if (!$sliders->isEmpty())
     <!-- ======= Slider Section ======= -->
@@ -26,10 +27,10 @@
                             <h2 class="animate__animated animate__fadeInDown">{{$slider->title}}</h2>
                         @endif
 
-                        <p class="animate__animated animate__fadeInUp">
+                        <p class="animate__animated animate__fadeInUp" style="margin:0px;width:100%">
                             @if($slider->picture)
                             <picture>
-                                <img src="{{$slider->picture}}" class="animate__animated animate__fadeInUp slider">
+                                <img src="{{$slider->picture}}" style="width:80%" class="animate__animated animate__fadeInUp slider">
                             </picture>
                             @endif
                                 {!! nl2br(e($slider->content)) !!}
@@ -53,14 +54,12 @@
 
     <br><br><br><br><br>
 
-<main id="main"  class="target">
-
     @if (!$cards->isEmpty())
         <!-- ======= Card Section ======= -->
         <section id="icon-boxes" class="icon-boxes">
         <div class="container">
             <div class="section-title">
-                <h2>{{$cards[0]->item->nama}}</h2>
+                <h2 style="font-size: 2.5em">{{$cards[0]->item->nama}}</h2>
             </div>
 
             <!-- loop for card row -->
@@ -84,7 +83,7 @@
                                         <h4 class="title">{{$card->title}}</h4>
 
                                         @if($card->content)
-                                            <p class="description justify" style="font-size: ">{!! nl2br(e($card->content)) !!}</p>
+                                            <p class="description justify" style="line-height:20px">{!! nl2br(e($card->content)) !!}</p>
                                         @endif
                                     </div>
                                 </div>
@@ -102,7 +101,7 @@
             <div class="container" data-aos="fade-up">
 
                     <div class="section-title">
-                        <h2>{{$galleries[0]->item->nama}}</h2>
+                        <h2 style="font-size: 2.5em">{{$galleries[0]->item->nama}}</h2>
                     </div>
                     @foreach($galleries->chunk(3) as $galleries)
                         <div class="row portfolio-container">
@@ -122,9 +121,7 @@
                                     </div>
                                 </a>
                             </div>
-
                         @endforeach  
-                        
                         </div>
                     @endforeach
 
@@ -137,7 +134,7 @@
         <section class="faq section-bg">
         <div class="container" data-aos="fade-up">
             <div class="section-title">
-            <h2>{{$dropdowns[0]->item->nama}}</h2>
+            <h2 style="font-size: 2.5em">{{$dropdowns[0]->item->nama}}</h2>
             </div>
 
             <div class="faq-list">

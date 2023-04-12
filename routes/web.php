@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard',  [UserController::class, 'dashboard']);
 
     // Route::get('/home',  [WebController::class, 'homeSetting']);
+    Route::get('/setting',  [WebController::class, 'page_list']);
 
     Route::get('/home',  [WebController::class, 'page_list']);
     Route::post('/home/page/add',  [WebController::class, 'page_add']);

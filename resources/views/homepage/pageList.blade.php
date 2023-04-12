@@ -8,7 +8,7 @@
 
   <div class="header">
     <h1 class="header-title">
-        Tetapan Laman
+        TETATAPAN HALAMAN WEB
     </h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -21,344 +21,382 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <table style="width: 100%">
-                    <tr>
-                        <td>
-                            <h2 class="modal-title">Senarai Laman</h2>
-                        </td>
-                        <td>
-                            <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAddProses">
-                            <div class="frame9403-frame7293">
-                            <span class="frame9403-text21"><span>Tambah Laman</span></span>
-                            <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                            </div>
-                        </button>
-                        </td>
-                    </tr>
-                </table>
+                <ul class="nav nav-tabs card-header-tabs pull-right" role="tablist">
+                    <li class="nav-item">
+
+                        @if (Request::is('setting'))
+                            <a class="nav-link active" data-bs-toggle="tab" href="#tab-4"><span class="arial-N">HALAMAN UTAMA</span></a>
+                        @else
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-4"><span class="arial-N">HALAMAN UTAMA</span></a>
+                        @endif
+                        
+                    </li>
+                    <li class="nav-item">
+
+                        @if (Request::is('home') || Request::is('home/*'))
+                            <a class="nav-link active" data-bs-toggle="tab" href="#tab-5"><span class="arial-N">HALAMAN LAIN</span></a>
+                        @else
+                            <a class="nav-link" data-bs-toggle="tab" href="#tab-5"><span class="arial-N">HALAMAN LAIN</span></a>
+                        @endif
+
+                    </li>
+                </ul>
             </div>
+            <div class="card-body">
+                <div class="tab-content">
 
-            {{-- Modal form Tambah proses --}}
-            <div class="modal fade" id="exampleModalAddProses" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">Cipta Laman</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="/home/page/add" method="POST">
-                    @csrf
-                    <div class="modal-body">
-                    <label for="pageName" class="frame9402-text04">
-                        <strong>Nama Laman</strong>
-                    </label>
-                    <input type="text" class="frame9402-kotaknamaProses" id="pageName" placeholder="Nama Laman" name="pageName" required oninput="this.value = this.value.toUpperCase()">
-                    <input type="hidden" value="{{count($pages)+1}}" name="sequence">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                        <button class="btn btn-primary">Tambah</button>
-                    </div>
-                </form>
-                </div>
-            </div>
-            </div>
-        
-            @if (!$pages->isEmpty())
-                @php
-                    $var = 0;
-                @endphp
-                <table class="table table-bordered table-striped w-100 arial">
-                <thead class="text-white bg-primary w-100 arial">
-                    <tr>
-                        <th scope="col" class="text-center">Nama Laman</th>
-                        <th scope="col" class="text-center">Turutan</th>
-                        <th scope="col" class="text-center">Status</th>
-                        <th scope="col" class="text-center" style="width:20%">Tindakan</th>
-                    </tr>
-                </thead>
-                <tbody style="back">
-                    @foreach ($pages as $page)
-                    <tr>
-                        <td class="text-center arial" style="text-transform: uppercase;">{{$page->nama}}</td>
-                        <td class="text-center arial" style="text-transform: uppercase;">{{$page->sequence}}</td>
-                        <td class="text-center arial" style="text-transform: uppercase;">
-                            @if ($page->status == "Active")
-                                Aktif
-                            @else
-                                Tidak Aktif
-                            @endif
-                        </td>
-                        <td class="text-center arial">
+                    @if (Request::is('setting'))
+                        <div class="tab-pane fade active show" id="tab-4" role="tabpanel">
+                    @else
+                        <div class="tab-pane fade text-center" id="tab-4" role="tabpanel">
+                    @endif
 
-                            <a href="home/page/{{$page->id}}/item" class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Masuk">
-                                <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A; width: 32px; height: 30px;" viewBox="0 0 556 502"><path d="M88.7 223.8L0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z"/></svg>
-                            </a>
-
-                            <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalEdit{{$page->id}}" title="Padam"><img src="/SVG/pencil.svg"/></button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModalEdit{{$page->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Kemaskini Laman {{$page->nama}}</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <form action="/home/page/update" method="POST" class="frame9402-frame9278">
-                                            @csrf
-                                            @method("PUT")
-                                            <div class="modal-body">
-                                                <input type="hidden" name="pageId" value="{{$page->id}}">
-                                                <table class="table table-borderless">
-                                                    <tr scope="row" style="background-color: #fff">
-                                                        <td>
-                                                            <label for="pageName" class="frame9402-text04">
-                                                                <strong>Nama Laman</strong>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="frame9402-kotaknamaProses" id="pageName" value="{{$page->nama}}" name="pageName" required oninput="this.value = this.value.toUpperCase()">
-                                                        </td>
-                                                    </tr>
-                                                    <tr scope="row" style="background-color: #fff">
-                                                        <td>
-                                                            <label for="status" class="frame9402-text04">
-                                                                <strong>Status</strong>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <select name="status" class="frame9402-kotaknamaProses">
-                                                                <option value="Active" 
-                                                                @if ($page->status == "Active")
-                                                                    selected
-                                                                @endif>Aktif</option>
-                                                                <option value="Inactive"
-                                                                @if ($page->status == "Inactive")
-                                                                    selected
-                                                                @endif>Tidak Aktif</option>
-                                                            </select>
-                                                        </td>
-                                                    </tr>
-                                                    <tr scope="row" style="background-color: #fff">
-                                                        <td>
-                                                            <label for="pageSequence" class="frame9402-text04">
-                                                                <strong>Turutan</strong>
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="frame9402-kotaknamaProses" id="pageSequence" value="{{$page->sequence}}" name="sequence" required oninput="this.value = this.value.toUpperCase()">
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                </button>
+                        <div class="card-title">
+                            <table style="width: 100%">
+                                <tr>
+                                    <td><h2 class="modal-title">Senarai Dokumen</h2></td>
+                                    <td>
+                                        <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladdDoc">
+                                            <div class="frame9403-frame7293">
+                                                <span class="frame9403-text21"><span>Tambah Dokumen</span></span>
+                                                <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>
-                                                <button type="submit" class="btn btn-danger">Ya</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalDel{{$page->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModalDel{{$page->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Padam Laman {{$page->nama}}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
                                         </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Anda Pasti Mahu Padam laman {{$page->nama}}?<p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
-                                        <form method="post" action="/home/page/delete">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input type="hidden" value="{{$page->id}}" name="pageId">
-                                            <button class="btn btn-danger">YA</button>
-                                        </form>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    @php
-                        if ($var == $page->sequence) {
-                        Alert::warning('Terdapat Duplikasi.', 'Terdapat duplikasi pada turutan Laman.');   
-                        }
-                        $var = $page->sequence;
-                    @endphp
-                    @endforeach 
-                </tbody>
-                </table>
-            @else
-                <h2 class="frame9402-text01" style="color:black; margin-bottom:5%;"> Tiada Laman</h2>
-            @endif
-        </div>
-
-        <div class="card">
-            <div class="card-header">
-                <table style="width: 100%">
-                    <tr>
-                        <td><h2 class="modal-title">Senarai Dokumen</h2></td>
-                        <td>
-                            <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladdDoc">
-                                <div class="frame9403-frame7293">
-                                    <span class="frame9403-text21"><span>Tambah Dokumen</span></span>
-                                    <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                                </div>
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-            @php
-                foreach($errors->all() as $error) {
-                    Alert::error('Tidak Berjaya.', $error);   
-                }
-            @endphp
-
-            {{-- Modal Tambah Doc --}}
-            <div class="modal fade" id="exampleModaladdDoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">TAMBAH DOKUMEN</h2>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
-                        <form action="/home/document/add" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="modal-body">
-                                <label for="title" class="frame9402-text04">
-                                    <strong>Tajuk Dokumen</strong>
-                                </label>
-                                <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset; width:-webkit-fill-available"  id="title" placeholder="Tajuk" name="name" required oninput="this.value = this.value.toUpperCase()">
-                                <label for="document" class="frame9402-text04">
-                                    <strong>Muat Naik Dokumen</strong>
-                                </label>
-                                <input id="document" type="file" name="dokumen" required/>
-                            
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                <button class="btn btn-primary">Tambah</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            {{-- senarai Slider --}}
-            @if (!$docs->isEmpty())
-            <table class="table table-bordered table-striped w-100">
-                <thead class="text-white bg-primary w-100">                    
-                    <tr class="text-center">
-                        <th class="text-center" style="width: 1%">No.</th>
-                        <th class="text-center"  style="width: 40%">Tajuk</th>
-                        <th class="text-center">Dokumen</th>
-                        <th class="text-center" style="width: 20%;">Tindakan</th>
-                    </tr>
-                </thead>
-                <tbody>          
-                    @foreach ($docs as $doc)
-                    <tr>
-                        <td class="text-center">{{ $loop->iteration }}</td>
-                        <td class="text-center arial-N">{{ $doc->name }}</td>
-                        <td class="text-center arial-N">
-                                <a href="{{ $doc->dokumen }}">Lihat Dokumen</a>
-                        </td>
-                        <td class="text-center align-middle">
-                            <!-- Button trigger modal update-->
-                            <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#updateModalDoc{{$doc->id}}">
-                                <img src="/SVG/pencil.svg"/>
-                            </button>
-        
-                            <!-- Modal update-->
-                            <div class="modal fade" id="updateModalDoc{{$doc->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">KEMASKINI {{$doc->question}}</h5>
+                        
+                        @php
+                            foreach($errors->all() as $error) {
+                                Alert::error('Tidak Berjaya.', $error);   
+                            }
+                        @endphp
+            
+                        {{-- Modal Tambah Doc --}}
+                        <div class="modal fade" id="exampleModaladdDoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">TAMBAH DOKUMEN</h2>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
-                                        </div>
-                                        <form method="post" action="/home/document/update" enctype="multipart/form-data">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="modal-body">
-                                                <label for="title" class="frame9402-text04">
-                                                    <strong>Tajuk</strong>
-                                                </label>
-                                                <input type="text" class="frame9402-kotaknamaBorang" id="title" style="text-transform: unset; width:-webkit-fill-available" value="{{$doc->name}}" name="name" required oninput="this.value = this.value.toUpperCase()">
-                                                <label for="document" class="frame9402-text04">
-                                                    <strong>Muat Naik Dokumen</strong>
-                                                </label>
-                                                <p><a href="{{ $doc->dokumen }}">Lihat dokumen</a> yang telah dimuat naik</p>
-                                                <input id="document" type="file" name="dokumen"/>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                                <input type="hidden" value="{{$doc->id}}" name="docId">
-                                                <button class="btn btn-primary">Kemaskini</button>
-                                            </div>
-                                        </form>
                                     </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Button trigger modal delete -->
-                            <button type="button" class="frame9402-rectangle828246" style="margin-left: 10%" data-toggle="modal" data-target="#deleteModalDoc{{$doc->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="deleteModalDoc{{$doc->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Padam Dokumen</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
+                                    <form action="/home/document/add" method="POST" enctype="multipart/form-data">
+                                        @csrf
                                         <div class="modal-body">
-                                            <p>Anda Pasti Mahu Padam Dokumen {{$doc->name}}?</p>
+                                            <label for="title" class="frame9402-text04">
+                                                <strong>Tajuk Dokumen</strong>
+                                            </label>
+                                            <input type="text" class="frame9402-kotaknamaBorang" style="text-transform: unset; width:-webkit-fill-available"  id="title" placeholder="Tajuk" name="name" required oninput="this.value = this.value.toUpperCase()">
+                                            <label for="document" class="frame9402-text04">
+                                                <strong>Muat Naik Dokumen</strong>
+                                            </label>
+                                            <input id="document" type="file" name="dokumen" required/>
+                                        
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
-                                            <form method="post" action="/home/document/delete">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input type="hidden" name="docId" value="{{$doc->id}}"/>
-                                            <button class="btn btn-danger">YA</button>
-                                            </form>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                            <button class="btn btn-primary">Tambah</button>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
-                        </td>
-                    </tr>
-                    @endforeach 
-                </tbody>
-            </table>
-            @else
-            <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Dokumen </h2>
-            @endif
+                        </div>
+            
+                        {{-- senarai Slider --}}
+                        @if (!$docs->isEmpty())
+                        <table class="table table-bordered table-striped w-100">
+                            <thead class="text-white bg-primary w-100">                    
+                                <tr class="text-center">
+                                    <th class="text-center" style="width: 1%">No.</th>
+                                    <th class="text-center"  style="width: 40%">Tajuk</th>
+                                    <th class="text-center">Dokumen</th>
+                                    <th class="text-center" style="width: 20%;">Tindakan</th>
+                                </tr>
+                            </thead>
+                            <tbody>          
+                                @foreach ($docs as $doc)
+                                <tr>
+                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                    <td class="text-center arial-N">{{ $doc->name }}</td>
+                                    <td class="text-center arial-N">
+                                            <a href="{{ $doc->dokumen }}">Lihat Dokumen</a>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <!-- Button trigger modal update-->
+                                        <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#updateModalDoc{{$doc->id}}">
+                                            <img src="/SVG/pencil.svg"/>
+                                        </button>
+                    
+                                        <!-- Modal update-->
+                                        <div class="modal fade" id="updateModalDoc{{$doc->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">KEMASKINI {{$doc->question}}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    </div>
+                                                    <form method="post" action="/home/document/update" enctype="multipart/form-data">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <div class="modal-body">
+                                                            <label for="title" class="frame9402-text04">
+                                                                <strong>Tajuk</strong>
+                                                            </label>
+                                                            <input type="text" class="frame9402-kotaknamaBorang" id="title" style="text-transform: unset; width:-webkit-fill-available" value="{{$doc->name}}" name="name" required oninput="this.value = this.value.toUpperCase()">
+                                                            <label for="document" class="frame9402-text04">
+                                                                <strong>Muat Naik Dokumen</strong>
+                                                            </label>
+                                                            <p><a href="{{ $doc->dokumen }}">Lihat dokumen</a> yang telah dimuat naik</p>
+                                                            <input id="document" type="file" name="dokumen"/>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                                            <input type="hidden" value="{{$doc->id}}" name="docId">
+                                                            <button class="btn btn-primary">Kemaskini</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Button trigger modal delete -->
+                                        <button type="button" class="frame9402-rectangle828246" style="margin-left: 10%" data-toggle="modal" data-target="#deleteModalDoc{{$doc->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+            
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="deleteModalDoc{{$doc->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Padam Dokumen</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Anda Pasti Mahu Padam Dokumen {{$doc->name}}?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                                                        <form method="post" action="/home/document/delete">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="hidden" name="docId" value="{{$doc->id}}"/>
+                                                        <button class="btn btn-danger">YA</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach 
+                            </tbody>
+                        </table>
+                        @else
+                        <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Dokumen </h2>
+                        @endif
+                    </div>
+
+                @if (Request::is('home') || Request::is('home/*'))
+                    <div class="tab-pane fade active show" id="tab-5" role="tabpanel">
+                @else
+                    <div class="tab-pane fade text-center" id="tab-5" role="tabpanel">
+                @endif
+                        <div class="card-title">
+                            <table style="width: 100%">
+                                <tr>
+                                    <td>
+                                        <h2 class="modal-title">Senarai Laman</h2>
+                                    </td>
+                                    <td>
+                                        <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAddLaman">
+                                        <div class="frame9403-frame7293">
+                                        <span class="frame9403-text21"><span>Tambah Laman</span></span>
+                                        <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                                        </div>
+                                    </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        {{-- Modal form Tambah Laman --}}
+                        <div class="modal fade" id="exampleModalAddLaman" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">Cipta Laman</h2>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="/home/page/add" method="POST">
+                                        @csrf
+                                        <div class="modal-body">
+                                        <label for="pageName" class="frame9402-text04">
+                                            <strong>Nama Laman</strong>
+                                        </label>
+                                        <input type="text" class="frame9402-kotaknamaProses" id="pageName" placeholder="Nama Laman" name="pageName" required oninput="this.value = this.value.toUpperCase()">
+                                        <input type="hidden" value="{{count($pages)+1}}" name="sequence">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                            <button class="btn btn-primary">Tambah</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        @if (!$pages->isEmpty())
+                            @php
+                                $var = 0;
+                            @endphp
+                            <table class="table table-bordered table-striped w-100 arial">
+                                <thead class="text-white bg-primary w-100 arial">
+                                    <tr>
+                                        <th scope="col" class="text-center">Nama Laman</th>
+                                        <th scope="col" class="text-center">Turutan</th>
+                                        <th scope="col" class="text-center">Status</th>
+                                        <th scope="col" class="text-center" style="width:20%">Tindakan</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="back">
+                                    @foreach ($pages as $page)
+                                        <tr>
+                                            <td class="text-center arial" style="text-transform: uppercase;">{{$page->nama}}</td>
+                                            <td class="text-center arial" style="text-transform: uppercase;">{{$page->sequence}}</td>
+                                            <td class="text-center arial" style="text-transform: uppercase;">
+                                                @if ($page->status == "Active")
+                                                    Aktif
+                                                @else
+                                                    Tidak Aktif
+                                                @endif
+                                            </td>
+                                            <td class="text-center arial">
+                    
+                                                <a href="home/page/{{$page->id}}/item" class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Masuk">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A; width: 32px; height: 30px;" viewBox="0 0 556 502"><path d="M88.7 223.8L0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z"/></svg>
+                                                </a>
+                    
+                                                <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalEdit{{$page->id}}" title="Padam"><img src="/SVG/pencil.svg"/></button>
+                    
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModalEdit{{$page->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Kemaskini Laman {{$page->nama}}</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form action="/home/page/update" method="POST" class="frame9402-frame9278">
+                                                                @csrf
+                                                                @method("PUT")
+                                                                <div class="modal-body">
+                                                                    <input type="hidden" name="pageId" value="{{$page->id}}">
+                                                                    <table class="table table-borderless">
+                                                                        <tr scope="row" style="background-color: #fff">
+                                                                            <td>
+                                                                                <label for="pageName" class="frame9402-text04">
+                                                                                    <strong>Nama Laman</strong>
+                                                                                </label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="frame9402-kotaknamaProses" id="pageName" value="{{$page->nama}}" name="pageName" required oninput="this.value = this.value.toUpperCase()">
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr scope="row" style="background-color: #fff">
+                                                                            <td>
+                                                                                <label for="status" class="frame9402-text04">
+                                                                                    <strong>Status</strong>
+                                                                                </label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <select name="status" class="frame9402-kotaknamaProses">
+                                                                                    <option value="Active" 
+                                                                                    @if ($page->status == "Active")
+                                                                                        selected
+                                                                                    @endif>Aktif</option>
+                                                                                    <option value="Inactive"
+                                                                                    @if ($page->status == "Inactive")
+                                                                                        selected
+                                                                                    @endif>Tidak Aktif</option>
+                                                                                </select>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr scope="row" style="background-color: #fff">
+                                                                            <td>
+                                                                                <label for="pageSequence" class="frame9402-text04">
+                                                                                    <strong>Turutan</strong>
+                                                                                </label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="frame9402-kotaknamaProses" id="pageSequence" value="{{$page->sequence}}" name="sequence" required oninput="this.value = this.value.toUpperCase()">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>
+                                                                    <button type="submit" class="btn btn-danger">Ya</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                    
+                                                <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalDel{{$page->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                    
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="exampleModalDel{{$page->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Padam Laman {{$page->nama}}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Anda Pasti Mahu Padam laman {{$page->nama}}?<p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                                                            <form method="post" action="/home/page/delete">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="hidden" value="{{$page->id}}" name="pageId">
+                                                                <button class="btn btn-danger">YA</button>
+                                                            </form>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @php
+                                            if ($var == $page->sequence) {
+                                            Alert::warning('Terdapat Duplikasi.', 'Terdapat duplikasi pada turutan Laman.');   
+                                            }
+                                            $var = $page->sequence;
+                                        @endphp
+                                    @endforeach 
+                                </tbody>
+                            </table>
+                        @else
+                            <h2 class="frame9402-text01" style="color:black; margin-bottom:5%;"> Tiada Laman</h2>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
   </div>

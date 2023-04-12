@@ -23,7 +23,7 @@
 
                     @foreach ($picture as $pic)
 
-                            <div class="col-sm-6 col-md-4">
+                            <div class="col-sm-6 col-md-4" >
                                 <div class="thumbnail">
                                     <a class="lightbox" href="{{$pic->picture}}">
                                         <img src="{{$pic->picture}}" alt="Park">
@@ -40,7 +40,6 @@
       
 </main><!-- End #main -->
 <style>
-
 .gallery-container h1 {
     text-align: center;
     margin-top: 70px;
@@ -48,18 +47,15 @@
     font-weight: bold;
     color: #58595a;
 }
-
 .gallery-container p.page-description {
     text-align: center;
     margin: 30px auto;
     font-size: 18px;
     color: #85878c;
 }
-
 .tz-gallery {
     padding: 40px;
 }
-
 .tz-gallery .thumbnail {
     padding: 0;
     margin-bottom: 30px;
@@ -69,20 +65,17 @@
     transition: 0.15s ease-in-out;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.06);
 }
-
 .tz-gallery .thumbnail:hover {
     transform: translateY(-10px) scale(1.02);
 }
-
 .tz-gallery .lightbox img {
     border-radius: 4px 4px 0 0;
 }
-
 .baguetteBox-button {
     background-color: transparent !important;
 }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.js"></script>
 <script>
     baguetteBox.run('.tz-gallery');
 </script>

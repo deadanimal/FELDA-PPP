@@ -40,7 +40,7 @@
                             <tr>
                                 <td class="text-center arial-N">{{$loop->iteration}}</td>
                                 <td class="text-center arial-N">{{$jwpn->AktivitiParameter->nama}}</td>
-            z                    <td class="text-center arial-N">{{$jwpn->AktivitiParameter->unit}}</td>
+                                <td class="text-center arial-N">{{$jwpn->AktivitiParameter->unit}}</td>
                                 <td class="text-center arial-N">{{$jwpn->AktivitiParameter->cycle}}</td>
                                 <td class="text-center arial-N">{{date("d-m-Y",strtotime($jwpn->created_at))}}</td>
                                 <td class="text-center arial-N">{{$jwpn->AktivitiParameter->sasaran_pendapatan ?? ""}}</td>

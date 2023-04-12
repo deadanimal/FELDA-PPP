@@ -67,6 +67,7 @@
                                             <option value="Dropdown">Dropdown</option>
                                             <option value="Article">Artikel</option>
                                             <option value="Gallery">Galeri</option>
+                                            
                                       </select>
                                     </td>
                                   <tr>

@@ -43,11 +43,13 @@
         <table class="w-100">
             <tr>
                 <td style="text-align: right">
-                    <div class="input-group">
+                    <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="Carian">
-                        <button class="btn btn-primary" style="background-color: #3A5F3B; border: #3A5F3B;">
-                            <i class="bi bi-search" style="color:white"></i>
-                        </button>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" style="background-color: #3A5F3B; border: #3A5F3B;">
+                                <i class="bi bi-search" style="color:white"></i>
+                            </button>
+                        </div>
                     </div>
                 </td>
                 <td style="width:25%; text-align: right">
@@ -85,31 +87,31 @@
       <nav id="navbar" class="navbar">
         <ul>
             @if(Request::is('/'))
-                <li><a class="nav-link scrollto active" href="#hero"  style="font-size:15px;">LAMAN UTAMA</a></li>
+                <li><a class="nav-link scrollto active" href="/"  style="font-size:1em;">LAMAN UTAMA</a></li>
             @else
-                <li><a class="nav-link scrollto" href="/"  style="font-size:15px;">LAMAN UTAMA</a></li>
+                <li><a class="nav-link scrollto" href="/"  style="font-size:1em;">LAMAN UTAMA</a></li>
             @endif
 
             @foreach ($pages as $page)
-                @if(Request::is('/page/{{$page->id}}'))
-                    <li><a class="nav-link scrollto active"href="/page/{{$page->id}}">{{$page->nama}}</a></li>
+                @if(Request::is('page/'.$page->id))
+                    <li><a class="nav-link scrollto active"href="/page/{{$page->id}}" style="font-size:1em;">{{$page->nama}}</a></li>
                 @else
-                    <li><a class="nav-link scrollto" href="/page/{{$page->id}}">{{$page->nama}}</a></li>
+                    <li><a class="nav-link scrollto" href="/page/{{$page->id}}" style="font-size:1em;">{{$page->nama}}</a></li>
                 @endif
             @endforeach
 
-            @if(Request::is('/penyataan'))
-                <li><a class="nav-link scrollto active" href="/penyataan">PENYATAAN DAN PENAFIAN</a></li>
+            @if(Request::is('penyataan'))
+                <li><a class="nav-link scrollto active" href="/penyataan" style="font-size:1em;">PENYATAAN DAN PENAFIAN</a></li>
             @else
-                <li><a class="nav-link scrollto" href="/penyataan">PENYATAAN DAN PENAFIAN</a></li>
+                <li><a class="nav-link scrollto" href="/penyataan" style="font-size:1em;">PENYATAAN DAN PENAFIAN</a></li>
             @endif
 
             @if (Route::has('login'))
                 <li>
                     @auth
-                        <a class="nav-link scrollto" href="{{ url('/dashboard') }}">PAPAN PEMUKA</a>
+                        <a class="nav-link scrollto" href="{{ url('/dashboard') }}" style="font-size:1em;">PAPAN PEMUKA</a>
                     @else
-                        <a class="nav-link scrollto" href="{{ route('login') }}">LOG MASUK</a>
+                        <a class="nav-link scrollto" href="{{ route('login') }}" style="font-size:1em;">LOG MASUK</a>
                     @endauth
                 </li>
             @endif
@@ -186,7 +188,9 @@
     <script src="/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="/vendor/php-email-form/validate.js"></script>
-
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons/dist/ionicons/ionicons.js"></script>
+    
     <!-- Template Main JS File -->
     <script src="/js/main.js"></script>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
