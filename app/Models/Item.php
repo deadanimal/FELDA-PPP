@@ -28,4 +28,8 @@ class Item extends Model
     public function slider(){
         return $this->hasMany(Slider::class);
     }
+
+    public function docs(){
+        return $this->hasMany(Doc::class);
+    }
 }

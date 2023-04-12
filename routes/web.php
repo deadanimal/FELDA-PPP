@@ -89,6 +89,12 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/home/picture/update',  [WebController::class, 'picture_update']);
     Route::delete('/home/picture/delete',  [WebController::class, 'picture_delete']);
 
+    Route::get('/home/item/{itemId}/doc',  [WebController::class, 'doc_list']);
+    Route::post('/home/doc/add',  [WebController::class, 'doc_add']);
+    Route::put('/home/doc/update',  [WebController::class, 'doc_update']);
+    Route::delete('/home/doc/delete',  [WebController::class, 'doc_delete']);
+
+
     Route::post('/home/document/add',  [WebController::class, 'documentAdd']);
     Route::put('/home/document/update',  [WebController::class, 'documentUpdate']);
     Route::delete('/home/document/delete',  [WebController::class, 'documentDelete']);

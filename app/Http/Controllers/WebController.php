@@ -15,6 +15,7 @@ use App\Models\Gallery;
 use App\Models\Picture;
 use App\Models\Page;
 use App\Models\Item;
+use App\Models\Doc;
 use App\Models\Modul;
 use App\Models\User;
 use App\Models\Proses;
@@ -282,6 +283,11 @@ class WebController extends Controller
                 return redirect('/home/item/'.$item->id.'/gallery');
     
                 break;
+            case('Document'):
+
+                return redirect('/home/item/'.$item->id.'/doc');
+    
+                break;
         }
     }
 
@@ -358,6 +364,21 @@ class WebController extends Controller
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('homepage.gallery', compact ('galleries','item', 'menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function doc_list(Request $request)
+    {
+        $itemId = (int) $request->route('itemId');
+
+        $item = Item::find($itemId);
+
+        $docs = Doc::where('item_id', $itemId)->get();
+        
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('homepage.docList', compact ('docs','item', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function homeSetting()
@@ -806,6 +827,81 @@ class WebController extends Controller
 
         return redirect('/home/item/'.$item->id.'/gallery/'.$gallery->id.'/picture');
     }
+    public function doc_add(Request $request)
+    {
+        $request->validate([
+            'file' => 'max:10000',
+        ]);
+
+        $item = Item::find($request->itemId);
+
+        $doc = new Doc;
+        $doc->name = $request->name;
+        if($request->file('dokumen')) {
+            $files = time().'.'.$request->dokumen->extension();  
+            $request->dokumen->move(public_path('dokumen'), $files);
+            $doc->file = '/dokumen/' . $files;
+        } 
+        $doc->item_id = $item->id; 
+        $doc->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Dokumen ".$doc->name;
+        $audit->save();
+
+        Alert::success('Cipta Dokumen Berjaya.', 'Dokumen telah berjaya dicipta.');
+
+        return redirect('/home/item/'.$item->id.'/doc');
+    }
+
+    public function doc_update(Request $request)
+    {
+        $request->validate([
+            'file' => 'max:10000',
+        ]);
+
+        $item = Item::find($request->itemId);
+
+        $doc = Doc::find($request->docId);
+        $doc->name = $request->name;
+        if($request->file('dokumen')) {
+            $files = time().'.'.$request->dokumen->extension();  
+            $request->dokumen->move(public_path('dokumen'), $files);
+            $doc->file = '/dokumen/' . $files;
+        } 
+        $doc->item_id = $item->id; 
+        $doc->save();
+
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Dokumen ".$doc->name;
+        $audit->save();
+
+        Alert::success('Kemaskini Dokumen Berjaya.', 'Dokumen telah berjaya dikemaskini.');
+
+        return redirect('/home/item/'.$item->id.'/doc');
+    }
+
+    public function doc_delete(Request $request)
+    {
+        $item = Item::find($request->itemId);
+
+        $doc = Doc::find($request->docId);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Dokumen ".$doc->name;
+        $audit->save();
+
+        $doc->delete();
+
+        Alert::success('Padam Dokumen Berjaya.', 'Dokumen telah berjaya dipadam.');
+
+        return redirect('/home/item/'.$item->id.'/doc');
+    }
+
     public function documentAdd(Request $request)
     {
         $request->validate([

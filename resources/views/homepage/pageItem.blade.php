@@ -67,7 +67,7 @@
                                             <option value="Dropdown">Dropdown</option>
                                             <option value="Article">Artikel</option>
                                             <option value="Gallery">Galeri</option>
-                                            
+                                            <option value="Document">Dokumen</option>
                                       </select>
                                     </td>
                                   <tr>
@@ -107,6 +107,8 @@
                             Artikel
                         @elseif($item->category == "Gallery")
                             Galeri
+                        @elseif($item->category == "Document")
+                            Dokumen
                         @else
                             {{$item->category}}
                         @endif    
@@ -169,6 +171,10 @@
                                                             @if ($item->category == "Gallery")
                                                             selected 
                                                             @endif>Galeri</option>
+                                                            <option value="Document"
+                                                            @if ($item->category == "Document")
+                                                            selected 
+                                                            @endif>Dokumen</option>
                                                         </select>
                                                     </td>
                                                 </tr>
