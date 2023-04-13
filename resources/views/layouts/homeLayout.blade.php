@@ -42,14 +42,18 @@
         <table class="w-100">
             <tr>
                 <td  style="text-align: right">
-                    <div class="d-flex flex-row">
-                        <input type="text" class="form-control" placeholder="Carian">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" style="background-color: #3A5F3B; border: #3A5F3B;">
-                                <i class="bi bi-search" style="color:white"></i>
-                            </button>
+
+                    <form name="t1" onSubmit="if(this.t1.value!=null && this.t1.value!='') findString(this.t1.value);return false">
+                        <div class="d-flex flex-row">
+                            <input type="text" class="form-control" placeholder="Carian" name="t1">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary" style="background-color: #3A5F3B; border: #3A5F3B;" >
+                                    <i class="bi bi-search" style="color:white"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
+
                 </td>
                 <td style="width:25%; text-align: right">
                     <div class="social-links mt-3">
@@ -215,6 +219,48 @@
 			zoom -= 0.1;
 			$('.target').css('transform', 'scale(' + zoom + ')');
 		});
+    </script>
+    <script language="JavaScript">
+        <!--
+        var TRange=null;
+        function findString (str) {
+         if (parseInt(navigator.appVersion)<4) return;
+         var strFound;
+         if (window.find) {
+        
+          // CODE FOR BROWSERS THAT SUPPORT window.find
+          strFound=self.find(str);
+          if (strFound && self.getSelection && !self.getSelection().anchorNode) {
+           strFound=self.find(str)
+          }
+          if (!strFound) {
+           strFound=self.find(str,0,1)
+           while (self.find(str,0,1)) continue
+          }
+         }
+         else if (navigator.appName.indexOf("Microsoft")!=-1) {
+        
+          // EXPLORER-SPECIFIC CODE
+        
+          if (TRange!=null) {
+           TRange.collapse(false)
+           strFound=TRange.findText(str)
+           if (strFound) TRange.select()
+          }
+          if (TRange==null || strFound==0) {
+           TRange=self.document.body.createTextRange()
+           strFound=TRange.findText(str)
+           if (strFound) TRange.select()
+          }
+         }
+         else if (navigator.appName=="Opera") {
+          alert ("Opera browsers not supported, sorry...")
+          return;
+         }
+         if (!strFound) alert ("Perkataan '"+str+"' Tidak Dijumpai!")
+         return;
+        }
+        //-->
     </script>
     <style>
         .hantar{
