@@ -80,7 +80,7 @@
           <div class="col d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="400">
             <div class="icon-box box" style="padding:0;">
               <img src="/SVG/user-global.svg" style="height:6em; filter: invert(85%) sepia(13%) saturate(6913%) hue-rotate(341deg) brightness(101%) contrast(93%);"><br>
-              <h3 class="text-center" style="margin: 0px;">Jumlah Pengguna Semasa</h3>
+              <h3 class="text-center" style="margin: 0px;">Jumlah Pelawat</h3>
               <h1 class="text" style="margin-left: 0px;">{{$userCount}}</h1>
             </div>
           </div>
