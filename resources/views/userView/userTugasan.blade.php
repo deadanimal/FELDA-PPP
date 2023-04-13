@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            Tugasan Bagi {{Auth::user()->nama}}
+            TUGASAN BAGI {{Auth::user()->nama}}
         </h1>
     </div>
     <div class="row">

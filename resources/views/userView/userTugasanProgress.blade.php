@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            Perkara Tugasan {{$tugasan_item->nama}}
+            PERKARA TUGASAN {{$tugasan_item->nama}}
         </h1>
     </div>
     <div class="row">

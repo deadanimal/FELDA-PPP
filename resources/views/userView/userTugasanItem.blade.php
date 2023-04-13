@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            Tugasan {{$tugasans->nama}}
+            TUGASAN {{$tugasans->nama}}
         </h1>
     </div>
     <div class="row">

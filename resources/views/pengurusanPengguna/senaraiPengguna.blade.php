@@ -8,7 +8,7 @@
 
   <div class="header">
     <h1 class="header-title">
-        Senarai Pengguna
+        SENARAI PENGGUNA
     </h1>
   </div>
   <div class="row">

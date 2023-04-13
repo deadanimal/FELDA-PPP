@@ -8,7 +8,7 @@
 
   <div class="header">
     <h1 class="header-title">
-        Modul {{$modul->nama}}
+        MODUL {{$modul->nama}}
     </h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">

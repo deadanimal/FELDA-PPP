@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laravel 9 Generate PDF</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
     <div class="container-fluid">
         <div class="header">
             <h1 class="header-title">
-                Borang {{$borangJwpn->borangs->namaBorang}}
+                BORANG {{$borangJwpn->borangs->namaBorang}}
             </h1>
         </div>
         <div class="card">

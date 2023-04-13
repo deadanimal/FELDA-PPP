@@ -9,7 +9,7 @@
 
   <div class="header">
     <h1 class="header-title">
-        Senarai Kategori Pengguna
+        SENARAI KATEGORI PENGGUNA
     </h1>
   </div>
   <div class="row">

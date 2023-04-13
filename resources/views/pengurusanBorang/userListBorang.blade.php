@@ -8,7 +8,7 @@
 
   <div class="header">
     <h1 class="header-title">
-        Senarai Permohonan Bagi {{$oneBorang->namaBorang}}
+      SENARAI PERMOHONAN BAGI {{$oneBorang->namaBorang}}
     </h1>
   </div>
   

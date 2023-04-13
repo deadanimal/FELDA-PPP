@@ -551,7 +551,7 @@ display: flex;
 
   <div class="header">
     <h1 class="header-title">
-        Borang {{$borang->namaBorang}}
+        BORANG {{$borang->namaBorang}}
     </h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">

@@ -6,7 +6,7 @@
 <div class="container-fluid">
   <div class="header">
     <h1 class="header-title">
-      Audit Trail
+      AUDIT
     </h1>
   </div>
   <div class="card" style="width: auto;">

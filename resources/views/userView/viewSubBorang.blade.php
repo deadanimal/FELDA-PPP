@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            Borang {{$borangJwpns->borangs->namaBorang}}
+            BORANG {{$borangJwpns->borangs->namaBorang}}
         </h1>
         <a href="/user/sub_borang/list"  class="frame9403-frame7445" style="margin-left:0px;">
             <div class="frame9403-frame7293">

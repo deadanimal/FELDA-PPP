@@ -15,7 +15,7 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            Tahap Kelulusan Borang {{$borang->namaBorang}}
+            TAHAP KELULUSAN BORANG {{$borang->namaBorang}}
         </h1>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">

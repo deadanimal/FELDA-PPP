@@ -6,7 +6,7 @@
 
     <div class="header">
         <h1 class="header-title">
-            Borang {{$borang->namaBorang}}
+            BORANG {{$borang->namaBorang}}
         </h1>
         <a href="/moduls/{{$modul->id}}/{{$proses->id}}/borang/{{$borang->id}}"  class="frame9403-frame7445" style="margin-left:0px;">
             <div class="frame9403-frame7293">

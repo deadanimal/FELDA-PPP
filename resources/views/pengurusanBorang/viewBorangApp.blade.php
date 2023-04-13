@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            Borang {{$borangJwpn->borangs->namaBorang}}
+            BORANG {{$borangJwpn->borangs->namaBorang}}
         </h1>
         <a href="/user/borang_app/{{$borangJwpn->borangs->id}}/user_list"  class="frame9403-frame7445" style="margin-left:0px;">
             <div class="frame9403-frame7293">

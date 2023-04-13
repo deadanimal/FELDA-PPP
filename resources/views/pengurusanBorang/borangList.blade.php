@@ -8,7 +8,7 @@
 
   <div class="header">
     <h1 class="header-title">
-        Senarai Borang
+        SENARAI BORANG
     </h1>
   </div>
   

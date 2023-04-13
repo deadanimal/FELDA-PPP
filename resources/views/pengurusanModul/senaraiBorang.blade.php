@@ -8,7 +8,7 @@
 
   <div class="header">
     <h1 class="header-title">
-        Proses {{$proses->nama}}
+        PROSES {{$proses->nama}}
     </h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
