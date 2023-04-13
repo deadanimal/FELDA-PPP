@@ -29,6 +29,17 @@
               </div>
           </div>
           <div class="row">
+            <div class="mb-3 col-md-6">
+              <label for="nama" style="font-family:'Arial', sans-serif">Nama Peneroka Asal</label>
+              <input type="text" class="form-control frame9403-kotaknama" maxlength="100" size="100" name="nama_asal" id="nama" oninput="this.value = this.value.toUpperCase()" value="{{$user->nama_asal}}">
+            </div>
+            <div class="mb-3 col-md-6">
+              <label for="nokadpengenalan" style="font-family:'Arial', sans-serif">No. Kad Pengenalan Peneroka Asal</label>
+              <input type="text" class="form-control frame9403-kotaknama" id="nokadpengenalan" name="nokadpengenalan_asal" maxlength="12" minlength="12"
+              size="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" value="{{$user->nokadpengenalan_asal}}">
+            </div>
+          </div>
+          <div class="row">
               <div class="mb-3 col-md-6">
                   <label for="email" class="labeltext">Emel</label>
                   <input type="email" class="form-control frame9403-kotaknama " value="{{ $user->email }}" name="email" id="email">

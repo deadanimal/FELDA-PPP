@@ -36,6 +36,17 @@
               </div>
           </div>
           <div class="row">
+            <div class="mb-3 col-md-6">
+              <label for="nama" style="font-family:'Arial', sans-serif">Nama Peneroka Asal</label>
+              <input type="text" class="form-control frame9403-kotaknama" maxlength="100" size="100" name="nama_asal" id="nama" oninput="this.value = this.value.toUpperCase()">
+            </div>
+            <div class="mb-3 col-md-6">
+              <label for="nokadpengenalan" style="font-family:'Arial', sans-serif">No. Kad Pengenalan Peneroka Asal</label>
+              <input type="text" class="form-control frame9403-kotaknama" id="nokadpengenalan" name="nokadpengenalan_asal" maxlength="12" minlength="12"
+              size="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="E.g: 750922140122" required>
+            </div>
+          </div>
+          <div class="row">
               <div class="mb-3 col-md-6">
                   <label for="email" style="font-family:'Arial', sans-serif">Emel</label>
                   <input type="email" class="form-control frame9403-kotaknama" name="email" id="email" required style="text-transform: none;">

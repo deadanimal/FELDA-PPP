@@ -72,9 +72,12 @@ class UserController extends Controller
 
         $user = new User;
         $user->email = $request->email;
+        $user->idPengguna = $request->idPengguna;
         $user->nama = $request->nama;
+        $user->nama_asal = $request->nama_asal;
         $user->notelefon = $request->noTelefon;
         $user->nokadpengenalan = $request->nokadpengenalan;
+        $user->nokadpengenalan_asal = $request->nokadpengenalan_asal;
         $user->password =  Hash::make($request->password);
         $user->kategoripengguna = $request->kategoripengguna;
         $user->wilayah = $request->wilayah;
@@ -115,8 +118,10 @@ class UserController extends Controller
             $user->idPengguna = $request->idPengguna;
         }
         $user->nama = $request->nama;
+        $user->nama_asal = $request->nama_asal;
         $user->notelefon = $request->noTelefon;
         $user->nokadpengenalan = $request->nokadpengenalan;
+        $user->nokadpengenalan_asal = $request->nokadpengenalan_asal;
         if($request->password != ""){
             $user->password =  Hash::make($request->password);
         }
@@ -241,8 +246,10 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->idPengguna = $request->idPengguna;
         $user->nama = $request->nama;
+        $user->nama_asal = $request->nama_asal;
         $user->notelefon = $request->noTelefon;
         $user->nokadpengenalan = $request->nokadpengenalan;
+        $user->nokadpengenalan_asal = $request->nokadpengenalan_asal;
         if($request->password != ""){
             $user->password =  Hash::make($request->password);
         }
