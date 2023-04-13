@@ -74,7 +74,7 @@
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top d-flex align-items-center header-inner-pages " style="height: 100px">
-    <div class="container d-flex align-items-center justify-content-between" style="height: 100px">
+    <div class="container d-flex align-items-center justify-content-between" style="height: 100px; margin: 1%;">
 
       <h1 style="height: -webkit-fill-available;margin: 0px;">
         <a href="/" >
@@ -120,7 +120,7 @@
         
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-      <div style="margin-left: 2%; display: flex;">
+      <div style="display: flex;">
         <a class="btn zoom"><i class="bi bi-zoom-in" style="color: #105CCB;font-size: 1.2em;"></i></a>
         <a class="btn zoom-init"><i class="bi bi-arrow-clockwise" style="color: #105CCB;font-size: 1.2em;"></i></a>
         <a class="btn zoom-out"><i class="bi bi-zoom-out" style="color: #105CCB;font-size: 1.2em;"></i></a>

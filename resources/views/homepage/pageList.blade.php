@@ -6,23 +6,22 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <div class="container-fluid">
 
-  <div class="header">
-    <h1 class="header-title">
-        TETATAPAN HALAMAN WEB
-    </h1>
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        {{-- <li class="breadcrumb-item"><a href="/moduls">Modul</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{$modul->nama}}</li> --}}
-      </ol>
-    </nav>
-  </div>
-  <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs pull-right" role="tablist">
-                    <li class="nav-item">
+    <div class="header">
+        <h1 class="header-title">
+            TETATAPAN HALAMAN WEB
+        </h1>
+        <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            {{-- <li class="breadcrumb-item"><a href="/moduls">Modul</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{$modul->nama}}</li> --}}
+        </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="tab">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item" style="background-color: rgb(210 210 210);">
 
                         @if (Request::is('setting'))
                             <a class="nav-link active" data-bs-toggle="tab" href="#tab-4"><span class="arial-N">HALAMAN UTAMA</span></a>
@@ -31,7 +30,7 @@
                         @endif
                         
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" style="background-color: rgb(210 210 210);">
 
                         @if (Request::is('home') || Request::is('home/*'))
                             <a class="nav-link active" data-bs-toggle="tab" href="#tab-5"><span class="arial-N">HALAMAN LAIN</span></a>
@@ -41,8 +40,6 @@
 
                     </li>
                 </ul>
-            </div>
-            <div class="card-body">
                 <div class="tab-content">
 
                     @if (Request::is('setting'))
