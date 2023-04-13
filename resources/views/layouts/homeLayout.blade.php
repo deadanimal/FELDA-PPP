@@ -21,6 +21,7 @@
   <link href="/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <!-- Template Main CSS File -->
   <link href="/css/style.css" rel="stylesheet">
@@ -73,8 +74,8 @@
   </div>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top d-flex align-items-center header-inner-pages " style="height: 100px">
-    <div class="container d-flex align-items-center justify-content-between" style="height: 100px; margin: 1%;">
+  <header id="header" class="fixed-top d-flex align-items-center header-inner-pages " style="height: 100px;" >
+    <div class="d-flex align-items-center justify-content-between" style="height: 100px; margin: 1%;">
 
       <h1 style="height: -webkit-fill-available;margin: 0px;">
         <a href="/" >
@@ -84,8 +85,8 @@
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href=index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
-      <nav id="navbar" class="navbar">
-        <ul>
+      <nav id="navbar" class="navbar" >
+        <ul class="nav navbar-nav d-flex flex-row">
             @if(Request::is('/'))
                 <li><a class="nav-link scrollto active" href="/"  style="font-size:1em;">LAMAN UTAMA</a></li>
             @else
@@ -119,14 +120,14 @@
         </ul>
         
         <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
-      <div style="display: flex;">
-        <a class="btn zoom"><i class="bi bi-zoom-in" style="color: #105CCB;font-size: 1.2em;"></i></a>
-        <a class="btn zoom-init"><i class="bi bi-arrow-clockwise" style="color: #105CCB;font-size: 1.2em;"></i></a>
-        <a class="btn zoom-out"><i class="bi bi-zoom-out" style="color: #105CCB;font-size: 1.2em;"></i></a>
-      </div>
 
+      </nav><!-- .navbar -->
     </div>
+    <ul class="nav navbar-nav navbar-right d-flex flex-row" style="display: flex; position: absolute;right: 0px;">
+        <li><a class="btn zoom"><i class="bi bi-zoom-in" style="color: #105CCB;font-size: 1.2em;"></i></a></li>
+        <li><a class="btn zoom-init"><i class="bi bi-arrow-clockwise" style="color: #105CCB;font-size: 1.2em;"></i></a></li> 
+        <li><a class="btn zoom-out"><i class="bi bi-zoom-out" style="color: #105CCB;font-size: 1.2em;"></i></a></li>
+    </ul>
   </header><!-- End Header -->
       @yield('content')
     <!-- ======= Footer ======= -->
