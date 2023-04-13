@@ -9,6 +9,7 @@ use App\Models\cards;
 use App\Models\Faq;
 use App\Models\Statement;
 
+use App\Models\Visitor;
 use App\Models\document;
 use App\Models\Article;
 use App\Models\Gallery;
@@ -30,20 +31,23 @@ use Illuminate\Support\Facades\Mail;
 
 class WebController extends Controller
 {
-    public function homePage()
+    public function homePage(Request $request)
     {
+        // user counter
+        $ip = $request->ip();
+        $visitor = Visitor::firstOrCreate(['ip_address' => $ip]);
+        $visitor->save();
+
+        // menu
         $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
-        
-        $sliders = Slider::all();
-        $cardsTotalRows = cards::max('rows');
-        $cards = cards::orderBy('rows', 'ASC')->get();
-        $faqs = Faq::orderBy('updated_at', 'DESC')->get();
-        
+
+        // icon
         $totalDana = Count(Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->get());
         $totalModul = Count(Modul::where('status', 'Go-live')->get());
         $totalPeneroka = Count(User::whereRelation('kategori', 'nama', '=', 'Peserta')->get());
+        $userCount = Visitor::count();
 
-        return view('homepage.home', compact ('totalDana','totalModul', 'totalPeneroka', 'pages', 'sliders', 'cardsTotalRows', 'cards', 'faqs'));
+        return view('homepage.home', compact ('totalDana','totalModul', 'totalPeneroka', 'userCount','pages'));
     }
 
     public function page(Request $request)

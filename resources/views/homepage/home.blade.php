@@ -53,25 +53,35 @@
             <h2 style="font-size: 2.5em">MAKLUMAT ASAS</h2>
         </div>
         <div class="row">
-          <div class="col-sm-4 d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="100">
-            <div class="icon-box box">
-                <img src="/SVG/farm.svg" style="height:5em; filter: invert(85%) sepia(13%) saturate(6913%) hue-rotate(341deg) brightness(101%) contrast(93%);"><br>
-                <h3 style="margin: 0px;">Jumlah Projek</h3>
+          <div class="col d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon-box box" style="padding:0">
+                <img src="/SVG/farm.svg" style="height:6em; filter: invert(85%) sepia(13%) saturate(6913%) hue-rotate(341deg) brightness(101%) contrast(93%);"><br>
+                <h3 class="text-center" style="margin: 0px;">Jumlah Projek</h3>
                 <h1 class="text" style="margin-left: 0px;">{{$totalModul}}</h1>
             </div>
           </div>
-          <div class="col-sm-4 d-flex align-items-stretch mt-4 mt-md-0 center" data-aos="fade-up" data-aos-delay="200">
-            <div class="icon-box box">
-              <img src="/SVG/group.svg" style="height:5em; filter: invert(85%) sepia(13%) saturate(6913%) hue-rotate(341deg) brightness(101%) contrast(93%);"><br>
-              <h3 style="margin: 0px;">Jumlah Peneroka</h3>
+          <div class="col d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon-box box" style="padding:0">
+              <img src="/SVG/group.svg" style="height:6em; filter: invert(85%) sepia(13%) saturate(6913%) hue-rotate(341deg) brightness(101%) contrast(93%);"><br>
+              <h3 class="text-center" style="margin: 0px;">Jumlah Peneroka</h3>
               <h1 class="text" style="margin-left: 0px;"> {{$totalPeneroka}}</h1>
             </div>
           </div>
-          <div class="col-sm-4 d-flex align-items-stretch mt-4 mt-md-0 center" data-aos="fade-up" data-aos-delay="300">
-            <div class="icon-box box">
-              <img src="/SVG/money.svg" style="height:5em; filter: invert(85%) sepia(13%) saturate(6913%) hue-rotate(341deg) brightness(101%) contrast(93%);"><br>
-              <h3 style="margin: 0px;">Jumlah Penyaluran Dana</h3>
+        </div>
+        <br><br>
+        <div class="row">
+          <div class="col d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="300">
+            <div class="icon-box box" style="padding:0; width:100%" >
+              <img src="/SVG/money.svg" style="height:6em; filter: invert(85%) sepia(13%) saturate(6913%) hue-rotate(341deg) brightness(101%) contrast(93%);"><br>
+              <h3 class="text-center" style="margin: 0px;">Jumlah Penyaluran Dana</h3>
               <h1 class="text" style="margin-left: 0px;">{{$totalDana}}</h1>
+            </div>
+          </div>
+          <div class="col d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="400">
+            <div class="icon-box box" style="padding:0;">
+              <img src="/SVG/user-global.svg" style="height:6em; filter: invert(85%) sepia(13%) saturate(6913%) hue-rotate(341deg) brightness(101%) contrast(93%);"><br>
+              <h3 class="text-center" style="margin: 0px;">Jumlah Pengguna Semasa</h3>
+              <h1 class="text" style="margin-left: 0px;">{{$userCount}}</h1>
             </div>
           </div>
         </div>
@@ -81,7 +91,7 @@
         </div>
         <div class="row">
           <div class="col d-flex align-items-stretch mt-4 mt-md-0 center" data-aos="fade-up" data-aos-delay="400">
-            <div class="icon-box">
+            <div class="icon-box" >
               <i class="bi bi-file-earmark-arrow-down"></i>
               <h4><a href="/document">Muat Turun Dokumen</a></h4>
             </div>
