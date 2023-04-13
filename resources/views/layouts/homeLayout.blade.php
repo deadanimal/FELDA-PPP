@@ -38,13 +38,11 @@
   <!-- ======= Top Bar ======= -->
   <div id="topbar" class="fixed-top d-flex align-items-center topbar-inner-pages " style="background: rgba(36, 61, 37, 1) !important">
     <div class="container d-flex align-items-center justify-content-center justify-content-md-between" style="margin-right:0px">
-      <div class="contact-info d-flex align-items-center">
-      </div>
-      <div class="contact-info d-none d-md-block" style="width: 80%">
+      <div class="contact-info d-flex" style="width: 100%">
         <table class="w-100">
             <tr>
-                <td style="text-align: right">
-                    <div class="input-group mb-3">
+                <td  style="text-align: right">
+                    <div class="d-flex flex-row">
                         <input type="text" class="form-control" placeholder="Carian">
                         <div class="input-group-append">
                             <button class="btn btn-primary" style="background-color: #3A5F3B; border: #3A5F3B;">
@@ -123,7 +121,7 @@
 
       </nav><!-- .navbar -->
     </div>
-    <ul class="nav navbar-nav navbar-right d-flex flex-row" style="display: flex; position: absolute;right: 0px;">
+    <ul class="nav navbar-nav navbar-right d-flex flex-row" style="display: flex; position: absolute;right: 1%;">
         <li><a class="btn zoom"><i class="bi bi-zoom-in" style="color: #105CCB;font-size: 1.2em;"></i></a></li>
         <li><a class="btn zoom-init"><i class="bi bi-arrow-clockwise" style="color: #105CCB;font-size: 1.2em;"></i></a></li> 
         <li><a class="btn zoom-out"><i class="bi bi-zoom-out" style="color: #105CCB;font-size: 1.2em;"></i></a></li>
