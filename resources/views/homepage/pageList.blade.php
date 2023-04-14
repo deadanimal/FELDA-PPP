@@ -8,7 +8,7 @@
 
     <div class="header">
         <h1 class="header-title">
-            TETATAPAN HALAMAN WEB
+            TETAPAN HALAMAN WEB
         </h1>
         <nav aria-label="breadcrumb">
         <ol class="breadcrumb">

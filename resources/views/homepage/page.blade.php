@@ -27,14 +27,12 @@
                             <h2 class="animate__animated animate__fadeInDown">{{$slider->title}}</h2>
                         @endif
 
-                        <p class="animate__animated animate__fadeInUp" style="margin:0px;width:100%">
+                        <div class="animate__animated animate__fadeInUp" style="margin:0px;width:100%">
                             @if($slider->picture)
-                            <picture>
-                                <img src="{{$slider->picture}}" style="width:80%" class="animate__animated animate__fadeInUp slider">
-                            </picture>
+                                <img src="{{$slider->picture}}" style="object-fit: cover;" class="animate__animated animate__fadeInUp slider">
                             @endif
-                                {!! nl2br(e($slider->content)) !!}
-                        </p>
+                            <p div class="animate__animated animate__fadeInUp" style="margin:0px;width:100%"> {!! nl2br(e($slider->content)) !!}</p>   
+                        </div>
                     </div>
                 </div>
             @endforeach
@@ -59,7 +57,7 @@
         <section id="icon-boxes" class="icon-boxes">
         <div class="container">
             <div class="section-title">
-                <h2 style="font-size: 2.5em">{{$cards[0]->item->nama}}</h2>
+                <h2 style="font-size: 3em">{{$cards[0]->item->nama}}</h2>
             </div>
 
             <!-- loop for card row -->
@@ -76,7 +74,7 @@
                                         </picture>
                                         @else
                                         <div class="icon">
-                                            <i class="bx bx-file"></i>
+                                            <i class="bx bx-file" style="color: #136552 "></i>
                                         </div>
                                         @endif
 
@@ -101,7 +99,7 @@
             <div class="container" data-aos="fade-up">
 
                     <div class="section-title">
-                        <h2 style="font-size: 2.5em">{{$galleries[0]->item->nama}}</h2>
+                        <h2 style="font-size: 3em">{{$galleries[0]->item->nama}}</h2>
                     </div>
                     @foreach($galleries->chunk(3) as $galleries)
                         <div class="row portfolio-container">
@@ -134,7 +132,7 @@
         <section class="faq section-bg">
         <div class="container" data-aos="fade-up">
             <div class="section-title">
-            <h2 style="font-size: 2.5em">{{$dropdowns[0]->item->nama}}</h2>
+            <h2 style="font-size: 3em">{{$dropdowns[0]->item->nama}}</h2>
             </div>
 
             <div class="faq-list">

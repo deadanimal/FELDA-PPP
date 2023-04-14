@@ -16,7 +16,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-            <h2 style="font-size: 2.5em">Mengenai Kami</h2>
+            <h2 style="font-size: 3em">Mengenai Kami</h2>
             <p style="font-size: 20px;">
                 Lembaga Kemajuan Tanah Persekutuan (FELDA) (bahasa Inggeris: Federal Land Development Authority atau FELDA) 
                 adalah satu agensi kerajaan Malaysia yang menangani penempatan semula penduduk luar bandar yang miskin ke kawasan-kawasan yang baru dibangun agar meningkatkan taraf ekonomi mereka.
@@ -50,19 +50,19 @@
     <section id="services" class="services">
       <div class="container" data-aos="fade-up">
         <div class="section-title">
-            <h2 style="font-size: 2.5em">MAKLUMAT ASAS</h2>
+            <h2 style="font-size: 3em">MAKLUMAT ASAS</h2>
         </div>
         <div class="row">
           <div class="col d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="100">
             <div class="icon-box box" style="padding:0">
-                <img src="/SVG/farm.svg" style="height:6em; filter: invert(85%) sepia(13%) saturate(6913%) hue-rotate(341deg) brightness(101%) contrast(93%);"><br>
+                <img src="/SVG/farm.svg" style="height:6em; filter: invert(16%) sepia(24%) saturate(2078%) hue-rotate(119deg) brightness(90%) contrast(103%);"><br>
                 <h3 class="text-center" style="margin: 0px;">Jumlah Projek</h3>
                 <h1 class="text" style="margin-left: 0px;">{{$totalModul}}</h1>
             </div>
           </div>
           <div class="col d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="200">
             <div class="icon-box box" style="padding:0">
-              <img src="/SVG/group.svg" style="height:6em; filter: invert(85%) sepia(13%) saturate(6913%) hue-rotate(341deg) brightness(101%) contrast(93%);"><br>
+              <img src="/SVG/group.svg" style="height:6em; filter: invert(16%) sepia(24%) saturate(2078%) hue-rotate(119deg) brightness(90%) contrast(103%);"><br>
               <h3 class="text-center" style="margin: 0px;">Jumlah Peneroka</h3>
               <h1 class="text" style="margin-left: 0px;"> {{$totalPeneroka}}</h1>
             </div>
@@ -72,14 +72,14 @@
         <div class="row">
           <div class="col d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="300">
             <div class="icon-box box" style="padding:0; width:100%" >
-              <img src="/SVG/money.svg" style="height:6em; filter: invert(85%) sepia(13%) saturate(6913%) hue-rotate(341deg) brightness(101%) contrast(93%);"><br>
+              <img src="/SVG/money.svg" style="height:6em; filter: invert(16%) sepia(24%) saturate(2078%) hue-rotate(119deg) brightness(90%) contrast(103%);"><br>
               <h3 class="text-center" style="margin: 0px;">Jumlah Penyaluran Dana</h3>
               <h1 class="text" style="margin-left: 0px;">{{$totalDana}}</h1>
             </div>
           </div>
           <div class="col d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="400">
             <div class="icon-box box" style="padding:0;">
-              <img src="/SVG/user-global.svg" style="height:6em; filter: invert(85%) sepia(13%) saturate(6913%) hue-rotate(341deg) brightness(101%) contrast(93%);"><br>
+              <img src="/SVG/user-global.svg" style="height:6em; filter: invert(16%) sepia(24%) saturate(2078%) hue-rotate(119deg) brightness(90%) contrast(103%);"><br>
               <h3 class="text-center" style="margin: 0px;">Jumlah Pelawat</h3>
               <h1 class="text" style="margin-left: 0px;">{{$userCount}}</h1>
             </div>
@@ -87,30 +87,30 @@
         </div>
 
         <div class="section-title" style="margin-top: 10%">
-            <h2 style="font-size: 2.5em">PAUTAN LAIN</h2>
+            <h2 style="font-size: 3em">PAUTAN LAIN</h2>
         </div>
         <div class="row">
           <div class="col d-flex align-items-stretch mt-4 mt-md-0 center" data-aos="fade-up" data-aos-delay="400">
             <div class="icon-box" >
-              <i class="bi bi-file-earmark-arrow-down"></i>
+              <i class="bi bi-file-earmark-arrow-down" style="color: #136552"></i>
               <h4><a href="/document">Muat Turun Dokumen</a></h4>
             </div>
           </div>
           <div class="col d-flex align-items-stretch mt-4 mt-md-0 center" data-aos="fade-up" data-aos-delay="500">
             <div class="icon-box">
-              <i class="bi bi-calendar4-week"></i>
+              <i class="bi bi-calendar4-week" style="color: #136552"></i>
               <h4><a href="#">Penerbitan</a></h4>
             </div>
           </div>
           <div class="col d-flex align-items-stretch mt-4 mt-md-0 center" data-aos="fade-up" data-aos-delay="600">
             <div class="icon-box">
-              <i class="bi bi-briefcase"></i>
+              <i class="bi bi-briefcase" style="color: #136552"></i>
               <h4><a href="#">Data Terbuka</a></h4>
             </div>
           </div>
           <div class="col d-flex align-items-stretch mt-4 mt-md-0 center" data-aos="fade-up" data-aos-delay="600">
             <div class="icon-box">
-              <i class="bi bi-briefcase"></i>
+              <i class="bi bi-briefcase" style="color: #136552"></i>
               <h4><a href="#">e-Penyertaan</a></h4>
             </div>
           </div>
@@ -124,7 +124,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2 style="font-size: 2.5em">Hubungi Kami</h2>
+          <h2 style="font-size: 3em">Hubungi Kami</h2>
         </div>
 
         <div class="row mt-1 d-flex justify-content-end" data-aos="fade-right" data-aos-delay="100">

@@ -611,7 +611,9 @@ section {
   text-transform: uppercase;
   margin-bottom: 20px;
   padding-bottom: 0;
-  color: #054a85;
+  background: -webkit-linear-gradient(180deg, rgba(19,101,82,1), rgba(0,59,42,1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .section-title p {
@@ -2256,7 +2258,7 @@ section {
 # Footer
 --------------------------------------------------------------*/
 #footer {
-  background: #243D25;
+  background: linear-gradient(90deg, rgba(0,53,36,1) 0%, rgba(19,101,82,1) 35%, rgba(0,59,42,1) 100%);
   padding: 0 0 20px 0;
   color: #fff;
   font-size: 14px;
@@ -2311,7 +2313,7 @@ section {
 }
 
 #footer .footer-top {
-  background: #2f5730;
+  background:linear-gradient(90deg, rgba(0,53,36,1) 0%, rgba(19,101,82,1) 35%, rgba(0,59,42,1) 100%);
   padding: 10px 0 0 0;
 }
 /* 
