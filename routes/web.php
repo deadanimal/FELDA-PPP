@@ -18,6 +18,7 @@ Route::get('/document',  [WebController::class, 'documentList']);
 Route::get('/',  [WebController::class, 'homePage']);
 Route::get('/page/{pageId}',  [WebController::class, 'page']);
 Route::get('/gallery/{galleryID}',  [WebController::class, 'gallery_pic']);
+Route::get('/doc/{itemId}',  [WebController::class, 'document_page']);
 
 Route::post('/home/contact',  [WebController::class, 'contact']);
 

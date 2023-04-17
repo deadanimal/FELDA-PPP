@@ -58,8 +58,6 @@ class WebController extends Controller
         $pageId = (int) $request->route('pageId');
         $pg = Page::find($pageId);
 
-        $items = Item::where('page_id', $pageId)->get();
-
         $cardsTotalRows = cards::whereRelation('item', 'page_id', '=', $pageId)->max('rows');
         $cards = cards::whereRelation('item', 'page_id', '=', $pageId)->orderBy('rows', 'ASC')->get();
         
@@ -67,13 +65,27 @@ class WebController extends Controller
         $galleries = Gallery::whereRelation('item', 'page_id', '=', $pageId)->orderBy('updated_at', 'DESC')->get();
         $dropdowns = dropdown::whereRelation('item', 'page_id', '=', $pageId)->get();
         $articles = Article::whereRelation('item', 'page_id', '=', $pageId)->get();
+        $docs = Item::where('page_id', $pageId)->where('category', 'Document')->get();
 
         $totalDana = Count(Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->get());
         $totalModul = Count(Modul::where('status', 'Go-live')->get());
         $totalPeneroka = Count(User::whereRelation('kategori', 'nama', '=', 'Peserta')->get());
 
-        return view('homepage.page', compact ('totalDana','totalModul', 'totalPeneroka', 'pages', 'pg', 'items', 'cardsTotalRows', 'cards', 'galleries' ,'sliders','articles', 'dropdowns'));
+        return view('homepage.page', compact ('totalDana','totalModul', 'totalPeneroka', 'pages', 'pg', 'cardsTotalRows', 'cards', 'galleries' ,'sliders','articles', 'dropdowns', 'docs'));
     }
+
+    public function document_page(Request $request)
+    {
+        //nav bar menu
+        $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
+        
+        $itemId = (int) $request->route('itemId');
+        $item = Item::find($itemId);
+        $docs = Doc::where('item_id', $itemId)->get();
+       
+        return view('homepage.doc', compact ('pages', 'docs', 'item'));
+    }
+
 
     public function gallery_pic(Request $request)
     {

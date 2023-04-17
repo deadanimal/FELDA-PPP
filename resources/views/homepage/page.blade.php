@@ -157,6 +157,30 @@
         </div>
         </section><!-- End Frequently Asked Questions Section -->
     @endif
+    
+    @if (!$docs->isEmpty())
+        <section id="services" class="services">
+            <div class="container aos-init aos-animate" data-aos="fade-up">
+                <div class="section-title" style="margin-top: 10%">
+                    <h2 style="font-size: 3em">PAUTAN LAIN</h2>
+                </div>
+                @foreach ($docs as $doc)
+                    @if ($loop->iteration%4 == 0)
+                        <div class="row" style="margin-bottom: 5%">
+                    @endif
+                    <div class="col d-flex align-items-stretch mt-4 mt-md-0 center aos-init aos-animate" data-aos="fade-up" data-aos-delay="400">
+                        <div class="icon-box">
+                            <i class="bi bi-file-earmark-arrow-down" style="color: #136552"></i>
+                            <h4><a href="/doc/{{$doc->id}}">{{$doc->nama}}</a></h4>
+                        </div>
+                    </div>
+                    @if ($loop->iteration%4 == 0)
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </section>
+    @endif
 
 </main><!-- End #main -->
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
