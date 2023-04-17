@@ -34,7 +34,7 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA PROSESM</h2>
+                <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA PROSES</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
