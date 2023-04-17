@@ -102,12 +102,12 @@
                     <li><a class="nav-link scrollto" href="/page/{{$page->id}}" style="font-size:1em;">{{$page->nama}}</a></li>
                 @endif
             @endforeach
-
+{{-- 
             @if(Request::is('penyataan'))
                 <li><a class="nav-link scrollto active" href="/penyataan" style="font-size:1em;">PENYATAAN DAN PENAFIAN</a></li>
             @else
                 <li><a class="nav-link scrollto" href="/penyataan" style="font-size:1em;">PENYATAAN DAN PENAFIAN</a></li>
-            @endif
+            @endif --}}
 
             @if (Route::has('login'))
                 <li>

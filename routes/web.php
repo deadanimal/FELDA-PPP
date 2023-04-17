@@ -12,7 +12,7 @@ use App\Http\Controllers\WebController;
 // });
 
 // Route::get('/',  [WebController::class, 'landingPage']);
-Route::get('/penyataan',  [WebController::class, 'statementList']);
+// Route::get('/penyataan',  [WebController::class, 'statementList']);
 Route::get('/document',  [WebController::class, 'documentList']);
 
 Route::get('/',  [WebController::class, 'homePage']);

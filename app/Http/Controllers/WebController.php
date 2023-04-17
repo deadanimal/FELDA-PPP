@@ -114,13 +114,14 @@ class WebController extends Controller
 
         return view('home', compact ('totalDana','totalModul', 'totalPeneroka', 'sliders', 'cardsTotalRows', 'cards', 'faqs'));
     }
-    public function statementList()
-    {
-        $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
-        $stats = Statement::orderBy('updated_at', 'DESC')->get();
+    
+    // public function statementList()
+    // {
+    //     $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
+    //     $stats = Statement::orderBy('updated_at', 'DESC')->get();
 
-        return view('penyataan', compact ('stats', 'pages'));
-    }
+    //     return view('penyataan', compact ('stats', 'pages'));
+    // }
 
     public function documentList()
     {
