@@ -29,7 +29,7 @@
 
                         <div class="animate__animated animate__fadeInUp" style="margin:0px;width:100%">
                             @if($slider->picture)
-                                <img src="{{$slider->picture}}" style="object-fit: cover;" class="animate__animated animate__fadeInUp slider">
+                                <img src="{{$slider->picture}}" style="object-fit: contain;" class="animate__animated animate__fadeInUp slider">
                             @endif
                             <p div class="animate__animated animate__fadeInUp" style="margin:0px;width:100%"> {!! nl2br(e($slider->content)) !!}</p>   
                         </div>
