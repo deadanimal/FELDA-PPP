@@ -199,17 +199,20 @@
 		document.addEventListener("DOMContentLoaded", function() {
 			var calendarEl = document.getElementById('fullcalendar');
 			var calendar = new FullCalendar.Calendar(calendarEl, {
-				themeSystem: 'bootstrap',
+				themeSystem: 'bootstrap4',
 				initialView: 'dayGridMonth',
-				initialDate: '2021-07-07',
 				headerToolbar: {
 					left: 'prev,next today',
 					center: 'title',
 					right: 'dayGridMonth,timeGridWeek,timeGridDay'
 				},
 				events: [{
-						title: 'All Day Event',
-						start: '2021-07-01'
+						title: 'Raya Adilfitri',
+						start: '2023-04-22'
+					},
+          {
+						title: 'Raya Adilfitri',
+						start: '2023-04-23'
 					}
 				]
 			});
@@ -217,7 +220,7 @@
 				calendar.render();
 			}, 250)
 		});
-	</script>
+</script>
 <style>
     .slider{
         width: 60%;
