@@ -139,7 +139,7 @@
             <ul>
                     @foreach($dropdowns as $dropdown)
                         <li data-aos="fade-up" data-aos="fade-up" data-aos-delay="{{$loop->iteration}}00">
-                            <i class="bx bx-help-circle icon-help"></i> 
+                            <i class="bx bxs-pin icon-help"></i>
                             <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-{{$loop->iteration}}">{{$dropdown->title}}
                                 <i class="bx bx-chevron-down icon-show"></i>
                                 <i class="bx bx-chevron-up icon-close"></i>

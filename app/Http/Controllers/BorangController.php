@@ -294,8 +294,9 @@ class BorangController extends Controller
             $noLulusBorang = [];
 
             //to make $borangJwpns as empty
-            $borangJwpns =  Jawapan::where('id', 0.1)->get();
-            
+            $borangJwpns =  new \Illuminate\Database\Eloquent\Collection();
+            // dd($borangJwpns);
+
             $tahapLulus = 0;
 
             for($x=0; $x<count($tahapKelulusan); $x++){

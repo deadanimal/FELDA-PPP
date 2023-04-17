@@ -611,7 +611,7 @@ section {
   text-transform: uppercase;
   margin-bottom: 20px;
   padding-bottom: 0;
-  background: -webkit-linear-gradient(180deg, rgba(19,101,82,1), rgba(0,59,42,1));
+  background: -webkit-linear-gradient(180deg, rgb(73 199 170), rgb(0 37 27));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
