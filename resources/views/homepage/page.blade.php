@@ -13,7 +13,7 @@
 
 @if (!$sliders->isEmpty())
     <!-- ======= Slider Section ======= -->
-    <section id="hero" class="d-flex justify-cntent-center align-items-center">
+    <section id="hero" class="d-flex justify-cntent-center align-items-center" style="height: 100vh;">
         <div id="heroCarousel" data-bs-interval="5000" class="container carousel carousel-fade" data-bs-ride="carousel">
         
         <!-- Slider loop -->
