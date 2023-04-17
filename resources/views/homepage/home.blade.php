@@ -1,4 +1,5 @@
 @extends('layouts.homeLayout')
+<script src="js/settings.js"></script>
 
 @section('content')
 
@@ -53,30 +54,29 @@
             <h2 style="font-size: 3em">MAKLUMAT ASAS</h2>
         </div>
         <div class="row">
-          <div class="col d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-sm-4 d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="100">
             <div class="icon-box box" style="padding:0">
                 <img src="/SVG/farm.svg" style="height:6em; filter: invert(16%) sepia(24%) saturate(2078%) hue-rotate(119deg) brightness(90%) contrast(103%);"><br>
                 <h3 class="text-center" style="margin: 0px;">Jumlah Projek</h3>
                 <h1 class="text" style="margin-left: 0px;">{{$totalModul}}</h1>
             </div>
           </div>
-          <div class="col d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-sm-4 d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="200">
             <div class="icon-box box" style="padding:0">
               <img src="/SVG/group.svg" style="height:6em; filter: invert(16%) sepia(24%) saturate(2078%) hue-rotate(119deg) brightness(90%) contrast(103%);"><br>
               <h3 class="text-center" style="margin: 0px;">Jumlah Peneroka</h3>
               <h1 class="text" style="margin-left: 0px;"> {{$totalPeneroka}}</h1>
             </div>
           </div>
-        </div>
-        <br><br>
-        <div class="row">
-          <div class="col d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="300">
+          <div class="col-sm-4 d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="300">
             <div class="icon-box box" style="padding:0; width:100%" >
               <img src="/SVG/money.svg" style="height:6em; filter: invert(16%) sepia(24%) saturate(2078%) hue-rotate(119deg) brightness(90%) contrast(103%);"><br>
               <h3 class="text-center" style="margin: 0px;">Jumlah Penyaluran Dana</h3>
               <h1 class="text" style="margin-left: 0px;">{{$totalDana}}</h1>
             </div>
           </div>
+        </div>
+        <div class="row">
           <div class="col d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="400">
             <div class="icon-box box" style="padding:0;">
               <img src="/SVG/user-global.svg" style="height:6em; filter: invert(16%) sepia(24%) saturate(2078%) hue-rotate(119deg) brightness(90%) contrast(103%);"><br>
@@ -85,6 +85,14 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="section-title" style="margin-top: 5%">
+            <h2 style="font-size: 3em">KALENDAR</h2>
+          </div>
+          <div id="fullcalendar"></div>
+      
+        </div>
+
 
         <div class="section-title" style="margin-top: 10%">
             <h2 style="font-size: 3em">PAUTAN LAIN</h2>
@@ -186,20 +194,30 @@
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src="js/app.js"></script>
   <script>
-    $('.text').each(function () {
-        $(this).prop('Counter',0).animate({
-            Counter: $(this).text()
-        }, {
-            duration: 2500,
-            easing: 'swing',
-            step: function (now) {
-                $(this).text(Math.ceil(now));
-            }
-        });
-    });
-  </script>
+		document.addEventListener("DOMContentLoaded", function() {
+			var calendarEl = document.getElementById('fullcalendar');
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				themeSystem: 'bootstrap',
+				initialView: 'dayGridMonth',
+				initialDate: '2021-07-07',
+				headerToolbar: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'dayGridMonth,timeGridWeek,timeGridDay'
+				},
+				events: [{
+						title: 'All Day Event',
+						start: '2021-07-01'
+					}
+				]
+			});
+			setTimeout(function() {
+				calendar.render();
+			}, 250)
+		});
+	</script>
 <style>
     .slider{
         width: 60%;
