@@ -10,11 +10,32 @@
         <h1 class="header-title">
             BORANG {{$borangJwpn->borangs->namaBorang}}
         </h1>
-        <a href="/user/borang_app/{{$borangJwpn->borangs->id}}/user_list"  class="frame9403-frame7445" style="margin-left:0px;">
-            <div class="frame9403-frame7293">
-              <span class="frame9403-text21"><span>Kembali</span></span>
-            </div>
-        </a>
+        <table class="w-100">
+            <tr>
+                <td>
+                    <a href="/user/borang_app/{{$borangJwpn->borangs->id}}/user_list"  class="frame9403-frame7445" style="margin-left:0px;">
+                        <div class="frame9403-frame7293">
+                        <span class="frame9403-text21"><span>Kembali</span></span>
+                        </div>
+                    </a>
+                </td>
+                <td>
+                    <form action="/user/borang_app/pdf" method="get">
+                        <input type="hidden" name="user_id" value="{{$borangJwpn->user->id}}">
+                        <input type="hidden" name="borang_id" value="{{$borangJwpn->borangs->id}}">
+                        <input type="hidden" name="tahapKelulusanID" value="{{$tahapLulus}}">
+
+                        <button class="btn frame9403-frame7445" style="margin-right:0px;">
+                            <div class="frame9403-frame7293">
+                                <span class="frame9403-text21"><span>Jana Surat (PDF)</span></span>
+                            </div>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        
+        
     </div>
     <div class="row">
         <div class="col-12">
@@ -142,10 +163,9 @@
 
 <style>
     .frame9403-frame7445 {
-    width: 125px;
     height: 44px;
     display: flex;
-    max-width: 157px;
+    max-width: 170px;
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
     box-sizing: border-box;
     align-items: center;

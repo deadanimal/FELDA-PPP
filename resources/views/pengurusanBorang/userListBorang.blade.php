@@ -43,15 +43,9 @@
                     @endif
                     </td>
                     <td class="text-center">
-                      @if(count($tahapKelulusan) == count($noLulusBorang))
-                        <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->user->id}}/pdf" style="color: white; text-decoration:none;">
-                          generate pdf
-                        </a>
-                      @else
                         <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->user->id}}/view/{{$tahapLulus}}" style="color: white; text-decoration:none;">
                           Papar Borang Pemohon
                         </a>
-                      @endif
                     </td>
                 </tr>
             @endforeach

@@ -16,7 +16,7 @@
     </head>
     <body class="c18 doc-content">
         <div>
-            <img src="/Image/header_surat.png" style="width: 110%; margin-left:-45px;">
+            <img src="/Image/header_surat.jpeg" style="width: 110%; margin-left:-45px;">
         </div>
         <hr style="background-color: #000000;">
         <table class="table table-borderless" style="margin-right: 0px; margin-left:auto; border: 0px;">
@@ -38,7 +38,7 @@
         </table>
         <p class="c15"><span class="c7"></span></p>
         <p class="c15"><span class="c37"></span></p>
-        <div class="c3"><span class="c7"><x-markdown>{{$surat->address}}</x-markdown></span></div>
+        <div class="c3"><span class="c7"><x-markdown>{!! nl2br(e($surat->address)) !!}</x-markdown></span></div>
         <br>
         <br>
         <p class="c8"><span class="c7">Tuan/Puan,</span></p>

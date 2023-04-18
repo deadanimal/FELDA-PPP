@@ -353,7 +353,7 @@ class BorangController extends Controller
         $borangJwpn = Jawapan::where('borang_id', $borangId)->where('user_id', $userId)->first();
         $lulusBorangs = Kelulusan_borang::where('tahapKelulusan_id', $tahapLulus)->where('jawapan_id', $borangJwpn->id)->get();
         $jawapanMedan = Jawapan_medan::where('jawapan_id', $borangJwpn->id)->get();
-
+        
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
@@ -363,16 +363,24 @@ class BorangController extends Controller
 
     public function borangApp_pdf(Request $request)
     {
-        $userId = (int) $request->route('user_id');
-        $borangId = (int) $request->route('borang_id');
+        $userId = $request->user_id;
+        $borangId = $request->borang_id;
+        $tahapKelulusanID = $request->tahapKelulusanID;
+
+        $surat = Surat::where('kelulusan_id', $tahapKelulusanID)->first();
 
         $borangJwpn = Jawapan::where('borang_id', $borangId)->where('user_id', $userId)->first();
         $jawapanMedan = Jawapan_medan::where('jawapan_id', $borangJwpn->id)->get();
-        
-        $data = compact('borangJwpn', 'jawapanMedan');
-        $pdf = PDF::loadView('pengurusanBorang.borangPDF', $data);
 
-        return $pdf->download('Borang_Permohonan.pdf');
+        $data = compact('borangJwpn', 'jawapanMedan', 'surat');
+        $pdf = PDF::loadView('pengurusanBorang.borangPDF', $data)
+        ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'defaultFont' => 'Arial'])
+        ->setPaper('A4', 'portrait');
+
+        // return view('pengurusanBorang.borangPDF', compact('borangJwpn', 'jawapanMedan', 'surat'));
+
+        
+        return $pdf->download(date("Y-m-d").'_Borang_Permohonan_'.$borangJwpn->user->nama.'.pdf');
     }
     
     public function borangApp_update(Request $request)
@@ -643,7 +651,7 @@ class BorangController extends Controller
         $surat->address = $request->address;
         $surat->title = $request->title;
         $surat->body = $request->body;
-        $surat->kelulusan_id = $id_tahapKelulusan;
+        $surat->kelulusan_id = $tahapKelulusanID;
         $surat->save();
 
         $audit = new Audit;
