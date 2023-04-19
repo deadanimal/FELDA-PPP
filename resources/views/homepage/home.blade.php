@@ -88,7 +88,7 @@
           <div class="section-title" style="margin-top: 5%">
             <h2 style="font-size: 3em">KALENDAR</h2>
           </div>
-          <div id="calendar" style="width: 70%;margin: auto;"></div> <br>
+          <div id="calendar" style="width: 60%;margin: auto;padding: 12px 0px;"></div> <br>
       
         </div>
 
@@ -223,9 +223,10 @@
 			}
 	    	];
     
-        $("#calendar").MEC({
-            events: sampleEvents
-          });
+      
+      $("#calendar").MEC({
+          events: sampleEvents,
+      });
 
 
 		
