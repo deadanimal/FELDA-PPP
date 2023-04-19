@@ -67,10 +67,10 @@ class WebController extends Controller
         $articles = Article::whereRelation('item', 'page_id', '=', $pageId)->get();
         $docs = Item::where('page_id', $pageId)->where('category', 'Document')->get();
 
-        $totalDana = Count(Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->get());
-        $totalModul = Count(Modul::where('status', 'Go-live')->get());
-        $totalPeneroka = Count(User::whereRelation('kategori', 'nama', '=', 'Peserta')->get());
-
+        $totalDana = Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->count();
+        $totalModul = Modul::where('status', 'Go-live')->count();
+        $totalPeneroka = User::whereRelation('kategori', 'nama', '=', 'Peserta')->count();
+        
         return view('homepage.page', compact ('totalDana','totalModul', 'totalPeneroka', 'pages', 'pg', 'cardsTotalRows', 'cards', 'galleries' ,'sliders','articles', 'dropdowns', 'docs'));
     }
 
@@ -108,10 +108,10 @@ class WebController extends Controller
         $cards = cards::orderBy('rows', 'ASC')->get();
         $faqs = Faq::orderBy('updated_at', 'DESC')->get();
         
-        $totalDana = Count(Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->get());
-        $totalModul = Count(Modul::where('status', 'Go-live')->get());
-        $totalPeneroka = Count(User::whereRelation('kategori', 'nama', '=', 'Peserta')->get());
-
+        $totalDana = Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->count();
+        $totalModul = Modul::where('status', 'Go-live')->count();
+        $totalPeneroka = User::whereRelation('kategori', 'nama', '=', 'Peserta')->count();
+        
         return view('home', compact ('totalDana','totalModul', 'totalPeneroka', 'sliders', 'cardsTotalRows', 'cards', 'faqs'));
     }
     
