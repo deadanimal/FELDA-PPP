@@ -219,7 +219,7 @@
       },
 			{
 			    title: "Hari Raya 2",
-			    date: "2023-04-21" // Today
+			    date: "2023-04-21"
 			}
 	    	];
     
