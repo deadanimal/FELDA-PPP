@@ -32,19 +32,19 @@ use Illuminate\Support\Facades\Mail;
 class WebController extends Controller
 {
     public function homePage(Request $request)
-    {
+    { 
         // user counter
         $ip = $request->ip();
-        $visitor = Visitor::firstOrCreate(['ip_address' => $ip]);
+        $visitor = Visitor::firstOrNew(['ip_address' => $ip]);
         $visitor->save();
 
         // menu
         $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
 
         // icon
-        $totalDana = Count(Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->get());
-        $totalModul = Count(Modul::where('status', 'Go-live')->get());
-        $totalPeneroka = Count(User::whereRelation('kategori', 'nama', '=', 'Peserta')->get());
+        $totalDana = Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->count();
+        $totalModul = Modul::where('status', 'Go-live')->count();
+        $totalPeneroka = User::whereRelation('kategori', 'nama', '=', 'Peserta')->count();
         $userCount = Visitor::count();
 
         return view('homepage.home', compact ('totalDana','totalModul', 'totalPeneroka', 'userCount','pages'));
