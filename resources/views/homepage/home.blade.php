@@ -88,7 +88,7 @@
           <div class="section-title" style="margin-top: 5%">
             <h2 style="font-size: 3em">KALENDAR</h2>
           </div>
-          <div id="calendar" style="width: 50%;margin: auto;"></div> <br>
+          <div id="calendar" style="width: 70%;margin: auto;"></div> <br>
       
         </div>
 
@@ -222,14 +222,12 @@
 			    date: "2023-04-21" // Today
 			}
 	    	];
-
-		
-	</script>
-  <script>
-			$("#calendar").MEC({
+    
+			$("#calendar").MEC(function () {
 				events: sampleEvents
 			});
-  </script>
+		
+	</script>
   {{-- <script>
 		document.addEventListener("DOMContentLoaded", function() {
 			var calendarEl = document.getElementById('fullcalendar');
