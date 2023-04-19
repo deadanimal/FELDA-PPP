@@ -300,13 +300,21 @@ class BorangController extends Controller
             $tahapLulus = 0;
 
             for($x=0; $x<count($tahapKelulusan); $x++){
-                if($x==0){
-                    if($tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == 1){
+                 if($x==0){
+                    if(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'HQ') && $tahapKelulusan[$x]->sequence == 1){
+                        $borangJwpns = Jawapan::where('borang_id', $borangId)->get();
+                        $tahapLulus = $tahapKelulusan[$x]->id;
+                        $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
+                        if(!$borangJwpns->isEmpty()){
+                            $noLulusBorang = Kelulusan_borang::where('jawapan_id', $borangJwpns[0]->id)->get();
+                        }
+                    }
+                    elseif($tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == 1){
                         $borangJwpns = Jawapan::where('borang_id', $borangId)
                         ->where('wilayah', Auth::user()->wilayah)
                         ->where('rancangan',  Auth::user()->rancangan)->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
-                        $noLulusBorang = [];
+                        $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
                             $noLulusBorang = Kelulusan_borang::where('jawapan_id', $borangJwpns[0]->id)->get();
                         }
@@ -314,13 +322,23 @@ class BorangController extends Controller
                 }else{
                     $z = $x-1;
                     $y = $tahapKelulusan[$z]->sequence + 1;
-                    if($tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $y){
+                    if(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'HQ') && $tahapKelulusan[$x]->sequence == $y){
+                        $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
+                        ->whereRelation('kelulusanBorang','keputusan', 'Lulus')
+                        ->whereRelation('kelulusanBorang.tahap_kelulusan','sequence', $tahapKelulusan[$z]->sequence)->get();
+                        $tahapLulus = $tahapKelulusan[$x]->id;
+                        $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();;
+                        if(!$borangJwpns->isEmpty()){
+                            $noLulusBorang = Kelulusan_borang::where('jawapan_id', $borangJwpns[0]->id)->get();
+                        }
+                    }
+                    elseif($tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $y){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
                         ->where('wilayah', Auth::user()->wilayah )->where('rancangan',  Auth::user()->rancangan)
                         ->whereRelation('kelulusanBorang','keputusan', 'Lulus')
                         ->whereRelation('kelulusanBorang.tahap_kelulusan','sequence', $tahapKelulusan[$z]->sequence)->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
-                        $noLulusBorang = [];
+                        $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();;
                         if(!$borangJwpns->isEmpty()){
                             $noLulusBorang = Kelulusan_borang::where('jawapan_id', $borangJwpns[0]->id)->get();
                         }
