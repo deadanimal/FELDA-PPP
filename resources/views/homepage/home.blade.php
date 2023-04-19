@@ -1,6 +1,6 @@
 @extends('layouts.homeLayout')
 <script src="js/settings.js"></script>
-<link rel="stylesheet" href="css/mini-event-calendar.min.css">
+<link rel="stylesheet" href="/css/mini-event-calendar.min.css">
 
 @section('content')
 
@@ -209,7 +209,7 @@
     });
   </script>
 
-	<script src="js/mini-event-calendar.js"></script>
+	<script src="/js/mini-event-calendar.min.js"></script>
   <script>
 
 	    	var sampleEvents = [
@@ -223,9 +223,11 @@
 			}
 	    	];
     
-			$("#calendar").MEC(function () {
-				events: sampleEvents
-			});
+        $("#calendar").MEC({
+          events: sampleEvents
+        });
+
+
 		
 	</script>
   {{-- <script>
