@@ -1,6 +1,6 @@
 @extends('layouts.homeLayout')
 <script src="js/settings.js"></script>
-<link rel="stylesheet" href="/css/mini-event-calendar.min.css">
+<link rel="stylesheet" href="css/mini-event-calendar.min.css">
 
 @section('content')
 
@@ -194,7 +194,7 @@
 
   </main><!-- End #main -->
   <script src="js/app.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
   <script>
     $('.text').each(function () {
         $(this).prop('Counter',0).animate({
@@ -208,8 +208,8 @@
         });
     });
   </script>
-
-	<script src="/js/mini-event-calendar.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+<script src="js/mini-event-calendar.js"></script>
   <script>
 
 	    	var sampleEvents = [
@@ -224,8 +224,8 @@
 	    	];
     
         $("#calendar").MEC({
-          events: sampleEvents
-        });
+            events: sampleEvents
+          });
 
 
 		
