@@ -1,5 +1,6 @@
 @extends('layouts.homeLayout')
 <script src="js/settings.js"></script>
+<link rel="stylesheet" href="css/mini-event-calendar.min.css">
 
 @section('content')
 
@@ -87,7 +88,7 @@
           <div class="section-title" style="margin-top: 5%">
             <h2 style="font-size: 3em">KALENDAR</h2>
           </div>
-          <div id="fullcalendar"></div>
+          <div id="calendar" style="width: 50%;margin: auto;"></div> <br>
       
         </div>
 
@@ -193,7 +194,7 @@
 
   </main><!-- End #main -->
   <script src="js/app.js"></script>
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
     $('.text').each(function () {
         $(this).prop('Counter',0).animate({
@@ -207,7 +208,29 @@
         });
     });
   </script>
+
+	<script src="js/mini-event-calendar.js"></script>
   <script>
+
+	    	var sampleEvents = [
+			{
+			    title: "Hari Raya 1",
+			    date: "2023-04-20"
+      },
+			{
+			    title: "Hari Raya 2",
+			    date: "2023-04-21" // Today
+			}
+	    	];
+
+		
+	</script>
+  <script>
+			$("#calendar").MEC({
+				events: sampleEvents
+			});
+  </script>
+  {{-- <script>
 		document.addEventListener("DOMContentLoaded", function() {
 			var calendarEl = document.getElementById('fullcalendar');
 			var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -232,7 +255,7 @@
 				calendar.render();
 			}, 250)
 		});
-</script>
+</script> --}}
 <style>
     .slider{
         width: 60%;
