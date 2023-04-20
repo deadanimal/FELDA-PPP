@@ -9,6 +9,7 @@ use App\Models\cards;
 use App\Models\Faq;
 use App\Models\Statement;
 
+use App\Models\Calendar_event;
 use App\Models\Visitor;
 use App\Models\document;
 use App\Models\Article;
@@ -135,12 +136,13 @@ class WebController extends Controller
     {
         $pages = Page::orderBy('sequence', 'ASC')->get();
         $docs = document::orderBy('updated_at', 'DESC')->get();
+        $events = Calendar_event::orderBy('updated_at', 'DESC')->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.pageList', compact ('docs','pages', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.pageList', compact ('events','docs','pages', 'menuModul', 'menuProses', 'menuBorang'));
     }
     
     public function page_add(Request $request)
@@ -980,5 +982,55 @@ class WebController extends Controller
         Alert::success('Padam Dokumen Berjaya.', 'Dokumen berjaya dipadam.');
 
         return redirect('/home');
+    }
+
+    public function event_add(Request $request)
+    {
+        $event = new Calendar_event;
+        $event->name = $request->name;
+        $event->event_date = $request->event_date;
+        $event->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Event ".$event->name;
+        $audit->save();
+
+        Alert::success('Cipta Event Berjaya.', 'Evenet telah berjaya dicipta.');
+
+        return redirect('/setting');
+    }
+
+    public function event_update(Request $request)
+    {
+        $event = Calendar_event::find($request->eventID);
+        $event->name = $request->name;
+        $event->event_date = $request->event_date;
+        $event->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Event ".$event->name;
+        $audit->save();
+
+        Alert::success('Kemaskini Event Berjaya.', 'Event telah berjaya dikemaskini.');
+
+        return redirect('/setting');
+    }
+
+    public function event_delete(Request $request)
+    {
+        $event = Calendar_event::find($request->eventID);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Event ".$event->name;
+        $audit->save();
+
+        $event->delete();
+
+        Alert::success('Padam Event Berjaya.', 'Event berjaya dipadam.');
+
+        return redirect('/setting');
     }
 }

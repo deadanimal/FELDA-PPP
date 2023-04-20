@@ -327,6 +327,8 @@ class ModulController extends Controller
 
     public function borang_list(Request $request)
     {
+        ini_set('memory_limit', '512M');
+
         $idProses = (int)$request->route('proses_id');
         $borangs = Borang::where('proses', $idProses)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($idProses);

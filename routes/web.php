@@ -47,6 +47,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Route::get('/home',  [WebController::class, 'homeSetting']);
     Route::get('/setting',  [WebController::class, 'page_list']);
+    
+    Route::post('/setting/event/add',  [WebController::class, 'event_add']);
+    Route::put('/setting/event/update',  [WebController::class, 'event_update']);
+    Route::delete('/setting/event/delete',  [WebController::class, 'event_delete']);
 
     Route::get('/home',  [WebController::class, 'page_list']);
     Route::post('/home/page/add',  [WebController::class, 'page_add']);

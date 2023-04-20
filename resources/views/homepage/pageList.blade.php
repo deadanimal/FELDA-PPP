@@ -197,7 +197,153 @@
                         @else
                         <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Dokumen </h2>
                         @endif
-                    </div>
+
+                        <br><br>
+                        <div class="card">
+                                <div class="card-title">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td><h2 class="modal-title">Senarai Event</h2></td>
+                                        <td>
+                                            <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladd">
+                                                <div class="frame9403-frame7293">
+                                                    <span class="frame9403-text21"><span>Tambah Event</span></span>
+                                                    <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                                                </div>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                
+                            {{-- Modal Tambah Doc --}}
+                            <div class="modal fade" id="exampleModaladd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">TAMBAH EVENT</h2>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form action="/setting/event/add" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="modal-body">
+                                                <label for="name" class="frame9402-text04">
+                                                    <strong>Nama Event</strong>
+                                                </label>
+                                                <input type="text" class="form-control frame9402-kotaknamaBorang" id="name" style="text-transform: unset; width:-webkit-fill-available" placeholder="Nama event" name="name" required oninput="this.value = this.value.toUpperCase()">
+                                                <br>
+                                                <label for="event_date" class="frame9402-text04">
+                                                    <strong>Tarikh </strong>
+                                                </label>
+                                                <input type="date" class="form-control frame9402-kotaknamaBorang" name="event_date" style="width: -webkit-fill-available;"/>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                                <button class="btn btn-primary">Tambah</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            {{-- senarai Slider --}}
+                            @if (!$events->isEmpty())
+                            <table class="table table-bordered table-striped w-100">
+                                <thead class="text-white bg-primary w-100">                    
+                                    <tr class="text-center">
+                                        <th class="text-center" style="width: 1%">No.</th>
+                                        <th class="text-center"  style="width: 40%">Nama Event</th>
+                                        <th class="text-center">Tarikh</th>
+                                        <th class="text-center" style="width: 20%;">Tindakan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>          
+                                    @foreach ($events as $event)
+                                    <tr>
+                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td class="text-center arial-N">{{ $event->name }}</td>
+                                        <td class="text-center arial-N">{{ $event->event_date }}</td>
+                                        <td class="text-center align-middle">
+                                            <!-- Button trigger modal update-->
+                                            <button type="button" class="frame9402-rectangle828245" title="Kemaskini" data-toggle="modal" data-target="#updateModalUpp{{$event->id}}">
+                                                <img src="/SVG/pencil.svg"/>
+                                            </button>
+                        
+                                            <!-- Modal update-->
+                                            <div class="modal fade" id="updateModalUpp{{$event->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">KEMASKINI {{$event->name}}</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        </div>
+                                                        <form method="post" action="/setting/event/update" enctype="multipart/form-data">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <div class="modal-body">
+                                                                <label for="name" class="frame9402-text04">
+                                                                    <strong>Nama Event</strong>
+                                                                </label>
+                                                                <input type="text" class="frame9402-kotaknamaBorang" id="name" style="text-transform: unset; width:-webkit-fill-available" value="{{$event->name}}" name="name" required oninput="this.value = this.value.toUpperCase()">
+                                                                <br><br>
+                                                                <label for="event_date" class="frame9402-text04">
+                                                                    <strong>Tarikh </strong>
+                                                                </label>
+                                                                <input type="date" class="form-control frame9402-kotaknamaBorang" id="event_date" name="event_date" style="width: -webkit-fill-available;" value="{{$event->event_date}}"/>                                           
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                                                <input type="hidden" value="{{$event->id}}" name="eventID">
+                                                                <button class="btn btn-primary">Kemaskini</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Button trigger modal delete -->
+                                            <button type="button" class="frame9402-rectangle828246" style="margin-left: 10%" data-toggle="modal" data-target="#deleteModalEvent{{$event->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="deleteModalEvent{{$event->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">PADAM EVENT</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Anda Pasti Mahu Padam event {{$event->name}}?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                                                            <form method="post" action="/setting/event/delete">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <input type="hidden" name="eventID" value="{{$event->id}}"/>
+                                                            <button class="btn btn-danger">YA</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach 
+                                </tbody>
+                            </table>
+                            @else
+                            <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Event </h2>
+                            @endif
+                        </div>
+                        
+                </div>
 
                 @if (Request::is('home') || Request::is('home/*'))
                     <div class="tab-pane fade active show" id="tab-5" role="tabpanel">
@@ -401,6 +547,21 @@
 <style>
     .arial{
         font-family: 'Arial', sans-serif;
+    }
+    .frame9402-kotaknamaBorang {
+    height: 50px;
+    position: relative;
+    box-sizing: content-box;
+    border-color: rgba(140, 38, 60, 1);
+    border-style: solid;
+    border-width: 0.865405261516571px;
+    margin-right: 0;
+    border-radius: 3.461621046066284px;
+    margin-top: 10px;
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    padding-left:10px;
+    text-transform: uppercase;
     }
   .frame9402-text04 {
     color: black;
@@ -748,7 +909,6 @@ function save(no)
    document.getElementById("namaupdate"+no).value=nama_val;
   }
 </script>
-
 <script>
 function openForm() {
   document.getElementById("popupForm").style.display = "block";
