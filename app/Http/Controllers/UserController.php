@@ -143,6 +143,8 @@ class UserController extends Controller
 
     public function user_list(Request $request)
     {
+        ini_set('memory_limit', '2048M');
+
         $id= Auth::user()->id;
         $user = User::where([
             ['id', '!=', $id],    

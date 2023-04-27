@@ -15,14 +15,42 @@
   <div class="row">
     <div class="col-12">
       <div class="card">
-        <div class="card-header">
-          
-        </div>
+
         @if (!$borangJwpns->isEmpty())
+          <div class="card-header">
+            <button type="button" class="btn btn-success" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModal17">Lulus Semua</button>
+          </div>
+
+          <form action="/user/borang_app/{{$oneBorang->id}}/lulusAll" method="POST">
+          @csrf
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal17" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Lulus Permohonan</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <p>Anda Pasti Mahu Lulus Permohonan Yang Telah Di Semak?</p><p>
+              </p></div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>      
+                  <button type="submit" class="btn btn-primary">Ya</button>
+                  <input type="hidden" name="tahapLulusID" value="{{$tahapLulus}}">
+                  <input type="hidden" name="borangID" value="{{$oneBorang->id}}">
+              </div>
+            </div>
+          </div>
+          </div>
+
         {{-- senarai borang --}}
         <table class="table table-bordered table-striped w-100 Arial">
           <thead class="text-white bg-primary w-100" style="text-align: center;">
             <tr>
+                <th scope="col" style="vertical-align: top;"><input class="form-check-input text-center" type="checkbox" id="master"></th>
                 <th scope="col" class="Arial">Nama Pemohon</th>
                 <th scope="col" class="Arial">Status</th>
                 <th scope="col" class="Arial">Tindakan</th>
@@ -31,8 +59,11 @@
           <tbody>
             @foreach ($borangJwpns as $borangJwpn)
                 <tr>
+                    <td style="vertical-align: top; width:5%" class="text-center">  
+                      <input class="form-check-input text-center sub_chk" type="checkbox" value="{{$borangJwpn->id}}" name="LulusList[]">
+                    </td>
                     <td class="text-center Arial">{{$borangJwpn->user->nama}}</td>
-                    <td class="text-center Arial">
+                    <td class="text-center Arial" style="width: 25%">
                     @if (!$lulusBorangs->isEmpty())
                         @foreach ($lulusBorangs as $lulusBorang)
                             @if ($borangJwpn->id == $lulusBorang->jawapan_id)
@@ -51,6 +82,7 @@
             @endforeach
           </tbody>
         </table>
+        </form>
         @else
         <h1 style="text-align: center; padding-bottom:5%;">Tiada Permohonan</h1>
         @endif
@@ -78,7 +110,20 @@ function save(no)
    document.getElementById("userKategoriupdate"+no).value=userKategori_val;
   }
 </script>
+<script type="text/javascript">  
+  $(document).ready(function () {  
 
+      $('#master').on('click', function(e) {  
+       if($(this).is(':checked',true))    
+       {  
+          $(".sub_chk").prop('checked', true);    
+       } else {    
+          $(".sub_chk").prop('checked',false);    
+       }    
+      });  
+
+  });  
+</script> 
 <script>
 function openForm() {
   document.getElementById("popupForm").style.display = "block";

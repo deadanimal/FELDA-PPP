@@ -420,16 +420,48 @@ class BorangController extends Controller
         }
 
         // check amount tahap lulus borang
-        $count = count(Tahap_kelulusan::whereRelation('prosesKelulusan','borang_id', '=', $borangId)->get());
+        $count = Tahap_kelulusan::whereRelation('prosesKelulusan','borang_id', '=', $borangId)->count();
 
         // check amount kelulusan borang that if its final go into if condition
-        $count2 = count(Kelulusan_borang::whereRelation('tahap_kelulusan.prosesKelulusan','borang_id', '=', $borangId)->get());
+        $count2 = Kelulusan_borang::whereRelation('tahap_kelulusan.prosesKelulusan','borang_id', '=', $borangId)->count();
 
         if($count == $count2){
             $jawapan = Jawapan::find($jawapanID);
             $jawapan->status = "Lulus";
             $jawapan->save();
         }
+
+        return redirect('/user/borang_app/'.$borangId.'/user_list');
+    }
+
+    public function borangApp_all(Request $request)
+    {
+        $jawapanID = $request->LulusList;
+        $borangId = $request->borangID;
+        $tahapLulusID = $request->tahapLulusID;
+        for($x = 0 ; $x<count($jawapanID); $x++){
+            $check = count(Kelulusan_borang::where('tahapKelulusan_id', $tahapLulusID)->where('jawapan_id', $jawapanID[$x])->get());
+            if($check == 0){
+                $lulusBorang = new Kelulusan_borang;
+                $lulusBorang->tahapKelulusan_id= $tahapLulusID;
+                $lulusBorang->jawapan_id = $jawapanID[$x];
+                $lulusBorang->keputusan = 'Lulus';
+                $lulusBorang->save();
+            }
+
+            // check amount tahap lulus borang
+            $count = Tahap_kelulusan::whereRelation('prosesKelulusan','borang_id', '=', $borangId)->count();
+
+            // check amount kelulusan borang that if its final go into if condition
+            $count2 = Kelulusan_borang::whereRelation('tahap_kelulusan.prosesKelulusan','borang_id', '=', $borangId)->count();
+
+            if($count == $count2){
+                $jawapan = Jawapan::find($jawapanID[$x]);
+                $jawapan->status = "Lulus";
+                $jawapan->save();
+            }
+        }
+        Alert::success('Lulus Borang Pemohonan Berjaya.', 'Borang telah berjaya Diluluskan.');
 
         return redirect('/user/borang_app/'.$borangId.'/user_list');
     }
