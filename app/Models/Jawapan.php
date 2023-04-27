@@ -37,5 +37,10 @@ class Jawapan extends Model
     public function tahapKelulusan(){
         return $this->hasManythrough(Tahap_kelulusan::class, Kelulusan_borang::class);
     }
+    
+    public function tarikDiri(){
+        return $this->hasMany(TarikDiri::class);
+
+    }
 }
 

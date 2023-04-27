@@ -23,6 +23,13 @@ use App\Models\Perkara_Tugasan;
 use App\Models\PerkaraTugasan_Progress;
 use App\Models\Jawapan;
 use App\Models\Jawapan_medan;
+use App\Models\jenis_ternakan;
+use App\Models\TarikDiri;
+use App\Models\JenisKemaskini;
+use App\Models\AktivitiParameter;
+use App\Models\Aktiviti;
+use App\Models\Jawapan_parameter;
+
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
@@ -563,6 +570,7 @@ class UserController extends Controller
 
         return view('userView.userProjectList', compact('jawapans', 'menuModul', 'menuProses', 'menuBorang'));
     }
+    
     public function project_view(Request $request)
     { 
         $jawapanId = (int) $request->route('jawapan_id');
@@ -577,5 +585,174 @@ class UserController extends Controller
         return view('userView.projectDetail', compact('jawapan', 'jawapanMedan','menuModul', 'menuProses', 'menuBorang'));
     }   
     
+    public function viewTarik_diri(Request $request)
+    {         
+        ini_set('memory_limit', '2048M');
+
+        $jawapanId = (int) $request->route('jawapan_id');
+        $jawapan = Jawapan::find($jawapanId);
+        $tarikDiri = TarikDiri::where('jawapan_id', $jawapanId)->first();
+
+        $users = User::whereRelation('kategori', 'nama', '=', 'Peserta')->where('status', 1)->get();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('userView.tarikDiri', compact('jawapan', 'users','tarikDiri','menuModul', 'menuProses', 'menuBorang'));
+    } 
+
+    public function tarik_diri(Request $request)
+    {         
+        $jawapanId = $request->jawapanId;
+
+        $tarik = new TarikDiri;
+        $tarik->reason = $request->reason;
+        $tarik->jawapan_id = $jawapanId;
+        $tarik->user_id = Auth::user()->id;
+        $tarik->pengganti_id = $request->pengganti;
+        $tarik->save();
+
+        Alert::success('Simpan Permohonan Tarik Diri berjaya.', 'Permohonan Tarik diri sedang diproses.');   
+
+        return back();
+    }
+    
+    public function tarik_diri_update(Request $request)
+    {         
+        $jawapanId = $request->jawapanId;
+
+        $tarik = TarikDiri::find($request->tarikDiriID);
+        $tarik->reason = $request->reason;
+        $tarik->jawapan_id = $jawapanId;
+        $tarik->user_id = Auth::user()->id;
+        $tarik->pengganti_id = $request->pengganti;
+        $tarik->save();
+
+        Alert::success('Kemaskini Permohonan Tarik Diri berjaya.', 'Permohonan Tarik diri sedang diproses.');   
+
+        return back();
+    } 
+
+    public function tarik_diri_delete(Request $request)
+    {  
+        $jawapanId = $request->jawapanId;
+
+        $tarik = TarikDiri::find($request->tarikDiriID);
+        $tarik->delete();
+
+        Alert::success('Batal Permohonan Tarik Diri berjaya.', 'Permohonan Tarik diri telah dibatalkan.');   
+
+        return redirect('/tarikDiri/'.$jawapanId);
+    } 
+
+    public function kemaskini_projek(Request $request)
+    { 
+        $jawapanId = (int) $request->route('jawapan_id');
+
+        $jawapan = Jawapan::find($jawapanId);
+        $borang = Borang::find($jawapan->borang_id);
+        
+        $jenisTernakan = jenis_ternakan::where('proses_id', $borang->proses)->get();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('userView.kemaskiniProjek', compact('jawapan', 'jenisTernakan','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function kemaskini_list(Request $request)
+    { 
+        $ternakanId = (int) $request->route('ternakan_id');
+
+        $jenisTernakan = jenis_ternakan::find($ternakanId);
+
+        $kemaskinis = JenisKemaskini::where('id_jenisTernakans', $ternakanId)->orderBy("updated_at", "DESC")->get();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('userView.kemaskiniList', compact('kemaskinis', 'jenisTernakan','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function aktiviti_list(Request $request)
+    { 
+        $kemaskiniId = (int) $request->route('kemaskini_id');
+
+        $kemaskini = JenisKemaskini::find($kemaskiniId);
+
+        $aktivitis = Aktiviti::where('id_jenisKemaskini', $kemaskiniId)->orderBy("updated_at", "DESC")->get();
+
+        $params = new \Illuminate\Database\Eloquent\Collection();
+        $jawapans = new \Illuminate\Database\Eloquent\Collection();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('userView.kemaskiniAktivit', compact('kemaskini', 'aktivitis','params','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function Param_list(Request $request)
+    { 
+        ini_set('memory_limit', '2048M');
+
+        $aktivitiId = $request->aktiviti;
+        $kemaskiniId = $request->kemaskiniId;
+
+        $kemaskini = JenisKemaskini::find($kemaskiniId);
+
+        $aktivitis = Aktiviti::where('id_jenisKemaskini', $kemaskiniId)->orderBy("updated_at", "DESC")->get();
+
+        $params = AktivitiParameter::where('aktiviti', $aktivitiId)->get();
+        $jawapans = Jawapan_parameter::whereRelation('AktivitiParameter', 'aktiviti' ,$aktivitiId)->where('user_id', Auth::user()->id)->get();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('userView.kemaskiniAktivit', compact('kemaskini', 'aktivitis','params','jawapans','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function KemasParam_add(Request $request)
+    { 
+        $paramId = $request->paramId;
+        $jwpnParam = $request->jwpnParam;
+        
+        for($x=0;$x<count($paramId);$x++){
+            $jawapan = new Jawapan_parameter;
+            $jawapan->value= $jwpnParam[$x];
+            $jawapan->user_id= Auth::user()->id;
+            $jawapan->aktivitiParameter_id = $paramId[$x];
+            $jawapan->save();
+        }
+
+        Alert::success('Kemaskini Aktiviti berjaya.', 'Kemaskini Aktiviti telah berjaya.');   
+
+        return back();
+
+    }
+
+    public function KemasParam_update(Request $request)
+    { 
+        $paramId = $request->paramId;
+        $jwpnParam = $request->jwpnParam;
+        $jawapanID = $request->jawapanID;
+
+        for($x=0;$x<count($paramId);$x++){
+            $jawapan = Jawapan_parameter::find($jawapanID[$x]);
+            $jawapan->value= $jwpnParam[$x];
+            $jawapan->user_id= Auth::user()->id;
+            $jawapan->aktivitiParameter_id = $paramId[$x];
+            $jawapan->save();
+        }
+
+        Alert::success('Kemaskini Aktiviti berjaya.', 'Kemaskini Aktiviti telah berjaya.');   
+
+        return back();
+
+    }
 
 }

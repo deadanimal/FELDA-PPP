@@ -203,6 +203,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/project', [UserController::class, 'project_list']);
     Route::get('/user/project/{jawapan_id}', [UserController::class, 'project_view']);
 
+    Route::get('/tarikDiri/{jawapan_id}', [UserController::class, 'viewTarik_diri']);
+    Route::Post('/user/tarikDiri', [UserController::class, 'tarik_diri']);
+    Route::put('/user/tarikDiri', [UserController::class, 'tarik_diri_update']);
+    Route::delete('/user/tarikDiri/delete', [UserController::class, 'tarik_diri_delete']);
+
+    Route::get('/kemaskiniProjek/{jawapan_id}', [UserController::class, 'kemaskini_projek']);
+    Route::get('/kemaskini/{ternakan_id}', [UserController::class, 'kemaskini_list']);
+    Route::get('/kemaskini/{kemaskini_id}/jenis', [UserController::class, 'aktiviti_list']);
+    Route::get('/kemaskini/aktiviti/list', [UserController::class, 'Param_list']);
+    Route::post('/kemaskini/param/add', [UserController::class, 'KemasParam_add']);
+    Route::put('/kemaskini/param/update', [UserController::class, 'KemasParam_update']);
+
     Route::get('/user/tugasan/list', [UserController::class, 'tugasList_app']);
     Route::get('/user/tugasan/{tugas_id}/item_list', [UserController::class, 'tugasItem_list']);
     Route::post('/user/tugasan/item_add', [UserController::class, 'tugasItem_add']);

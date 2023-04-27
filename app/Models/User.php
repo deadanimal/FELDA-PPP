@@ -79,6 +79,8 @@ class User extends Authenticatable
     public function Jawapan_parameter() {
         return $this->hasMany(Jawapan_parameter::class);
     }
-    
+    public function tarikDiri() {
+        return $this->hasMany(TarikDiri::class);
+    }
 
 }

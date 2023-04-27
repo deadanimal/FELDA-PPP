@@ -45,7 +45,7 @@ class WebController extends Controller
         // icon
         $totalDana = Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->count();
         $totalModul = Modul::where('status', 'Go-live')->count();
-        $totalPeneroka = User::whereRelation('kategori', 'nama', '=', 'Peserta')->count();
+        $totalPeneroka = User::whereRelation('kategori', 'nama', '=', 'Peserta')->where('status', 1)->count();
         $userCount = Visitor::count();
 
         return view('homepage.home', compact ('totalDana','totalModul', 'totalPeneroka', 'userCount','pages'));
