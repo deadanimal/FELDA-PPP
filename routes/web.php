@@ -200,6 +200,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/sub_borang/{borang_id}/edit', [BorangController::class, 'subBorang_edit']);
     Route::put('/user/sub_borang/update', [BorangController::class, 'subBorang_update']);
 
+    Route::get('/user/project', [UserController::class, 'project_list']);
+    Route::get('/user/project/{jawapan_id}', [UserController::class, 'project_view']);
+
     Route::get('/user/tugasan/list', [UserController::class, 'tugasList_app']);
     Route::get('/user/tugasan/{tugas_id}/item_list', [UserController::class, 'tugasItem_list']);
     Route::post('/user/tugasan/item_add', [UserController::class, 'tugasItem_add']);

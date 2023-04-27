@@ -35,6 +35,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" href="/users/info"><i class="align-middle me-1 fas fa-fw fa-user"></i>Kemaskini Profil</a>
+                                    <a class="dropdown-item" href="/user/project"><i class="align-middle me-1 fas fa-fw fa-suitcase"></i>Senarai Projek</a>
                                     <div class="dropdown-divider"></div>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf

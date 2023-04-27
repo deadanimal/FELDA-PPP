@@ -21,7 +21,8 @@ use App\Models\Proses;
 use App\Models\Borang;
 use App\Models\Perkara_Tugasan;
 use App\Models\PerkaraTugasan_Progress;
-
+use App\Models\Jawapan;
+use App\Models\Jawapan_medan;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
@@ -551,4 +552,30 @@ class UserController extends Controller
 
         return redirect('/user/tugasan/'.$tugas_id.'/tugas_item/'.$tugasItem_id.'/progress_list');
     }
+
+    public function project_list(Request $request)
+    {               
+        $jawapans = Jawapan::where('user_id', Auth::user()->id)->get();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('userView.userProjectList', compact('jawapans', 'menuModul', 'menuProses', 'menuBorang'));
+    }
+    public function project_view(Request $request)
+    { 
+        $jawapanId = (int) $request->route('jawapan_id');
+
+        $jawapan = Jawapan::find($jawapanId);
+        $jawapanMedan = Jawapan_medan::where('jawapan_id', $jawapan->id)->get();
+        
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('userView.projectDetail', compact('jawapan', 'jawapanMedan','menuModul', 'menuProses', 'menuBorang'));
+    }   
+    
+
 }
