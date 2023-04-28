@@ -32,7 +32,7 @@
                                 </td>
                                 <td>
                                     <input type="hidden" name="kemaskiniId" value="{{$kemaskini->id}}">
-                                    <button type="submit" class="btn btn-primary"><i class="align-middle me-2 fab fa-fw fa-searchengin"></i></button>
+                                    <button type="submit" class="btn btn-primary" style="height: 2.4rem;border-radius: 100px;"><i class="align-middle me-2 fas fa-fw fa-search"></i></button>
                                 </td>
                             </tr>
                         </table>
@@ -64,7 +64,11 @@
                                 @endif
 
                                     <div class="mb-3 col-md-6">
-                                        <label for="param{{$param->id}}" class="labeltext">{{$param->nama}}</label>
+                                        <label for="param{{$param->id}}" class="labeltext">{{$param->nama}} ({{$param->unit}})
+                                            @if ($param->category == "Pendapatan")
+                                            (Sasaran: {{$param->sasaran??""}})
+                                            @endif
+                                        </label>
                                         <table class="w-100">
                                             <tr>
                                                 <td>
@@ -85,9 +89,6 @@
                                                     >
                                                 </td>
                                                 <input type="hidden" name="paramId[]" value="{{$param->id}}">
-                                                <td>
-                                                    <h1 class="card-title">{{$param->unit}}</h1>
-                                                </td>
                                             </tr>
                                         </table>
                                     </div>
