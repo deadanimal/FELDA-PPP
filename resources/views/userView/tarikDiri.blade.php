@@ -62,9 +62,27 @@
         <div class="row">
             <div class="card">
                 <div class="card-header">
-                    <h1 class="header-title">PROJEK {{$jawapan->borangs->namaBorang}}</h1>
+                    <h1 class="header-title" style="color: var(--bs-body-color)">PROJEK {{$jawapan->borangs->namaBorang}}</h1>
                 </div>
                 <div class="card-body">
+                    <div class="row">
+                        <div class="mb-3 col-md-6">
+                        @if ($tarikDiri != null && $tarikDiri->status == "Sedang Di Proses")
+                            <div class="alert alert-warning d-flex align-items-center text-center" role="alert">
+                                <i class="align-middle me-2 far fa-fw fa-hourglass" style="margin-left:1%"></i>
+                        
+                        @elseif ($tarikDiri != null && $tarikDiri->status == "Sah")
+                            <div class="alert alert-success d-flex align-items-center text-center" role="alert">
+                                <i class="align-middle me-2 fas fa-fw fa-check-circle" style="margin-left:1%"></i>
+                        @else
+                            <div class="alert alert-danger d-flex align-items-center text-center" role="alert">
+                                <i class="align-middle me-2 fas fa-fw fa-exclamation-triangle" style="margin-left:1%"></i>
+
+                        @endif
+                                <p class="align-items-center labeltext" style="display: flex;margin: 0.5rem">STATUS PEMOHONAN: &nbsp<b>{{$tarikDiri->status ??""}}</b></p>
+                            </div>
+                        </div>
+                    </div>
                     <form action="/user/tarikDiri" method="post">
                         @csrf
                         @if ($tarikDiri != null)
@@ -95,16 +113,28 @@
                         </div>
                         @if ($tarikDiri != null)
                             <input type="hidden" name="tarikDiriID" value="{{$tarikDiri->id}}">
+                            @if($tarikDiri->status == 'Sedang Di Proses')
+                                <input type="hidden" name="jawapanId" value="{{$jawapan->id}}">
+                                <input type="checkbox" id="consent" name="const" onchange="document.getElementById('hantar').disabled = !this.checked;">
+                                <label for="consent" style="font-size: 120%;">Dengan ini saya mengesahkan bahawa saya {{$jawapan->nama}} bersetuju unutk memberi kerjasama bagi proses peralihan ini</label><br>
+                                <button type="submit" class="frame9403-frame7445" id="hantar" disabled="">
+                                    <div class="frame9403-frame7293">
+                                        <span class="frame9403-text21"><span>Hantar</span></span>
+                                        <img src="/SVG/kemaskini.svg" class="frame9403-group7527">
+                                    </div>
+                                </button>
+                            @endif
+                        @else
+                            <input type="hidden" name="jawapanId" value="{{$jawapan->id}}">
+                            <input type="checkbox" id="consent" name="const" onchange="document.getElementById('hantar').disabled = !this.checked;">
+                            <label for="consent" style="font-size: 120%;">Dengan ini saya mengesahkan bahawa saya {{$jawapan->nama}} bersetuju unutk memberi kerjasama bagi proses peralihan ini</label><br>
+                            <button type="submit" class="frame9403-frame7445" id="hantar" disabled="">
+                                <div class="frame9403-frame7293">
+                                    <span class="frame9403-text21"><span>Hantar</span></span>
+                                    <img src="/SVG/kemaskini.svg" class="frame9403-group7527">
+                                </div>
+                            </button>
                         @endif
-                        <input type="hidden" name="jawapanId" value="{{$jawapan->id}}">
-                        <input type="checkbox" id="consent" name="const" onchange="document.getElementById('hantar').disabled = !this.checked;">
-                        <label for="consent" style="font-size: 120%;">Dengan ini saya mengesahkan bahawa saya {{$jawapan->nama}} bersetuju unutk memberi kerjasama bagi proses peralihan ini</label><br>
-                        <button type="submit" class="frame9403-frame7445" id="hantar" disabled="">
-                            <div class="frame9403-frame7293">
-                                <span class="frame9403-text21"><span>Hantar</span></span>
-                                <img src="/SVG/kemaskini.svg" class="frame9403-group7527">
-                            </div>
-                        </button>
                     </form>
                     
                 </div>

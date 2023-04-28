@@ -17,7 +17,7 @@ class TarikDiri extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function pegganti(){
-        return $this->belongsTo(User::class, 'pegganti_id');
+    public function pengganti(){
+        return $this->belongsTo(User::class, 'pengganti_id');
     }
 }

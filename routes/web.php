@@ -34,6 +34,9 @@ Route::post('/forgot',  [UserController::class, 'forgotPenggunaClicked']);
 //for js wilayah and rancangan
 Route::get('/getRancangan/{id}',  [UserController::class, 'getRancangan']);
 
+//for js project and peneroka
+Route::get('/getPeneroka/{id}',  [UserController::class, 'getPeneroka']);
+
 require __DIR__.'/auth.php';
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -207,6 +210,13 @@ Route::middleware(['auth'])->group(function () {
     Route::Post('/user/tarikDiri', [UserController::class, 'tarik_diri']);
     Route::put('/user/tarikDiri', [UserController::class, 'tarik_diri_update']);
     Route::delete('/user/tarikDiri/delete', [UserController::class, 'tarik_diri_delete']);
+
+    Route::get('/tarik_Diri/List', [UserController::class, 'tarik_diri_list']);
+    Route::get('/tarik_Diri/{tarikDiri_id}/details', [UserController::class, 'tarik_diri_details']);
+    Route::PUT('/tarik_Diri/update', [UserController::class, 'tarik_diri_status']);
+    
+    Route::get('/tarik_Diri/force', [UserController::class, 'tarik_diri_view']);
+    Route::Post('/tarik_Diri/add', [UserController::class, 'tarik_diri_paksa']);
 
     Route::get('/kemaskiniProjek/{jawapan_id}', [UserController::class, 'kemaskini_projek']);
     Route::get('/kemaskini/{ternakan_id}', [UserController::class, 'kemaskini_list']);

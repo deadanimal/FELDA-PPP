@@ -755,4 +755,83 @@ class UserController extends Controller
 
     }
 
+    public function tarik_diri_list(Request $request)
+    { 
+        $tarikDiris = TarikDiri::with('jawapan')->whereRelation('jawapan', 'rancangan', '=', Auth::user()->rancangan)->where('status', 'Sedang Di Proses')->get();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanBorang.tarikDiriList', compact('tarikDiris','menuModul', 'menuProses', 'menuBorang'));
+
+    }
+
+    public function tarik_diri_details(Request $request)
+    { 
+        $tarikDiri_id = (int) $request->route('tarikDiri_id');
+
+        $tarikDiri = TarikDiri::find($tarikDiri_id)->with('jawapan')->first();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanBorang.tarikDiriDetail', compact('tarikDiri','menuModul', 'menuProses', 'menuBorang'));
+
+    }
+
+    public function tarik_diri_status(Request $request)
+    {  
+        $tarikDiriId = $request->tarikDiriId;
+
+        $tarik = TarikDiri::find($tarikDiriId);
+        $tarik->status = $request->status;
+        $tarik->save();
+
+        if($request->status == 'Sah'){
+            Alert::success('Mengesahkan Permohonan Tarik Diri Berjaya.', 'Permohonan tarik diri telah disahkan.');   
+        }else{
+            Alert::success('Tidak Mengesahkan Permohonan Tarik Diri Berjaya.', 'Permohonan tarik diri telah disahkan.');   
+        }
+
+        return redirect('/tarik_Diri/List');
+    }
+    
+    public function tarik_diri_view(Request $request)
+    {
+        $users = User::where('rancangan', Auth::user()->rancangan)->get();
+        $borangs = Borang::all()->pluck('namaBorang', 'id');
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanBorang.forceTarikDiri', compact('users','borangs','menuModul', 'menuProses', 'menuBorang'));
+
+    }
+
+    public function getPeneroka($borangid)
+    {
+        $jawapan= Jawapan::with('user')->where('borang_id',$borangid)->where('rancangan', Auth::user()->rancangan)->where('status', 'Lulus')->get()->pluck('user.nama', 'user_id');
+        return json_encode($jawapan);
+    }
+
+    public function tarik_diri_paksa(Request $request)
+    {  
+        $jawapan = Jawapan::where('borang_id', $request->project)->where('user_id', $request->namaAsal)->first();
+        
+        $tarik = new TarikDiri;
+        $tarik->reason = $request->reason;
+        $tarik->jawapan_id = $jawapan->id;
+        $tarik->user_id = $request->namaAsal;
+        $tarik->pengganti_id = $request->pengganti;
+        $tarik->save();
+
+        Alert::success('Permohonan Tarik Diri Berjaya.', 'Permohonan tarik diri telah disimpan.');   
+        
+        return redirect('/tarik_Diri/List');
+    } 
+    
+
 }
