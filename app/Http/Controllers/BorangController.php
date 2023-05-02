@@ -425,6 +425,7 @@ class BorangController extends Controller
         if($tahapLulusID == $final->id){
             $jawapan = Jawapan::find($jawapanID[$x]);
             $jawapan->status = "Lulus";
+            $jawapan->kod_projek =  "PJK".random_int(1000, 9999);
             $jawapan->save();
         }
 

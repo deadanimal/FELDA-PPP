@@ -37,16 +37,20 @@
                                 <label for="nama" class="labeltext">NAMA</label>
                                 <input type="text" class="form-control frame9403-kotaknama" value="{{$jawapan->nama}}" readonly>
                             </div>
+                            <div class="mb-3 col-md-6">
+                                <label for="nama" class="labeltext">KOD PROJEK</label>
+                                <input type="text" class="form-control frame9403-kotaknama" value="{{$jawapan->kod_projek}}" readonly>
+                            </div>
                         </div>
                         @foreach ($jawapanMedan as $jwpn)
-                            @if ($loop->index % 2 == 0)
+                            @if ($loop->index%2 == 0)
                                 <div class="row">
                             @endif
                                 <div class="mb-3 col-md-6">
                                     <label for="medan{{$jwpn->id}}" class="labeltext">{{$jwpn->medan->nama}}</label>
                                     <input type="text" class="form-control frame9403-kotaknama" value="{{$jwpn->jawapan}}" readonly>
                                 </div>
-                            @if ($loop->index != 0 && $loop->index % 2 == 0)
+                            @if ($loop->index%2 != 0)
                                 </div>
                             @endif
                         @endforeach
