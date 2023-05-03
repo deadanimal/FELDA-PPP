@@ -29,6 +29,9 @@ use App\Models\JenisKemaskini;
 use App\Models\AktivitiParameter;
 use App\Models\Aktiviti;
 use App\Models\Jawapan_parameter;
+use App\Models\Aduan;
+use App\Models\Respond_aduan;
+use App\Models\Project;
 
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -490,13 +493,14 @@ class UserController extends Controller
     public function tugasList_app(Request $request)
     {
         $user = Auth::user()->id;
-
+        $aduans = Aduan::where('user_category', Auth::user()->kategoripengguna)->get();
         $tugasans= Senarai_tugasan::where('user_id', $user)->get();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
-        return view('userView.userTugasan', compact('tugasans', 'menuModul', 'menuProses', 'menuBorang'));
+        
+        return view('userView.userTugasan', compact('aduans','tugasans', 'menuModul', 'menuProses', 'menuBorang'));
          
     }
 
@@ -790,7 +794,12 @@ class UserController extends Controller
         $tarik->save();
 
         if($request->status == 'Sah'){
-            Alert::success('Mengesahkan Permohonan Tarik Diri Berjaya.', 'Permohonan tarik diri telah disahkan.');   
+            Alert::success('Mengesahkan Permohonan Tarik Diri Berjaya.', 'Permohonan tarik diri telah disahkan.');
+            
+            $jwpn = Jawapan::find($tarik->jawapan_id);
+            $jwpn->user_id = $tarik->pengganti_id;
+            $jwpn->save();
+
         }else{
             Alert::success('Tidak Mengesahkan Permohonan Tarik Diri Berjaya.', 'Permohonan tarik diri telah disahkan.');   
         }
@@ -833,5 +842,246 @@ class UserController extends Controller
         return redirect('/tarik_Diri/List');
     } 
     
+    public function aduan_list(Request $request)
+    {  
+        $aduans = Aduan::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+        if($request->ajax()) {
+            return DataTables::collection($aduans)
+            ->editColumn('nama', function(Aduan $aduans) { 
+                return nl2br($aduans->nama);
+            })
+            ->addColumn('tindakan', function (Aduan $aduans) {
+                return '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal'.$aduans->id.'" title="Padam">Padam</button>
 
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal'.$aduans->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Padam Aduan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Anda Pasti Mahu Aduan Ini?<p>
+                                    <label for="nama" class="frame9402-text04">
+                                        <strong>Aduan</strong>
+                                    </label>
+                                    <textarea class="form-control frame9403-kotaknama" name="nama" id="nama" rows="4" oninput="this.value = this.value.toUpperCase()" readonly>'.str_replace('<br />', '', nl2br(e($aduans->nama))).'</textarea>
+                                    <br>
+                                    <label for="jenisAduan" class="frame9402-text04">
+                                        <strong>Jenis Aduan</strong>
+                                    </label>
+                                    <input type="text" class="frame9402-kotaknamaBorang" id="jenisAduan" value="'.$aduans->jenis_aduan.'" name="jenisAduan" required oninput="this.value = this.value.toUpperCase()" disabled>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>
+                                    <form action="/Aduan/delete" method="post">
+                                    '.csrf_field().'  
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="aduanId" value="'.$aduans->id.'">                                      
+                                    <button class="btn btn-danger">YA</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>';
+            })                  
+            ->rawColumns(['tindakan','nama'])                          
+            ->make(true);
+        }
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('aduan.aduanList', compact('aduans','menuModul', 'menuProses', 'menuBorang'));
+    }
+    
+    public function aduan_add(Request $request)
+    { 
+        $aduan = new Aduan;
+        $aduan->nama = $request->nama;
+        $aduan->jenis_aduan = $request->jenisAduan;
+        $aduan->user_id = Auth::user()->id;
+        $aduan->save();
+
+        Alert::success('Cipta Aduan Berjaya.', 'Aduan telah berjaya dicipta.');   
+
+        return redirect('/Aduan/List');
+
+    }
+    public function aduan_delete(Request $request)
+    { 
+        $aduan = Aduan::find($request->aduanId);
+
+        $aduan->delete();
+
+        Alert::success('Padam Aduan Berjaya.', 'Aduan telah berjaya dipadam.');   
+
+        return redirect('/Aduan/List');
+
+    }
+
+    public function pegawaiAduan_list(Request $request)
+    { 
+        $aduans = Aduan::orderBy('created_at', 'DESC')->get();
+        if($request->ajax()) {
+            return DataTables::collection($aduans)
+            ->addIndexColumn() 
+            ->addColumn('user', function (Aduan $aduans) {
+                if($aduans->user_id) {
+                    $html_ = $aduans->user->nama;
+                } else {
+                    $html_ = '-';
+                }
+                return $html_;
+            }) 
+            ->editColumn('nama', function(Aduan $aduans) { 
+                return nl2br(e($aduans->nama));
+            })
+            ->addColumn('tindakan', function (Aduan $aduans) {
+                $options = '';
+                $userCategorys = KategoriPengguna::all();
+                foreach($userCategorys as $userCategory){
+                    if ($aduans->user_category == $userCategory->id) {
+                        $options .= '<option value="'.$userCategory->id.'" selected>'.$userCategory->nama.'</option>';
+                    } else {
+                        $options .= '<option value="'.$userCategory->id.'">'.$userCategory->nama.'</option>';
+                    }
+                }
+                
+                return '<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal'.$aduans->id.'" title="selesai">Tindakan</button>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal'.$aduans->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <form action="/Aduan/Pegawai/tindakan" method="post">
+                                '.csrf_field().'
+                                <input type="hidden" name="_method" value="PUT"> 
+                                <input type="hidden" name="aduanID" value="'.$aduans->id.'"> 
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Tindakan Aduan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <label for="respond" class="frame9402-text04">
+                                        <strong>Jenis Jawapan</strong>
+                                    </label>
+                                    <select name="jenisRespond" class="form-control frame9402-kotaknamaBorang">
+                                        <option value="'.$aduans->jenis_respond.'" selected>'.$aduans->jenis_respond.'</option>
+                                        <option value="Text">Text</option>
+                                        <option value="Upload">Upload</option>
+                                    </select>
+
+                                    <label for="user_category" class="frame9402-text04" >
+                                        <strong>Kategori Pengguna Yang Ditugaskan</strong>
+                                    </label>
+                                    <select id="user_category" name="user_category" class="form-control frame9402-kotaknamaBorang">
+                                        '.$options.'
+                                    </select>
+
+                                    <label for="nama" class="frame9402-text04">
+                                        <strong>Aduan</strong>
+                                    </label>
+                                    <textarea class="form-control frame9403-kotaknama" name="nama" id="nama" rows="4" oninput="this.value = this.value.toUpperCase()" required disabled>'.str_replace('<br />', '', nl2br(e($aduans->nama))).'</textarea><br>
+                                    
+                                    <label for="jenisAduan" class="frame9402-text04">
+                                        <strong>Jenis Aduan</strong>
+                                    </label>
+                                    <input type="text" class="frame9402-kotaknamaBorang" id="jenisAduan" value="'.$aduans->jenis_aduan.'" name="jenisAduan" required oninput="this.value = this.value.toUpperCase()" disabled>                
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">TIDAK</button>
+                                    <button type="submit" class="btn btn-primary">YA</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>';
+            })                  
+            ->rawColumns(['tindakan','nama'])                          
+            ->make(true);
+        }
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('aduan.pegawaiAduanList', compact('aduans','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function pegawaiAduan_update(Request $request)
+    { 
+        $aduan = Aduan::find($request->aduanID);
+        $aduan->jenis_respond = $request->jenisRespond;
+        $aduan->user_category = $request->user_category;
+        $aduan->save();
+
+        Alert::success('Tugaskan Aduan Berjaya.', 'Aduan telah berjaya ditugaskan.');   
+
+        return redirect('/Aduan/List/Pegawai');
+
+    }
+    public function userAduan_details(Request $request)
+    { 
+        $aduanID = (int) $request->route('aduan_id');
+
+        $aduan = Aduan::find($aduanID);
+        $responds = Respond_aduan::where('aduan_id', $aduanID)->get();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('aduan.respond', compact('aduan', 'responds','menuModul', 'menuProses', 'menuBorang'));
+
+    }
+
+    public function userAduan_add(Request $request)
+    {
+        $response = new Respond_aduan;
+        if($request->file()) {
+            $files = time().'.'.$request->dokumen->extension();  
+            $request->dokumen->move(public_path('aduan'), $files);
+            $response->respond = '/aduan/' . $files;
+        }else{
+            $response->respond = $request->respond;
+        }
+        $response->aduan_id = $request->aduan_id;
+        $response->user_id = Auth::user()->id;
+        $response->save();
+        
+        return redirect('/user/tugasan/aduan/'.$request->aduan_id.'/list');
+
+    }
+
+    public function userAduan_delete(Request $request)
+    {
+        $response = Respond_aduan::find($request->response_id);
+        $response->delete();
+        
+        return redirect('/user/tugasan/aduan/'.$request->aduan_id.'/list');
+
+    }
+
+    public function response_list(Request $request)
+    { 
+        $aduanID = (int) $request->route('aduan_id');
+
+        $aduan = Aduan::find($aduanID);
+        $responds = Respond_aduan::where('aduan_id', $aduanID)->get();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('aduan.respondList', compact('aduan', 'responds','menuModul', 'menuProses', 'menuBorang'));
+
+    }
+
+
+    
 }

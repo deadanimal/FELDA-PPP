@@ -1,6 +1,9 @@
 @extends('layouts.guest')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 @section('innercontent')
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <div class="container-fluid">
     <div class="header">
@@ -10,39 +13,109 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Sila lengkapkan tugasan berikut sebelum tarikh yang ditetapkan.</h5>
-                </div>
-                <div class="card-body">
-                    @if (!$tugasans->isEmpty())
-                    <table class="table table-bordered table-striped w-100 arial">
-                        <thead class="text-white bg-primary w-100">
-                          <tr class="text-center">
-                              <th scope="col">Nama Tugasan</th>
-                              <th scope="col">Tarikh</th>
-                              <th scope="col">Tindakan</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($tugasans as $tugasan)
-                            <tr>
-                                <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->nama}}</td>
-                                <td class="text-center arial">{{$tugasan->due_date}}</td>
-                                <td class="text-center arial">
-                                    <a class="btn btn-success" href="/user/tugasan/{{$tugasan->id}}/item_list" style="color: white; text-decoration:none;">
-                                    Semak Tugasan
-                                    </a>
-                                </td>
+            <div class="tab">
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" style="background-color: rgb(210 210 210);">
+                  <a 
+                  @if (Request::is('user/tugasan') || Request::is('user/tugasan/*'))
+                    class="nav-link active"
+                  @else
+                    class="nav-link" 
+                  @endif
+                  
+                  data-bs-toggle="tab" href="#tab-4"><span class="arial-N">TUGASAN</span></a>
+                </li>
+                <li class="nav-item" style="background-color: rgb(210 210 210);">
+                  <a 
+                  @if (Request::is('user/tugasan/aduan/*'))
+                    class="nav-link active"
+                  @else
+                    class="nav-link" 
+                  @endif
+                  
+                  data-bs-toggle="tab" href="#tab-5"><span class="arial-N">ADUAN</span></a>   
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div 
+                  @if (Request::is('user/tugasan') || Request::is('user/tugasan/*'))
+                    class="tab-pane fade active show" 
+                  @else
+                    class="tab-pane fade" 
+                  @endif
+                  id="tab-4" role="tabpanel">
+                  <div class="card-header">
+                      <h5 class="card-title mb-0">Sila lengkapkan tugasan berikut sebelum tarikh yang ditetapkan.</h5>
+                  </div>
+                  <div class="card-body">
+                      @if (!$tugasans->isEmpty())
+                      <table class="table table-bordered table-striped w-100 arial">
+                          <thead class="text-white bg-primary w-100">
+                            <tr class="text-center">
+                                <th scope="col">Nama Tugasan</th>
+                                <th scope="col">Tarikh</th>
+                                <th scope="col">Tindakan</th>
                             </tr>
-                            @endforeach 
-                        </tbody>
-                      </table>
-                      
-                                    
-                    @else
-                        <h1 style="text-align: center;"> Tiada Tugasan </h1>
-                    @endif
+                          </thead>
+                          <tbody>
+                              @foreach ($tugasans as $tugasan)
+                              <tr>
+                                  <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->nama}}</td>
+                                  <td class="text-center arial">{{$tugasan->due_date}}</td>
+                                  <td class="text-center arial">
+                                      <a class="btn btn-success" href="/user/tugasan/{{$tugasan->id}}/item_list" style="color: white; text-decoration:none;">
+                                      Semak Tugasan
+                                      </a>
+                                  </td>
+                              </tr>
+                              @endforeach 
+                          </tbody>
+                        </table>
+                        
+                                      
+                      @else
+                          <h1 style="text-align: center;"> Tiada Tugasan </h1>
+                      @endif
+                  </div>
+                </div>
+                <div 
+                  @if (Request::is('user/tugasan/aduan/*'))
+                    class="tab-pane fade active show" 
+                  @else
+                    class="tab-pane" 
+                  @endif
+                  id="tab-5" role="tabpanel">
+                  <div class="card-header">
+                      <h5 class="card-title mb-0">Sila lengkapkan tugasan berikut</h5>
+                  </div>
+                  <div class="card-body">
+                      @if (!$aduans->isEmpty())
+                      <table class="table table-bordered table-striped w-100 arial">
+                          <thead class="text-white bg-primary w-100">
+                            <tr class="text-center">
+                                <th scope="col">Aduan</th>
+                                <th scope="col">Tindakan</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              @foreach ($aduans as $aduan)
+                              <tr>
+                                  <td class="text-center arial" style="text-transform: uppercase;">{{$aduan->nama}}</td>
+                                  <td class="text-center arial">
+                                    <a class="btn btn-success" href="/user/tugasan/aduan/{{$aduan->id}}/list" style="color: white; text-decoration:none;">
+                                      Semak Tugasan
+                                      </a>
+                                  </td>
+                              </tr>
+                              @endforeach 
+                          </tbody>
+                        </table>
+                        
+                                      
+                      @else
+                          <h1 style="text-align: center;"> Tiada Tugasan </h1>
+                      @endif
+                  </div>
                 </div>
             </div>
         </div>

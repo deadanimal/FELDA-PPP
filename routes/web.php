@@ -240,6 +240,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pelaporan/report/{aktiviti_id}/{user_id}', [PelaporanController::class, 'user_report']);
     Route::get('/pelaporan/report/print/{aktiviti_id}/{user_id}', [PelaporanController::class, 'report_print']);
 
+
+    Route::get('/Aduan/List/Pegawai', [UserController::class, 'pegawaiAduan_list']);
+    Route::put('/Aduan/Pegawai/tindakan', [UserController::class, 'pegawaiAduan_update']);
+    
+    Route::get('/Aduan/List', [UserController::class, 'aduan_list']);
+    Route::post('/Aduan/add', [UserController::class, 'aduan_add']);
+    Route::delete('/Aduan/delete', [UserController::class, 'aduan_delete']);
+
+    Route::get('/Aduan/respon/{aduan_id}/list', [UserController::class, 'response_list']);
+    Route::put('/Aduan/respon/update', [UserController::class, 'response_update']);
+
+    Route::get('/user/tugasan/aduan/{aduan_id}/list', [UserController::class, 'userAduan_details']);
+    Route::post('/user/tugasan/aduan/add', [UserController::class, 'userAduan_add']);
+    Route::delete('/user/tugasan/aduan/delete', [UserController::class, 'userAduan_delete']);
+
     Route::get('/test', function () {
         return view('pengurusanBorang.TemplatePermohonanPerolehanIbuPejabatWilayah_');
     });

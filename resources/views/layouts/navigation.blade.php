@@ -48,7 +48,30 @@
                     </a>
                 </li>
 
-            {{-- @if(Auth::user()->kategoripengguna == "Pengurus Rancangan") --}}
+                @if (Request::is('Aduan') || Request::is('Aduan/*'))
+                    <li class="sidebar-item active">
+                @else
+                    <li class="sidebar-item">
+                @endif
+                {{-- @if(Auth::user()->kategoripengguna == "Pegawai Aduan") --}}
+                        <a  class="sidebar-link" href="/Aduan/List/Pegawai">
+                    {{-- @else --}}
+                        {{-- <a  class="sidebar-link" href="/Aduan/user"> --}}
+
+                    {{-- @endif --}}
+
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" width="20" height="20" fill="currentColor" viewBox="0 0 100 100" style="margin-right:8;">
+                                <path d="M50,47.5C50,43.356,53.356,40,57.5,40C61.644,40,65,43.356,65,47.5C65,51.644,61.644,55,57.5,55C53.356,55,50,51.644,50,47.5Z" stroke="none"></path>
+                                <path d="M60,10.423L60,35.252C65.699,36.413,70,41.463,70,47.5S65.699,58.587,60,59.748L60,60C60,65.514,55.514,70,50,70L35,70L35,65L50,65C52.757,65,55,62.757,55,60L55,59.748C49.301,58.587,45,53.537,45,47.5S49.301,36.413,55,35.252L55,10C38.431,10,25,23.431,25,40L25,42.929L16.464,51.465C15.56,52.369,15,53.619,15,55C15,57.761,17.239,60,20,60L25,60L25,70C25,75.523,29.477,80,35,80L45,80L45,90L75,90L75,66.443C81.219,59.393,85,50.141,85,40L85,40C85,25.136,74.187,12.804,60,10.423Z" stroke="none"></path>
+                            </svg>
+                            <span class="align-middle">SENARAI ADUAN</span>
+                        </a>
+                        
+                    </li>
+                
+
+
+            @if(Auth::user()->kategoripengguna == "Pengurus Rancangan")
                 @if (Request::is('tarik_Diri') || Request::is('tarik_Diri/*'))
                     <li class="sidebar-item active">
                 @else
@@ -61,7 +84,7 @@
                               </svg> <span class="align-middle">PERMOHONAN TARIK DIRI</span>
                         </a>
                     </li>
-            {{-- @endif --}}
+            @endif
             
             @if(Auth::user()->kategoripengguna == "1")
                 @if (Request::is('users') || Request::is('users/*') || Request::is('user-categories') || Request::is('user-categories/*'))

@@ -88,6 +88,7 @@
   cursor:pointer;
   background: url("/SVG/pencil.svg")
 }
+
 .frame9402-text01 {
   color: #781E2A;
   height: auto;
