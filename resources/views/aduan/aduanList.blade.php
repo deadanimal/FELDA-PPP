@@ -78,6 +78,7 @@
               <tr>
                   <th scope="col" class="text-center" style="width: 50%">Aduan</th>
                   <th scope="col" class="text-center">Jenis Aduan</th>
+                  <th scope="col" class="text-center">Tarikh Aduan</th>
                   <th scope="col" class="text-center">Status</th>
                   <th scope="col" class="text-center">Tindakan</th>
               </tr>
@@ -122,6 +123,11 @@
                         data: 'nama',
                         name: 'nama',
                         className: "text-Upp Arial"
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
+                        className: "text-center Arial"
                     },
                     {
                         data: 'jenis_aduan',

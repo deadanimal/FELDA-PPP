@@ -850,6 +850,9 @@ class UserController extends Controller
             ->editColumn('nama', function(Aduan $aduans) { 
                 return nl2br($aduans->nama);
             })
+            ->editColumn('created_at', function(Aduan $aduans){ 
+                return \Carbon\Carbon::parse($aduans->created_at )->isoFormat('DD/MM/YYYY');
+            })
             ->addColumn('tindakan', function (Aduan $aduans) {
                 return '<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal'.$aduans->id.'" title="Padam">Padam</button>
 
@@ -940,6 +943,9 @@ class UserController extends Controller
             ->editColumn('nama', function(Aduan $aduans) { 
                 return nl2br(e($aduans->nama));
             })
+            ->editColumn('created_at', function(Aduan $aduans){ 
+                return \Carbon\Carbon::parse($aduans->created_at )->isoFormat('DD/MM/YYYY');
+            })
             ->addColumn('tindakan', function (Aduan $aduans) {
                 $url = "/Aduan/respon/$aduans->id/list";
                 $options = '';
@@ -952,7 +958,7 @@ class UserController extends Controller
                     }
                 }
                 return '
-                <a href="'.$url.'" class="btn btn-primary">Lihat Respond</a>
+                <a href="'.$url.'" class="btn btn-primary" style="text-transform:capitalize;">Lihat Respond</a><br><br>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal'.$aduans->id.'" title="selesai">Tindakan</button>
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal'.$aduans->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
