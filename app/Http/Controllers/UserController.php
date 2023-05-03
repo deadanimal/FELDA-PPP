@@ -941,6 +941,7 @@ class UserController extends Controller
                 return nl2br(e($aduans->nama));
             })
             ->addColumn('tindakan', function (Aduan $aduans) {
+                $url = "/Aduan/respon/$aduans->id/list";
                 $options = '';
                 $userCategorys = KategoriPengguna::all();
                 foreach($userCategorys as $userCategory){
@@ -950,8 +951,9 @@ class UserController extends Controller
                         $options .= '<option value="'.$userCategory->id.'">'.$userCategory->nama.'</option>';
                     }
                 }
-                
-                return '<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal'.$aduans->id.'" title="selesai">Tindakan</button>
+                return '
+                <a href="'.$url.'" class="btn btn-primary">Lihat Respond</a>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal'.$aduans->id.'" title="selesai">Tindakan</button>
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal'.$aduans->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -1044,8 +1046,8 @@ class UserController extends Controller
     {
         $response = new Respond_aduan;
         if($request->file()) {
-            $files = time().'.'.$request->dokumen->extension();  
-            $request->dokumen->move(public_path('aduan'), $files);
+            $files = time().'.'.$request->respond->extension();  
+            $request->respond->move(public_path('aduan'), $files);
             $response->respond = '/aduan/' . $files;
         }else{
             $response->respond = $request->respond;
@@ -1063,6 +1065,8 @@ class UserController extends Controller
         $response = Respond_aduan::find($request->response_id);
         $response->delete();
         
+        Alert::success('Padam Respon Berjaya.', 'Respon telah berjaya disimpan.');   
+
         return redirect('/user/tugasan/aduan/'.$request->aduan_id.'/list');
 
     }
@@ -1082,6 +1086,17 @@ class UserController extends Controller
 
     }
 
+    public function response_update(Request $request)
+    {
+        $aduan = Aduan::find($request->aduan_id);
+        $aduan->status = $request->status;
+        $aduan->save();
+        
+        Alert::success('Kemaskini Respon Berjaya.', 'Respon telah berjaya dikemaskini.');   
+
+        return redirect('/user/tugasan/aduan/'.$request->aduan_id.'/list');
+
+    }
 
     
 }

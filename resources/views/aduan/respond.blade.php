@@ -23,6 +23,19 @@
                 <h1 style="font-family: 'Arial', sans-serif; font-size:23px;">{{$aduan->nama}}</h1>
                 <h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Jenis Aduan: {{$aduan->jenis_aduan}}</h1>
             </div>
+            @if ($aduan->status == "Belum Selesai")
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <div class="alert-message">
+                        <strong>Status: {{$aduan->status}}</strong>
+                    </div>
+                </div>
+            @else
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <div class="alert-message">
+                        <strong>Status: {{$aduan->status}}</strong>
+                    </div>
+                </div>
+            @endif
             <div>
                 <form action="/user/tugasan/aduan/add" method="post" enctype="multipart/form-data">
                     @csrf
@@ -56,10 +69,9 @@
             <table class="table table-bordered table-striped w-100 text-center">
                 <thead class="text-white bg-primary w-100">
                     <tr>
-                        <th scope="col" class="text-center" style="width: 40%">Aduan</th>
+                        <th scope="col" class="text-center" style="width: 50%">Aduan</th>
                         <th scope="col" class="text-center">Respon</th>
-                        <th scope="col" class="text-center" style="width: 20%">Status</th>
-                        <th scope="col" class="text-center">Tindakan</th>
+                        <th scope="col" class="text-center" style="width: 10%">Tindakan</th>
                     </tr>
                 </thead>
             <tbody>
@@ -75,12 +87,10 @@
                         @endif
                         </td>
 
-                        <td>{{$response->status}}</td>
                         <td>
                             <div class="col-md-12 text-center">
                                 <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalcheck{{$response->id}}" title="Padam"></button>
                             </div>
-
 
                             <!-- Modal delete-->
                             <div class="modal fade" id="exampleModalcheck{{$response->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -129,58 +139,6 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">
-    $('.respond-datatable').DataTable({
-                processing: true,
-                serverSide: true,
-                responsive: true,
-                language: {
-                    "search": "Carian:",
-                    "lengthMenu": "Tunjuk _MENU_ Pengguna",
-                    "info": "Tunjuk _START_ ke _END_ dari _TOTAL_ Pengguna",
-                    "paginate": {
-                        "first": "Pertama",
-                        "last": "Akhir",
-                        "next": "Seterusnya",
-                        "previous": "Sebelum"
-                    },
-                    "zeroRecords": "Carian tidak dijumpai",
-                    "infoEmpty": "Tiada maklumat",
-                    "infoFiltered": "(carian dari _MAX_ jumlah rekod)"
-  
-  
-  
-                },
-                ajax: "/Aduan/".$aduanId."/Details",
-                columns: [{
-                      data: 'DT_RowIndex',
-                      name: 'DT_RowIndex',
-                      className: "text-center Arial"
-                    },
-                    {
-                        data: 'aduan',
-                        name: 'aduan',
-                        className: "text-center Arial"
-                    },
-                    {
-                        data: 'respond',
-                        name: 'respond',
-                        className: "text-center Arial"
-                    },
-                    {
-                        data: 'user', 
-                        name: 'user',
-                        className: "text-center Arial"
-                    },
-                    {
-                        data: 'tindakan',
-                        name: 'tindakan',
-                        className: "text-center col-sm-auto w-15 Arial"
-                    },                    
-  
-                ]
-            });
-</script>
 <style>
   .arial{
       font-family: 'Arial', sans-serif;

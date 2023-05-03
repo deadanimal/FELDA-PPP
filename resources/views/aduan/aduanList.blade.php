@@ -55,7 +55,10 @@
                     <label for="jenisAduan" class="frame9402-text04">
                         <strong>Jenis Aduan</strong>
                     </label>
-                    <input type="text" class="frame9402-kotaknamaBorang" id="jenisAduan" placeholder="Jenis Aduan" name="jenisAduan" required oninput="this.value = this.value.toUpperCase()">
+                    <select name="jenisAduan" class="form-select frame9402-kotaknamaBorang">
+                        <option value="Pemakluman">Pemakluman</option>
+                        <option value="Perlu Tindakan">Perlu Tindakan</option>
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
@@ -75,8 +78,8 @@
               <tr>
                   <th scope="col" class="text-center" style="width: 50%">Aduan</th>
                   <th scope="col" class="text-center">Jenis Aduan</th>
+                  <th scope="col" class="text-center">Status</th>
                   <th scope="col" class="text-center">Tindakan</th>
-
               </tr>
             </thead>
             <tbody>
@@ -124,6 +127,11 @@
                         data: 'jenis_aduan',
                         name: 'jenis_aduan',
                         className: "text-center Arial"
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
+                        className: "text-Upp Arial"
                     },
                     {
                         data: 'tindakan',

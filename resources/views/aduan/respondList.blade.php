@@ -22,21 +22,51 @@
             <div class="card-title text-center">
                 <h1 style="font-family: 'Arial', sans-serif; font-size:23px;">{{$aduan->nama}}</h1>
                 <h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Jenis Aduan: {{$aduan->jenis_aduan}}</h1>
-            </div>
-            <div>
-                <form action="/user/tugasan/aduan/add" method="post" enctype="multipart/form-data">
-                    @csrf
-                    @if ($aduan->jenis_respond == "Text")
-                            <textarea name="respond" class="form-control frame9402-kotaknamaBorang"></textarea>
-                    @else
-                            <input name="respond" type="file" class="form-control">
-                    @endif
-
-                    <input type="hidden" name="aduan_id" value="{{$aduan->id}}">
-                    <div class="col-md-12 text-center">
-                        <button type="submit" class="btn btn-primary text-center">Hantar</button>
+            </div><br>
+            @if ($aduan->status == "Belum Selesai")
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <div class="alert-message">
+                        <strong>Status: {{$aduan->status}}</strong>
                     </div>
-                </form>
+                </div>
+            @else
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <div class="alert-message">
+                        <strong>Status: {{$aduan->status}}</strong>
+                    </div>
+                </div>
+            @endif
+            
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-primary text-center btn-lg" data-toggle="modal" data-target="#exampleModalstatus">Selesai</button>
+
+                <div class="modal fade" id="exampleModalstatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Selesai Aduan</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Adakah Aduan Sudah Selesai?</p>
+                            <p>{{$aduan->nama}}</p>
+                            <p>Jenis Aduan: {{$aduan->jenis_aduan}}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                            <form action="/Aduan/respon/update" method="post" enctype="multipart/form-data">
+                                @csrf
+                                @method('put')
+                                <input type="hidden" name="aduan_id" value="{{$aduan->id}}">
+                                <input type="hidden" name="status" value="Selesai">
+                                <button class="btn btn-danger">YA</button>
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
       </div>
@@ -57,8 +87,8 @@
                 <thead class="text-white bg-primary w-100">
                     <tr>
                         <th scope="col" class="text-center" style="width: 40%">Aduan</th>
+                        <th scope="col" class="text-center">Pengguna</th>
                         <th scope="col" class="text-center">Respon</th>
-                        <th scope="col" class="text-center" style="width: 20%">Status</th>
                         <th scope="col" class="text-center">Tindakan</th>
                     </tr>
                 </thead>
@@ -66,7 +96,7 @@
                 @foreach ($responds as $response)
                     <tr>
                         <td>{{$response->Aduan->nama}}</td>
-
+                        <td>{{$response->user->nama}}</td>
                         <td>
                         @if ($response->Aduan->jenis_respond == "Text")
                             {!!nl2br(e($response->respond))!!}
@@ -75,7 +105,6 @@
                         @endif
                         </td>
 
-                        <td>{{$response->status}}</td>
                         <td>
                             <div class="col-md-12 text-center">
                                 <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalcheck{{$response->id}}" title="Padam"></button>
@@ -129,58 +158,7 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">
-    $('.respond-datatable').DataTable({
-                processing: true,
-                serverSide: true,
-                responsive: true,
-                language: {
-                    "search": "Carian:",
-                    "lengthMenu": "Tunjuk _MENU_ Pengguna",
-                    "info": "Tunjuk _START_ ke _END_ dari _TOTAL_ Pengguna",
-                    "paginate": {
-                        "first": "Pertama",
-                        "last": "Akhir",
-                        "next": "Seterusnya",
-                        "previous": "Sebelum"
-                    },
-                    "zeroRecords": "Carian tidak dijumpai",
-                    "infoEmpty": "Tiada maklumat",
-                    "infoFiltered": "(carian dari _MAX_ jumlah rekod)"
-  
-  
-  
-                },
-                ajax: "/Aduan/".$aduanId."/Details",
-                columns: [{
-                      data: 'DT_RowIndex',
-                      name: 'DT_RowIndex',
-                      className: "text-center Arial"
-                    },
-                    {
-                        data: 'aduan',
-                        name: 'aduan',
-                        className: "text-center Arial"
-                    },
-                    {
-                        data: 'respond',
-                        name: 'respond',
-                        className: "text-center Arial"
-                    },
-                    {
-                        data: 'user', 
-                        name: 'user',
-                        className: "text-center Arial"
-                    },
-                    {
-                        data: 'tindakan',
-                        name: 'tindakan',
-                        className: "text-center col-sm-auto w-15 Arial"
-                    },                    
-  
-                ]
-            });
-</script>
+
 <style>
   .arial{
       font-family: 'Arial', sans-serif;

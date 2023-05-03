@@ -30,6 +30,7 @@
               <tr>
                   <th scope="col" class="text-center" style="width: 50%">Aduan</th>
                   <th scope="col" class="text-center">Jenis Aduan</th>
+                  <th scope="col" class="text-center">Status</th>
                   <th scope="col" class="text-center">Tindakan</th>
 
               </tr>
@@ -79,6 +80,11 @@
                         data: 'jenis_aduan',
                         name: 'jenis_aduan',
                         className: "text-center Arial"
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
+                        className: "text-Upp Arial"
                     },
                     {
                         data: 'tindakan',
