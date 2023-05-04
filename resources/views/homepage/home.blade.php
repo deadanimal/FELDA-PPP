@@ -5,14 +5,30 @@
 @section('content')
 
   <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex justify-cntent-center align-items-center" style=" background: url('../img/felda-2.jpg') no-repeat top center! important;">
+  <section id="hero" class="d-flex justify-cntent-center align-items-center" style=" background: url('../img/felda-2.jpg') no-repeat fixed center! important;">
     <div id="heroCarousel" data-bs-interval="5000" class="container carousel carousel-fade" data-bs-ride="carousel">
         
     </div>
   </section><!-- End Hero -->
+  <div style="float: right; width: 20%; background:#D0F0C0; padding-top:7%;" >
+    <div class="row align-items-stretch center" >
+      <div class="section-title">
+        <h2>KALENDAR</h2>
+      </div>
+      <div id="calendar" style="width: 90%;margin: auto;margin: 0px;"></div> <br>
 
-<main id="main"  class="target">
+      <div class="col-sm-3 d-flex " style="margin-top:2%;">
+        <div class="icon-box box" style="padding:0;">
+          <img src="/SVG/user-global.svg" style="height:6em; filter: invert(16%) sepia(24%) saturate(2078%) hue-rotate(119deg) brightness(90%) contrast(103%);"><br>
+          <h3 class="text-center" style="margin: 0px;">Jumlah Pelawat</h3>
+          <h1 class="text" style="margin-left: 0px;">{{$userCount}}</h1>
+        </div>
+      </div>
+    </div>
 
+  </div>
+<main id="main"  class="target" style="width: 80%">
+  
     <!-- ======= About Us Section ======= -->
     <section id="about" class="about">
       <div class="container" data-aos="fade-up">
@@ -55,42 +71,29 @@
             <h2 style="font-size: 3em">MAKLUMAT ASAS</h2>
         </div>
         <div class="row">
-          <div class="col-sm-3 d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-sm-4 d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="100">
             <div class="icon-box box" style="padding:0">
                 <img src="/SVG/farm.svg" style="height:6em; filter: invert(16%) sepia(24%) saturate(2078%) hue-rotate(119deg) brightness(90%) contrast(103%);"><br>
                 <h3 class="text-center" style="margin: 0px;">Jumlah Projek</h3>
                 <h1 class="text" style="margin-left: 0px;">{{$totalModul}}</h1>
             </div>
           </div>
-          <div class="col-sm-3 d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-sm-4 d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="200">
             <div class="icon-box box" style="padding:0">
               <img src="/SVG/group.svg" style="height:6em; filter: invert(16%) sepia(24%) saturate(2078%) hue-rotate(119deg) brightness(90%) contrast(103%);"><br>
               <h3 class="text-center" style="margin: 0px;">Jumlah Peneroka</h3>
               <h1 class="text" style="margin-left: 0px;"> {{$totalPeneroka}}</h1>
             </div>
           </div>
-          <div class="col-sm-3 d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="300">
+          <div class="col-sm-4 d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="300">
             <div class="icon-box box" style="padding:0; width:100%" >
               <img src="/SVG/money.svg" style="height:6em; filter: invert(16%) sepia(24%) saturate(2078%) hue-rotate(119deg) brightness(90%) contrast(103%);"><br>
               <h3 class="text-center" style="margin: 0px;">Jumlah Penyaluran Dana</h3>
               <h1 class="text" style="margin-left: 0px;">{{$totalDana}}</h1>
             </div>
           </div>
-          <div class="col-sm-3 d-flex align-items-stretch center" data-aos="fade-up" data-aos-delay="400">
-            <div class="icon-box box" style="padding:0;">
-              <img src="/SVG/user-global.svg" style="height:6em; filter: invert(16%) sepia(24%) saturate(2078%) hue-rotate(119deg) brightness(90%) contrast(103%);"><br>
-              <h3 class="text-center" style="margin: 0px;">Jumlah Pelawat</h3>
-              <h1 class="text" style="margin-left: 0px;">{{$userCount}}</h1>
-            </div>
-          </div>
         </div>
-        <div class="row">
-          <div class="section-title" style="margin-top: 5%">
-            <h2 style="font-size: 3em">KALENDAR</h2>
-          </div>
-          <div id="calendar" style="width: 60%;margin: auto;padding: 12px 0px;"></div> <br>
-      
-        </div>
+        
 
 
         <div class="section-title" style="margin-top: 10%">
@@ -191,8 +194,8 @@
 
       </div>
     </section><!-- End Contact Section -->
-
   </main><!-- End #main -->
+
   <script src="js/app.js"></script>
   {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
   <script>

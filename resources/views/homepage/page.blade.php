@@ -2,7 +2,7 @@
 
 @section('content')
 <section id="breadcrumbs" class="breadcrumbs">
-    <div class="container">
+    <div class="container text-center">
 
         <br><br>
         <h2>{{$pg->nama}}</h2>
