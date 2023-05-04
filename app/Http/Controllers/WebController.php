@@ -42,13 +42,16 @@ class WebController extends Controller
         // menu
         $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
 
+        //calendar
+        $event = Calendar_event::all();
+
         // icon
         $totalDana = Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->count();
         $totalModul = Modul::where('status', 'Go-live')->count();
         $totalPeneroka = User::whereRelation('kategori', 'nama', '=', 'Peserta')->where('status', 1)->count();
         $userCount = Visitor::count();
 
-        return view('homepage.home', compact ('totalDana','totalModul', 'totalPeneroka', 'userCount','pages'));
+        return view('homepage.home', compact ('event','totalDana','totalModul', 'totalPeneroka', 'userCount','pages'));
     }
 
     public function page(Request $request)

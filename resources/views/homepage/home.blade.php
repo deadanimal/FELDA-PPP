@@ -10,14 +10,14 @@
         
     </div>
   </section><!-- End Hero -->
-  <div style="float: right; width: 20%; background:#D0F0C0; padding-top:7%;" >
+  <div style="float: right; width: 20%; padding-top:7%;" >
     <div class="row align-items-stretch center" >
       <div class="section-title">
         <h2>KALENDAR</h2>
       </div>
       <div id="calendar" style="width: 90%;margin: auto;margin: 0px;"></div> <br>
 
-      <div class="col-sm-3 d-flex " style="margin-top:2%;">
+      <div class="col-sm-3 d-flex " style="margin-top:4%;">
         <div class="icon-box box" style="padding:0;">
           <img src="/SVG/user-global.svg" style="height:6em; filter: invert(16%) sepia(24%) saturate(2078%) hue-rotate(119deg) brightness(90%) contrast(103%);"><br>
           <h3 class="text-center" style="margin: 0px;">Jumlah Pelawat</h3>
@@ -214,21 +214,24 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
 <script src="js/mini-event-calendar.js"></script>
   <script>
+    var event = @json($event);
+var events = []
+event.forEach(element => {
+    var color = 'blue';
+     var date1 = new Date();
+    var event = {
+        title: element['name'],
+        date: element['event_date']
+    }
+    events.push(event)            
+});
 
-	    	var sampleEvents = [
-			{
-			    title: "Hari Raya 1",
-			    date: "2023-04-20"
-      },
-			{
-			    title: "Hari Raya 2",
-			    date: "2023-04-21"
-			}
-	    	];
+  </script>
+  <script>
+
     
-      
       $("#calendar").MEC({
-          events: sampleEvents,
+          events: events,
       });
 
 

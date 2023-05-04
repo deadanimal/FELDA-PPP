@@ -331,7 +331,7 @@ class BorangController extends Controller
                     $y = $tahapKelulusan[$z]->sequence + 1;
                     if(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'HQ') && $tahapKelulusan[$x]->sequence == $y){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
-                        ->whereRelation('kelulusanBorang','keputusan', 'Lulus')
+                        ->orWhereRelation('kelulusanBorang','keputusan', 'Lulus')
                         ->whereRelation('kelulusanBorang.tahap_kelulusan','sequence', $tahapKelulusan[$z]->sequence)->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();;
@@ -342,7 +342,7 @@ class BorangController extends Controller
                     elseif(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Wilayah') || Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'WILAYAH')  && $tahapKelulusan[$x]->sequence == $y){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
                         ->where('wilayah', Auth::user()->wilayah)
-                        ->whereRelation('kelulusanBorang','keputusan', 'Lulus')
+                        ->orWhereRelation('kelulusanBorang','keputusan', 'Lulus')
                         ->whereRelation('kelulusanBorang.tahap_kelulusan','sequence', $tahapKelulusan[$z]->sequence)->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();;
@@ -353,7 +353,7 @@ class BorangController extends Controller
                     elseif($tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $y){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
                         ->where('wilayah', Auth::user()->wilayah )->where('rancangan',  Auth::user()->rancangan)
-                        ->whereRelation('kelulusanBorang','keputusan', 'Lulus')
+                        ->WhereRelation('kelulusanBorang','keputusan', 'Lulus')
                         ->whereRelation('kelulusanBorang.tahap_kelulusan','sequence', $tahapKelulusan[$z]->sequence)->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();;
