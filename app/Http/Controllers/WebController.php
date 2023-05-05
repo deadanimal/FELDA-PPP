@@ -8,7 +8,7 @@ use App\Models\cards;
 
 use App\Models\Faq;
 use App\Models\Statement;
-
+use Carbon\Carbon;
 use App\Models\Calendar_event;
 use App\Models\Visitor;
 use App\Models\document;
@@ -26,6 +26,8 @@ use App\Models\Audit;
 use App\Models\dropdown;
 use App\Models\Jawapan;
 use App\Mail\contactUs;
+use App\Models\Aduan;
+use App\Models\Senarai_tugasan;
 use Illuminate\Http\Request;
 use Alert;
 use Illuminate\Support\Facades\Mail;
@@ -135,17 +137,30 @@ class WebController extends Controller
         return view('downloadDoc', compact ('docs', 'pages'));
     }
 
+    public function notification(){
+        //for notification tugasan
+        $date = Carbon::now();
+        $tugasans_noti= Senarai_tugasan::where('user_id', Auth::user()->id)->where('due_date', '>=', $date->format('Y-m-d'))->count();
+        $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->where('status', 'Belum Selesai')->count();
+        $noti = $tugasans_noti+$aduans_noti;
+
+        return $noti;
+    }
+
     public function page_list()
     {
         $pages = Page::orderBy('sequence', 'ASC')->get();
         $docs = document::orderBy('updated_at', 'DESC')->get();
         $events = Calendar_event::orderBy('updated_at', 'DESC')->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.pageList', compact ('events','docs','pages', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.pageList', compact ('noti','events','docs','pages', 'menuModul', 'menuProses', 'menuBorang'));
     }
     
     public function page_add(Request $request)
@@ -205,12 +220,15 @@ class WebController extends Controller
 
         $page = Page::find($pageId);
         $pageItems = Item::where('page_id', $pageId)->orderBy('row', 'ASC')->get();
-        
+                
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.pageItem', compact ('page','pageItems', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.pageItem', compact ('noti','page','pageItems', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function item_add(Request $request)
@@ -320,12 +338,15 @@ class WebController extends Controller
         $item = Item::find($itemId);
 
         $sliders = Slider::where('item_id', $itemId)->get();
-        
+                
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.slider', compact ('sliders','item', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.slider', compact ('noti','sliders','item', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function card_list(Request $request)
@@ -336,11 +357,14 @@ class WebController extends Controller
 
         $cards = cards::where('item_id', $itemId)->orderBy('rows', 'ASC')->get();
         
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.card', compact ('cards','item', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.card', compact ('noti','cards','item', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function dropdown_list(Request $request)
@@ -351,11 +375,14 @@ class WebController extends Controller
 
         $dropdowns = dropdown::where('item_id', $itemId)->get();
         
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.dropdown', compact ('dropdowns','item', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.dropdown', compact ('noti','dropdowns','item', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function article_list(Request $request)
@@ -366,11 +393,14 @@ class WebController extends Controller
 
         $articles = Article::where('item_id', $itemId)->get();
         
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.article', compact ('articles','item', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.article', compact ('noti','articles','item', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function gallery_list(Request $request)
@@ -381,11 +411,14 @@ class WebController extends Controller
 
         $galleries = Gallery::where('item_id', $itemId)->get();
         
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.gallery', compact ('galleries','item', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.gallery', compact ('noti','galleries','item', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function doc_list(Request $request)
@@ -396,26 +429,16 @@ class WebController extends Controller
 
         $docs = Doc::where('item_id', $itemId)->get();
         
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.docList', compact ('docs','item', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.docList', compact ('noti','docs','item', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
-    public function homeSetting()
-    {
-        $sliders = Slider::all();
-        $cards = cards::orderBy('rows', 'ASC')->get();
-        $faqs = Faq::orderBy('updated_at', 'DESC')->get();
-        $docs = document::orderBy('updated_at', 'DESC')->get();
-        
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
-
-        return view('homepage.homeEdit', compact ('docs','sliders', 'cards', 'faqs', 'stats' ,'menuModul', 'menuProses', 'menuBorang'));
-    }
 
     public function sliderAdd(Request $request)
     {
@@ -774,11 +797,14 @@ class WebController extends Controller
 
         $pictures = Picture::where('gallery_id', $galleryId)->get();
         
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('homepage.picture', compact ('pictures','gallery', 'item' ,'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.picture', compact ('noti','pictures','gallery', 'item' ,'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function picture_add(Request $request)

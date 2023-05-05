@@ -7,6 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use App\Models\Borang;
 use App\Models\Modul;
 use App\Models\Wilayah;
@@ -21,12 +22,24 @@ use App\Models\User;
 use App\Models\KategoriPengguna;
 use App\Models\Tahap_kelulusan;
 use App\Models\Kelulusan_borang;
+use App\Models\Aduan;
+use App\Models\Senarai_tugasan;
 use Illuminate\Http\Request;
 use Alert;
 use PDF;
 
 class BorangController extends Controller
 {
+    public function notification(){
+        //for notification tugasan
+        $date = Carbon::now();
+        $tugasans_noti= Senarai_tugasan::where('user_id', Auth::user()->id)->where('due_date', '>=', $date->format('Y-m-d'))->count();
+        $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->where('status', 'Belum Selesai')->count();
+        $noti = $tugasans_noti+$aduans_noti;
+
+        return $noti;
+    }
+
     public function borang_detail(Request $request)
     {
         $idBorang = (int)$request->route('borang_id');
@@ -40,11 +53,14 @@ class BorangController extends Controller
 
         $medans = Medan::where('borang_id', $idBorang)->orderBy("sequence", "ASC")->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.borang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function uploadBorang(Request $request)
@@ -55,11 +71,14 @@ class BorangController extends Controller
 
         Alert::success('Muat Naik Borang berjaya.', 'Muat naik borang anda berjaya.');   
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('pengurusanModul.borang', compact('borang', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.borang', compact('noti','borang', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function borang_field_add(Request $request)
@@ -93,11 +112,14 @@ class BorangController extends Controller
 
         Alert::success('Tambah Medan Borang berjaya.', 'Tambah medan borang telah berjaya.');   
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.borang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function borang_field_update(Request $request)
@@ -115,12 +137,14 @@ class BorangController extends Controller
         $idBorang = $request->borangId;
         $borang = Borang::find($idBorang);
 
-
         $idModul = $request->modulId;
         $modul = Modul::find($idModul);
 
         $idProses = $request->prosesId;
         $proses = Proses::find($idProses);
+
+        //for notification tugasan
+        $noti = $this->notification();
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
@@ -135,7 +159,7 @@ class BorangController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.borang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function borang_field_delete(Request $request)
@@ -163,11 +187,14 @@ class BorangController extends Controller
 
         Alert::success('Padam Medan Borang berjaya.', 'Kemaskini medan borang telah berjaya.');   
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanModul.borang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.borang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function borang_view(Request $request)
@@ -183,11 +210,14 @@ class BorangController extends Controller
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanModul.viewBorang', compact('borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.viewBorang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
     }
     public function userBorang_view(Request $request)
     {
@@ -196,11 +226,14 @@ class BorangController extends Controller
         $wilayah = Wilayah::all()->pluck('nama','id');
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('userView.userBorang', compact('wilayah','borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userBorang', compact('noti','wilayah','borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function userBorang_submit(Request $request)
@@ -250,22 +283,28 @@ class BorangController extends Controller
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('userView.userBorang', compact('borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userBorang', compact('noti','borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function borangList_app(Request $request)
     {
         $borangs = Borang::where('status', 1)->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('pengurusanBorang.borangList', compact('borangs','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanBorang.borangList', compact('noti','borangs','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function borangApp_search(Request $request)
@@ -273,11 +312,14 @@ class BorangController extends Controller
         $nBorang= $request->searchBorang;
         $borangs = Borang::where('status', 1)->where('namaBorang','LIKE','%'.$nBorang.'%')->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('pengurusanBorang.borangList', compact('borangs','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanBorang.borangList', compact('noti','borangs','menuModul', 'menuProses', 'menuBorang'));
     }
     
 
@@ -339,7 +381,7 @@ class BorangController extends Controller
                             $noLulusBorang = Kelulusan_borang::where('jawapan_id', $borangJwpns[0]->id)->get();
                         }
                     }
-                    elseif(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Wilayah') || Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'WILAYAH')  && $tahapKelulusan[$x]->sequence == $y){
+                    elseif(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Wilayah') && Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'WILAYAH')  && $tahapKelulusan[$x]->sequence == $y){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
                         ->where('wilayah', Auth::user()->wilayah)
                         ->orWhereRelation('kelulusanBorang','keputusan', 'Lulus')
@@ -369,11 +411,16 @@ class BorangController extends Controller
             //         $tahapLulus = $tKelulusan->id;
             //     }
             // }
+
+
+            //for notification tugasan
+            $noti = $this->notification();
+
             $menuModul = Modul::where('status', 'Go-live')->get();
             $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
             $menuBorang = Borang::where('status', 1)->get();
             
-            return view('pengurusanBorang.userListBorang', compact('noLulusBorang','tahapKelulusan','lulusBorangs','borangJwpns','tahapLulus','oneBorang','menuModul', 'menuProses', 'menuBorang'));
+            return view('pengurusanBorang.userListBorang', compact('noti','noLulusBorang','tahapKelulusan','lulusBorangs','borangJwpns','tahapLulus','oneBorang','menuModul', 'menuProses', 'menuBorang'));
         }
         else{
             Alert::error('Borang Tiada Tahap Kelulusan', 'Borang Ini Tiada Tahap Kelulusan');   
@@ -390,11 +437,14 @@ class BorangController extends Controller
         $lulusBorangs = Kelulusan_borang::where('tahapKelulusan_id', $tahapLulus)->where('jawapan_id', $borangJwpn->id)->get();
         $jawapanMedan = Jawapan_medan::where('jawapan_id', $borangJwpn->id)->get();
         
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('pengurusanBorang.viewBorangApp', compact('lulusBorangs','tahapLulus','jawapanMedan','borangJwpn','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanBorang.viewBorangApp', compact('noti','lulusBorangs','tahapLulus','jawapanMedan','borangJwpn','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function borangApp_pdf(Request $request)
@@ -494,11 +544,14 @@ class BorangController extends Controller
             $kelulusanBorang = Kelulusan_borang::with('tahap_kelulusan')->where('jawapan_id', 0)->orderBy('created_at', 'DESC')->get();
         }
         
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('userView.userBorangList', compact('kelulusanBorang','borangJwpns','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userBorangList', compact('noti','kelulusanBorang','borangJwpns','menuModul', 'menuProses', 'menuBorang'));
     }
     
     public function subBorang_view(Request $request)
@@ -509,11 +562,14 @@ class BorangController extends Controller
         $borangJwpns = Jawapan::where('borang_id', $borangId)->where('user_id', $userId)->first();
         $jawapanMedans = Jawapan_medan::where('jawapan_id', $borangJwpns->id)->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('userView.viewSubBorang', compact('borangJwpns','jawapanMedans','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.viewSubBorang', compact('noti','borangJwpns','jawapanMedans','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function subBorang_edit(Request $request)
@@ -523,11 +579,14 @@ class BorangController extends Controller
 
         $borangJwpns = Jawapan::where('borang_id', $borangId)->where('userid', $userId)->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('userView.userUpdateBorang', compact('borangJwpns','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userUpdateBorang', compact('noti','borangJwpns','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function subBorang_update(Request $request)
@@ -559,7 +618,7 @@ class BorangController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('userView.userBorangList', compact('borangJwpns','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userBorangList', compact('noti','borangJwpns','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function borang_kelulusan(Request $request)
@@ -586,11 +645,14 @@ class BorangController extends Controller
         $category = KategoriPengguna::all();
         $surat = Surat::all();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('pengurusanModul.prosesKelulusan', compact('tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.prosesKelulusan', compact('noti','tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function tahapKelulusan_add(Request $request)
@@ -615,13 +677,16 @@ class BorangController extends Controller
         $tahapKelulusan = Tahap_kelulusan::where('prosesKelulusan_id', $proseskelulusan->id)->get();
         $category = KategoriPengguna::all();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         Alert::success('Tambah Tahap Kelulusan Berjaya.', 'Tahap Kelulusan telah berjaya ditambah.');
 
-        return view('pengurusanModul.prosesKelulusan', compact('tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.prosesKelulusan', compact('noti','tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function tahapKelulusan_update(Request $request)
@@ -645,13 +710,16 @@ class BorangController extends Controller
         $tahapKelulusan = Tahap_kelulusan::where('prosesKelulusan_id', $proseskelulusan->id)->get();
         $category = KategoriPengguna::all();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         Alert::success('Kemaskini Tahap Kelulusan Berjaya.', 'Tahap Kelulusan telah berjaya dikemaskini.');
 
-        return view('pengurusanModul.prosesKelulusan', compact('tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.prosesKelulusan', compact('noti','tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function tahapKelulusan_delete(Request $request)
@@ -673,13 +741,16 @@ class BorangController extends Controller
         $tahapKelulusan = Tahap_kelulusan::where('prosesKelulusan_id', $proseskelulusan->id)->get();
         $category = KategoriPengguna::all();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
         Alert::success('Padam Tahap Kelulusan Berjaya.', 'Tahap Kelulusan telah berjaya dipadama.');
 
-        return view('pengurusanModul.prosesKelulusan', compact('tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.prosesKelulusan', compact('noti','tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function surat_kelulusan(Request $request)
@@ -697,11 +768,14 @@ class BorangController extends Controller
         $surat = Surat::where('kelulusan_id', $id_tahapKelulusan)->first();
         $tahapKelulusan = Tahap_kelulusan::find($id_tahapKelulusan);
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('pengurusanModul.suratKelulusan', compact('surat','tahapKelulusan', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.suratKelulusan', compact('noti','surat','tahapKelulusan', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function suratKelulusan_add(Request $request)
@@ -760,9 +834,12 @@ class BorangController extends Controller
         $tahapKelulusanID = $request->tahapKelulusanID;
         $tahapKelulusan = Tahap_kelulusan::find($tahapKelulusanID);
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $surat = Surat::find($request->suratID);
 
-        return view('pengurusanModul.viewSurat', compact('surat','tahapKelulusan'));
+        return view('pengurusanModul.viewSurat', compact('noti','surat','tahapKelulusan'));
     }
 
     public function borangConsent_add(Request $request)

@@ -43,8 +43,13 @@
             @else
                 <li class="sidebar-item">
             @endif
-                    <a  class="sidebar-link" href="/user/tugasan/list">
-                        <i class="align-middle me-2 fas fa-fw fa-clipboard-check"></i> <span class="align-middle">TUGASAN</span>
+                    <a  class="sidebar-link" href="/user/tugasan/list" style="display: flex">
+                        <i class="align-middle me-2 fas fa-fw fa-clipboard-check" style="margin-top: 1%;"></i> 
+                        <span class="align-middle" style="display: flex">TUGASAN 
+                            <div class="alert alert-danger" role="alert" style="padding: 0 10%;margin: 0 10%;">
+                                {{$noti}}
+                            </div>
+                        </span>
                     </a>
                 </li>
 
@@ -81,7 +86,7 @@
                               </svg> <span class="align-middle">PERMOHONAN TARIK DIRI</span>
                         </a>
                     </li>
-                    
+
             @endif
             
             @if(Auth::user()->kategoripengguna == "1")

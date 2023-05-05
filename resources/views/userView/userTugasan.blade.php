@@ -23,7 +23,15 @@
                     class="nav-link" 
                   @endif
                   
-                  data-bs-toggle="tab" href="#tab-4"><span class="arial-N">TUGASAN</span></a>
+                  data-bs-toggle="tab" href="#tab-4" style="height: 100%;">
+                    <span class="arial-N" style="display: flex;">TUGASAN
+                      @if ($tugasans_noti != 0)
+                          <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin:0 2%;">
+                            {{$tugasans_noti}}
+                          </div>
+                        @endif
+                    </span>
+                  </a>
                 </li>
                 <li class="nav-item" style="background-color: rgb(210 210 210);">
                   <a 
@@ -33,7 +41,15 @@
                     class="nav-link" 
                   @endif
                   
-                  data-bs-toggle="tab" href="#tab-5"><span class="arial-N">ADUAN</span></a>   
+                  data-bs-toggle="tab" href="#tab-5" style="height: 100%;">
+                      <span class="arial-N" style="display: flex;">ADUAN 
+                        @if ($aduans_noti != 0)
+                          <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin-left:2%;">
+                            {{$aduans_noti}}
+                          </div>
+                        @endif
+                      </span>
+                  </a>   
                 </li>
               </ul>
               <div class="tab-content">

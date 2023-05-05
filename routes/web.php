@@ -48,7 +48,6 @@ Route::middleware(['auth'])->group(function () {
     // });
     Route::get('/dashboard',  [UserController::class, 'dashboard']);
 
-    // Route::get('/home',  [WebController::class, 'homeSetting']);
     Route::get('/setting',  [WebController::class, 'page_list']);
     
     Route::post('/setting/event/add',  [WebController::class, 'event_add']);

@@ -237,32 +237,7 @@ event.forEach(element => {
 
 		
 	</script>
-  {{-- <script>
-		document.addEventListener("DOMContentLoaded", function() {
-			var calendarEl = document.getElementById('fullcalendar');
-			var calendar = new FullCalendar.Calendar(calendarEl, {
-				themeSystem: 'bootstrap',
-				initialView: 'dayGridMonth',
-				headerToolbar: {
-					left: 'prev,next today',
-					center: 'title',
-					right: 'dayGridMonth,timeGridWeek,timeGridDay'
-				},
-				events: [{
-						title: 'Raya Adilfitri',
-						start: '2023-04-22'
-					},
-          {
-						title: 'Raya Adilfitri',
-						start: '2023-04-23'
-					}
-				]
-			});
-			setTimeout(function() {
-				calendar.render();
-			}, 250)
-		});
-</script> --}}
+  
 <style>
     .slider{
         width: 60%;

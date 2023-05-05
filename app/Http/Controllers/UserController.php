@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Mail;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ResetPassword;
-
+use Carbon\Carbon;
 use DataTables;
 use App\Models\User;
 use App\Models\Wilayah;
@@ -42,13 +42,25 @@ use Alert;
 
 class UserController extends Controller
 {
+    
+    public function notification(){
+        //for notification tugasan
+        $date = Carbon::now();
+        $tugasans_noti= Senarai_tugasan::where('user_id', Auth::user()->id)->where('due_date', '>=', $date->format('Y-m-d'))->count();
+        $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->where('status', 'Belum Selesai')->count();
+        $noti = $tugasans_noti+$aduans_noti;
+
+        return $noti;
+    }
+
     public function dashboard()
     {
+        $noti = $this->notification();
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('dashboard', compact('menuModul', 'menuProses', 'menuBorang'));
+        return view('dashboard', compact('noti','menuModul', 'menuProses', 'menuBorang'));
 
     }
     public function user_add_page()
@@ -60,7 +72,7 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanPengguna.daftarPengguna', compact('wilayah', 'kategoriPengguna', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanPengguna.daftarPengguna', compact('noti','wilayah', 'kategoriPengguna', 'menuModul', 'menuProses', 'menuBorang'));
 
     }
 
@@ -113,11 +125,14 @@ class UserController extends Controller
         $rancangan = Rancangan::all();
         $kategoriPengguna = KategoriPengguna::all();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanPengguna.maklumatPengguna', compact('kategoriPengguna', 'wilayah', 'rancangan', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanPengguna.maklumatPengguna', compact('noti','kategoriPengguna', 'wilayah', 'rancangan', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
 
@@ -215,11 +230,14 @@ class UserController extends Controller
 
         $bilangan = count($user);
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanPengguna.senaraiPengguna', compact('user', 'bilangan', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanPengguna.senaraiPengguna', compact('noti','user', 'bilangan', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function user_delete(Request $request)
@@ -246,11 +264,14 @@ class UserController extends Controller
         $kategoriPengguna = KategoriPengguna::all();
         $user = User::find($id);
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanPengguna.kemaskini', compact('user', 'kategoriPengguna', 'wilayah', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanPengguna.kemaskini', compact('noti','user', 'kategoriPengguna', 'wilayah', 'menuModul', 'menuProses', 'menuBorang'));
     }
     public function user_update(Request $request)
     {
@@ -375,7 +396,7 @@ class UserController extends Controller
             $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
             $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanPengguna.pengurusanKategoriPengguna', compact('kategoriPenggunas', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanPengguna.pengurusanKategoriPengguna', compact('noti','kategoriPenggunas', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function category_add(Request $request)
@@ -433,11 +454,14 @@ class UserController extends Controller
     {
         $audits = Audit::orderBy("updated_at", "DESC")->get();
         
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('auditTrail.audit', compact('audits', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('auditTrail.audit', compact('noti','audits', 'menuModul', 'menuProses', 'menuBorang'));
     }
  
     public function user_auditFilter(Request $request)
@@ -483,11 +507,14 @@ class UserController extends Controller
             ->orderBy("created_at", "DESC")->get();
         }
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('auditTrail.auditFilter', compact('audits', 'menuModul', 'menuProses', 'menuBorang', 'idPengguna', 'action', 'from_date', 'to_date'));
+        return view('auditTrail.auditFilter', compact('noti','audits', 'menuModul', 'menuProses', 'menuBorang', 'idPengguna', 'action', 'from_date', 'to_date'));
     }
     
     public function tugasList_app(Request $request)
@@ -495,12 +522,17 @@ class UserController extends Controller
         $user = Auth::user()->id;
         $aduans = Aduan::where('user_category', Auth::user()->kategoripengguna)->get();
         $tugasans= Senarai_tugasan::where('user_id', $user)->get();
-
+        
+        $date = Carbon::now();
+        $tugasans_noti= Senarai_tugasan::where('user_id', $user)->where('due_date', '>=', $date->format('Y-m-d'))->count();
+        $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->where('status', 'Belum Selesai')->count();
+        $noti = $tugasans_noti+$aduans_noti;
+        
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('userView.userTugasan', compact('aduans','tugasans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userTugasan', compact('noti','tugasans_noti','aduans_noti','aduans','tugasans', 'menuModul', 'menuProses', 'menuBorang'));
          
     }
 
@@ -512,10 +544,13 @@ class UserController extends Controller
 
         $tugasan_item = Perkara_Tugasan::where('tugasan_id', $tugas_id)->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+        
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
-        return view('userView.userTugasanItem', compact('tugasan_item','tugasans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userTugasanItem', compact('noti','tugasan_item','tugasans', 'menuModul', 'menuProses', 'menuBorang'));
         
     }
 
@@ -542,11 +577,14 @@ class UserController extends Controller
         $tugasan_item = Perkara_Tugasan::find($tugasItem_id);
         $item_progress = PerkaraTugasan_Progress::where('perkara_tugasan', $tugasItem_id)->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('userView.userTugasanProgress', compact('item_progress','tugasan_item','tugas_id', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userTugasanProgress', compact('noti','item_progress','tugasan_item','tugas_id', 'menuModul', 'menuProses', 'menuBorang'));
         
     }
 
@@ -568,11 +606,14 @@ class UserController extends Controller
     {               
         $jawapans = Jawapan::where('user_id', Auth::user()->id)->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('userView.userProjectList', compact('jawapans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userProjectList', compact('noti','jawapans', 'menuModul', 'menuProses', 'menuBorang'));
     }
     
     public function project_view(Request $request)
@@ -582,11 +623,14 @@ class UserController extends Controller
         $jawapan = Jawapan::find($jawapanId);
         $jawapanMedan = Jawapan_medan::where('jawapan_id', $jawapan->id)->get();
         
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('userView.projectDetail', compact('jawapan', 'jawapanMedan','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.projectDetail', compact('noti','jawapan', 'jawapanMedan','menuModul', 'menuProses', 'menuBorang'));
     }   
     
     public function viewTarik_diri(Request $request)
@@ -599,11 +643,14 @@ class UserController extends Controller
 
         $users = User::whereRelation('kategori', 'nama', '=', 'Peserta')->where('status', 1)->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('userView.tarikDiri', compact('jawapan', 'users','tarikDiri','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.tarikDiri', compact('noti','jawapan', 'users','tarikDiri','menuModul', 'menuProses', 'menuBorang'));
     } 
 
     public function tarik_diri(Request $request)
@@ -659,11 +706,14 @@ class UserController extends Controller
         
         $jenisTernakan = jenis_ternakan::where('proses_id', $borang->proses)->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('userView.kemaskiniProjek', compact('jawapan', 'jenisTernakan','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.kemaskiniProjek', compact('noti','jawapan', 'jenisTernakan','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function kemaskini_list(Request $request)
@@ -674,11 +724,14 @@ class UserController extends Controller
 
         $kemaskinis = JenisKemaskini::where('id_jenisTernakans', $ternakanId)->orderBy("updated_at", "DESC")->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('userView.kemaskiniList', compact('kemaskinis', 'jenisTernakan','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.kemaskiniList', compact('noti','kemaskinis', 'jenisTernakan','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function aktiviti_list(Request $request)
@@ -692,11 +745,14 @@ class UserController extends Controller
         $params = new \Illuminate\Database\Eloquent\Collection();
         $jawapans = new \Illuminate\Database\Eloquent\Collection();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('userView.kemaskiniAktivit', compact('kemaskini', 'aktivitis','params','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.kemaskiniAktivit', compact('noti','kemaskini', 'aktivitis','params','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function Param_list(Request $request)
@@ -713,11 +769,14 @@ class UserController extends Controller
         $params = AktivitiParameter::where('aktiviti', $aktivitiId)->get();
         $jawapans = Jawapan_parameter::whereRelation('AktivitiParameter', 'aktiviti' ,$aktivitiId)->where('user_id', Auth::user()->id)->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('userView.kemaskiniAktivit', compact('kemaskini', 'aktivitis','params','jawapans','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.kemaskiniAktivit', compact('noti','kemaskini', 'aktivitis','params','jawapans','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function KemasParam_add(Request $request)
@@ -763,11 +822,14 @@ class UserController extends Controller
     { 
         $tarikDiris = TarikDiri::with('jawapan')->whereRelation('jawapan', 'rancangan', '=', Auth::user()->rancangan)->where('status', 'Sedang Di Proses')->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanBorang.tarikDiriList', compact('tarikDiris','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanBorang.tarikDiriList', compact('noti','tarikDiris','menuModul', 'menuProses', 'menuBorang'));
 
     }
 
@@ -777,11 +839,14 @@ class UserController extends Controller
 
         $tarikDiri = TarikDiri::find($tarikDiri_id)->with('jawapan')->first();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanBorang.tarikDiriDetail', compact('tarikDiri','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanBorang.tarikDiriDetail', compact('noti','tarikDiri','menuModul', 'menuProses', 'menuBorang'));
 
     }
 
@@ -812,11 +877,14 @@ class UserController extends Controller
         $users = User::where('rancangan', Auth::user()->rancangan)->get();
         $borangs = Borang::all()->pluck('namaBorang', 'id');
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanBorang.forceTarikDiri', compact('users','borangs','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanBorang.forceTarikDiri', compact('noti','users','borangs','menuModul', 'menuProses', 'menuBorang'));
 
     }
 
@@ -894,11 +962,14 @@ class UserController extends Controller
             ->make(true);
         }
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('aduan.aduanList', compact('aduans','menuModul', 'menuProses', 'menuBorang'));
+        return view('aduan.aduanList', compact('noti','aduans','menuModul', 'menuProses', 'menuBorang'));
     }
     
     public function aduan_add(Request $request)
@@ -1014,11 +1085,14 @@ class UserController extends Controller
             ->make(true);
         }
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('aduan.pegawaiAduanList', compact('aduans','menuModul', 'menuProses', 'menuBorang'));
+        return view('aduan.pegawaiAduanList', compact('noti','aduans','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function pegawaiAduan_update(Request $request)
@@ -1040,11 +1114,14 @@ class UserController extends Controller
         $aduan = Aduan::find($aduanID);
         $responds = Respond_aduan::where('aduan_id', $aduanID)->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('aduan.respond', compact('aduan', 'responds','menuModul', 'menuProses', 'menuBorang'));
+        return view('aduan.respond', compact('noti','aduan', 'responds','menuModul', 'menuProses', 'menuBorang'));
 
     }
 
@@ -1084,11 +1161,14 @@ class UserController extends Controller
         $aduan = Aduan::find($aduanID);
         $responds = Respond_aduan::where('aduan_id', $aduanID)->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('aduan.respondList', compact('aduan', 'responds','menuModul', 'menuProses', 'menuBorang'));
+        return view('aduan.respondList', compact('noti','aduan', 'responds','menuModul', 'menuProses', 'menuBorang'));
 
     }
 

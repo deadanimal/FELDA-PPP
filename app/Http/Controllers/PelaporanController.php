@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use App\Models\Wilayah;
 use App\Models\Rancangan;
 use App\Models\User;
@@ -14,12 +16,23 @@ use App\Models\JenisKemaskini;
 use App\Models\AktivitiParameter;
 use App\Models\Aktiviti;
 use App\Models\Jawapan_parameter;
+use App\Models\Aduan;
+use App\Models\Senarai_tugasan;
 use DataTables;
 use PDF;
 
 class PelaporanController extends Controller
 {
-    
+    public function notification(){
+        //for notification tugasan
+        $date = Carbon::now();
+        $tugasans_noti= Senarai_tugasan::where('user_id', Auth::user()->id)->where('due_date', '>=', $date->format('Y-m-d'))->count();
+        $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->where('status', 'Belum Selesai')->count();
+        $noti = $tugasans_noti + $aduans_noti;
+
+        return $noti;
+    }
+
     public function proses_list(Request $request)
     {
         $idModul = (int)$request->route('id');
@@ -37,11 +50,15 @@ class PelaporanController extends Controller
             ->rawColumns(['tindakan'])                          
             ->make(true);
         }
+
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pelaporan.senaraiProsesLaporan', compact('modul','proses', 'idModul','menuModul', 'menuProses', 'menuBorang'));
+        return view('pelaporan.senaraiProsesLaporan', compact('noti','modul','proses', 'idModul','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function ternakan_list(Request $request)
@@ -61,11 +78,15 @@ class PelaporanController extends Controller
             ->rawColumns(['tindakan'])                          
             ->make(true);
         }
+        
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pelaporan.senaraiTernakan', compact('proses', 'jenisTernakan', 'idProses', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pelaporan.senaraiTernakan', compact('noti','proses', 'jenisTernakan', 'idProses', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function kemaskini_list(Request $request)
@@ -85,11 +106,15 @@ class PelaporanController extends Controller
             ->rawColumns(['tindakan'])                          
             ->make(true);
         }
+        
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pelaporan.senaraiKemaskini', compact('ternakan', 'jenisKemaskini', 'idTernakan', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pelaporan.senaraiKemaskini', compact('noti','ternakan', 'jenisKemaskini', 'idTernakan', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function aktiviti_list(Request $request)
@@ -109,11 +134,15 @@ class PelaporanController extends Controller
             ->rawColumns(['tindakan'])                          
             ->make(true);
         }
+
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pelaporan.senaraiAktiviti', compact('kemaskini', 'aktiviti', 'idKemaskini', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pelaporan.senaraiAktiviti', compact('noti','kemaskini', 'aktiviti', 'idKemaskini', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function user_list(Request $request)
@@ -123,11 +152,14 @@ class PelaporanController extends Controller
         $jwpnParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->orderBy('user_id')->get();
         // dd($jwpnParameter);
         
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pelaporan.senaraiUser', compact('aktiviti', 'jwpnParameter', 'idAktiviti', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pelaporan.senaraiUser', compact('noti','aktiviti', 'jwpnParameter', 'idAktiviti', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function userSearch_list(Request $request)
@@ -162,7 +194,7 @@ class PelaporanController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pelaporan.senaraiUser', compact('aktiviti', 'jwpnParameter', 'idAktiviti', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pelaporan.senaraiUser', compact('noti','aktiviti', 'jwpnParameter', 'idAktiviti', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function user_report(Request $request)
@@ -174,11 +206,14 @@ class PelaporanController extends Controller
         $expensesParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->where('user_id', $idUser)->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->whereRelation('AktivitiParameter', 'category', 'Perbelanjaan')->orderBy('created_at')->get();
         $incomeParameter = Jawapan_parameter::with('AktivitiParameter', 'AktivitiParameter.aktiviti', 'users', 'users.rancangan_id', 'users.wilayah_id')->where('user_id', $idUser)->whereRelation('AktivitiParameter.aktiviti','id', $idAktiviti)->whereRelation('AktivitiParameter', 'category', 'Pendapatan')->orderBy('created_at')->get();
 
+        //for notification tugasan
+        $noti = $this->notification();
+
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pelaporan.reportUser', compact('aktiviti', 'expensesParameter', 'incomeParameter', 'user', 'idAktiviti', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pelaporan.reportUser', compact('noti','aktiviti', 'expensesParameter', 'incomeParameter', 'user', 'idAktiviti', 'menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function report_print(Request $request)
