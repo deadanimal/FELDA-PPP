@@ -110,6 +110,7 @@
                           <thead class="text-white bg-primary w-100">
                             <tr class="text-center">
                                 <th scope="col">Aduan</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Tindakan</th>
                             </tr>
                           </thead>
@@ -117,6 +118,7 @@
                               @foreach ($aduans as $aduan)
                               <tr>
                                   <td class="text-center arial" style="text-transform: uppercase;">{{$aduan->nama}}</td>
+                                  <td class="text-center arial" style="text-transform: uppercase;">{{$aduan->status}}</td>
                                   <td class="text-center arial">
                                     <a class="btn btn-success" href="/user/tugasan/aduan/{{$aduan->id}}/list" style="color: white; text-decoration:none;">
                                       Semak Tugasan

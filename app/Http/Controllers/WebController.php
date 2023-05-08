@@ -141,7 +141,7 @@ class WebController extends Controller
         //for notification tugasan
         $date = Carbon::now();
         $tugasans_noti= Senarai_tugasan::where('user_id', Auth::user()->id)->where('due_date', '>=', $date->format('Y-m-d'))->count();
-        $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->where('status', 'Belum Selesai')->count();
+        $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->whereNot('status', 'Sah Selesai')->count();
         $noti = $tugasans_noti+$aduans_noti;
 
         return $noti;

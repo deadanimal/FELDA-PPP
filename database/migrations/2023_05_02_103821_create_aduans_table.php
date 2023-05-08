@@ -19,6 +19,8 @@ return new class extends Migration
             $table->String('jenis_aduan');
             $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('user_category')->references('id')->on('kategori_penggunas')->onUpdate('cascade')->onDelete('cascade')->nullable();
+            $table->foreignId('wilayah')->references('id')->on('Wilayah')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('rancangan')->references('id')->on('rancangan')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

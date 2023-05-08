@@ -24,19 +24,33 @@
                 <h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Jenis Aduan: {{$aduan->jenis_aduan}}</h1>
             </div>
             @if ($aduan->status == "Belum Selesai")
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <div class="alert-message">
+                        <strong>Status: {{$aduan->status}}</strong>
+                    </div>
+                </div>
+            @elseif ($aduan->status == "Dalam Proses")
                 <div class="alert alert-warning alert-dismissible" role="alert">
                     <div class="alert-message">
                         <strong>Status: {{$aduan->status}}</strong>
                     </div>
                 </div>
-            @else
-                <div class="alert alert-success alert-dismissible" role="alert">
+            @elseif ($aduan->status == "Selesai")
+                <div class="alert alert-secondary alert-dismissible" role="alert">
                     <div class="alert-message">
                         <strong>Status: {{$aduan->status}}</strong>
                     </div>
                 </div>
+            @else
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <div class="alert-message">
+                    <strong>Status: {{$aduan->status}}</strong>
+                </div>
+            </div>
             @endif
-            <div>
+
+            @if($aduan->status != "Sah Selesai")
+              <div>
                 <form action="/user/tugasan/aduan/add" method="post" enctype="multipart/form-data">
                     @csrf
                     @if ($aduan->jenis_respond == "Text")
@@ -50,9 +64,74 @@
                         <button type="submit" class="btn btn-primary text-center">Hantar</button>
                     </div>
                 </form>
-            </div>
+              </div>
+            @endif
         </div>
       </div>
+      @if($aduan->status != "Sah Selesai")
+        <div class="card">
+          <div class="card-header">
+            <h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Kemaskini Status</h1>
+          </div>
+          <div class="card-body">
+            <button type="button" class="btn btn-warning text-center btn-lg" data-toggle="modal" data-target="#exampleModalstatus">Dalam Proses</button>
+            {{-- modal Belum Selesai --}}
+            <div class="modal fade" id="exampleModalstatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Kemaskini Status Aduan</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <p>Adakah Aduan Masih Dalam Proses?</p>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                      <form action="/Aduan/respon/update" method="post" enctype="multipart/form-data">
+                          @csrf
+                          @method('put')
+                          <input type="hidden" name="aduan_id" value="{{$aduan->id}}">
+                          <input type="hidden" name="status" value="Dalam Proses">
+                          <button class="btn btn-danger">YA</button>
+                      </form>
+                  </div>
+                  </div>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-primary text-center btn-lg" data-toggle="modal" data-target="#exampleModalSelesai">Selesai</button>
+            {{-- modal Selesai --}}
+            <div class="modal fade" id="exampleModalSelesai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Kemaskini Status Aduan</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <p>Adakah Aduan Sudah Selesai?</p>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                      <form action="/Aduan/respon/update" method="post" enctype="multipart/form-data">
+                          @csrf
+                          @method('put')
+                          <input type="hidden" name="aduan_id" value="{{$aduan->id}}">
+                          <input type="hidden" name="status" value="Selesai">
+                          <button class="btn btn-danger">YA</button>
+                      </form>
+                  </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      @endif
     </div>
   </div>
   <div class="row">
@@ -69,16 +148,15 @@
             <table class="table table-bordered table-striped w-100 text-center">
                 <thead class="text-white bg-primary w-100">
                     <tr>
-                        <th scope="col" class="text-center" style="width: 50%">Aduan</th>
                         <th scope="col" class="text-center">Respon</th>
-                        <th scope="col" class="text-center" style="width: 10%">Tindakan</th>
+                        @if($aduan->status != "Sah Selesai")
+                          <th scope="col" class="text-center" style="width: 10%">Tindakan</th>
+                        @endif
                     </tr>
                 </thead>
             <tbody>
                 @foreach ($responds as $response)
                     <tr>
-                        <td>{{$response->Aduan->nama}}</td>
-
                         <td>
                         @if ($response->Aduan->jenis_respond == "Text")
                             {!!nl2br(e($response->respond))!!}
@@ -87,45 +165,47 @@
                         @endif
                         </td>
 
-                        <td>
-                            <div class="col-md-12 text-center">
-                                <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalcheck{{$response->id}}" title="Padam"></button>
-                            </div>
+                        @if($aduan->status != "Sah Selesai")
+                          <td>
+                              <div class="col-md-12 text-center">
+                                  <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalcheck{{$response->id}}" title="Padam"></button>
+                              </div>
 
-                            <!-- Modal delete-->
-                            <div class="modal fade" id="exampleModalcheck{{$response->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Padam Respon</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Anda Pasti Mahu Padam respon ini?</p>
-                                        <p>
-                                            @if ($response->Aduan->jenis_respond == "Text")
-                                                {!!nl2br(e($response->respond))!!}
-                                            @else
-                                                <a href="{{$response->respond}}">Papar fail</a>
-                                            @endif
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
-                                        <form action="/user/tugasan/aduan/delete" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            @method('Delete')
-                                            <input type="hidden" name="response_id" value="{{$response->id}}">
-                                            <input type="hidden" name="aduan_id" value="{{$aduan->id}}">
-                                            <button class="btn btn-danger">YA</button>
-                                        </form>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
+                              <!-- Modal delete-->
+                              <div class="modal fade" id="exampleModalcheck{{$response->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered" role="document">
+                                      <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLabel">Padam Respon</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                          </button>
+                                      </div>
+                                      <div class="modal-body">
+                                          <p>Anda Pasti Mahu Padam respon ini?</p>
+                                          <p>
+                                              @if ($response->Aduan->jenis_respond == "Text")
+                                                  {!!nl2br(e($response->respond))!!}
+                                              @else
+                                                  <a href="{{$response->respond}}">Papar fail</a>
+                                              @endif
+                                          </p>
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                                          <form action="/user/tugasan/aduan/delete" method="post" enctype="multipart/form-data">
+                                              @csrf
+                                              @method('Delete')
+                                              <input type="hidden" name="response_id" value="{{$response->id}}">
+                                              <input type="hidden" name="aduan_id" value="{{$aduan->id}}">
+                                              <button class="btn btn-danger">YA</button>
+                                          </form>
+                                      </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </td>
+                        @endif
                     </tr>
                 @endforeach
 

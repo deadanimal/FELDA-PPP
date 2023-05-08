@@ -59,6 +59,22 @@
                         <option value="Pemakluman">Pemakluman</option>
                         <option value="Perlu Tindakan">Perlu Tindakan</option>
                     </select>
+
+                    <label for="wilayah" class="frame9402-text04">
+                        <strong>Anda Dari Peringkat:</strong>
+                    </label>
+                    <select name="wilayah" class="form-select frame9402-kotaknamaBorang">
+                        <option value="" selected disabled>Pilih Peringkat</option>
+                        @foreach ($wilayah as $key => $value)
+                            <option value="{{ $key }}">{{ $value }}</option>
+                        @endforeach
+                    </select>
+                    <label for="rancangan" class="frame9402-text04">
+                        <strong>Anda Dari Rancangan:</strong>
+                    </label>
+                    <select name="rancangan" class="form-select frame9402-kotaknamaBorang">
+                        <option value="" selected disabled>Pilih Rancangan</option>
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
@@ -77,8 +93,8 @@
             <thead class="text-white bg-primary w-100">
               <tr>
                   <th scope="col" class="text-center" style="width: 50%">Aduan</th>
-                  <th scope="col" class="text-center">Jenis Aduan</th>
                   <th scope="col" class="text-center">Tarikh Aduan</th>
+                  <th scope="col" class="text-center">Jenis Aduan</th>
                   <th scope="col" class="text-center">Status</th>
                   <th scope="col" class="text-center">Tindakan</th>
               </tr>
@@ -95,6 +111,30 @@
     </div>
   </div>
 </div>
+<script>
+    $(document).ready(function(){
+    $('select[name="wilayah"]').on('change',function(){
+        var wilayahid= $(this).val();
+        var newUrl = window.location.protocol + "//" + window.location.host;
+        if (wilayahid) {
+          $.ajax({
+            url: newUrl+"/getRancangan/"+wilayahid,
+          type: "GET",
+          dataType: "json",
+          success: function(data){
+            console.log(data);
+            $('select[name="rancangan"]').empty();
+            $.each(data,function(key,value){
+                $('select[name="rancangan"]').append('<option value="'+key+'">'+value+'</option>');
+            });
+          }
+          });
+        }else {
+              $('select[name="rancangan"]').empty();
+        }
+    });
+  });
+</script>
 <script type="text/javascript">
     $('.aduan-datatable').DataTable({
                 processing: true,
@@ -137,7 +177,7 @@
                     {
                         data: 'status',
                         name: 'status',
-                        className: "text-Upp Arial"
+                        className: "text-center Arial"
                     },
                     {
                         data: 'tindakan',

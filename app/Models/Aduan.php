@@ -20,4 +20,12 @@ class Aduan extends Model
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function wilayah_id() {
+        return $this->belongsTo(Wilayah::class,'wilayah');
+    }
+
+    public function rancangan_id() {
+        return $this->belongsTo(Rancangan::class,'rancangan');
+    }
 }

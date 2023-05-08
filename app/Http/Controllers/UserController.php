@@ -47,7 +47,7 @@ class UserController extends Controller
         //for notification tugasan
         $date = Carbon::now();
         $tugasans_noti= Senarai_tugasan::where('user_id', Auth::user()->id)->where('due_date', '>=', $date->format('Y-m-d'))->count();
-        $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->where('status', 'Belum Selesai')->count();
+        $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->whereNot('status', 'Sah Selesai')->count();
         $noti = $tugasans_noti+$aduans_noti;
 
         return $noti;
@@ -529,7 +529,7 @@ class UserController extends Controller
         
         $date = Carbon::now();
         $tugasans_noti= Senarai_tugasan::where('user_id', $user)->where('due_date', '>=', $date->format('Y-m-d'))->count();
-        $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->where('status', 'Belum Selesai')->count();
+        $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->whereNot('status', 'Sah Selesai')->count();
         $noti = $tugasans_noti+$aduans_noti;
 
         $menuModul = Modul::where('status', 'Go-live')->get();
@@ -968,12 +968,13 @@ class UserController extends Controller
 
         //for notification tugasan
         $noti = $this->notification();
+        $wilayah = Wilayah::all()->pluck('nama','id');
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('aduan.aduanList', compact('noti','aduans','menuModul', 'menuProses', 'menuBorang'));
+        return view('aduan.aduanList', compact('noti','wilayah','aduans','menuModul', 'menuProses', 'menuBorang'));
     }
     
     public function aduan_add(Request $request)
@@ -981,6 +982,8 @@ class UserController extends Controller
         $aduan = new Aduan;
         $aduan->nama = $request->nama;
         $aduan->jenis_aduan = $request->jenisAduan;
+        $aduan->wilayah = $request->wilayah;
+        $aduan->rancangan = $request->rancangan;
         $aduan->user_id = Auth::user()->id;
         $aduan->save();
 
@@ -989,6 +992,7 @@ class UserController extends Controller
         return redirect('/Aduan/List');
 
     }
+    
     public function aduan_delete(Request $request)
     { 
         $aduan = Aduan::find($request->aduanId);
@@ -1034,7 +1038,7 @@ class UserController extends Controller
                 }
                 return '
                 <a href="'.$url.'" class="btn btn-primary" style="text-transform:capitalize;">Lihat Respond</a><br><br>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal'.$aduans->id.'" title="selesai">Tindakan</button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal'.$aduans->id.'" title="selesai" style="width: -webkit-fill-available;">Tindakan</button>
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal'.$aduans->id.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -1173,7 +1177,6 @@ class UserController extends Controller
         $menuBorang = Borang::where('status', 1)->get();
 
         return view('aduan.respondList', compact('noti','aduan', 'responds','menuModul', 'menuProses', 'menuBorang'));
-
     }
 
     public function response_update(Request $request)

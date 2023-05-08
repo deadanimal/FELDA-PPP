@@ -24,17 +24,29 @@
                 <h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Jenis Aduan: {{$aduan->jenis_aduan}}</h1>
             </div><br>
             @if ($aduan->status == "Belum Selesai")
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <div class="alert-message">
+                        <strong>Status: {{$aduan->status}}</strong>
+                    </div>
+                </div>
+            @elseif ($aduan->status == "Dalam Proses")
                 <div class="alert alert-warning alert-dismissible" role="alert">
                     <div class="alert-message">
                         <strong>Status: {{$aduan->status}}</strong>
                     </div>
                 </div>
-            @else
-                <div class="alert alert-success alert-dismissible" role="alert">
+            @elseif ($aduan->status == "Selesai")
+                <div class="alert alert-secondary alert-dismissible" role="alert">
                     <div class="alert-message">
                         <strong>Status: {{$aduan->status}}</strong>
                     </div>
                 </div>
+            @else
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <div class="alert-message">
+                    <strong>Status: {{$aduan->status}}</strong>
+                </div>
+            </div>
             @endif
             
             <div class="col-md-12 text-center">
@@ -66,7 +78,7 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-primary text-center btn-lg" data-toggle="modal" data-target="#exampleModalSelesai">Selesai</button>
+                <button type="button" class="btn btn-primary text-center btn-lg" data-toggle="modal" data-target="#exampleModalSelesai">Sah Selesai</button>
                 {{-- modal Selesai --}}
                 <div class="modal fade" id="exampleModalSelesai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -86,7 +98,7 @@
                                 @csrf
                                 @method('put')
                                 <input type="hidden" name="aduan_id" value="{{$aduan->id}}">
-                                <input type="hidden" name="status" value="Selesai">
+                                <input type="hidden" name="status" value="Sah Selesai">
                                 <button class="btn btn-danger">YA</button>
                             </form>
                         </div>
@@ -112,17 +124,13 @@
             <table class="table table-bordered table-striped w-100 text-center">
                 <thead class="text-white bg-primary w-100">
                     <tr>
-                        <th scope="col" class="text-center" style="width: 40%">Aduan</th>
+                        <th scope="col" class="text-center" style="width: 60%">Respon</th>
                         <th scope="col" class="text-center">Pengguna</th>
-                        <th scope="col" class="text-center">Respon</th>
-                        <th scope="col" class="text-center">Tindakan</th>
                     </tr>
                 </thead>
             <tbody>
                 @foreach ($responds as $response)
                     <tr>
-                        <td>{{$response->Aduan->nama}}</td>
-                        <td>{{$response->user->nama}}</td>
                         <td>
                         @if ($response->Aduan->jenis_respond == "Text")
                             {!!nl2br(e($response->respond))!!}
@@ -131,46 +139,7 @@
                         @endif
                         </td>
 
-                        <td>
-                            <div class="col-md-12 text-center">
-                                <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalcheck{{$response->id}}" title="Padam"></button>
-                            </div>
-
-
-                            <!-- Modal delete-->
-                            <div class="modal fade" id="exampleModalcheck{{$response->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Padam Respon</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Anda Pasti Mahu Padam respon ini?</p>
-                                        <p>
-                                            @if ($response->Aduan->jenis_respond == "Text")
-                                                {!!nl2br(e($response->respond))!!}
-                                            @else
-                                                <a href="{{$response->respond}}">Papar fail</a>
-                                            @endif
-                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
-                                        <form action="/user/tugasan/aduan/delete" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            @method('Delete')
-                                            <input type="hidden" name="response_id" value="{{$response->id}}">
-                                            <input type="hidden" name="aduan_id" value="{{$aduan->id}}">
-                                            <button class="btn btn-danger">YA</button>
-                                        </form>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
+                        <td>{{$response->user->nama}}</td>
                     </tr>
                 @endforeach
 
