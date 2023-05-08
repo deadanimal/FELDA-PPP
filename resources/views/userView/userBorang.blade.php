@@ -42,27 +42,52 @@
                                 </select>
                             </div>
                         </div>
+                        @php
+                            $count = 0;
+                        @endphp
                         @foreach($medans as $medan)
-                            <div class="row">
-                                <div class="mb-3">
-                                    <label for="jawapan{{$medan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase">{{$medan->nama}}</label>
-                                    <input 
-                                    @if ($medan->datatype == "string")
-                                        type="text" 
-                                    @else
-                                        type="number" step="any"
-                                    @endif
-
-                                    @if ($medan->pilihan == "required")
-                                        required 
-                                    @endif
-                                    @if ($medan->nama != 'emel')
-                                        style="text-transform: uppercase;"
-                                    @endif
-                                    class="form-control" maxlength="{{$medan->max}}" minlength="{{$medan->min}}" name="jawapan[]" id="jawapan{{$medan->id}}">
-                                    <input type="hidden" name="medanID[]" value="{{$medan->id}}">
+                            @if($medan->datatype == "checkbox")
+                                <div class="row">
+                                    <label for="nama" style="font-family:'Arial', sans-serif; text-transform:uppercase;">{{$medan->nama}}</label>
                                 </div>
-                            </div>
+                                <div class="row">
+                                    <div class="mb-3">
+                                        @foreach($checkboxes as $checkbox=>$value)
+                                            @foreach($value as $chkbox)
+                                                @if($chkbox->medan_id == $medan->id)
+                                                    <input type="radio" id="check{{$chkbox->id}}" name="jawapancheck{{$medan->id}}[]" value="{{$chkbox->nama}}">
+                                                    <label for="check{{$chkbox->id}}">{{$chkbox->nama}}</label><br>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    <input type="hidden" name="medanID[]" value="{{$medan->id}}">
+                                    </div>
+                                </div>
+                            @else
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <label for="jawapan{{$medan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase">{{$medan->nama}}</label>
+                                        <input 
+                                        @if ($medan->datatype == "string")
+                                            type="text" 
+                                        @else
+                                            type="number" step="any"
+                                        @endif
+
+                                        @if ($medan->pilihan == "required")
+                                            required 
+                                        @endif
+                                        @if ($medan->nama != 'emel')
+                                            style="text-transform: uppercase;"
+                                        @endif
+                                        class="form-control" maxlength="{{$medan->max}}" minlength="{{$medan->min}}" name="jawapan[]" id="jawapan{{$medan->id}}">
+                                        <input type="hidden" name="medanID[]" value="{{$medan->id}}">
+                                    </div>
+                                </div>
+                            @endif
+                            @php
+                                $count += 1;
+                            @endphp
                         @endforeach
                         @if ($borang->consent != null || $borang->consent != "")
                             <input type="checkbox" id="consent" name="const" onchange="document.getElementById('hantar').disabled = !this.checked;">
@@ -73,6 +98,8 @@
                             <input type="hidden" name="borangID" value="{{$borang->id}}">
                             <button type="submit" class="frame9403-frame7445" id="hantar">
                         @endif
+                            <input type="hidden" name="countJwpn" value="{{$count}}">
+
                             <div class="frame9403-frame7293">
                                 <span class="frame9403-text21"><span>Hantar</span></span>
                                 <img

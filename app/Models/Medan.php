@@ -17,5 +17,9 @@ class Medan extends Model
     public function jawapan_medan() {
         return $this->hasMany(Jawapan_Medan::class);
     }
+
+    public function checkbox() {
+        return $this->hasMany(checkbox::class);
+    }
     
 }

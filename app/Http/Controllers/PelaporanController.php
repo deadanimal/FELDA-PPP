@@ -37,7 +37,7 @@ class PelaporanController extends Controller
     {
         $idModul = (int)$request->route('id');
         $modul = Modul::find($idModul);
-        $proses = Proses::where('modul', $idModul)->orderBy("updated_at", "DESC")->get();
+        $proses = Proses::where('modul_id', $idModul)->orderBy("updated_at", "DESC")->get();
         if($request->ajax()) {
             return DataTables::collection($proses)
             ->addIndexColumn()

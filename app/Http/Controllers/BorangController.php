@@ -23,6 +23,7 @@ use App\Models\KategoriPengguna;
 use App\Models\Tahap_kelulusan;
 use App\Models\Kelulusan_borang;
 use App\Models\Aduan;
+use App\Models\checkbox;
 use App\Models\Senarai_tugasan;
 use Illuminate\Http\Request;
 use Alert;
@@ -209,7 +210,14 @@ class BorangController extends Controller
         $proses = Proses::find($idProses);
 
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
-
+        $checkboxes = new \Illuminate\Database\Eloquent\Collection();
+        
+        foreach($medans as $medan){
+            $checkbox = checkbox::where("medan_id", $medan->id)->get();
+            if(!$checkbox->isEmpty()){
+                $checkboxes->push($checkbox);
+            }
+        }
         //for notification tugasan
         $noti = $this->notification();
 
@@ -217,15 +225,25 @@ class BorangController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('pengurusanModul.viewBorang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.viewBorang', compact('checkboxes','noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
     }
+
     public function userBorang_view(Request $request)
     {
         $idBorang = (int)$request->route('idBorang');
         $borang = Borang::find($idBorang);
         $wilayah = Wilayah::all()->pluck('nama','id');
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
-
+        $checkboxes = new \Illuminate\Database\Eloquent\Collection();
+        
+        $checkboxes = new \Illuminate\Database\Eloquent\Collection();
+        
+        foreach($medans as $medan){
+            $checkbox = checkbox::where("medan_id", $medan->id)->get();
+            if(!$checkbox->isEmpty()){
+                $checkboxes->push($checkbox);
+            }
+        }
         //for notification tugasan
         $noti = $this->notification();
 
@@ -233,15 +251,14 @@ class BorangController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('userView.userBorang', compact('noti','wilayah','borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userBorang', compact('checkboxes','noti','wilayah','borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function userBorang_submit(Request $request)
     {
         $medanID = $request->medanID;
         $jawapan = $request->jawapan;
-        $count = count($jawapan);
-
+        $count = $request->countJwpn;
         $borangid = $request->borangID;
 
         $ans = new Jawapan;
@@ -255,8 +272,18 @@ class BorangController extends Controller
         $jawapan_id= $ans->id;
 
         for($x=0; $x<$count; $x++){
+            $medan = Medan::find($medanID[$x]);
             $jwpn_Medan = new Jawapan_medan;
-            $jwpn_Medan->jawapan = $jawapan[$x];
+
+            if($medan->datatype == "checkbox"){
+                $jawapancheck = ("jawapancheck".$medanID[$x]);
+                $checkjawapan = $request->$jawapancheck;
+                $jwpn_Medan->jawapan = $checkjawapan[0];
+            }
+            else{
+                $jwpn_Medan->jawapan = $jawapan[$x];
+            }
+            
             $jwpn_Medan->jawapan_id = $jawapan_id;
             $jwpn_Medan->medan_id = $medanID[$x];
             $jwpn_Medan->save();
@@ -270,10 +297,6 @@ class BorangController extends Controller
 
         Alert::success('Maklumat Anda Berjaya Disimpan.', 'Maklumat anda telah berjaya disimpan.');   
         
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
-
         return redirect('/user/sub_borang/list');
     }
 
@@ -503,10 +526,10 @@ class BorangController extends Controller
     public function borangApp_view(Request $request)
     {
         $userId = (int) $request->route('user_id');
-        $borangId = (int) $request->route('borang_id');
+        $jawapan_id = (int) $request->route('jawapan_id');
         $tahapLulus = (int) $request->route('level_app');
 
-        $borangJwpn = Jawapan::where('borang_id', $borangId)->where('user_id', $userId)->first();
+        $borangJwpn = Jawapan::find($jawapan_id);
         $lulusBorangs = Kelulusan_borang::where('tahapKelulusan_id', $tahapLulus)->where('jawapan_id', $borangJwpn->id)->get();
         $jawapanMedan = Jawapan_medan::where('jawapan_id', $borangJwpn->id)->get();
         
@@ -523,13 +546,13 @@ class BorangController extends Controller
     public function borangApp_pdf(Request $request)
     {
         $userId = $request->user_id;
-        $borangId = $request->borang_id;
+        $jawapan_id = $request->jawapan_id;
         $tahapKelulusanID = $request->tahapKelulusanID;
 
         $surat = Surat::where('kelulusan_id', $tahapKelulusanID)->first();
 
-        $borangJwpn = Jawapan::where('borang_id', $borangId)->where('user_id', $userId)->first();
-        $jawapanMedan = Jawapan_medan::where('jawapan_id', $borangJwpn->id)->get();
+        $borangJwpn = Jawapan::find($jawapan_id);
+        $jawapanMedan = Jawapan_medan::where('jawapan_id', $jawapan_id)->get();
 
         $data = compact('borangJwpn', 'jawapanMedan', 'surat');
         $pdf = PDF::loadView('pengurusanBorang.borangPDF', $data)
@@ -630,10 +653,9 @@ class BorangController extends Controller
     
     public function subBorang_view(Request $request)
     {
-        $borangId = (int) $request->route('borang_id');
-        $userId = Auth::user()->id;
+        $jwpnId = (int) $request->route('borang_id');
 
-        $borangJwpns = Jawapan::where('borang_id', $borangId)->where('user_id', $userId)->first();
+        $borangJwpns = Jawapan::find($jwpnId);
         $jawapanMedans = Jawapan_medan::where('jawapan_id', $borangJwpns->id)->get();
 
         //for notification tugasan
@@ -926,16 +948,81 @@ class BorangController extends Controller
         $idModul = $request->modulId;
         $idProses = $request->prosesId;
 
-        Alert::success('Kemaskini Persetujuan Berjaya.', 'Persetujuan telah berjaya diKemaskini.');
+        Alert::success('Kemaskini Persetujuan Berjaya.', 'Persetujuan telah berjaya dikemaskini.');
 
         return redirect('/moduls/'.$idModul.'/'.$idProses.'/borang/'.$idBorang.'');
     }
 
     public function checkbox_list(Request $request)
     {
-        $idBorang = (int)$request->route('borang_id');
-        $borang = Borang::find($idBorang);
+        $medan_id = (int)$request->route('medan_id');
+        $medan = Medan::with('borang', 'borang.proses', 'borang.proses.modul', 'borang.proses.modul')->where('id',$medan_id)->first();
+        // dd($medan);
+        $checkboxes = checkbox::where('medan_id', $medan_id)->get();
+        //for notification tugasan
+        $noti = $this->notification();
 
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
         
+        return view('pengurusanModul.borangCheckbox', compact('checkboxes','medan','noti','menuModul', 'menuProses', 'menuBorang'));
     }
+
+    public function checkbox_add(Request $request)
+    {
+        $medan_id = $request->medan_id;
+
+        $checkboxes = new checkbox;
+        $checkboxes->nama = $request->nama;
+        $checkboxes->medan_id = $request->medan_id;
+        $checkboxes->save();
+        
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Pilihan Kotak Semak ".$checkboxes->nama." pada Medan ".$checkboxes->medan->nama;
+        $audit->save();
+
+        Alert::success('Cipta Pilihan Kotak Semak Berjaya.', 'Pilihan kotak semak telah berjaya dicipta.');
+
+        return redirect('/moduls/borang/checkbox/'.$medan_id.'');
+    }
+
+    public function checkbox_edit(Request $request)
+    {
+        $medan_id = $request->medan_id;
+
+        $checkboxes = checkbox::find($request->checkbox_id);
+        $checkboxes->nama = $request->nama;
+        $checkboxes->medan_id = $request->medan_id;
+        $checkboxes->save();
+        
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Pilihan Kotak Semak ".$checkboxes->nama." pada Medan ".$checkboxes->medan->nama;
+        $audit->save();
+
+        Alert::success('Kemaskini Pilihan Kotak Semak Berjaya.', 'Pilihan kotak semak telah berjaya dikemaskini.');
+
+        return redirect('/moduls/borang/checkbox/'.$medan_id.'');
+    }
+
+    public function checkbox_delete(Request $request)
+    {
+        $medan_id = $request->medan_id;
+
+        $checkboxes = checkbox::find($request->checkbox_id);
+        
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Pilihan Kotak Semak ".$checkboxes->nama." pada Medan ".$checkboxes->medan->nama;
+        $audit->save();
+
+        $checkboxes->delete();
+
+        Alert::success('Padam Pilihan Kotak Semak Berjaya.', 'Pilihan kotak semak telah berjaya dipadam.');
+
+        return redirect('/moduls/borang/checkbox/'.$medan_id.'');
+    }
+    
 }

@@ -227,14 +227,14 @@
                 </a>
                 <ul id="auth{{$mModul->id}}" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
                     @foreach ($menuProses as $mProses)
-                        @if ($mProses->modul == $mModul->id)
+                        @if ($mProses->modul_id == $mModul->id)
                         <li class="sidebar-item">
                             <a data-bs-target="#subauth{{$mProses->id}}" data-bs-toggle="collapse" class="sidebar-link submenu collapsed" aria-expanded="false">
                                 <i class="align-middle me-2 ion ion-ios-journal"></i> <span class="align-middle">{{$mProses->nama}}</span>
                             </a>
                             <ul id="subauth{{$mProses->id}}" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#submenu">
                                 @foreach ($menuBorang as $mBorang)
-                                    @if ($mBorang->proses == $mProses->id)
+                                    @if ($mBorang->proses_id == $mProses->id)
                                         <li class="sidebar-item"><a class="sidebar-link" href="/userBorang/view/{{$mBorang->id}}"><i class="align-middle me-2 fas fa-fw fa-file-alt"></i>{{$mBorang->namaBorang}}</a></li>  
                                     @endif                                  
                                 @endforeach

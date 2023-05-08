@@ -236,7 +236,7 @@ class ModulController extends Controller
         $prosess->nama = $request->namaProses;
         $prosess->status = 1;
         $prosess->sequence = $request->sequence;
-        $prosess->modul = $request->modulId;
+        $prosess->modul_id = $request->modulId;
         $prosess->save();
 
         $audit = new Audit;
@@ -246,7 +246,7 @@ class ModulController extends Controller
 
         Alert::success('Cipta proses berjaya.', 'Cipta proses telah berjaya.');
         $modul = Modul::find($request->modulId);
-        $prosess = Proses::where('modul', $request->modulId)->orderBy("sequence", "ASC")->get();
+        $prosess = Proses::where('modul_id', $request->modulId)->orderBy("sequence", "ASC")->get();
 
         //for notification tugasan
         $noti = $this->notification();
@@ -261,7 +261,7 @@ class ModulController extends Controller
     public function proses_list(Request $request)
     {
         $idModul = (int)$request->route('modul_id');
-        $prosess = Proses::where('modul', $idModul)->orderBy("sequence", "ASC")->get();
+        $prosess = Proses::where('modul_id', $idModul)->orderBy("sequence", "ASC")->get();
         $modul = Modul::find($idModul);
 
         //for notification tugasan
@@ -290,7 +290,7 @@ class ModulController extends Controller
 
         Alert::success('Kemaskini Proses berjaya.', 'Kemaskini Proses telah berjaya.');
 
-        $prosess = Proses::where('modul', $request->modulID)->orderBy("sequence", "ASC")->get();
+        $prosess = Proses::where('modul_id', $request->modulID)->orderBy("sequence", "ASC")->get();
         $modul = Modul::find($request->modulID);
 
         //for notification tugasan
@@ -316,7 +316,7 @@ class ModulController extends Controller
         $proses->delete();
         Alert::success('Padam Proses Berjaya.', 'Padam proses telah berjaya.');
 
-        $prosess = Proses::where('modul', $request->modulId)->orderBy("sequence", "ASC")->get();
+        $prosess = Proses::where('modul_id', $request->modulId)->orderBy("sequence", "ASC")->get();
         $modul = Modul::find($request->modulId);
 
         //for notification tugasan
@@ -335,7 +335,7 @@ class ModulController extends Controller
         $borang = new Borang;
         $borang->namaBorang = $request->namaBorang;
         $borang->status = 1;
-        $borang->proses = $idProses;
+        $borang->proses_id = $idProses;
         $borang->save();
 
         $audit = new Audit;

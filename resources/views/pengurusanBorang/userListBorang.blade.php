@@ -74,7 +74,7 @@
                         @endif
                         </td>
                         <td class="text-center">
-                            <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->user->id}}/view/{{$tahapLulus}}" style="color: white; text-decoration:none;">
+                            <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->id}}/view/{{$tahapLulus}}" style="color: white; text-decoration:none;">
                               Papar Borang Pemohon
                             </a>
                         </td>

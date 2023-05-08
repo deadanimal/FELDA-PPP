@@ -49,7 +49,7 @@
                     {{-- @if ($borangJwpn->pembetulan == 1)
                         <a href="/user/sub_borang/{{$borangJwpn->borang_id}}/edit" type="button" class="btn btn-primary">Kemaskini</a>
                     @else --}}
-                    <a class="btn btn-info" href="/user/sub_borang/{{$borangJwpn->borang_id}}/view" style="color: white; text-decoration:none;">
+                    <a class="btn btn-info" href="/user/sub_borang/{{$borangJwpn->id}}/view" style="color: white; text-decoration:none;">
                         Papar Borang Permohon
                     </a>
                     {{-- @endif --}}

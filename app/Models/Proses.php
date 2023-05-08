@@ -11,7 +11,7 @@ class Proses extends Model
     protected $table = 'proses';
 
     public function modul() {
-        return $this->belongsTo(Modul::class, 'modul');
+        return $this->belongsTo(Modul::class, 'modul_id');
     }
     
     public function borang() {

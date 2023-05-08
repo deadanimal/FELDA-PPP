@@ -22,7 +22,7 @@
                 <td>
                     <form action="/user/borang_app/pdf" method="get">
                         <input type="hidden" name="user_id" value="{{$borangJwpn->user->id}}">
-                        <input type="hidden" name="borang_id" value="{{$borangJwpn->borangs->id}}">
+                        <input type="hidden" name="jawapan_id" value="{{$borangJwpn->id}}">
                         <input type="hidden" name="tahapKelulusanID" value="{{$tahapLulus}}">
 
                         <button class="btn frame9403-frame7445" style="margin-right:0px;">

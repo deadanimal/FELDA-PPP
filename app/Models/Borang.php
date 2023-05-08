@@ -10,7 +10,7 @@ class Borang extends Model
     use HasFactory;
 
     public function proses() {
-        return $this->belongsTo(Proses::class, 'proses');
+        return $this->belongsTo(Proses::class, 'proses_id');
     }
 
     public function medan() {

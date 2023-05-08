@@ -41,12 +41,30 @@
               </div>
 
               @foreach($medans as $medan)
-              <div class="row">
-                  <div class="mb-3">
+                @if($medan->datatype == "checkbox")
+                  <div class="row">
                       <label for="nama" style="font-family:'Arial', sans-serif; text-transform:uppercase;">{{$medan->nama}}</label>
-                      <input type="text" class="form-control" maxlength="100" size="100" name="" id="nama" readonly>
                   </div>
-              </div>
+                  <div class="row">
+                    <div class="mb-3">
+                      @foreach($checkboxes as $checkbox=>$value)
+                        @foreach($value as $chkbox)
+                          @if($chkbox->medan_id == $medan->id)
+                            <input type="radio" id="check{{$medan->id}}" name="jawapan[]" value="{{$chkbox->nama}}">
+                            <label for="check{{$medan->id}}">{{$chkbox->nama}}</label><br>
+                          @endif
+                        @endforeach
+                      @endforeach
+                    </div>
+                  </div>
+                @else
+                  <div class="row">
+                      <div class="mb-3">
+                          <label for="nama" style="font-family:'Arial', sans-serif; text-transform:uppercase;">{{$medan->nama}}</label>
+                          <input type="text" class="form-control" maxlength="100" size="100" name="" id="nama" readonly>
+                      </div>
+                  </div>
+                @endif
               @endforeach
 
               @if ($borang->consent != null || $borang->consent != "")
