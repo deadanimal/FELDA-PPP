@@ -393,7 +393,6 @@ class BorangController extends Controller
                         // dd($borangJwpns);
                     }
                     elseif((Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Wilayah') || Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'WILAYAH')) && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $y){
-                        dd("tak jadi 3");
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
                         ->where('wilayah', Auth::user()->wilayah)
                         ->WhereRelation('kelulusanBorang','keputusan', 'Lulus')
@@ -406,7 +405,6 @@ class BorangController extends Controller
                     }
                     
                     elseif($tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $tahapKelulusan[$z]->sequence){
-                        dd("tak jadi4");
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
                         ->where('wilayah', Auth::user()->wilayah )
                         ->where('rancangan',  Auth::user()->rancangan)->get();

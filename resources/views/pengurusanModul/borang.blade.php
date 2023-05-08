@@ -416,13 +416,13 @@ display: flex;
   cursor:pointer;
 }
 .frame9402-rectangle828245 {
-  width: 32px;
-  height: 30px;
-  position: relative;
-  box-sizing: border-box;
-  margin-right: 15px;
-  margin-top: -1px;
-}
+    width: 32px;
+    height: 30px;
+    position: relative;
+    box-sizing: border-box;
+    margin-right: 10px;
+    border: none;
+  }
 .frame9402-rectangle8282452 {
   width: 32px;
   height: 30px;
@@ -720,13 +720,23 @@ display: flex;
                   <td class="frame9402-text31">Nama Medan:<input type="text" name="nama" class="frame9402-kotaknama" value="{{$medan->nama}}" oninput="this.value = this.value.toUpperCase()"></td>
                   <td class="frame9402-text30">Jenis Data:
                     <select name="datatype" class="frame9403-kotaknama3">
-                      @if ($medan->datatype == "string" )
-                        <option value="string" selected>Alfanumerik</option>
-                        <option value="integer">Numerikal</option>
-                      @else
-                        <option value="string">Alfanumerik</option>
-                        <option value="integer"selected>Numerikal</option>
-                      @endif
+                      
+                        <option value="string"
+                        @if ($medan->datatype == "string" )
+                        selected 
+                        @endif>Alfanumerik</option>
+                        <option value="integer"
+                        @if ($medan->datatype == "integer" )
+                        selected 
+                        @endif>Numerikal</option>
+                        <option value="checkbox"
+                        @if ($medan->datatype == "checkbox" )
+                        selected 
+                        @endif>kotak semak</option>
+                        <option value="calendar"
+                        @if ($medan->datatype == "calendar" )
+                        selected 
+                        @endif>Kalendar</option>
                     </select>
                   </td>
                   <td class="frame9402-text30"> Pilihan:
