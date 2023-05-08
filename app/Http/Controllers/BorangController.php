@@ -990,7 +990,7 @@ class BorangController extends Controller
         return redirect('/moduls/borang/checkbox/'.$medan_id.'');
     }
 
-    public function checkbox_edit(Request $request)
+    public function checkbox_update(Request $request)
     {
         $medan_id = $request->medan_id;
 

@@ -93,7 +93,7 @@
                                         </div>
                                         <form action="/moduls/borang/checkbox/update" method="post" enctype="multipart/form-data">
                                             @csrf
-                                            @method('Delete')
+                                            @method('PUT')
                                             <div class="modal-body">
                                                 <table class="table table-borderless">
                                                     <tr>
