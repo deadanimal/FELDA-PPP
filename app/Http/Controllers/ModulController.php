@@ -353,7 +353,7 @@ class ModulController extends Controller
         ini_set('memory_limit', '512M');
 
         $idProses = (int)$request->route('proses_id');
-        $borangs = Borang::where('proses', $idProses)->orderBy("updated_at", "DESC")->get();
+        $borangs = Borang::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
         $proses = Proses::find($idProses);
 
         $idModul = (int)$request->route('modul_id');
@@ -501,7 +501,7 @@ class ModulController extends Controller
         $audit->save();
 
         $modul = Modul::find($request->modulId);
-        $borangs = Borang::where('proses', $prosesId)->orderBy("updated_at", "DESC")->get();
+        $borangs = Borang::where('proses_id', $prosesId)->orderBy("updated_at", "DESC")->get();
         $tugasans = Senarai_tugasan::where('proses_id', $prosesId)->orderBy("updated_at", "DESC")->get();
         $kemaskini = JenisKemaskini::where('id_jenisTernakans', $request->jenisTernakanID)->orderBy("updated_at", "DESC")->get();
         $jenisTernakan = jenis_ternakan::find($request->jenisTernakanID);

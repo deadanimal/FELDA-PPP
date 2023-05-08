@@ -271,6 +271,7 @@ class BorangController extends Controller
 
         $jawapan_id= $ans->id;
 
+        $checkbox_amount= 0;
         for($x=0; $x<$count; $x++){
             $medan = Medan::find($medanID[$x]);
             $jwpn_Medan = new Jawapan_medan;
@@ -279,9 +280,10 @@ class BorangController extends Controller
                 $jawapancheck = ("jawapancheck".$medanID[$x]);
                 $checkjawapan = $request->$jawapancheck;
                 $jwpn_Medan->jawapan = $checkjawapan[0];
+                $checkbox_amount +=1;
             }
             else{
-                $jwpn_Medan->jawapan = $jawapan[$x];
+                $jwpn_Medan->jawapan = $jawapan[($x-$checkbox_amount)];
             }
             
             $jwpn_Medan->jawapan_id = $jawapan_id;

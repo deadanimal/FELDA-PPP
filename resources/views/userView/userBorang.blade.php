@@ -63,6 +63,18 @@
                                     <input type="hidden" name="medanID[]" value="{{$medan->id}}">
                                     </div>
                                 </div>
+                            @elseif($medan->datatype == "calendar")
+                                <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                        <div class="mb-3">
+                                            <label for="jawapan{{$medan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase">{{$medan->nama}}</label>
+                                            <input type="date" class="form-control" name="jawapan[]" id="jawapan{{$medan->id}}">
+
+                                            <input type="hidden" name="medanID[]" value="{{$medan->id}}">
+                                        </div>
+                                    </div>
+                                    
+                                </div>
                             @else
                                 <div class="row">
                                     <div class="mb-3">
