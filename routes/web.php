@@ -150,6 +150,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/moduls/borang/viewBorang', [BorangController::class, 'borang_view']);
     Route::get('/moduls/{modul_id}/{proses_id}/borang/{borang_id}', [BorangController::class, 'borang_detail']);
 
+    Route::get('/moduls/borang/checkbox/{borang_id}', [BorangController::class, 'checkbox_list']);
+    Route::post('/moduls/borang/checkbox/add', [BorangController::class, 'checkbox_add']);
+    Route::put('/moduls/borang/checkbox/update', [BorangController::class, 'checkbox_update']);
+    Route::delete('/moduls/borang/checkbox/delete', [BorangController::class, 'checkbox_delete']);
+
     Route::put('/moduls/borang/consent/add', [BorangController::class, 'borangConsent_add']);
 
     Route::get('/moduls/borang/kelulusan', [BorangController::class, 'borang_kelulusan']);
