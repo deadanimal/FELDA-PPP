@@ -46,14 +46,16 @@
                     <a  class="sidebar-link" href="/user/tugasan/list" style="display: flex">
                         <i class="align-middle me-2 fas fa-fw fa-clipboard-check" style="margin-top: 1%;"></i> 
                         <span class="align-middle" style="display: flex">TUGASAN 
-                            <div class="alert alert-danger" role="alert" style="padding: 0 10%;margin: 0 10%;">
-                                {{$noti}}
-                            </div>
+                            @if ($noti != 0)
+                                <div class="alert alert-danger" role="alert" style="padding: 0 10%;margin: 0 10%;">
+                                    {{$noti}}
+                                </div>
+                            @endif
                         </span>
                     </a>
                 </li>
 
-            @if(Auth::user()->kategoripengguna == "Pegawai Aduan")
+            @if(Auth::user()->kategori->nama == "Pegawai Aduan")
 
                 @if (Request::is('Aduan') || Request::is('Aduan/*'))
                     <li class="sidebar-item active">
@@ -72,7 +74,7 @@
             
             @endif
 
-            @if(Auth::user()->kategoripengguna == "Pengurus Rancangan")
+            @if(Auth::user()->kategori->nama == "Pengurus Rancangan")
 
                 @if (Request::is('tarik_Diri') || Request::is('tarik_Diri/*'))
                     <li class="sidebar-item active">
@@ -89,7 +91,7 @@
 
             @endif
             
-            @if(Auth::user()->kategoripengguna == "1")
+            @if(Auth::user()->kategori->nama == "Super Admin")
                 @if (Request::is('users') || Request::is('users/*') || Request::is('user-categories') || Request::is('user-categories/*'))
                 <li class="sidebar-item active">
                     <a data-bs-target="#pages" data-bs-toggle="collapse" class="sidebar-link" aria-expanded="true">
@@ -194,7 +196,7 @@
                     </a>
                 </li>
                 
-            @elseif(Auth::user()->kategoripengguna != "4")
+            @elseif(Auth::user()->kategori->nama != "Peserta")
                 @if (Request::is('user/borang_app') || Request::is('user/borang_app/*'))
                     <li class="sidebar-item active">
                 @else

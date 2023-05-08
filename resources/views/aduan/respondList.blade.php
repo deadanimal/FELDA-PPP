@@ -38,9 +38,37 @@
             @endif
             
             <div class="col-md-12 text-center">
-                <button type="button" class="btn btn-primary text-center btn-lg" data-toggle="modal" data-target="#exampleModalstatus">Selesai</button>
-
+                <button type="button" class="btn btn-danger text-center btn-lg" data-toggle="modal" data-target="#exampleModalstatus">Belum Selesai</button>
+                {{-- modal Belum Selesai --}}
                 <div class="modal fade" id="exampleModalstatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Aduan Belum Selesai</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Adakah Aduan Belum Selesai?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                            <form action="/Aduan/respon/update" method="post" enctype="multipart/form-data">
+                                @csrf
+                                @method('put')
+                                <input type="hidden" name="aduan_id" value="{{$aduan->id}}">
+                                <input type="hidden" name="status" value="Belum Selesai">
+                                <button class="btn btn-danger">YA</button>
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary text-center btn-lg" data-toggle="modal" data-target="#exampleModalSelesai">Selesai</button>
+                {{-- modal Selesai --}}
+                <div class="modal fade" id="exampleModalSelesai" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
@@ -51,8 +79,6 @@
                         </div>
                         <div class="modal-body">
                             <p>Adakah Aduan Sudah Selesai?</p>
-                            <p>{{$aduan->nama}}</p>
-                            <p>Jenis Aduan: {{$aduan->jenis_aduan}}</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      

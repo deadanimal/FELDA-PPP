@@ -43,7 +43,7 @@
                   <label for="namaKategori" class="frame9402-text04">
                     <strong>Nama Kategori Pengguna</strong>
                   </label>
-                  <input type="text" class="frame9402-kotaknamaProses" id="namaKategori" placeholder="Sila Masuk Kategori Pengguna" name="namaKategoriPengguna" required>
+                  <input type="text" class="frame9402-kotaknamaProses" id="namaKategori" placeholder="Sila Masuk Kategori Pengguna" name="namaKategoriPengguna" required oninput="this.value = this.value.toUpperCase()">
                 </form>
               </div>
               <div class="modal-footer">
