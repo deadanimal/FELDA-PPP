@@ -58,6 +58,8 @@ class WebController extends Controller
 
     public function page(Request $request)
     {
+        ini_set('memory_limit', '2048M');
+        
         //nav bar menu
         $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
 
@@ -73,11 +75,13 @@ class WebController extends Controller
         $articles = Article::whereRelation('item', 'page_id', '=', $pageId)->get();
         $docs = Item::where('page_id', $pageId)->where('category', 'Document')->get();
 
+        $items = Item::where('page_id', $pageId)->orderBy('row')->get();
+
         $totalDana = Jawapan::whereRelation('kelulusanBorang', 'keputusan', '=', 'Lulus')->count();
         $totalModul = Modul::where('status', 'Go-live')->count();
         $totalPeneroka = User::whereRelation('kategori', 'nama', '=', 'Peserta')->count();
         
-        return view('homepage.page', compact ('totalDana','totalModul', 'totalPeneroka', 'pages', 'pg', 'cardsTotalRows', 'cards', 'galleries' ,'sliders','articles', 'dropdowns', 'docs'));
+        return view('homepage.page', compact ('items','totalDana','totalModul', 'totalPeneroka', 'pages', 'pg', 'cardsTotalRows', 'cards', 'galleries' ,'sliders','articles', 'dropdowns', 'docs'));
     }
 
     public function document_page(Request $request)

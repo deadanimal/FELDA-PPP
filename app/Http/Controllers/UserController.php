@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ResetPassword;
@@ -67,7 +68,10 @@ class UserController extends Controller
     {
         $wilayah = Wilayah::all()->pluck('nama','id');
         $kategoriPengguna = KategoriPengguna::all();
-
+ 
+        //for notification tugasan
+        $noti = $this->notification();
+ 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
@@ -524,7 +528,15 @@ class UserController extends Controller
     public function tugasList_app(Request $request)
     {
         $user = Auth::user()->id;
-        $aduans = Aduan::where('user_category', Auth::user()->kategoripengguna)->get();
+        
+        if(Str::contains(Auth::user()->kategoripengguna, 'HQ')){
+            $aduans = Aduan::where('user_category', Auth::user()->kategoripengguna)->get();
+        }elseif(Str::contains(Auth::user()->kategoripengguna, 'wilayah')|| Str::contains(Auth::user()->kategoripengguna, 'WILAYAH')){
+            $aduans = Aduan::where('user_category', Auth::user()->kategoripengguna)->where('wilayah', Auth::user()->wilayah)->get();
+        }else{
+            $aduans = Aduan::where('user_category', Auth::user()->kategoripengguna)->where('wilayah', Auth::user()->wilayah)->where('rancangan',Auth::user()->rancangan)->get();
+        }
+
         $tugasans= Senarai_tugasan::where('user_id', $user)->get();
         
         $date = Carbon::now();

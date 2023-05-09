@@ -5,7 +5,7 @@
 @section('content')
 
   <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex justify-cntent-center align-items-center" style=" background: url('../img/felda-2.jpg') no-repeat fixed center! important;">
+  <section id="hero" class="d-flex justify-cntent-center align-items-center" style=" background-image: url('../img/felda-2.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
     <div id="heroCarousel" data-bs-interval="5000" class="container carousel carousel-fade" data-bs-ride="carousel">
         
     </div>

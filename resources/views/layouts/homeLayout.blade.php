@@ -36,7 +36,7 @@
 <body>
     @include('sweetalert::alert')
   <!-- ======= Top Bar ======= -->
-  <div id="topbar" class="fixed-top d-flex align-items-center topbar-inner-pages " style="background: linear-gradient(90deg, rgba(0,53,36,1) 0%, rgba(19,101,82,1) 35%, rgba(0,59,42,1) 100%) !important">
+  <div id="topbar" class="fixed-top d-flex align-items-center header-inner-pages " style="background: linear-gradient(90deg, rgba(0,53,36,1) 0%, rgba(19,101,82,1) 35%, rgba(0,59,42,1) 100%) !important">
     <div class="container d-flex align-items-center justify-content-center justify-content-md-between" style="margin-right:0px">
       <div class="contact-info d-flex" style="width: 100%">
         <table class="w-100">

@@ -260,6 +260,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/user/tugasan/aduan/delete', [UserController::class, 'userAduan_delete']);
 
     Route::get('/test', function () {
+        ini_set('memory_limit', '2048M');
         return view('pengurusanBorang.TemplatePermohonanPerolehanIbuPejabatWilayah_');
     });
 
