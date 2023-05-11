@@ -12,4 +12,8 @@ class Surat extends Model
     public function Tahap_kelulusan(){
         return $this->belongsTo(Tahap_kelulusan::class, 'kelulusan_id');
     }
+
+    public function hantarSurat(){
+        return $this->hasMany(Hantar_Surat::class);
+    }
 }

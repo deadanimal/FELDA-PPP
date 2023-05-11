@@ -8,61 +8,88 @@
 
   <div class="header">
     <h1 class="header-title">
-      SENARAI BORANG YANG DI MOHON
+      SENARAI PERMOHONAN BAGI {{$borangs->namaBorang}}
     </h1>
   </div>
   
   <div class="row">
     <div class="col-12">
       <div class="card">
-        <div class="card-header">
-          
+
+        @if (!$jawapans->isEmpty())
+          <div class="card-header" style="display: flex">
+            <button type="button" class="btn btn-success" style="margin-left: 10px; border-radius: 8.598855018615723px;" data-toggle="modal" data-target="#exampleModalAll">HANTAR SURAT</button>
+            <a href="/user/borang_app/surat/{{$borangs->id}}/template" class="btn frame9403-frame7446">TEMPLAT SURAT</a>  
         </div>
-        @if (!$borangJwpns->isEmpty())
-        {{-- senarai borang --}}
-        <table class="table table-bordered table-striped w-100">
-          <thead class="text-white bg-primary w-100" style="text-align: center;">
-            <tr>
-                <th scope="col" class="arial">Nama Borang</th>
-                <th scope="col" class="arial">Status</th>
-                <th scope="col" class="arial">Ulasan</th>
-                <th scope="col" class="arial">Tindakan</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($borangJwpns as $borangJwpn)
-              <tr>
-                <td class="text-center arial">{{$borangJwpn->borangs->namaBorang}}</td>
-                @if ($borangJwpn->status != "" || $borangJwpn->status == "Lulus"|| $borangJwpn->status == "Menolak")
-                  <td class="text-center arial">{{$borangJwpn->status}}</td>
-                  <td class="text-center arial"></td>
-                @elseif(!$kelulusanBorang->isEmpty())
-                  @foreach($kelulusanBorang as $lulusBorang)
-                    @if ($lulusBorang->jawapan_id == $borangJwpn->id)
-                        <td class="text-center arial">{{$lulusBorang->keputusan}} di Peringkat {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}</td>
-                        <td class="text-center arial">{{$lulusBorang->ulasan ?? ""}}</td>
-                        @break
-                    @endif
-                  @endforeach
-                @else
-                <td class="text-center arial">Sedang di Proses</td>
-                    <td class="text-center arial"></td>
-                @endif
-                <td class="text-center arial">
-                    @if ($borangJwpn->status == "Lulus")
-                        <a href="/user/sub_borang/{{$borangJwpn->id}}/tindakan" type="button" class="btn btn-success">Tindakan</a>
-                    @else
-                        <a class="btn btn-info" href="/user/sub_borang/{{$borangJwpn->id}}/view" style="color: white; text-decoration:none;">
-                            Papar Borang Permohon
-                        </a>
-                    @endif
-                </td>
-              </tr>
-            @endforeach
-          </tbody>
-        </table>
+
+          <form action="/user/borang_app/generateAll" method="POST">
+            @csrf
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalAll" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Hantar Surat</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <button class="frame9403-frame7445"  type="button" id="rowAdder">
+                    <div class="frame9403-frame7293">
+                        <span class="frame9403-text21"><span>Tambah Kategori Pengguna</span></span>
+                        <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                    </div>
+                </button>
+                <form action="/user/tugasan/send/generate_all" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <table style="overflow: scroll; max-height: 750px; width:100%;" id="borangField" class="draggable-table">
+                            <tbody class="row_drag">
+                        
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="borangID" value="{{$borangs->id}}">
+                        <input type="hidden" id="count" name="count" value=""> 
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>      
+                    <button type="submit" class="btn btn-primary" id="hantar" disabled="disabled">Hantar</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+            </div>
+
+            {{-- senarai borang --}}
+            <table class="table table-bordered table-striped w-100 Arial">
+              <thead class="text-white bg-primary w-100" style="text-align: center;">
+                <tr>
+                    <th scope="col" style="vertical-align: top;"><input class="form-check-input text-center" type="checkbox" id="master"></th>
+                    <th scope="col" class="Arial">Nama Pemohon</th>
+                    <th scope="col" class="Arial">Status</th>
+                    <th scope="col" class="Arial">Tindakan</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($jawapans as $jawapan)
+                    <tr>
+                        <td style="vertical-align: top; width:5%" class="text-center">  
+                          <input class="form-check-input text-center sub_chk" type="checkbox" value="{{$jawapan->id}}" name="jawapanList[]">
+                        </td>
+                        <td class="text-center Arial">{{$jawapan->user->nama}}</td>
+                        <td class="text-center Arial" style="width: 25%">{{$jawapan->status}}</td>
+                        <td class="text-center">
+                            <a class="btn btn-info" href="/user/tugasan/petiMasuk/{{$jawapan->id}}/user" style="color: white; text-decoration:none;">
+                              Tindakan
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </form>
         @else
-        <h1 style="text-align: center; padding-bottom:5%;">Tiada Permohonan</h1>
+          <h1 style="text-align: center; padding-bottom:5%;">Tiada Permohonan</h1>
         @endif
       </div>
     </div>
@@ -70,6 +97,39 @@
 </div>
 
 <script src="/js/jquery.js"></script>
+<script type="text/javascript">
+    var count = 0;
+    $("#rowAdder").click(function () {
+        count +=1;
+            newRowAdd =
+            '<tr class="frame9402-input" id="row">'+
+                '<td style="display:flex;"><span style="text-align:right;margin-right:2%;">Kategori Pengguna</span>'+
+                    '<select type="text" name="category[]" class="form-select frame9402-kotaknama">'+
+                        '@foreach($kategoriPengguna as $kategoriPengguna)'+
+                        '<option value="{{$kategoriPengguna->id}}">{{$kategoriPengguna->nama}}</option>'+
+                        '@endforeach'+
+                    '</select>'+
+                    '<button class="frame9402-rectangle828245" id="DeleteRow"><img src="/SVG/bin.svg"/></button>'+
+                '</td>'+
+            '</tr>';
+            $('#borangField').append(newRowAdd);
+            document.getElementById("count").value = count;
+            
+            var cansubmit = (count > 0);
+            document.getElementById("hantar").disabled = !cansubmit;
+        });
+     
+    $("body").on("click", "#DeleteRow", function () {
+      $(this).parents("#row").remove();
+      count -=1;
+      document.getElementById("count").value = count;
+    
+      var cansubmit = (count > 0);
+      document.getElementById("hantar").disabled = !cansubmit;
+    
+    });
+    $("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
+    </script>
 <script>
 function save(no)
   {
@@ -88,7 +148,20 @@ function save(no)
    document.getElementById("userKategoriupdate"+no).value=userKategori_val;
   }
 </script>
+<script type="text/javascript">  
+  $(document).ready(function () {  
 
+      $('#master').on('click', function(e) {  
+       if($(this).is(':checked',true))    
+       {  
+          $(".sub_chk").prop('checked', true);    
+       } else {    
+          $(".sub_chk").prop('checked',false);    
+       }    
+      });  
+
+  });  
+</script> 
 <script>
 function openForm() {
   document.getElementById("popupForm").style.display = "block";
@@ -114,7 +187,7 @@ function closeFormKemas() {
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <style>
-    .arial{
+    .Arial{
         font-family: 'Arial', sans-serif;
         text-transform: uppercase;
     }
@@ -298,6 +371,28 @@ function closeFormKemas() {
       width: auto;
     height: 50px;
     display: flex;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
+    box-sizing: border-box;
+    padding-top: 0px;
+    border-color: transparent;
+    padding-left: 20px;
+    border-radius: 8.598855018615723px;
+    padding-right: 20px;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #A2335D;
+    cursor: pointer;
+    align-self: flex-end;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .frame9403-frame7446:hover{
+    color: white;
+  }
+  .frame9403-frame7446 {
+      width: auto;
+    height: 50px;
+    display: flex;
     max-width: 250px;
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
     box-sizing: border-box;
@@ -309,6 +404,7 @@ function closeFormKemas() {
     flex-direction: column;
     justify-content: center;
     background-color: #A2335D;
+    color: white;
     cursor: pointer;
     align-self: flex-end;
     margin-left: auto;
@@ -526,7 +622,10 @@ function closeFormKemas() {
     position: relative;
     box-sizing: border-box;
     margin-right: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
     border: none;
+    background-color: rgba(0, 0, 0, 0);
   }
   .frame9402-rectangle8282452 {
     width: 32px;

@@ -21,4 +21,8 @@ class KategoriPengguna extends Model
     public function aduan() {
         return $this->hasMany(Aduan::class);
     }
+
+    public function hantarSurat(){
+        return $this->hasMany(Hantar_Surat::class);
+    }
 }

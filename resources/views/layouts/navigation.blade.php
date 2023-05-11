@@ -24,7 +24,7 @@
                         <i class="align-middle me-2 fas fa-fw fa-home"></i> <span class="align-middle">PAPAN PEMUKA</span>
                     </a>
                 </li>
-            @if (Request::is('home') || Request::is('home/*'))
+            @if (Request::is('home') || Request::is('home/*') || Request::is('setting') || Request::is('setting/*'))
                 <li class="sidebar-item active">
             @else
                 <li class="sidebar-item">
@@ -44,8 +44,8 @@
                 <li class="sidebar-item">
             @endif
                     <a  class="sidebar-link" href="/user/tugasan/list" style="display: flex">
-                        <i class="align-middle me-2 fas fa-fw fa-clipboard-check" style="margin-top: 1%;"></i> 
-                        <span class="align-middle" style="display: flex">TUGASAN 
+                        <i class="align-middle me-2 fas fa-fw fa-bell" style="margin-top: 2%;"></i> 
+                        <span class="align-middle" style="display: flex">NOTIFIKASI 
                             @if ($noti != 0)
                                 <div class="alert alert-danger" role="alert" style="padding: 0 10%;margin: 0 10%;">
                                     {{$noti}}

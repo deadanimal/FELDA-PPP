@@ -36,8 +36,9 @@ class BorangController extends Controller
         $date = Carbon::now();
         $tugasans_noti= Senarai_tugasan::where('user_id', Auth::user()->id)->where('due_date', '>=', $date->format('Y-m-d'))->count();
         $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->whereNot('status', 'Sah Selesai')->count();
-        $noti = $tugasans_noti+$aduans_noti;
-
+        $borangs_noti = Borang::where('status', 1)->whereHas('jwpn')->count();
+        $noti = $tugasans_noti+$aduans_noti+$borangs_noti;
+        
         return $noti;
     }
 
@@ -320,7 +321,7 @@ class BorangController extends Controller
 
     public function borangList_app(Request $request)
     {
-        $borangs = Borang::where('status', 1)->get();
+        $borangs = Borang::where('status', 1)->whereHas('jwpn')->get();
 
         //for notification tugasan
         $noti = $this->notification();
@@ -625,7 +626,7 @@ class BorangController extends Controller
     public function subBorang_list(Request $request)
     {
         $userId = Auth::user()->id;
-        $borangJwpns = Jawapan::where('user_id', $userId)->get();
+        $borangJwpns = Jawapan::where('user_id', $userId)->whereNot('Status', 'Terima')->get();
         if (!$borangJwpns->isEmpty()) {
             foreach($borangJwpns as $jwpn ){
                 $kelulusanBorang = Kelulusan_borang::with('tahap_kelulusan')->whereRelation('jawapan','user_id', $userId)->orderBy('created_at', 'DESC')->get();
@@ -684,7 +685,7 @@ class BorangController extends Controller
         },
 
         $text);
-        
+
         //for notification tugasan
         $noti = $this->notification();
 
@@ -704,15 +705,15 @@ class BorangController extends Controller
         $borangJwpn->status = $tindakan;
         $borangJwpn->save();
         
-        if($tindakan == "Terima"){
-
+        if($tindakan == "Terima"){        
+            Alert::success('Terima Projek '.$borangJwpn->borangs->namaBorang.'', 'Menerima Projek '.$borangJwpn->borangs->namaBorang.' telah berjaya');
+            return redirect('/user/project/'.$jawapanId.'');
         }
-
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
-        
-        return view('userView.userBorangList', compact('noti','borangJwpns','menuModul', 'menuProses', 'menuBorang'));
+        else{
+            Alert::success('Menolak Projek '.$borangJwpn->borangs->namaBorang.'', 'Menolak Projek '.$borangJwpn->borangs->namaBorang.' telah berjaya');
+            return redirect('/user/sub_borang/list');
+            
+        }
     }
 
     public function borang_kelulusan(Request $request)

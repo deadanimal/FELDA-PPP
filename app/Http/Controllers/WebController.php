@@ -59,7 +59,7 @@ class WebController extends Controller
     public function page(Request $request)
     {
         ini_set('memory_limit', '2048M');
-        
+
         //nav bar menu
         $pages = Page::where('status', 'Active')->orderBy('sequence', 'ASC')->get();
 
@@ -146,8 +146,9 @@ class WebController extends Controller
         $date = Carbon::now();
         $tugasans_noti= Senarai_tugasan::where('user_id', Auth::user()->id)->where('due_date', '>=', $date->format('Y-m-d'))->count();
         $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->whereNot('status', 'Sah Selesai')->count();
-        $noti = $tugasans_noti+$aduans_noti;
-
+        $borangs_noti = Borang::where('status', 1)->whereHas('jwpn')->count();
+        $noti = $tugasans_noti+$aduans_noti+$borangs_noti;
+        
         return $noti;
     }
 

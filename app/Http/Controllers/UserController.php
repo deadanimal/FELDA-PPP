@@ -33,6 +33,7 @@ use App\Models\Jawapan_parameter;
 use App\Models\Aduan;
 use App\Models\Respond_aduan;
 use App\Models\Project;
+use App\Models\Surat;
 
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -49,7 +50,8 @@ class UserController extends Controller
         $date = Carbon::now();
         $tugasans_noti= Senarai_tugasan::where('user_id', Auth::user()->id)->where('due_date', '>=', $date->format('Y-m-d'))->count();
         $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->whereNot('status', 'Sah Selesai')->count();
-        $noti = $tugasans_noti+$aduans_noti;
+        $borangs_noti = Borang::where('status', 1)->whereHas('jwpn')->count();
+        $noti = $tugasans_noti+$aduans_noti+$borangs_noti;
 
         return $noti;
     }
@@ -539,17 +541,19 @@ class UserController extends Controller
         }
 
         $tugasans= Senarai_tugasan::where('user_id', $user)->get();
+        $borangs = Borang::where('status', 1)->whereHas('jwpn')->get();
         
         $date = Carbon::now();
         $tugasans_noti= Senarai_tugasan::where('user_id', $user)->where('due_date', '>=', $date->format('Y-m-d'))->count();
         $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->whereNot('status', 'Sah Selesai')->count();
-        $noti = $tugasans_noti+$aduans_noti;
+        $borangs_noti = Borang::where('status', 1)->whereHas('jwpn')->count();
+        $noti = $tugasans_noti+$aduans_noti+$borangs_noti;
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('userView.userTugasan', compact('noti','tugasans_noti','aduans_noti','aduans','tugasans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userTugasan', compact('noti','borangs_noti','tugasans_noti','aduans_noti','borangs','aduans','tugasans', 'menuModul', 'menuProses', 'menuBorang'));
          
     }
 
@@ -621,7 +625,7 @@ class UserController extends Controller
 
     public function project_list(Request $request)
     {               
-        $jawapans = Jawapan::where('user_id', Auth::user()->id)->get();
+        $jawapans = Jawapan::where('user_id', Auth::user()->id)->whereNot('Status','Menolak')->get();
 
         //for notification tugasan
         $noti = $this->notification();
@@ -1215,5 +1219,79 @@ class UserController extends Controller
 
     }
 
-    
+    public function kontrak_userList(Request $request)
+    { 
+        $borang_id = (int) $request->route('borang_id');
+
+        $jawapans = Jawapan::where('borang_id', $borang_id)->where('status', 'Terima')->doesntHave('hantarSurat')->get();
+
+        $borangs = Borang::find($borang_id);
+        $kategoriPengguna = KategoriPengguna::all();
+
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pegawaiKontrak.userList', compact('noti','kategoriPengguna','borangs','jawapans','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function kontrak_user(Request $request)
+    { 
+        $jawapan_id = (int) $request->route('jawapan_id');
+
+        $jawapans = Jawapan::find($jawapan_id);
+        $kategoriPengguna = KategoriPengguna::all();
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pegawaiKontrak.oneUser', compact('noti','kategoriPengguna','jawapans','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function generate_one(Request $request)
+    { 
+        $jawapan_id = $request->jawapan_id;
+        $count = $request->count;
+        $category = $request->category;
+        $jawapans = Jawapan::find($jawapan_id);
+        $kategoriPengguna = KategoriPengguna::all();
+
+        return redirect('pegawaiKontrak.oneUser', compact('noti','kategoriPengguna','jawapans','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function generate_all(Request $request)
+    { 
+        $listJawapan = $request->jawapan_id;
+        $count = $request->count;
+        $category = $request->category;
+        $borang_id = $request->borang_id;
+
+        //for notification tugasan
+        $noti = $this->notification();
+
+        return redirect('/user/tugasan/petiMasuk/'.$borang_id.'/list');
+    }
+
+    public function kontrak_surat(Request $request)
+    { 
+        $borang_id = (int) $request->route('borang_id');
+       
+        $borang = Borang::find($borang_id);
+        $surat = Surat::where('borang_id',$borang_id)->first();
+
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pegawaiKontrak.surat', compact('noti','borang','surat','menuModul', 'menuProses', 'menuBorang'));
+    }
 }

@@ -18,7 +18,7 @@ class Borang extends Model
     }
 
     public function jwpn(){
-        return $this->hasMany(borangJawapan::class);
+        return $this->hasMany(Jawapan::class);
 
     }
 }

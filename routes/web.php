@@ -245,7 +245,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pelaporan/report/{aktiviti_id}/{user_id}', [PelaporanController::class, 'user_report']);
     Route::get('/pelaporan/report/print/{aktiviti_id}/{user_id}', [PelaporanController::class, 'report_print']);
 
-
     Route::get('/Aduan/List/Pegawai', [UserController::class, 'pegawaiAduan_list']);
     Route::put('/Aduan/Pegawai/tindakan', [UserController::class, 'pegawaiAduan_update']);
     
@@ -259,6 +258,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/tugasan/aduan/{aduan_id}/list', [UserController::class, 'userAduan_details']);
     Route::post('/user/tugasan/aduan/add', [UserController::class, 'userAduan_add']);
     Route::delete('/user/tugasan/aduan/delete', [UserController::class, 'userAduan_delete']);
+
+    Route::get('/user/tugasan/petiMasuk/{borang_id}/list', [UserController::class, 'kontrak_userList']);
+    Route::get('/user/tugasan/petiMasuk/{jawapan_id}/user', [UserController::class, 'kontrak_user']);
+    
+    Route::post('/user/tugasan/send/generate_one', [UserController::class, 'generate_one']);
+    Route::post('/user/tugasan/send/generate_all', [UserController::class, 'generate_all']);
+
+    Route::get('/user/borang_app/surat/{borang_id}/template', [UserController::class, 'kontrak_surat']);
+    Route::post('/user/borang_app/surat/add', [UserController::class, 'kontrak_updateSurat']);
+    Route::put('/user/borang_app/surat/update', [UserController::class, 'kontrak_updateSurat']);
 
     Route::get('/test', function () {
         return view('pengurusanBorang.TemplatePermohonanPerolehanIbuPejabatWilayah_');

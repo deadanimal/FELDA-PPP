@@ -42,5 +42,8 @@ class Jawapan extends Model
         return $this->hasMany(TarikDiri::class);
 
     }
+    public function hantarSurat(){
+        return $this->hasMany(Hantar_Surat::class);
+    }
 }
 

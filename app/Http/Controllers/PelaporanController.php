@@ -28,8 +28,9 @@ class PelaporanController extends Controller
         $date = Carbon::now();
         $tugasans_noti= Senarai_tugasan::where('user_id', Auth::user()->id)->where('due_date', '>=', $date->format('Y-m-d'))->count();
         $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->whereNot('status', 'Sah Selesai')->count();
-        $noti = $tugasans_noti + $aduans_noti;
-
+        $borangs_noti = Borang::where('status', 1)->whereHas('jwpn')->count();
+        $noti = $tugasans_noti+$aduans_noti+$borangs_noti;
+        
         return $noti;
     }
 

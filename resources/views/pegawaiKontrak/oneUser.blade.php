@@ -4,120 +4,121 @@
 @section('innercontent')
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 <div class="container-fluid">
 
   <div class="header">
     <h1 class="header-title">
-      SENARAI BORANG YANG DI MOHON
+        PERMOHONAN {{$jawapans->nama}}
     </h1>
   </div>
-  
   <div class="row">
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          
+            <h3 style="text-transform: uppercase;">PERMOHONAN {{$jawapans->borangs->namaBorang}}</h3>
         </div>
-        @if (!$borangJwpns->isEmpty())
-        {{-- senarai borang --}}
-        <table class="table table-bordered table-striped w-100">
-          <thead class="text-white bg-primary w-100" style="text-align: center;">
-            <tr>
-                <th scope="col" class="arial">Nama Borang</th>
-                <th scope="col" class="arial">Status</th>
-                <th scope="col" class="arial">Ulasan</th>
-                <th scope="col" class="arial">Tindakan</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($borangJwpns as $borangJwpn)
-              <tr>
-                <td class="text-center arial">{{$borangJwpn->borangs->namaBorang}}</td>
-                @if ($borangJwpn->status != "" || $borangJwpn->status == "Lulus"|| $borangJwpn->status == "Menolak")
-                  <td class="text-center arial">{{$borangJwpn->status}}</td>
-                  <td class="text-center arial"></td>
-                @elseif(!$kelulusanBorang->isEmpty())
-                  @foreach($kelulusanBorang as $lulusBorang)
-                    @if ($lulusBorang->jawapan_id == $borangJwpn->id)
-                        <td class="text-center arial">{{$lulusBorang->keputusan}} di Peringkat {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}</td>
-                        <td class="text-center arial">{{$lulusBorang->ulasan ?? ""}}</td>
-                        @break
-                    @endif
-                  @endforeach
-                @else
-                <td class="text-center arial">Sedang di Proses</td>
-                    <td class="text-center arial"></td>
-                @endif
-                <td class="text-center arial">
-                    @if ($borangJwpn->status == "Lulus")
-                        <a href="/user/sub_borang/{{$borangJwpn->id}}/tindakan" type="button" class="btn btn-success">Tindakan</a>
-                    @else
-                        <a class="btn btn-info" href="/user/sub_borang/{{$borangJwpn->id}}/view" style="color: white; text-decoration:none;">
-                            Papar Borang Permohon
-                        </a>
-                    @endif
-                </td>
-              </tr>
-            @endforeach
-          </tbody>
-        </table>
-        @else
-        <h1 style="text-align: center; padding-bottom:5%;">Tiada Permohonan</h1>
-        @endif
+        <div class="card-body">
+            <div class="row">
+                <div class="mb-3">
+                    <label for="nama" class="frame9402-text04">
+                        <strong>Nama</strong>
+                    </label>
+                    <input type="text" class="form-control frame9402-kotaknama" id="nama" value="{{$jawapans->nama}}" readonly>                
+                </div>
+                <div class="mb-3"> 
+                    <label for="kod_projek" class="frame9402-text04">
+                        <strong>Kod Projek</strong>
+                    </label>
+                    <input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->kod_projek}}" readonly> 
+                </div>
+                <div class="mb-3"> 
+                    <label for="kod_projek" class="frame9402-text04">
+                        <strong>Wilayah</strong>
+                    </label>
+                    <input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->wilayahs->nama}}" readonly> 
+                </div>
+                <div class="mb-3"> 
+                    <label for="kod_projek" class="frame9402-text04">
+                        <strong>Rancangan</strong>
+                    </label>
+                    <input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->rancangans->nama}}" readonly> 
+                </div><br>
+            </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+            <button class="frame9403-frame7445"  type="button" id="rowAdder">
+                <div class="frame9403-frame7293">
+                    <span class="frame9403-text21"><span>Tambah Kategori Pengguna</span></span>
+                    <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                </div>
+            </button>
+        </div>
+        <form action="/user/tugasan/send/generate_one" method="post">
+            @csrf
+            <div class="card-body">
+                <table style="overflow: scroll; max-height: 750px; width:100%;" id="borangField" class="draggable-table">
+                    <tbody class="row_drag">
+                
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <input type="hidden" id="count" name="count" value=""> 
+                <button type="submit" class="frame9403-frame7445" id="hantar" disabled="disabled">
+                    <div class="frame9403-frame7293">
+                        <span class="frame9403-text21"><span>Hantar</span></span>
+                        <img src="/SVG/kemaskini.svg" class="frame9403-group7527">
+                    </div>
+                </button>
+            </div>
+        </form>
       </div>
     </div>
   </div>
 </div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+var count = 0;
+$("#rowAdder").click(function () {
+    count +=1;
+        newRowAdd =
+        '<tr class="frame9402-input" id="row">'+
+            '<td style="display:flex;">Kategori Pengguna '+
+                '<select type="text" name="category[]" class="form-select frame9402-kotaknama">'+
+                    '@foreach($kategoriPengguna as $kategoriPengguna)'+
+                    '<option value="{{$kategoriPengguna->id}}">{{$kategoriPengguna->nama}}</option>'+
+                    '@endforeach'+
+                '</select>'+
+                '<button class="frame9402-rectangle828245" id="DeleteRow"><img src="/SVG/bin.svg"/></button>'+
+            '</td>'+
+        '</tr>';
+        $('#borangField').append(newRowAdd);
+        document.getElementById("count").value = count;
+        
+        var cansubmit = (count > 0);
+        document.getElementById("hantar").disabled = !cansubmit;
+    });
+ 
+$("body").on("click", "#DeleteRow", function () {
+  $(this).parents("#row").remove();
+  count -=1;
+  document.getElementById("count").value = count;
 
-<script src="/js/jquery.js"></script>
-<script>
-function save(no)
-  {
-   var nama_val=document.getElementById("nama"+no).value;
-   var status_val=document.getElementById("status"+no).value;
-   document.getElementById("statusUpdate"+no).value = status_val;
-   document.getElementById("namaupdate"+no).value=nama_val;
-  }
-  function savetugasan(no)
-  {
-   var namatugas_val=document.getElementById("namaTugas"+no).value;
-   var jenistugas_val=document.getElementById("jenisTugas"+no).value;
-   var userKategori_val=document.getElementById("userKategori"+no).value;
-   document.getElementById("namaTugasupdate"+no).value = namatugas_val;
-   document.getElementById("jenisTugasupdate"+no).value=jenistugas_val;
-   document.getElementById("userKategoriupdate"+no).value=userKategori_val;
-  }
+  var cansubmit = (count > 0);
+  document.getElementById("hantar").disabled = !cansubmit;
+
+});
+$("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
 </script>
-
-<script>
-function openForm() {
-  document.getElementById("popupForm").style.display = "block";
-}
-function closeForm() {
-  document.getElementById("popupForm").style.display = "none";
-}
-function openFormTugas() {
-  document.getElementById("popupFormTugas").style.display = "block";
-}
-function closeFormTugas() {
-  document.getElementById("popupFormTugas").style.display = "none";
-}
-function openFormKemas() {
-  document.getElementById("popupFormKemas").style.display = "block";
-}
-function closeFormKemas() {
-  document.getElementById("popupFormKemas").style.display = "none";
-}
-
-</script>
-   
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
 <style>
-    .arial{
-        font-family: 'Arial', sans-serif;
-        text-transform: uppercase;
-    }
+  .arial{
+      font-family: 'Arial', sans-serif;
+      text-transform: uppercase;
+  }
+  
   .frame9402-frame9402 {
     width: 100%;
     display: flex;
@@ -278,8 +279,7 @@ function closeFormKemas() {
     text-decoration: none;
   }
   .frame9402-kotaknama {
-    width: 350px;
-    height: 45px;
+    width: -webkit-fill-available;
     position: relative;
     box-sizing: content-box;
     border-color: rgba(140, 38, 60, 1);
@@ -292,13 +292,17 @@ function closeFormKemas() {
     font-size: 18px;
     padding-left:10px;
     box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2);
-    background-color: #FFFFFF;
+    background-color: #FFFFFF;  
+    text-transform: uppercase;
+  }
+  .frame9403-frame7445:disabled {
+    opacity: 0.5;
+    cursor: default;
   }
   .frame9403-frame7445 {
       width: auto;
     height: 50px;
     display: flex;
-    max-width: 250px;
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
     box-sizing: border-box;
     padding-top: 0px;
@@ -310,7 +314,6 @@ function closeFormKemas() {
     justify-content: center;
     background-color: #A2335D;
     cursor: pointer;
-    align-self: flex-end;
     margin-left: auto;
     margin-right: 10px;
   }
@@ -348,7 +351,7 @@ function closeFormKemas() {
   }
   .frame9403-kotaknama3 {
       top: 0px;
-      width: 50%;
+      width: 65%;
       height: 50px;
       position: relative;
       box-sizing: content-box;
@@ -361,7 +364,9 @@ function closeFormKemas() {
       background-position:99% center;
       display:block;
       font-family: 'Arial', sans-serif;
-      font-size: 17.3081px;
+      font-size: 17.3081px;  
+      text-transform: uppercase;
+      text-align: center;
     }
   * {
       box-sizing: border-box;
@@ -402,7 +407,7 @@ function closeFormKemas() {
       margin-bottom: 0px;
     }
     .frame9402-kotaknamaBorang {
-    width: 299px;
+    width: -webkit-fill-available;
     height: 50px;
     position: relative;
     box-sizing: content-box;
@@ -415,7 +420,8 @@ function closeFormKemas() {
     margin-bottom: 30px;
     font-family: 'Arial', sans-serif;
     font-size: 18px;
-    padding-left:10px;
+    padding-left:10px;  
+    text-transform: uppercase;
   }
     .formContainer .btn {
       padding: 12px 20px;
@@ -467,6 +473,7 @@ function closeFormKemas() {
     padding-right: 20px;
   }
   .frame9402-text31 {
+    display: inline;
     color: #494949;
     width: 50%;
     height: auto;
@@ -509,25 +516,16 @@ function closeFormKemas() {
     margin-bottom: 0;
     justify-content: center;
   }
-  .frame9402-rectangle828246 {
-    width: 35px;
-    height: 30px;
-    padding: 0px;
-    margin-top: -5px;
-    position: relative;
-    box-sizing: border-box;
-    background-color: transparent;
-    border-color: transparent;
-    cursor:pointer;
-  }
+  
   .frame9402-rectangle828245 {
-    width: 32px;
-    height: 30px;
-    position: relative;
-    box-sizing: border-box;
-    margin-right: 10px;
-    border: none;
-  }
+  width: 32px;
+  height: 31px;
+  margin: auto 0px;
+  box-sizing: border-box;
+  background-color: transparent;
+  border: none;
+  cursor:pointer;
+}
   .frame9402-rectangle8282452 {
     width: 32px;
     height: 30px;
