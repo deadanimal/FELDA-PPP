@@ -31,7 +31,7 @@
             @foreach ($jawapans as $jawapan)
                 <tr>
                     <td class="text-center Arial">{{$jawapan->borangs->namaBorang}}</td>
-                    @if ($jawapan->status == "Lulus")
+                    @if ($jawapan->status == "Terima")
                         <td class="text-center Arial" style="width: 25%">Lulus</td>
                         <td class="text-center">
                             <a class="btn btn-info" href="/user/project/{{$jawapan->id}}" style="color: white; text-decoration:none;">

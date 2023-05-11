@@ -11,7 +11,7 @@
     </div>
   </section><!-- End Hero -->
   <div style="float: right; width: 20%; padding-top:7%;" >
-    <div class="row align-items-stretch center" >
+    <div class="row align-items-stretch center">
       <div class="section-title">
         <h2>KALENDAR</h2>
       </div>
@@ -25,8 +25,8 @@
         </div>
       </div>
     </div>
-
   </div>
+  
 <main id="main"  class="target" style="width: 80%">
   
     <!-- ======= About Us Section ======= -->

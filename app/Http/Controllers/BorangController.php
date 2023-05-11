@@ -442,15 +442,6 @@ class BorangController extends Controller
                             $noLulusBorang = Kelulusan_borang::where('jawapan_id', $borangJwpns[0]->id)->get();
                         }
                     }
-                    elseif(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'HQ') && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $tahapKelulusan[$z]->sequence){
-                        $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')
-                        ->where('borang_id', $borangId)->get();
-                        $tahapLulus = $tahapKelulusan[$x]->id;
-                        $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
-                        if(!$borangJwpns->isEmpty()){
-                            $noLulusBorang = Kelulusan_borang::where('jawapan_id', $borangJwpns[0]->id)->get();
-                        }
-                    }
                     elseif((Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Wilayah') || Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'WILAYAH')) && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $tahapKelulusan[$z]->sequence){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
                         ->where('wilayah', Auth::user()->wilayah)->get();
@@ -637,11 +628,13 @@ class BorangController extends Controller
         $borangJwpns = Jawapan::where('user_id', $userId)->get();
         if (!$borangJwpns->isEmpty()) {
             foreach($borangJwpns as $jwpn ){
-                $kelulusanBorang = Kelulusan_borang::with('tahap_kelulusan')->where('jawapan_id', $jwpn->id)->orderBy('created_at', 'DESC')->get();
+                $kelulusanBorang = Kelulusan_borang::with('tahap_kelulusan')->whereRelation('jawapan','user_id', $userId)->orderBy('created_at', 'DESC')->get();
             }
+
         }else{
             $kelulusanBorang = Kelulusan_borang::with('tahap_kelulusan')->where('jawapan_id', 0)->orderBy('created_at', 'DESC')->get();
         }
+
         
         //for notification tugasan
         $noti = $this->notification();
@@ -670,13 +663,28 @@ class BorangController extends Controller
         return view('userView.viewSubBorang', compact('noti','borangJwpns','jawapanMedans','menuModul', 'menuProses', 'menuBorang'));
     }
 
-    public function subBorang_edit(Request $request)
+    public function subBorang_tindakan(Request $request)
     {
-        $borangId = (int) $request->route('borang_id');
-        $userId = Auth::user()->id;
+        $jawapanId = (int) $request->route('borang_id');
+        
+        $borangJwpns = Jawapan::find($jawapanId);
 
-        $borangJwpns = Jawapan::where('borang_id', $borangId)->where('userid', $userId)->get();
+        $kelulusan = Kelulusan_borang::with('tahap_kelulusan')->where('jawapan_id', $jawapanId)->orderBy('created_at', 'DESC')->first();
+        $surat = Surat::where('kelulusan_id',$kelulusan->tahap_kelulusan->id)->first();
+        
+        $jawapan_dana = Jawapan_medan::where('jawapan_id', $jawapanId)->whereRelation('medan','medan.nama', 'LIKE','%PERMOHONAN DANA%')->first();
+        $this->dana = $jawapan_dana->jawapan;
+        
+        $text= $surat->body;
+        $surat_body = preg_replace_callback('~\{(.*?)\}~',
+        function($key)
+        {
+            $variable['dana'] = "RM ".$this->dana;
+            return $variable[$key[1]];      
+        },
 
+        $text);
+        
         //for notification tugasan
         $noti = $this->notification();
 
@@ -684,33 +692,21 @@ class BorangController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('userView.userUpdateBorang', compact('noti','borangJwpns','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userUpdateBorang', compact('noti','surat_body','surat','borangJwpns','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function subBorang_update(Request $request)
     {
-        $borangId = (int) $request->route('borang_id');
-        $userId = Auth::user()->id;
+        $jawapanId = $request->jawapan_id;
+        $tindakan = $request->tindakan;
 
-        $borangjwpnId = $request->borangjwpnId;
-        $jwpn = $request->jwpn;
-        $count = count($jwpn);
+        $borangJwpn = Jawapan::find($jawapanId);
+        $borangJwpn->status = $tindakan;
+        $borangJwpn->save();
+        
+        if($tindakan == "Terima"){
 
-        for($x=0; $x<$count; $x++){
-            $ans = Jawapan::find($borangjwpnId[$x]);
-            $ans->jawapan = $request->jwpn[$x];
-            $ans->pembetulan = null;
-            $ans->status = "Sedang di proses";
-            $ans->ulasan = null;
-            $ans->save();
         }
-
-        $borangJwpns = Jawapan::where('userid', $userId)->get();
-
-        $audit = new Audit;
-        $audit->user_id = Auth::user()->id;
-        $audit->action = "Mengemaskini Borang ".$oneBorang->namaBorang;
-        $audit->save();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();

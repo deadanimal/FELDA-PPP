@@ -528,10 +528,11 @@ class UserController extends Controller
     public function tugasList_app(Request $request)
     {
         $user = Auth::user()->id;
-        
-        if(Str::contains(Auth::user()->kategoripengguna, 'HQ')){
+        if(Str::contains(Auth::user()->kategori->nama, 'HQ')){
             $aduans = Aduan::where('user_category', Auth::user()->kategoripengguna)->get();
-        }elseif(Str::contains(Auth::user()->kategoripengguna, 'wilayah')|| Str::contains(Auth::user()->kategoripengguna, 'WILAYAH')){
+        }elseif(Str::contains(Auth::user()->kategori->nama, 'Super Admin')){
+            $aduans = Aduan::where('user_category', Auth::user()->kategoripengguna)->get();
+        }elseif(Str::contains(Auth::user()->kategori->nama, 'wilayah')|| Str::contains(Auth::user()->kategori->nama, 'WILAYAH')){
             $aduans = Aduan::where('user_category', Auth::user()->kategoripengguna)->where('wilayah', Auth::user()->wilayah)->get();
         }else{
             $aduans = Aduan::where('user_category', Auth::user()->kategoripengguna)->where('wilayah', Auth::user()->wilayah)->where('rancangan',Auth::user()->rancangan)->get();

@@ -204,8 +204,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user/sub_borang/list', [BorangController::class, 'subBorang_list']);
     Route::get('/user/sub_borang/{borang_id}/view', [BorangController::class, 'subBorang_view']);
-    Route::get('/user/sub_borang/{borang_id}/edit', [BorangController::class, 'subBorang_edit']);
+    Route::get('/user/sub_borang/{borang_id}/tindakan', [BorangController::class, 'subBorang_tindakan']);
     Route::put('/user/sub_borang/update', [BorangController::class, 'subBorang_update']);
+
 
     Route::get('/user/project', [UserController::class, 'project_list']);
     Route::get('/user/project/{jawapan_id}', [UserController::class, 'project_view']);
@@ -260,7 +261,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/user/tugasan/aduan/delete', [UserController::class, 'userAduan_delete']);
 
     Route::get('/test', function () {
-        ini_set('memory_limit', '2048M');
         return view('pengurusanBorang.TemplatePermohonanPerolehanIbuPejabatWilayah_');
     });
 
