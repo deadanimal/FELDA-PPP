@@ -47,6 +47,11 @@
               <form action="/Aduan/add" method="POST">
                 @csrf
                 <div class="modal-body">
+                    <label for="title" class="frame9402-text04">
+                        <strong>Tajuk Aduan</strong>
+                    </label>
+                    <input type="text" class="form-control frame9402-kotaknamaBorang" name="title" id="title" required>
+                    
                     <label for="nama" class="frame9402-text04">
                       <strong>Aduan</strong>
                     </label>
@@ -92,7 +97,7 @@
         <table class="table table-bordered table-striped w-100 aduan-datatable">
             <thead class="text-white bg-primary w-100">
               <tr>
-                  <th scope="col" class="text-center" style="width: 50%">Aduan</th>
+                  <th scope="col" class="text-center" style="width: 50%"> Tajuk Aduan</th>
                   <th scope="col" class="text-center">Tarikh Aduan</th>
                   <th scope="col" class="text-center">Jenis Aduan</th>
                   <th scope="col" class="text-center">Status</th>
@@ -160,9 +165,9 @@
                 ajax: "/Aduan/List",
                 columns: [
                     {
-                        data: 'nama',
-                        name: 'nama',
-                        className: "text-Upp Arial"
+                        data: 'title',
+                        name: 'title',
+                        className: "text-Center Arial"
                     },
                     {
                         data: 'created_at',

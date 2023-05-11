@@ -20,7 +20,8 @@
         </div>
         <div class="card-body">
             <div class="card-title text-center">
-                <h1 style="font-family: 'Arial', sans-serif; font-size:23px;">{{$aduan->nama}}</h1>
+                <h1 style="font-family: 'Arial', sans-serif; font-size:23px; text-decoration: underline;">{{$aduan->title}}</h1><br>
+                <h1 style="font-family: 'Arial', sans-serif; font-size:23px;">{!! nl2br(e($aduan->nama)) !!}</h1>
                 <h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Jenis Aduan: {{$aduan->jenis_aduan}}</h1>
             </div><br>
             @if ($aduan->status == "Belum Selesai")

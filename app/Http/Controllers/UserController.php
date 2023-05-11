@@ -932,9 +932,9 @@ class UserController extends Controller
         $aduans = Aduan::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
         if($request->ajax()) {
             return DataTables::collection($aduans)
-            ->editColumn('nama', function(Aduan $aduans) { 
-                return nl2br($aduans->nama);
-            })
+            // ->editColumn('nama', function(Aduan $aduans) { 
+            //     return nl2br($aduans->nama);
+            // })
             ->editColumn('created_at', function(Aduan $aduans){ 
                 return \Carbon\Carbon::parse($aduans->created_at )->isoFormat('DD/MM/YYYY');
             })
@@ -953,6 +953,11 @@ class UserController extends Controller
                                 </div>
                                 <div class="modal-body">
                                     <p>Anda Pasti Mahu Aduan Ini?<p>
+                                    <label for="title" class="frame9402-text04">
+                                        <strong>Tajuk Aduan</strong>
+                                    </label>
+                                    <input type="text" class="form-control frame9402-kotaknamaBorang" name="title" id="title" value="'.$aduans->jenis_aduan.'" readonly>
+                                
                                     <label for="nama" class="frame9402-text04">
                                         <strong>Aduan</strong>
                                     </label>
@@ -975,7 +980,7 @@ class UserController extends Controller
                         </div>
                     </div>';
             })                  
-            ->rawColumns(['tindakan','nama'])                          
+            ->rawColumns(['tindakan'])                          
             ->make(true);
         }
 
@@ -993,6 +998,7 @@ class UserController extends Controller
     public function aduan_add(Request $request)
     { 
         $aduan = new Aduan;
+        $aduan->title = $request->title;
         $aduan->nama = $request->nama;
         $aduan->jenis_aduan = $request->jenisAduan;
         $aduan->wilayah = $request->wilayah;
@@ -1023,7 +1029,6 @@ class UserController extends Controller
         $aduans = Aduan::orderBy('created_at', 'DESC')->get();
         if($request->ajax()) {
             return DataTables::collection($aduans)
-            ->addIndexColumn() 
             ->addColumn('user', function (Aduan $aduans) {
                 if($aduans->user_id) {
                     $html_ = $aduans->user->nama;
@@ -1032,9 +1037,9 @@ class UserController extends Controller
                 }
                 return $html_;
             }) 
-            ->editColumn('nama', function(Aduan $aduans) { 
-                return nl2br(e($aduans->nama));
-            })
+            // ->editColumn('nama', function(Aduan $aduans) { 
+            //     return nl2br(e($aduans->nama));
+            // })
             ->editColumn('created_at', function(Aduan $aduans){ 
                 return \Carbon\Carbon::parse($aduans->created_at )->isoFormat('DD/MM/YYYY');
             })
@@ -1083,6 +1088,12 @@ class UserController extends Controller
                                         '.$options.'
                                     </select>
 
+                                    <label for="title" class="frame9402-text04">
+                                        <strong>Tajuk Aduan</strong>
+                                    </label>
+                                    <input type="text" class="form-control frame9402-kotaknamaBorang" name="title" value="'.$aduans->title.'" readonly>
+                                
+
                                     <label for="nama" class="frame9402-text04">
                                         <strong>Aduan</strong>
                                     </label>
@@ -1091,7 +1102,7 @@ class UserController extends Controller
                                     <label for="jenisAduan" class="frame9402-text04">
                                         <strong>Jenis Aduan</strong>
                                     </label>
-                                    <input type="text" class="frame9402-kotaknamaBorang" id="jenisAduan" value="'.$aduans->jenis_aduan.'" name="jenisAduan" required oninput="this.value = this.value.toUpperCase()" disabled>                
+                                    <input type="text" class="frame9402-kotaknamaBorang" id="jenisAduan" value="'.$aduans->jenis_aduan.'" name="jenisAduan" readonly oninput="this.value = this.value.toUpperCase()">                
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">TIDAK</button>
@@ -1102,7 +1113,7 @@ class UserController extends Controller
                     </div>
                 </div>';
             })                  
-            ->rawColumns(['tindakan','nama'])                          
+            ->rawColumns(['tindakan'])                          
             ->make(true);
         }
 

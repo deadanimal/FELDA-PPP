@@ -28,7 +28,7 @@
         <table class="table table-bordered table-striped w-100 aduan-datatable">
             <thead class="text-white bg-primary w-100">
               <tr>
-                  <th scope="col" class="text-center" style="width: 50%">Aduan</th>
+                  <th scope="col" class="text-center" style="width: 50%">Tajuk Aduan</th>
                   <th scope="col" class="text-center">Tarikh Aduan</th>
                   <th scope="col" class="text-center">Jenis Aduan</th>
                   <th scope="col" class="text-center">Status</th>
@@ -73,9 +73,9 @@
                 ajax: "/Aduan/List/Pegawai",
                 columns: [
                     {
-                        data: 'nama',
-                        name: 'nama',
-                        className: "text-Upp Arial"
+                        data: 'title',
+                        name: 'title',
+                        className: "text-center Arial"
                     },
                     {
                         data: 'created_at',
