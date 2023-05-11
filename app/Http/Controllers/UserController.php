@@ -956,7 +956,7 @@ class UserController extends Controller
                                     <label for="title" class="frame9402-text04">
                                         <strong>Tajuk Aduan</strong>
                                     </label>
-                                    <input type="text" class="form-control frame9402-kotaknamaBorang" name="title" id="title" value="'.$aduans->jenis_aduan.'" readonly>
+                                    <input type="text" class="form-control frame9402-kotaknamaBorang" name="title" id="title" value="'.$aduans->title.'" readonly>
                                 
                                     <label for="nama" class="frame9402-text04">
                                         <strong>Aduan</strong>
