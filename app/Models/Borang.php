@@ -21,4 +21,8 @@ class Borang extends Model
         return $this->hasMany(Jawapan::class);
 
     }
+    public function MedanPO(){
+        return $this->hasMany(MedanPO::class);
+
+    }
 }

@@ -66,7 +66,8 @@
                 </table>
             </div>
             <div class="card-footer">
-                <input type="hidden" id="count" name="count" value=""> 
+                <input type="hidden" id="count" name="count" value="">
+                <input type="hidden" name="jawapan_id" value="{{$jawapans->id}}"> 
                 <button type="submit" class="frame9403-frame7445" id="hantar" disabled="disabled">
                     <div class="frame9403-frame7293">
                         <span class="frame9403-text21"><span>Hantar</span></span>
@@ -86,7 +87,7 @@ $("#rowAdder").click(function () {
     count +=1;
         newRowAdd =
         '<tr class="frame9402-input" id="row">'+
-            '<td style="display:flex;">Kategori Pengguna '+
+            '<td style="display:flex;"><span style="text-align:right;margin-right:2%;">Kategori Pengguna</span>'+
                 '<select type="text" name="category[]" class="form-select frame9402-kotaknama">'+
                     '@foreach($kategoriPengguna as $kategoriPengguna)'+
                     '<option value="{{$kategoriPengguna->id}}">{{$kategoriPengguna->nama}}</option>'+

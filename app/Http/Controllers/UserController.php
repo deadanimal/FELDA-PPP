@@ -34,6 +34,11 @@ use App\Models\Aduan;
 use App\Models\Respond_aduan;
 use App\Models\Project;
 use App\Models\Surat;
+use App\Models\Hantar_Surat;
+use App\Models\Tugasan;
+use App\Models\TindakanTugasan;
+use App\Models\MedanPO;
+use App\Models\InputMedan;
 
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -50,7 +55,7 @@ class UserController extends Controller
         $date = Carbon::now();
         $tugasans_noti= Senarai_tugasan::where('user_id', Auth::user()->id)->where('due_date', '>=', $date->format('Y-m-d'))->count();
         $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->whereNot('status', 'Sah Selesai')->count();
-        $borangs_noti = Borang::where('status', 1)->whereHas('jwpn')->count();
+        $borangs_noti = Borang::where('status', 1)->with('jwpn')->whereRelation('jwpn','status',  '=','Terima')->doesntHave('jwpn.hantarSurat')->count();
         $noti = $tugasans_noti+$aduans_noti+$borangs_noti;
 
         return $noti;
@@ -530,6 +535,8 @@ class UserController extends Controller
     public function tugasList_app(Request $request)
     {
         $user = Auth::user()->id;
+
+        //aduans with usercategory check
         if(Str::contains(Auth::user()->kategori->nama, 'HQ')){
             $aduans = Aduan::where('user_category', Auth::user()->kategoripengguna)->get();
         }elseif(Str::contains(Auth::user()->kategori->nama, 'Super Admin')){
@@ -541,19 +548,21 @@ class UserController extends Controller
         }
 
         $tugasans= Senarai_tugasan::where('user_id', $user)->get();
-        $borangs = Borang::where('status', 1)->whereHas('jwpn')->get();
-        
+        $borangs = Borang::where('status', 1)->with('jwpn')->whereRelation('jwpn','status',  '=','Terima')->whereRelation('jwpn', 'rancangan')->doesntHave('jwpn.hantarSurat')->get();
+        $hantarSurats = Hantar_surat::with('jawapan')->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->whereRelation('jawapan','rancangan', Auth::user()->rancangan)->orderBy('created_at', "DESC")->get();
+
+
         $date = Carbon::now();
         $tugasans_noti= Senarai_tugasan::where('user_id', $user)->where('due_date', '>=', $date->format('Y-m-d'))->count();
         $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->whereNot('status', 'Sah Selesai')->count();
-        $borangs_noti = Borang::where('status', 1)->whereHas('jwpn')->count();
+        $borangs_noti = Borang::where('status', 1)->with('jwpn')->whereRelation('jwpn','status',  '=','Terima')->doesntHave('jwpn.hantarSurat')->count();
         $noti = $tugasans_noti+$aduans_noti+$borangs_noti;
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('userView.userTugasan', compact('noti','borangs_noti','tugasans_noti','aduans_noti','borangs','aduans','tugasans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userTugasan', compact('noti','borangs_noti','tugasans_noti','aduans_noti','hantarSurats','borangs','aduans','tugasans', 'menuModul', 'menuProses', 'menuBorang'));
          
     }
 
@@ -1257,10 +1266,21 @@ class UserController extends Controller
     public function generate_one(Request $request)
     { 
         $jawapan_id = $request->jawapan_id;
+        $jawapans = Jawapan::find($jawapan_id);
+
+        $surat = Surat::where('borang_id',$jawapans->borang_id)->first();
+
         $count = $request->count;
         $category = $request->category;
-        $jawapans = Jawapan::find($jawapan_id);
-        $kategoriPengguna = KategoriPengguna::all();
+
+        for($x = 0; $x<$count; $x++){
+            $send = new Hantar_Surat;
+            $send->surat_id = $surat->id;
+            $send->jawapan_id = $jawapan_id;
+            $send->userCategory_id = $category[$x];
+            $send->save();
+        }
+        Alert::success('Hantar Surat Berjaya.', 'Surat telah berjaya dihantar.');   
 
         return redirect('pegawaiKontrak.oneUser', compact('noti','kategoriPengguna','jawapans','menuModul', 'menuProses', 'menuBorang'));
     }
@@ -1294,4 +1314,225 @@ class UserController extends Controller
 
         return view('pegawaiKontrak.surat', compact('noti','borang','surat','menuModul', 'menuProses', 'menuBorang'));
     }
+    
+    public function kontrak_addSurat(Request $request)
+    { 
+        $borang_id = $request->borangId;
+
+        $surat = new Surat;
+        $surat->title = $request->title;
+        $surat->body = $request->body;
+        $surat->borang_id = $borang_id;
+        $surat->save();
+
+        Alert::success('Cipta Templat Surat Berjaya.', 'Templat surat telah berjaya dicipta.');   
+
+        return redirect('/user/borang_app/surat/'.$borang_id.'/template');
+    }
+
+    public function kontrak_updateSurat(Request $request)
+    { 
+        $borang_id = $request->borangId;
+
+        $surat = Surat::find($request->suratID);
+        $surat->title = $request->title;
+        $surat->body = $request->body;
+        $surat->borang_id = $borang_id;
+        $surat->save();
+
+        Alert::success('Kemaskini Templat Surat Berjaya.', 'Templat surat telah berjaya dikemaskini.');   
+
+        return redirect('/user/borang_app/surat/'.$borang_id.'/template');
+    }
+    
+    public function TugasanProjek_list(Request $request)
+    {        
+        $borang_id = (int)$request->route('borang_id'); 
+        $borang = Borang::find($borang_id); 
+        $tugasans = Tugasan::where('borang_id',$borang_id)->where('userCategory_id', Auth::user()->kategoripengguna)->get();
+        
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('userView.senaraiProjekTugasan', compact('borang','tugasans','noti','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function Tugasan_list(Request $request)
+    {     
+        $tugasan_id = (int)$request->route('tugasan_id'); 
+
+        $tugasan = Tugasan::find($tugasan_id);
+        $tindakans = TindakanTugasan::where('tugasan_id', $tugasan_id)->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+        
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('userView.tindakanList', compact('tindakans','tugasan','noti','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function TindakanText_add(Request $request)
+    {     
+        $tugasan_id = $request->tugasan_id; 
+
+        $tindakan = new TindakanTugasan;
+        $tindakan->input = $request->reply;
+        $tindakan->tugasan_id = $tugasan_id;
+        $tindakan->user_id = Auth::user()->id;
+        $tindakan->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Maklum Balas Pada Tugasan ".$tindakan->Tugasan->Perkara;
+        $audit->save();
+
+        Alert::success('Kemaskini Tugasan Berjaya.', 'Tindakan Tugasan telah berjaya disimpan.');   
+
+        return redirect('/user/projek/tugasan/'.$tugasan_id.'/list');
+    }
+
+    public function TindakanText_delete(Request $request)
+    {     
+        $tugasan_id = $request->tugasan_id; 
+
+        $tindakan = TindakanTugasan::find($request->tindakanID);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Maklum Balas Pada Tugasan ".$tindakan->Tugasan->Perkara;
+        $audit->save();
+
+        $tindakan->delete();
+
+        Alert::success('Padam Maklum Balas Tugasan Berjaya.', 'Maklum Balas Tugasan telah berjaya dipadam.');   
+
+        return redirect('/user/projek/tugasan/'.$tugasan_id.'/list');
+    }
+
+    public function TindakanFile_add(Request $request)
+    {     
+        $tugasan_id = $request->tugasan_id; 
+
+        $tindakan = new TindakanTugasan;
+        if($request->file()) {
+            $files = time().'.'.$request->reply->extension();  
+            $request->reply->move(public_path('tugasan'), $files);
+            $tindakan->file = '/tugasan/' . $files;
+        }
+        $tindakan->tugasan_id = $tugasan_id;
+        $tindakan->user_id = Auth::user()->id;
+        $tindakan->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Upload Fail Maklum Balas Pada Tugasan ".$tindakan->Tugasan->Perkara;
+        $audit->save();
+
+        Alert::success('Kemaskini Tugasan Berjaya.', 'Tindakan Tugasan telah berjaya disimpan.');   
+
+        return redirect('/user/projek/tugasan/'.$tugasan_id.'/list');
+    }
+
+    public function TindakanFile_delete(Request $request)
+    {     
+        $tugasan_id = $request->tugasan_id; 
+
+        $tindakan = TindakanTugasan::find($request->tindakanID);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Fail Maklum Balas Pada Tugasan ".$tindakan->Tugasan->Perkara;
+        $audit->save();
+
+        $tindakan->delete();
+
+        Alert::success('Padam Maklum Balas Tugasan Berjaya.', 'Maklum Balas Tugasan telah berjaya dipadam.');   
+
+        return redirect('/user/projek/tugasan/'.$tugasan_id.'/list');
+    }
+
+    public function TugasanPO_list(Request $request)
+    {     
+        $tugasan_id = (int)$request->route('tugasan_id'); 
+
+        $tugasan = Tugasan::find($tugasan_id);
+        $medanPO = MedanPO::where('tugasan_id', $tugasan_id)->get();
+        $tindakans = TindakanTugasan::where('tugasan_id', $tugasan_id)->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+
+        foreach($tindakans as $tindakan){
+            $inputMedan = InputMedan:: where('tindakanTugasan_id', $tindakan->id)->get();
+            $tindakan->jawapan = $inputMedan;
+        }
+
+        // dd($tindakan);
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('userView.tugasanPO', compact('tindakans','medanPO','tugasan','noti','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function TugasanPO_add(Request $request)
+    {     
+        $tugasan_id = $request->tugasan_id; 
+
+        $tindakan = new TindakanTugasan;
+        if($request->file()) {
+            $files = time().'.'.$request->PO->extension();  
+            $request->PO->move(public_path('PO'), $files);
+            $tindakan->file = '/PO/' . $files;
+        }
+        $tindakan->tugasan_id = $tugasan_id;
+        $tindakan->user_id = Auth::user()->id;
+        $tindakan->save();
+
+        $medanId = $request->medanId;
+        $jawapan = $request->jawapan;
+
+        for($x = 0; $x<count($medanId); $x++){
+            $inputMedan = new InputMedan;
+            $inputMedan->value = $jawapan[$x];
+            $inputMedan->medanPO_id = $medanId[$x];
+            $inputMedan->tindakanTugasan_id = $tindakan->id;
+            $inputMedan->save();
+        }
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Upload Pesanan Pembelian Pada Tugasan ".$tindakan->Tugasan->Perkara;
+        $audit->save();
+
+        Alert::success('Kemaskini Pesanan Pembelian Berjaya.', 'Pesanan Pembelian telah berjaya disimpan.');   
+
+        return redirect('/user/projek/tugasan/'.$tugasan_id.'/PO/list');
+    }
+
+    public function TugasanPO_delete(Request $request)
+    {     
+        $tugasan_id = $request->tugasan_id; 
+
+        $tindakan = TindakanTugasan::find($request->tindakanID);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Pesanan Pembelian Pada Tugasan ".$tindakan->Tugasan->Perkara;
+        $audit->save();
+
+        $tindakan->delete();
+
+        Alert::success('Padam Pesanan Pembelian Berjaya.', 'Pesanan Pembelian telah berjaya dipadam.');   
+
+        return redirect('/user/projek/tugasan/'.$tugasan_id.'/PO/list');
+    }
+    
 }

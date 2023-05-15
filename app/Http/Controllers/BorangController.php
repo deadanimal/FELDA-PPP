@@ -36,9 +36,9 @@ class BorangController extends Controller
         $date = Carbon::now();
         $tugasans_noti= Senarai_tugasan::where('user_id', Auth::user()->id)->where('due_date', '>=', $date->format('Y-m-d'))->count();
         $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->whereNot('status', 'Sah Selesai')->count();
-        $borangs_noti = Borang::where('status', 1)->whereHas('jwpn')->count();
+        $borangs_noti = Borang::where('status', 1)->with('jwpn')->whereRelation('jwpn','status',  '=','Terima')->doesntHave('jwpn.hantarSurat')->count();
         $noti = $tugasans_noti+$aduans_noti+$borangs_noti;
-        
+
         return $noti;
     }
 
@@ -627,6 +627,7 @@ class BorangController extends Controller
     {
         $userId = Auth::user()->id;
         $borangJwpns = Jawapan::where('user_id', $userId)->whereNot('Status', 'Terima')->get();
+
         if (!$borangJwpns->isEmpty()) {
             foreach($borangJwpns as $jwpn ){
                 $kelulusanBorang = Kelulusan_borang::with('tahap_kelulusan')->whereRelation('jawapan','user_id', $userId)->orderBy('created_at', 'DESC')->get();
@@ -671,20 +672,30 @@ class BorangController extends Controller
         $borangJwpns = Jawapan::find($jawapanId);
 
         $kelulusan = Kelulusan_borang::with('tahap_kelulusan')->where('jawapan_id', $jawapanId)->orderBy('created_at', 'DESC')->first();
-        $surat = Surat::where('kelulusan_id',$kelulusan->tahap_kelulusan->id)->first();
+        $surat = Surat::where('borang_id',$borangJwpns->borang_id)->first();
         
         $jawapan_dana = Jawapan_medan::where('jawapan_id', $jawapanId)->whereRelation('medan','medan.nama', 'LIKE','%PERMOHONAN DANA%')->first();
         $this->dana = $jawapan_dana->jawapan;
+        
+        $this->nama = $borangJwpns->nama;
+        $this->projek = $borangJwpns->borangs->namaBorang;
+        $this->rancangan = $borangJwpns->rancangans->nama;
         
         $text= $surat->body;
         $surat_body = preg_replace_callback('~\{(.*?)\}~',
         function($key)
         {
+            $variable['nama'] = $this->nama;
+            $variable['projek'] = $this->projek;
+            $variable['rancangan'] = $this->rancangan;
             $variable['dana'] = "RM ".$this->dana;
+            
             return $variable[$key[1]];      
         },
 
         $text);
+
+        $jawapan_alamat = Jawapan_medan::where('jawapan_id', $jawapanId)->whereRelation('medan','medan.nama', 'LIKE','%alamat%')->first();
 
         //for notification tugasan
         $noti = $this->notification();
@@ -693,7 +704,7 @@ class BorangController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('userView.userUpdateBorang', compact('noti','surat_body','surat','borangJwpns','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userUpdateBorang', compact('noti','jawapan_alamat','surat_body','surat','borangJwpns','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function subBorang_update(Request $request)
@@ -1023,5 +1034,6 @@ class BorangController extends Controller
 
         return redirect('/moduls/borang/checkbox/'.$medan_id.'');
     }
+    
     
 }

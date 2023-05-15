@@ -70,8 +70,68 @@
                       </span>
                   </a>   
                 </li>
+
+                <li class="nav-item" style="background-color: rgb(210 210 210);">
+                  <a 
+                  @if (Request::is('user/projek/*'))
+                    class="nav-link active"
+                  @else
+                    class="nav-link" 
+                  @endif
+                  
+                  data-bs-toggle="tab" href="#tab-7" style="height: 100%;">
+                      <span class="arial-N" style="display: flex;white-space: nowrap;">Tugasan Projek
+                        {{-- @if ($borangs_noti != 0)
+                          <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin-left:2%;">
+                            {{$borangs_noti}}
+                          </div>
+                        @endif --}}
+                      </span>
+                  </a>   
+                </li>
               </ul>
+              
               <div class="tab-content">
+                <div 
+                  @if (Request::is('user/projek/') || Request::is('user/projek/*'))
+                    class="tab-pane fade active show" 
+                  @else
+                    class="tab-pane fade" 
+                  @endif
+                  id="tab-7" role="tabpanel">
+                  <div class="card-header">
+                      <h5 class="card-title mb-0">Senarai projek yang perlu dikemaskini.</h5>
+                  </div>
+                  <div class="card-body">
+                      @if (!$hantarSurats->isEmpty())
+                      <table class="table table-bordered table-striped w-100 arial">
+                          <thead class="text-white bg-primary w-100">
+                            <tr class="text-center">
+                                <th scope="col">Nama Projek</th>
+                                <th scope="col">Tindakan</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              @foreach ($hantarSurats as $hantarSurat)
+                              <tr>
+                                  <td class="text-center arial" style="text-transform: uppercase;">{{$hantarSurat->jawapan->borangs->namaBorang}}</td>
+                                  {{-- <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->borang}}</td> --}}
+                                  <td class="text-center arial">
+                                    <a class="btn btn-success" href="/user/projek/{{$hantarSurat->jawapan->borang_id}}/list" style="color: white; text-decoration:none;">
+                                      Lihat Tugasan
+                                    </a>
+                                  </td>
+                              </tr>
+                              @endforeach 
+                          </tbody>
+                        </table>
+                        
+                                      
+                      @else
+                          <h1 style="text-align: center;"> Tiada Tugasan </h1>
+                      @endif
+                  </div>
+                </div>
                 <div 
                   @if (Request::is('user/tugasan') || Request::is('user/tugasan/*'))
                     class="tab-pane fade active show" 
@@ -96,6 +156,7 @@
                               @foreach ($tugasans as $tugasan)
                               <tr>
                                   <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->nama}}</td>
+                                  {{-- <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->borang}}</td> --}}
                                   <td class="text-center arial">{{$tugasan->due_date}}</td>
                                   <td class="text-center arial">
                                       <a class="btn btn-success" href="/user/tugasan/{{$tugasan->id}}/item_list" style="color: white; text-decoration:none;">
@@ -150,7 +211,7 @@
                         
                                       
                       @else
-                          <h1 style="text-align: center;"> Tiada Tugasan </h1>
+                          <h1 style="text-align: center;"> Tiada Aduan </h1>
                       @endif
                   </div>
                 </div>

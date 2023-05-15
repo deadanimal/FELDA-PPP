@@ -88,4 +88,11 @@ class User extends Authenticatable
         return $this->hasMany(TarikDiri::class);
     }
 
+    public function Tugasan() {
+        return $this->hasMany(Tugasan::class);
+    }
+    
+    public function InputMedan() {
+        return $this->hasMany(InputMedan::class);
+    }
 }

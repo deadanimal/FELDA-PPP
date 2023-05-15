@@ -135,6 +135,7 @@ editor.getMarkdown();
 
     var editor = new FroalaEditor('#editor', {
         height: 300,
+        attribution: false,
         toolbarButtons: ['bold', 'italic', 'underline', 'paragraphFormat', 'align','insertTable', 'undo', 'redo']
     // }, function () {
     //     console.log(editor.html.get())

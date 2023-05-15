@@ -17,6 +17,8 @@ use App\Models\Aktiviti;
 use App\Models\Perkara_Tugasan;
 use App\Models\User;
 use App\Models\Aduan;
+use App\Models\Tugasan;
+use App\Models\MedanPO;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Alert;
@@ -30,7 +32,7 @@ class ModulController extends Controller
         $date = Carbon::now();
         $tugasans_noti= Senarai_tugasan::where('user_id', Auth::user()->id)->where('due_date', '>=', $date->format('Y-m-d'))->count();
         $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->whereNot('status', 'Sah Selesai')->count();
-        $borangs_noti = Borang::where('status', 1)->whereHas('jwpn')->count();
+        $borangs_noti = Borang::where('status', 1)->with('jwpn')->whereRelation('jwpn','status',  '=','Terima')->doesntHave('jwpn.hantarSurat')->count();
         $noti = $tugasans_noti+$aduans_noti+$borangs_noti;
         
         return $noti;
@@ -892,4 +894,143 @@ class ModulController extends Controller
         return view('pengurusanModul.paramList', compact('noti','proses', 'modul', 'menuModul', 'menuProses', 'menuBorang', 'aktiviti', 'params'));
     }
 
+    public function TugasanPengguna_list(Request $request)
+    { 
+        $borang_id = (int) $request->route('borang_id');
+        $borang = Borang::with('proses')->where('id',$borang_id)->first();
+
+        $user_Categories = KategoriPengguna::all();
+        $tugasans = Tugasan::where('borang_id', $borang_id)->orderBy('created_at', "DESC")->get();
+
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pegawaiKontrak.tugas', compact('borang','tugasans','user_Categories','noti','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function Tugas_add(Request $request)
+    { 
+        $tugasan = new Tugasan;
+        $tugasan->perkara = $request->perkara;
+        $tugasan->jenis_input = $request->jenis;
+        $tugasan->due_date = $request->tarikh;
+        $tugasan->userCategory_id = $request->category;
+        $tugasan->borang_id = $request->borang_id;
+        $tugasan->save();
+
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Tugasan ".$tugasan->perkara." pada Borang ".$tugasan->Borang->namaBorang;
+        $audit->save();
+
+        Alert::success('Cipta Tugasan Berjaya.', 'Tugasan telah berjaya dicipta.');
+
+        return redirect('/moduls/tugasan/'.$request->borang_id.'/List');
+    }
+
+    public function Tugas_update(Request $request)
+    { 
+        $tugasan = Tugasan::find($request->tugasanID);
+        $tugasan->perkara = $request->perkara;
+        $tugasan->jenis_input = $request->jenis;
+        $tugasan->due_date = $request->tarikh;
+        $tugasan->userCategory_id = $request->category;
+        $tugasan->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "kemaskini Tugasan ".$tugasan->perkara." pada Borang ".$tugasan->Borang->namaBorang;
+        $audit->save();
+
+        Alert::success('Kemaskini Tugasan Berjaya.', 'Tugasan telah berjaya dikemaskini.');
+
+        return redirect('/moduls/tugasan/'.$tugasan->borang_id.'/List');
+    }
+
+    public function Tugas_delete(Request $request)
+    { 
+        $tugasan = Tugasan::find($request->tugasanID);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Tugasan ".$tugasan->perkara." pada Borang ".$tugasan->Borang->namaBorang;
+        $audit->save();
+
+
+        $tugasan->delete();
+
+        Alert::success('Padam Tugasan Berjaya.', 'Tugasan telah berjaya dipadam.');
+
+        return redirect('/moduls/tugasan/'.$request->borang_id.'/List');
+    }
+
+    public function MedanPO_List(Request $request)
+    { 
+        $tugasan_id = (int) $request->route('tugasan_id');
+        $tugasan = Tugasan::with('Borang')->where('id', $tugasan_id)->first();
+        $medans = MedanPO::where('tugasan_id', $tugasan_id)->orderBy('created_at', "DESC")->get();
+
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+
+        return view('pengurusanModul.purchaseOrder', compact('tugasan','medans','noti','menuModul', 'menuProses', 'menuBorang'));
+    }
+
+    public function MedanPO_add(Request $request)
+    { 
+        $medan = new MedanPO;
+        $medan->nama = $request->nama;
+        $medan->datatype = $request->datatype;
+        $medan->tugasan_id = $request->tugasan_id;
+        $medan->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Medan PO ".$medan->nama." pada Tugasan ".$medan->Tugasan->Perkara;
+        $audit->save();
+
+        Alert::success('Cipta Medan PO Berjaya.', 'Medan PO telah berjaya dicipta.');
+    
+        return redirect('/moduls/medanPO/'.$request->tugasan_id.'/List');
+    }
+    public function MedanPO_update(Request $request)
+    { 
+        $medan = MedanPO::find($request->medanID);
+        $medan->nama = $request->nama;
+        $medan->datatype = $request->datatype;
+        $medan->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "kemaskini Medan PO ".$medan->nama." pada Tugasan ".$medan->Tugasan->Perkara;
+        $audit->save();
+
+        Alert::success('Kemaskini Medan PO Berjaya.', 'Medan PO telah berjaya dikemaskini.');
+
+        return redirect('/moduls/medanPO/'.$request->tugasan_id.'/List');
+    }
+
+    public function MedanPO_delete(Request $request)
+    { 
+        $medan = MedanPO::find($request->medanID);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Medan PO ".$medan->nama." pada Tugasan ".$medan->Tugasan->Perkara;
+        $audit->save();
+
+        $medan->delete();
+
+        Alert::success('Padam Medan PO Berjaya.', 'Medan PO telah berjaya dipadam.');
+
+        return redirect('/moduls/medanPO/'.$request->tugasan_id.'/List');
+    }
 }

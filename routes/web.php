@@ -266,8 +266,31 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/tugasan/send/generate_all', [UserController::class, 'generate_all']);
 
     Route::get('/user/borang_app/surat/{borang_id}/template', [UserController::class, 'kontrak_surat']);
-    Route::post('/user/borang_app/surat/add', [UserController::class, 'kontrak_updateSurat']);
+    Route::post('/user/borang_app/surat/add', [UserController::class, 'kontrak_addSurat']);
     Route::put('/user/borang_app/surat/update', [UserController::class, 'kontrak_updateSurat']);
+
+    Route::get('/moduls/tugasan/{borang_id}/List', [ModulController::class, 'TugasanPengguna_list']);
+    Route::post('/moduls/borang/tugasan/add', [ModulController::class, 'Tugas_add']);
+    Route::put('/moduls/borang/tugasan/update', [ModulController::class, 'Tugas_update']);
+    Route::delete('/moduls/borang/tugasan/delete', [ModulController::class, 'Tugas_delete']);
+
+    Route::get('/user/projek/{borang_id}/list', [UserController::class, 'TugasanProjek_list']);
+    Route::get('/user/projek/tugasan/{tugasan_id}/list', [UserController::class, 'Tugasan_list']);
+    Route::post('/user/projek/tindakan/text/add', [UserController::class, 'TindakanText_add']);
+    Route::delete('/user/projek/tindakan/text/delete', [UserController::class, 'TindakanText_delete']);
+
+    Route::post('/user/projek/tindakan/file/add', [UserController::class, 'TindakanFile_add']);
+    Route::delete('/user/projek/tindakan/file/delete', [UserController::class, 'TindakanFile_delete']);
+
+    Route::get('/user/projek/tugasan/{tugasan_id}/PO/list', [UserController::class, 'TugasanPO_list']);
+    Route::post('/user/projek/tindakan/PO/add', [UserController::class, 'TugasanPO_add']);
+    Route::delete('/user/projek/tindakan/PO/delete', [UserController::class, 'TugasanPO_delete']);
+
+
+    Route::get('/moduls/medanPO/{tugasan_id}/List', [ModulController::class, 'MedanPO_List']);
+    Route::post('/moduls/medanPO/add', [ModulController::class, 'MedanPO_add']);
+    Route::put('/moduls/medanPO/update', [ModulController::class, 'MedanPO_update']);
+    Route::delete('/moduls/medanPO/delete', [ModulController::class, 'MedanPO_delete']);
 
     Route::get('/test', function () {
         return view('pengurusanBorang.TemplatePermohonanPerolehanIbuPejabatWilayah_');

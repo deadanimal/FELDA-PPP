@@ -14,6 +14,6 @@ class Surat extends Model
     }
 
     public function hantarSurat(){
-        return $this->hasMany(Hantar_Surat::class);
+        return $this->hasOne(Hantar_Surat::class);
     }
 }
