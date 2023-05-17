@@ -25,7 +25,7 @@
             <div class="card">
                 <div class="card-header">
                     <button class="frame9403-frame7445"  
-                    @if ($acceptance->count() == 2)
+                    @if ($acceptance->count() >= 2)
                         disabled
                     @endif
                     data-toggle="modal" data-target="#exampleModaladdMedan">

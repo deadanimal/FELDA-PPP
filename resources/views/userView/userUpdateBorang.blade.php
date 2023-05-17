@@ -145,7 +145,7 @@
                                         @if ($accept->types == "Menolak")
                                             <div class="arial">{!!nl2br(e($accept->name))!!}</div>
                                         @endif
-                                    @endforeach>
+                                    @endforeach
                                     <input type="hidden" value="Menolak" name="tindakan">
                                     <input type="hidden" value="{{$borangJwpns->id}}" name="jawapan_id">
                                 </div>
