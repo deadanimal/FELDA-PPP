@@ -121,7 +121,8 @@
                                                             </tr>
                                                         </table>
                                                     </div>
-                                                    <input type="hidden" value="{{$accept->id}}" name="accept_id">
+                                                    <input type="hidden" value="{{$accept->id}}" name="accept_id">                                        
+                                                    <input type="hidden" value="{{$borang->id}}" name="borang_id">        
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>      
                                                         <button class="btn btn-primary">KEMASKINI</button>

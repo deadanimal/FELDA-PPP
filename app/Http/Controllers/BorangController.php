@@ -1105,7 +1105,7 @@ class BorangController extends Controller
 
         Alert::success('Kemaskini Penerimaan Tawaran Berjaya.', 'Penerimaan Tawaran telah berjaya dikemaskini.');
 
-        $borang = Borang::with('proses')->where('id',$request->borang_id)->first();
+        $borang = Borang::with('proses')->where('id', $request->borang_id)->first();
 
         return redirect('moduls/borang/acceptance?borangId='.$borang->id.'&modulId='.$borang->proses->modul_id.'&prosesId='.$borang->proses_id.'');
     }
