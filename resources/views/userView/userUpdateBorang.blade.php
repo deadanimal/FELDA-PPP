@@ -142,7 +142,7 @@
                                 @method('put')
                                 <div class="modal-body">
                                     @foreach ($acceptance as $accept)
-                                        @if ($accept->types == "Terima")
+                                        @if ($accept->types == "Menolak")
                                             <div class="arial">{!!nl2br(e($accept->name))!!}</div>
                                         @endif
                                     @endforeach>
