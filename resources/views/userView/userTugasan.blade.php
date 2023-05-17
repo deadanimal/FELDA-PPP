@@ -107,6 +107,7 @@
                       <table class="table table-bordered table-striped w-100 arial">
                           <thead class="text-white bg-primary w-100">
                             <tr class="text-center">
+                                <th scope="col">Nama Peserta</th>                                
                                 <th scope="col">Nama Projek</th>
                                 <th scope="col">Tindakan</th>
                             </tr>
@@ -114,10 +115,10 @@
                           <tbody>
                               @foreach ($hantarSurats as $hantarSurat)
                               <tr>
+                                  <td class="text-center arial" style="text-transform: uppercase;">{{$hantarSurat->jawapan->nama}}</td>
                                   <td class="text-center arial" style="text-transform: uppercase;">{{$hantarSurat->jawapan->borangs->namaBorang}}</td>
-                                  {{-- <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->borang}}</td> --}}
                                   <td class="text-center arial">
-                                    <a class="btn btn-success" href="/user/projek/{{$hantarSurat->jawapan->borang_id}}/list" style="color: white; text-decoration:none;">
+                                    <a class="btn btn-success" href="/user/projek/{{$hantarSurat->jawapan_id}}/list" style="color: white; text-decoration:none;">
                                       Lihat Tugasan
                                     </a>
                                   </td>

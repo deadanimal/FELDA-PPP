@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            TUGASAN BAGI PROJEK {{$borang->namaBorang}}
+            TUGASAN BAGI PROJEK {{$jawapan->borangs->namaBorang}}
         </h1>
     </div>
     <div class="row">
@@ -30,7 +30,19 @@
             </div> --}}
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Sila lengkapkan tugasan berikut sebelum tarikh yang ditetapkan.</h5>
+                    <table class="w-100">
+                        <tr>
+                            <td><h5 class="card-title mb-0">Sila lengkapkan tugasan berikut sebelum tarikh yang ditetapkan.</h5></td>
+                            <td> 
+                                <a href="/user/projek/surat/view"  class="frame9403-frame7445">
+                                    <div class="frame9403-frame7293">
+                                    <span class="frame9403-text21"><span>Papar Surat</span></span>
+                                    </div>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
                 <div class="card-body">
                     @if (!$tugasans->isEmpty())
@@ -49,12 +61,12 @@
                                 <td class="text-center arial">{{$tugasan->due_date}}</td>
                                 <td class="text-center arial">
                                     @if ($tugasan->jenis_input == "P.O")
-                                        <a class="btn btn-success" href="/user/projek/tugasan/{{$tugasan->id}}/PO/list" style="color: white; text-decoration:none;">
+                                        <a class="btn btn-success" href="/user/projek/tugasan/{{$tugasan->id}}/{{$jawapan->id}}/PO/list" style="color: white; text-decoration:none;">
                                          Semak Tugasan
                                         </a>
                                     @else
                                         
-                                        <a class="btn btn-success" href="/user/projek/tugasan/{{$tugasan->id}}/list" style="color: white; text-decoration:none;">
+                                        <a class="btn btn-success" href="/user/projek/tugasan/{{$tugasan->id}}/{{$jawapan->id}}/list" style="color: white; text-decoration:none;">
                                             Semak Tugasan
                                         </a>
                                     @endif
@@ -74,10 +86,61 @@
     </div>
 </div>
 <style>
+
     .center{
          margin-left: auto;
         margin-right: auto;
     }
-    
+
+    .frame9403-frame7445 {
+    width: 50%;
+    display: flex;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
+    box-sizing: border-box;
+    align-items: center;
+    padding-top: 0px;
+    border-color: transparent;
+    padding-left: 20px;
+    border-radius: 8.598855018615723px;
+    padding-right: 20px;
+    flex-direction: column;
+    padding-bottom: 0px;
+    justify-content: center;
+    background-color: #A2335D;
+    margin-left:auto;
+    margin-right: 2% !important; 
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .frame9403-frame7445:hover{
+    text-decoration: none;
+
+  }
+  .frame9403-frame7293 {
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    align-items: center;
+    border-color: transparent;
+    margin-right: 0;
+    border-radius: 0px 0px 0px 0px;
+    margin-bottom: 0;
+    text-decoration: none;
+  }
+  .frame9403-text21 {
+    color: #FFFFFF;
+    width: auto;
+    height: auto;
+    font-size: 16px;
+    align-self: auto;
+    text-align: left;
+    font-family: 'Arial', sans-serif;
+    font-weight: 600;
+    line-height: 34.39542007446289px;
+    font-stretch: normal;
+    margin-right: 2px;
+    margin-bottom: 0;
+    text-decoration: none;
+  }
 </style>
 @endsection

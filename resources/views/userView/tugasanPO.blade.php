@@ -72,6 +72,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button> 
                                         <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
+                                        <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
                                         <button class="btn btn-danger">CIPTA</button>
                                     </div>
                                 </form>
@@ -154,6 +155,7 @@
                                                         @method('DELETE')
                                                         <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
                                                         <input type="hidden" value="{{$tindakan->id}}" name="tindakanID">
+                                                        <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
                                                         <button class="btn btn-danger">YA</button>
                                                     </form>
                                                 </div>

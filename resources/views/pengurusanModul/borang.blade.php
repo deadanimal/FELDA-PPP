@@ -563,84 +563,101 @@ display: flex;
     </nav>
   </div>
   <div class="row">
+    <div class="card">
+      <div class="card-header">
+        <h1 class="card-title">Pengurusan Borang</h1>
+      </div>
+      <table style="width:100%;">
+        <tr>
+          <td>
+            <form action="/moduls/borang/viewBorang" method="GET">
+              <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;">
+                <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                <input type="hidden" value="{{$modul->id}}" name="modulId">
+                <input type="hidden" value="{{$borang->id}}" name="borangId">
+                <div class="frame9403-frame7293">
+                <span class="frame9403-text21"><span>Papar Borang</span></span>
+                </div>
+              </button>
+            </form>
+          </td>
+          <td>
+            <form action="/moduls/borang/kelulusan" method="GET">
+              <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;">
+                <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                <input type="hidden" value="{{$modul->id}}" name="modulId">
+                <input type="hidden" value="{{$borang->id}}" name="borangId">
+                <div class="frame9403-frame7293">
+                <span class="frame9403-text21"><span>Proses Kelulusan</span></span>
+                </div>
+              </button>
+            </form>
+          </td>
+          <td>
+            <form action="/moduls/borang/acceptance" method="GET">
+              <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;">
+                <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                <input type="hidden" value="{{$modul->id}}" name="modulId">
+                <input type="hidden" value="{{$borang->id}}" name="borangId">
+                <div class="frame9403-frame7293">
+                <span class="frame9403-text21"><span>Penerimaan Tawaran</span></span>
+                </div>
+              </button>
+            </form>
+          </td>
+          <td>
+            <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;" data-toggle="modal" data-target="#exampleModaladdConsent">
+              <div class="frame9403-frame7293">
+              <span class="frame9403-text21"><span>Persutujuan borang</span></span>
+              </div>
+            </button>
+
+            {{-- Modal Persutujuan borang --}}
+            <div class="modal fade" id="exampleModaladdConsent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">PERSUTUJUAN BORANG</h2>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+
+                      <form action="/moduls/borang/consent/add" method="POST">
+                        @csrf
+                        @method("PUT")
+                        <div class="modal-body">
+                          <label for="consent" class="frame9402-text04">
+                              <strong>Persutujuan</strong>
+                          </label>
+                          <textarea class="form-control" id="consent" rows="5" name="consent" placeholder="Persutujuan Borang">{{$borang->consent ?? ""}}</textarea>
+                      
+                          <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                          <input type="hidden" value="{{$modul->id}}" name="modulId">
+                          <input type="hidden" value="{{$borang->id}}" name="borangId">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                          <button class="btn btn-primary">Tambah</button>
+                        </div>
+                      </form>
+                  </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
       <div class="card mb-3" style="padding-left: 0px; padding-right: 0px;">
         <div class="card-header">
-          <table style="overflow: auto; height: auto; max-height: 750px; width:100%;">
-            <tr>
-              <td>
-                <form action="/moduls/borang/viewBorang" method="GET">
-                  <button type="submit" class="frame9403-frame7445" style="margin-left: 0px; margin-right:auto;">
-                    <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                    <input type="hidden" value="{{$modul->id}}" name="modulId">
-                    <input type="hidden" value="{{$borang->id}}" name="borangId">
-                    <div class="frame9403-frame7293">
-                    <span class="frame9403-text21"><span>Papar Borang</span></span>
-                    </div>
-                  </button>
-                </form>
-              </td>
-              <td>
-                <form action="/moduls/borang/kelulusan" method="GET">
-                  <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;">
-                    <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                    <input type="hidden" value="{{$modul->id}}" name="modulId">
-                    <input type="hidden" value="{{$borang->id}}" name="borangId">
-                    <div class="frame9403-frame7293">
-                    <span class="frame9403-text21"><span>Proses Kelulusan</span></span>
-                    </div>
-                  </button>
-                </form>
-              </td>
-              <td>
-                <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;" data-toggle="modal" data-target="#exampleModaladdConsent">
-                  <div class="frame9403-frame7293">
-                  <span class="frame9403-text21"><span>Persutujuan borang</span></span>
-                  </div>
-                </button>
+          <h1 class="card-title mb-0">Senarai Medan</h1>
 
-                {{-- Modal Persutujuan borang --}}
-                <div class="modal fade" id="exampleModaladdConsent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content">
-                          <div class="modal-header">
-                              <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">PERSUTUJUAN BORANG</h2>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                              </button>
-                          </div>
-
-                          <form action="/moduls/borang/consent/add" method="POST">
-                            @csrf
-                            @method("PUT")
-                            <div class="modal-body">
-                              <label for="consent" class="frame9402-text04">
-                                  <strong>Persutujuan</strong>
-                              </label>
-                              <textarea class="form-control" id="consent" rows="5" name="consent" placeholder="Persutujuan Borang">{{$borang->consent ?? ""}}</textarea>
-                          
-                              <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                              <input type="hidden" value="{{$modul->id}}" name="modulId">
-                              <input type="hidden" value="{{$borang->id}}" name="borangId">
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                              <button class="btn btn-primary">Tambah</button>
-                            </div>
-                          </form>
-                      </div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladdMedan">
-                  <div class="frame9403-frame7293">
-                  <span class="frame9403-text21"><span>Tambah Medan</span></span>
-                  <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                  </div>
-                </button>
-              </td>
-            </tr>
-          </table>
+          <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladdMedan">
+            <div class="frame9403-frame7293">
+            <span class="frame9403-text21"><span>Tambah Medan</span></span>
+            <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+            </div>
+          </button>
         </div>
         
         {{-- Modal Tambah Medan --}}

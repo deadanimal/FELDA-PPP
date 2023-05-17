@@ -13,6 +13,10 @@ class TindakanTugasan extends Model
         return $this->belongsTo(Tugasan::class, 'tugasan_id');
     }
 
+    public function Jawapan(){
+        return $this->belongsTo(Jawapan::class, 'jawapan_id');
+    }
+
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }

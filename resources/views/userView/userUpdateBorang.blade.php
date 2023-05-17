@@ -110,8 +110,11 @@
                                 @csrf
                                 @method('put')
                                 <div class="modal-body">
-                                    <p>Anda pasti mahu <span style="font-weight: bold;">terima</span> projek {{$borangJwpns->borangs->namaBorang}}?</p>
-                                    <p>Kod Projek: {{$borangJwpns->kod_projek}}</p>
+                                    @foreach ($acceptance as $accept)
+                                        @if ($accept->types == "Terima")
+                                            <div class="arial">{!!nl2br(e($accept->name))!!}</div>
+                                        @endif
+                                    @endforeach
                                     <input type="hidden" value="Terima" name="tindakan">
                                     <input type="hidden" value="{{$borangJwpns->id}}" name="jawapan_id">
                                 </div>
@@ -138,8 +141,11 @@
                                 @csrf
                                 @method('put')
                                 <div class="modal-body">
-                                    <p>Anda pasti mahu <span style="font-weight: bold;">menolak</span> projek {{$borangJwpns->borangs->namaBorang}}?</p>
-                                    <p>Kod Projek: {{$borangJwpns->kod_projek}}</p>
+                                    @foreach ($acceptance as $accept)
+                                        @if ($accept->types == "Terima")
+                                            <div class="arial">{!!nl2br(e($accept->name))!!}</div>
+                                        @endif
+                                    @endforeach>
                                     <input type="hidden" value="Menolak" name="tindakan">
                                     <input type="hidden" value="{{$borangJwpns->id}}" name="jawapan_id">
                                 </div>
@@ -228,5 +234,9 @@
     margin-right: 0;
     margin-bottom: 0;
   } 
+  .arial{
+    font-family: 'Arial', sans-serif;
+    text-transform: uppercase;
+  }
 </style>
 @endsection

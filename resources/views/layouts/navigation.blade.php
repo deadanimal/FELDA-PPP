@@ -221,16 +221,6 @@
                 </a>
             </li>
 
-            @if (Request::is('/user/projek/tugasan/*'))
-                <li class="sidebar-item active">
-            @else
-                <li class="sidebar-item">
-            @endif
-                <a  class="sidebar-link" href="/user/projek/list">
-                    <i class="align-middle me-2 fas fa-fw fa-bell"></i><span class="align-middle">TUGASAN PROJEK</span>
-                </a>
-            </li>
-
             @foreach ($menuModul as $mModul) 
             <li class="sidebar-item">
                 <a data-bs-target="#auth{{$mModul->id}}" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">

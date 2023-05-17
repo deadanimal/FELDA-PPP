@@ -45,5 +45,9 @@ class Jawapan extends Model
     public function hantarSurat(){
         return $this->hasMany(Hantar_Surat::class);
     }
+
+    public function TindakanTugasan(){
+        return $this->hasMany(TindakanTugasan::class);
+    }
 }
 

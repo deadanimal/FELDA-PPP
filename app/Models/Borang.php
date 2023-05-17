@@ -25,4 +25,8 @@ class Borang extends Model
         return $this->hasMany(MedanPO::class);
 
     }
+    public function Acceptance(){
+        return $this->hasMany(Acceptance::class);
+
+    }
 }

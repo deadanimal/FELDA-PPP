@@ -57,6 +57,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button> 
                                         <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
+                                        <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
                                         <button class="btn btn-danger">KEMASKINI</button>
                                     </div>
                                 </form>
@@ -71,6 +72,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button> 
                                         <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
+                                        <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
                                         <button class="btn btn-danger">KEMASKINI</button>
                                     </div>
                                 </form>
@@ -128,6 +130,7 @@
                                                         @csrf
                                                         @method('DELETE')
                                                         <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
+                                                        <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
                                                         <input type="hidden" value="{{$tindakan->id}}" name="tindakanID">
                                                         <button class="btn btn-danger">YA</button>
                                                     </form>

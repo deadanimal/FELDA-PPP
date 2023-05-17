@@ -548,9 +548,9 @@ class UserController extends Controller
         }
 
         $tugasans= Senarai_tugasan::where('user_id', $user)->get();
-        $borangs = Borang::where('status', 1)->with('jwpn')->whereRelation('jwpn','status',  '=','Terima')->whereRelation('jwpn', 'rancangan')->doesntHave('jwpn.hantarSurat')->get();
+        $borangs = Borang::with('jwpn')->where('status', 1)->whereRelation('jwpn','status', '=','Terima')->get();
+        
         $hantarSurats = Hantar_surat::with('jawapan')->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->whereRelation('jawapan','rancangan', Auth::user()->rancangan)->orderBy('created_at', "DESC")->get();
-
 
         $date = Carbon::now();
         $tugasans_noti= Senarai_tugasan::where('user_id', $user)->where('due_date', '>=', $date->format('Y-m-d'))->count();
@@ -734,7 +734,7 @@ class UserController extends Controller
         $jawapan = Jawapan::find($jawapanId);
         $borang = Borang::find($jawapan->borang_id);
         
-        $jenisTernakan = jenis_ternakan::where('proses_id', $borang->proses)->get();
+        $jenisTernakan = jenis_ternakan::where('proses_id', $borang->proses_id)->get();
 
         //for notification tugasan
         $noti = $this->notification();
@@ -1280,9 +1280,10 @@ class UserController extends Controller
             $send->userCategory_id = $category[$x];
             $send->save();
         }
+
         Alert::success('Hantar Surat Berjaya.', 'Surat telah berjaya dihantar.');   
 
-        return redirect('pegawaiKontrak.oneUser', compact('noti','kategoriPengguna','jawapans','menuModul', 'menuProses', 'menuBorang'));
+        return redirect('/user/tugasan/petiMasuk/'.$jawapans->borang_id.'/list');
     }
 
     public function generate_all(Request $request)
@@ -1347,9 +1348,11 @@ class UserController extends Controller
     
     public function TugasanProjek_list(Request $request)
     {        
-        $borang_id = (int)$request->route('borang_id'); 
-        $borang = Borang::find($borang_id); 
-        $tugasans = Tugasan::where('borang_id',$borang_id)->where('userCategory_id', Auth::user()->kategoripengguna)->get();
+        $jawapan_id = (int)$request->route('jawapan_id'); 
+        $jawapan = Jawapan::find($jawapan_id); 
+
+        $tugasans = Tugasan::where('borang_id',$jawapan->borang_id)->where('userCategory_id', Auth::user()->kategoripengguna)->get();
+        $hantar_surat = Hantar_Surat::with('jawapan')->whereRelation('jawapan', 'borang_id', $jawapan->borang_id)->get();
         
         //for notification tugasan
         $noti = $this->notification();
@@ -1358,15 +1361,16 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('userView.senaraiProjekTugasan', compact('borang','tugasans','noti','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.senaraiProjekTugasan', compact('jawapan','tugasans','noti','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function Tugasan_list(Request $request)
     {     
         $tugasan_id = (int)$request->route('tugasan_id'); 
+        $jawapan_id = (int)$request->route('jawapan_id'); 
 
         $tugasan = Tugasan::find($tugasan_id);
-        $tindakans = TindakanTugasan::where('tugasan_id', $tugasan_id)->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+        $tindakans = TindakanTugasan::where('tugasan_id', $tugasan_id)->where('jawapan_id', $jawapan_id)->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
         
         //for notification tugasan
         $noti = $this->notification();
@@ -1375,16 +1379,18 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('userView.tindakanList', compact('tindakans','tugasan','noti','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.tindakanList', compact('jawapan_id','tindakans','tugasan','noti','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function TindakanText_add(Request $request)
     {     
         $tugasan_id = $request->tugasan_id; 
+        $jawapan_id = $request->jawapan_id;
 
         $tindakan = new TindakanTugasan;
         $tindakan->input = $request->reply;
         $tindakan->tugasan_id = $tugasan_id;
+        $tindakan->jawapan_id = $jawapan_id;
         $tindakan->user_id = Auth::user()->id;
         $tindakan->save();
 
@@ -1395,12 +1401,13 @@ class UserController extends Controller
 
         Alert::success('Kemaskini Tugasan Berjaya.', 'Tindakan Tugasan telah berjaya disimpan.');   
 
-        return redirect('/user/projek/tugasan/'.$tugasan_id.'/list');
+        return redirect('/user/projek/tugasan/'.$tugasan_id.'/'.$jawapan_id.'/list');
     }
 
     public function TindakanText_delete(Request $request)
     {     
         $tugasan_id = $request->tugasan_id; 
+        $jawapan_id = $request->jawapan_id;
 
         $tindakan = TindakanTugasan::find($request->tindakanID);
 
@@ -1413,12 +1420,13 @@ class UserController extends Controller
 
         Alert::success('Padam Maklum Balas Tugasan Berjaya.', 'Maklum Balas Tugasan telah berjaya dipadam.');   
 
-        return redirect('/user/projek/tugasan/'.$tugasan_id.'/list');
+        return redirect('/user/projek/tugasan/'.$tugasan_id.'/'.$jawapan_id.'/list');
     }
 
     public function TindakanFile_add(Request $request)
     {     
         $tugasan_id = $request->tugasan_id; 
+        $jawapan_id = $request->jawapan_id;
 
         $tindakan = new TindakanTugasan;
         if($request->file()) {
@@ -1427,6 +1435,7 @@ class UserController extends Controller
             $tindakan->file = '/tugasan/' . $files;
         }
         $tindakan->tugasan_id = $tugasan_id;
+        $tindakan->jawapan_id = $jawapan_id;
         $tindakan->user_id = Auth::user()->id;
         $tindakan->save();
 
@@ -1437,12 +1446,13 @@ class UserController extends Controller
 
         Alert::success('Kemaskini Tugasan Berjaya.', 'Tindakan Tugasan telah berjaya disimpan.');   
 
-        return redirect('/user/projek/tugasan/'.$tugasan_id.'/list');
+        return redirect('/user/projek/tugasan/'.$tugasan_id.'/'.$jawapan_id.'/list');
     }
 
     public function TindakanFile_delete(Request $request)
     {     
         $tugasan_id = $request->tugasan_id; 
+        $jawapan_id = $request->jawapan_id;
 
         $tindakan = TindakanTugasan::find($request->tindakanID);
 
@@ -1455,16 +1465,17 @@ class UserController extends Controller
 
         Alert::success('Padam Maklum Balas Tugasan Berjaya.', 'Maklum Balas Tugasan telah berjaya dipadam.');   
 
-        return redirect('/user/projek/tugasan/'.$tugasan_id.'/list');
+        return redirect('/user/projek/tugasan/'.$tugasan_id.'/'.$jawapan_id.'/list');
     }
 
     public function TugasanPO_list(Request $request)
     {     
         $tugasan_id = (int)$request->route('tugasan_id'); 
+        $jawapan_id = (int)$request->route('jawapan_id'); 
 
         $tugasan = Tugasan::find($tugasan_id);
         $medanPO = MedanPO::where('tugasan_id', $tugasan_id)->get();
-        $tindakans = TindakanTugasan::where('tugasan_id', $tugasan_id)->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+        $tindakans = TindakanTugasan::where('tugasan_id', $tugasan_id)->where('jawapan_id', $jawapan_id)->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
 
         foreach($tindakans as $tindakan){
             $inputMedan = InputMedan:: where('tindakanTugasan_id', $tindakan->id)->get();
@@ -1479,12 +1490,13 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
 
-        return view('userView.tugasanPO', compact('tindakans','medanPO','tugasan','noti','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.tugasanPO', compact('jawapan_id','tindakans','medanPO','tugasan','noti','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function TugasanPO_add(Request $request)
     {     
         $tugasan_id = $request->tugasan_id; 
+        $jawapan_id = $request->jawapan_id;
 
         $tindakan = new TindakanTugasan;
         if($request->file()) {
@@ -1494,6 +1506,7 @@ class UserController extends Controller
         }
         $tindakan->tugasan_id = $tugasan_id;
         $tindakan->user_id = Auth::user()->id;
+        $tindakan->jawapan_id = $jawapan_id;
         $tindakan->save();
 
         $medanId = $request->medanId;
@@ -1514,13 +1527,13 @@ class UserController extends Controller
 
         Alert::success('Kemaskini Pesanan Pembelian Berjaya.', 'Pesanan Pembelian telah berjaya disimpan.');   
 
-        return redirect('/user/projek/tugasan/'.$tugasan_id.'/PO/list');
+        return redirect('/user/projek/tugasan/'.$tugasan_id.'/'.$jawapan_id.'/PO/list');
     }
 
     public function TugasanPO_delete(Request $request)
-    {     
-        $tugasan_id = $request->tugasan_id; 
-
+    {      
+        $jawapan_id = $request->jawapan_id;
+        $tugasan_id = $request->tugasan_id;
         $tindakan = TindakanTugasan::find($request->tindakanID);
 
         $audit = new Audit;
@@ -1532,7 +1545,7 @@ class UserController extends Controller
 
         Alert::success('Padam Pesanan Pembelian Berjaya.', 'Pesanan Pembelian telah berjaya dipadam.');   
 
-        return redirect('/user/projek/tugasan/'.$tugasan_id.'/PO/list');
+        return redirect('/user/projek/tugasan/'.$tugasan_id.'/'.$jawapan_id.'/PO/list');
     }
     
 }

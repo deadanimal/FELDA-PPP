@@ -25,6 +25,8 @@ use App\Models\Kelulusan_borang;
 use App\Models\Aduan;
 use App\Models\checkbox;
 use App\Models\Senarai_tugasan;
+use App\Models\Acceptance;
+
 use Illuminate\Http\Request;
 use Alert;
 use PDF;
@@ -354,16 +356,16 @@ class BorangController extends Controller
         $borangId = (int) $request->route('borang_id');
         $oneBorang = Borang::find($borangId);
         $proseskelulusan = ProsesKelulusan::where('borang_id', $borangId)->first();
+
         if($proseskelulusan != null){
             $tahapKelulusan = Tahap_kelulusan::where('prosesKelulusan_id', $proseskelulusan->id)->orderBy("sequence", "ASC")->get();
-            
+
             $lulusBorangs = Kelulusan_borang::with('tahap_kelulusan')->orderBy('created_at', 'DESC')->get();
-            
+
             $noLulusBorang = [];
 
             //to make $borangJwpns as empty
             $borangJwpns =  new \Illuminate\Database\Eloquent\Collection();
-            // dd($borangJwpns);
 
             $tahapLulus = 0;
             for($x=0; $x<count($tahapKelulusan); $x++){
@@ -476,20 +478,27 @@ class BorangController extends Controller
                     }
                     elseif($tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $y){
                         
-                        $count_lulus = Kelulusan_borang::whereRelation('tahap_kelulusan','prosesKelulusan_id', $proseskelulusan->id)->whereRelation('tahap_kelulusan',"sequence", $tahapKelulusan[$z]->sequence)->where('keputusan', 'Lulus')->count();
-                        $count_TahapLulus = Tahap_kelulusan::where('prosesKelulusan_id', $proseskelulusan->id)->where("sequence", $tahapKelulusan[$z]->sequence)->count();
-                        
-                        if($count_lulus == $count_TahapLulus){
-                            $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
-                            ->where('wilayah', Auth::user()->wilayah )->where('rancangan',  Auth::user()->rancangan)
-                            ->WhereRelation('kelulusanBorang','keputusan', 'Lulus')
-                            ->WhereRelation('kelulusanBorang.tahap_kelulusan','sequence', $tahapKelulusan[$z]->sequence)->get();
-                        }
-                        else{
-                            $borangJwpns = new \Illuminate\Database\Eloquent\Collection();
-                        }
+                        $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
+                        ->where('wilayah', Auth::user()->wilayah )->where('rancangan',  Auth::user()->rancangan)
+                        ->WhereRelation('kelulusanBorang','keputusan', 'Lulus')
+                        ->WhereRelation('kelulusanBorang.tahap_kelulusan','sequence', $tahapKelulusan[$z]->sequence)->get();
+
+                        // $count_lulus = Kelulusan_borang::whereRelation('tahap_kelulusan','prosesKelulusan_id', $proseskelulusan->id)->whereRelation('tahap_kelulusan',"sequence", $tahapKelulusan[$z]->sequence)->where('keputusan', 'Lulus')->count();
+                        // $count_TahapLulus = Tahap_kelulusan::where('prosesKelulusan_id', $proseskelulusan->id)->where("sequence", $tahapKelulusan[$z]->sequence)->count();
+
+                        // if($count_lulus == $count_TahapLulus){
+                        //     $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
+                        //     ->where('wilayah', Auth::user()->wilayah )->where('rancangan',  Auth::user()->rancangan)
+                        //     ->WhereRelation('kelulusanBorang','keputusan', 'Lulus')
+                        //     ->WhereRelation('kelulusanBorang.tahap_kelulusan','sequence', $tahapKelulusan[$x]->sequence)->get();
+
+                        // }
+                        // else{
+                        //     $borangJwpns = new \Illuminate\Database\Eloquent\Collection();
+                        // }
                         $tahapLulus = $tahapKelulusan[$x]->id;
-                        $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();;
+                        $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
+
                         if(!$borangJwpns->isEmpty()){
                             $noLulusBorang = Kelulusan_borang::where('jawapan_id', $borangJwpns[0]->id)->get();
                         }
@@ -625,8 +634,14 @@ class BorangController extends Controller
     
     public function subBorang_list(Request $request)
     {
+        ini_set('memory_limit', '512M');
+
         $userId = Auth::user()->id;
-        $borangJwpns = Jawapan::where('user_id', $userId)->whereNot('Status', 'Terima')->get();
+        // $borangJwpns = Jawapan::where('user_id', $userId)->orwhere('status','!=','Terima')->orWhere('status', '!=', Null)->get();
+        $borangJwpns = Jawapan::where('user_id', $userId)->orwhere([
+            ['status', '!=', 1],
+            ['status', '=', Null]
+        ])->get();
 
         if (!$borangJwpns->isEmpty()) {
             foreach($borangJwpns as $jwpn ){
@@ -637,7 +652,6 @@ class BorangController extends Controller
             $kelulusanBorang = Kelulusan_borang::with('tahap_kelulusan')->where('jawapan_id', 0)->orderBy('created_at', 'DESC')->get();
         }
 
-        
         //for notification tugasan
         $noti = $this->notification();
 
@@ -696,6 +710,7 @@ class BorangController extends Controller
         $text);
 
         $jawapan_alamat = Jawapan_medan::where('jawapan_id', $jawapanId)->whereRelation('medan','medan.nama', 'LIKE','%alamat%')->first();
+        $acceptance = Acceptance::where('borang_id', $borangJwpns->borang_id)->get();
 
         //for notification tugasan
         $noti = $this->notification();
@@ -704,7 +719,7 @@ class BorangController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuBorang = Borang::where('status', 1)->get();
         
-        return view('userView.userUpdateBorang', compact('noti','jawapan_alamat','surat_body','surat','borangJwpns','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userUpdateBorang', compact('acceptance','noti','jawapan_alamat','surat_body','surat','borangJwpns','menuModul', 'menuProses', 'menuBorang'));
     }
 
     public function subBorang_update(Request $request)
@@ -1034,6 +1049,82 @@ class BorangController extends Controller
 
         return redirect('/moduls/borang/checkbox/'.$medan_id.'');
     }
+
+    public function acceptance_list(Request $request)
+    {
+        $borang = Borang::find($request->borangId);
+        $modul = Modul::find($request->modulId);
+        $proses = Proses::find($request->prosesId);
+
+        $acceptance = Acceptance::where('borang_id', $borang->id)->orderBy("updated_at", "DESC")->get();
+
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuBorang = Borang::where('status', 1)->get();
+        
+        return view('pengurusanModul.acceptance', compact('acceptance','borang','modul','proses','noti','menuModul', 'menuProses', 'menuBorang'));
+    }
     
-    
+    public function acceptance_add(Request $request)
+    {
+        $borang = Borang::find($request->borangId);
+
+        $accept = new Acceptance;
+        $accept->name = $request->name;
+        $accept->types = $request->datatype;
+        $accept->borang_id = $request->borang_id;
+        $accept->save();
+        
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Penerimaan Tawaran ".$accept->nama." pada Borang ".$accept->borangs->namaBorang;
+        $audit->save();
+
+        Alert::success('Cipta Penerimaan Tawaran Berjaya.', 'Penerimaan Tawaran telah berjaya dicipta.');
+
+
+        $borang = Borang::with('proses')->where('id',$request->borang_id)->first();
+
+        return redirect('moduls/borang/acceptance?borangId='.$borang->id.'&modulId='.$borang->proses->modul_id.'&prosesId='.$borang->proses_id.'');
+    }
+
+    public function acceptance_edit(Request $request)
+    {
+        $accept = Acceptance::find($request->accept_id);
+        $accept->name = $request->name;
+        $accept->types = $request->datatype;
+        $accept->save();
+        
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Penerimaan Tawaran ".$accept->nama." pada Borang ".$accept->borangs->namaBorang;
+        $audit->save();
+
+        Alert::success('Kemaskini Penerimaan Tawaran Berjaya.', 'Penerimaan Tawaran telah berjaya dikemaskini.');
+
+        $borang = Borang::with('proses')->where('id',$request->borang_id)->first();
+
+        return redirect('moduls/borang/acceptance?borangId='.$borang->id.'&modulId='.$borang->proses->modul_id.'&prosesId='.$borang->proses_id.'');
+    }
+
+    public function acceptance_delete(Request $request)
+    {        
+        $accept = Acceptance::find($request->accept_id);
+        
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Penerimaan Tawaran ".$accept->nama." pada Borang ".$accept->borangs->namaBorang;
+        $audit->save();
+
+        $accept->delete();
+
+        Alert::success('Padam Penerimaan Tawaran Berjaya.', 'Penerimaan Tawaran telah berjaya dipadam.');
+
+        $borang = Borang::with('proses')->where('id',$request->borang_id)->first();
+
+        return redirect('moduls/borang/acceptance?borangId='.$borang->id.'&modulId='.$borang->proses->modul_id.'&prosesId='.$borang->proses_id.'');
+    }
 }
