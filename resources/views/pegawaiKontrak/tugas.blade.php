@@ -103,7 +103,7 @@
                           </tr>
                       </table>
                     </div>
-                    <input type="hidden" value="{{$borang->id}}" name="borang_id">
+                    <input type="hidden" value="{{$proses->id}}" name="borang_id">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                         <button class="btn btn-primary">Cipta</button>

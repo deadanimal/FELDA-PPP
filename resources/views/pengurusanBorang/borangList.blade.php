@@ -15,43 +15,49 @@
   <div class="row">
     <div class="col-12">
       <div class="card">
-        <div class="card-header">
-            <form action="/user/borang_app/list/search" method="post">
-                @csrf
-                <table class="table table-borderless">
-                    <thead></thead>
-                    <tbody>
-                    <tr style="border: none;">
-                        <td style="border: none;"><p class="text04" style="text-align: right; margin-bottom:0;">Nama Borang:</p></td>
-                        <td style="border: none;"><input type="text" name="searchBorang" class="form-control" placeholder="Nama Borang" value=""></td>
-                        <td style="border: none;"><button type="submit" class="btn btn-primary" style="margin-right: auto; margin-left:auto;">Cari</button></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </form>
-        </div>
+        @if (!$borangs->isEmpty())\
+          <div class="card-header">
+              <form action="/user/borang_app/list/search" method="post">
+                  @csrf
+                  <table class="table table-borderless">
+                      <thead></thead>
+                      <tbody>
+                      <tr style="border: none;">
+                          <td style="border: none;"><p class="text04" style="text-align: right; margin-bottom:0;">Nama Borang:</p></td>
+                          <td style="border: none;"><input type="text" name="searchBorang" class="form-control" placeholder="Nama Borang" value=""></td>
+                          <td style="border: none;"><button type="submit" class="btn btn-primary" style="margin-right: auto; margin-left:auto;">Cari</button></td>
+                      </tr>
+                      </tbody>
+                  </table>
+              </form>
+          </div>
 
-        {{-- senarai borang --}}
-        <table class="table table-bordered table-striped w-100 Arial">
-          <thead class="text-white bg-primary w-100" style="text-align: center;">
-            <tr>
-                <th scope="col" class="Arial">Nama Borang</th>
-                <th scope="col" class="Arial">Tindakan</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($borangs as $borang)
-                <tr>
-                    <td class="text-center Arial">{{$borang->namaBorang}}</td>
-                    <td class="text-center Arial">
-                        <a class="btn btn-success" href="/user/borang_app/{{$borang->id}}/user_list" style="color: white; text-decoration:none;">
-                            Senarai Pemohon
-                        </a>
-                    </td>
-                </tr> 
-            @endforeach
-          </tbody>
-        </table>
+          {{-- senarai borang --}}
+          <table class="table table-bordered table-striped w-100 Arial">
+            <thead class="text-white bg-primary w-100" style="text-align: center;">
+              <tr>
+                  <th scope="col" class="Arial">Nama Borang</th>
+                  <th scope="col" class="Arial">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($borangs as $borang)
+                  <tr>
+                      <td class="text-center Arial">{{$borang->namaBorang}}</td>
+                      <td class="text-center Arial">
+                          <a class="btn btn-success" href="/user/borang_app/{{$borang->id}}/user_list" style="color: white; text-decoration:none;">
+                              Senarai Pemohon
+                          </a>
+                      </td>
+                  </tr> 
+              @endforeach
+            </tbody>
+          </table>
+        @else
+        <div class="card-header">
+          <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Borang Perlu Diluluskan </h2>
+        </div>
+        @endif
       </div>
     </div>
   </div>

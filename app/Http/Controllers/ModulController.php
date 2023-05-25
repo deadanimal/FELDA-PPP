@@ -19,6 +19,9 @@ use App\Models\User;
 use App\Models\Aduan;
 use App\Models\Tugasan;
 use App\Models\MedanPO;
+use App\Models\Projek;
+use App\Models\Perkara_Pemohonan;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Alert;
@@ -45,9 +48,9 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusanModul.ciptaModul', compact( 'noti','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.ciptaModul', compact( 'noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function modul_add(Request $request)
@@ -102,7 +105,7 @@ class ModulController extends Controller
                 return $html_;
             })       
             ->addColumn('tindakan', function (Modul $modul) {
-                $url = '/moduls/'.$modul->id.'/proses';
+                $url = '/moduls/'.$modul->id.'/projek';
                 $url2 = '/moduls/'.$modul->id;
                 $url3 = '/moduls/'.$modul->id.'/copy';
                 $url4 = '/moduls/'.$modul->id.'/delete';
@@ -148,9 +151,9 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusanModul.senaraiModul', compact('noti','modul', 'bilangan',  'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.senaraiModul', compact('noti','modul', 'bilangan',  'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function modul_delete(Request $request)
@@ -179,9 +182,9 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusanModul.kemaskiniModul', compact('noti','modul',  'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.kemaskiniModul', compact('noti','modul',  'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function modul_copy(Request $request)
@@ -228,9 +231,95 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusanModul.senaraiModul', compact('noti','modul', 'bilangan',  'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.senaraiModul', compact('noti','modul', 'bilangan',  'menuModul', 'menuProses', 'menuProjek'));
+    }
+
+    public function projek_list(Request $request)
+    {
+        $idModul = (int)$request->route('modul_id');
+        $projeks = Projek::where('modul_id', $idModul)->orderBy("updated_at", "DESC")->get();
+        $modul = Modul::find($idModul);
+
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+
+        return view('pengurusanModul.senaraiProjek', compact('noti','modul', 'projeks',  'menuModul', 'menuProses', 'menuProjek'));
+    }
+
+    public function projek_add(Request $request)
+    {
+        $projek = new Projek;
+        $projek->nama = $request->nama;
+        $projek->modul_id = $request->modulId;
+        $projek->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Projek ".$projek->nama;
+        $audit->save();
+
+        Alert::success('Cipta Projek berjaya.', 'Cipta projek telah berjaya.');
+       
+        return redirect('/moduls/'.$projek->modul_id.'/projek');
+    }
+
+
+    public function projek_update(Request $request)
+    {
+        $projekId = $request->projekId;
+        $projek = Projek::find($projekId);
+        $projek->nama = $request->namaupdate;
+        $projek->status = $request->statusUpdate;
+        $projek->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Projek ".$projek->nama;
+        $audit->save();
+
+        Alert::success('Kemaskini Projek berjaya.', 'Kemaskini Projek telah berjaya.');
+
+        return redirect('/moduls/'.$request->modulId.'/projek');
+    }
+
+    public function projek_delete(Request $request)
+    {
+        $projekId = $request->projekId;
+        $projek = Projek::find($projekId);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Projek ".$projek->nama;
+        $audit->save();
+
+        $projek->delete();
+
+        Alert::success('Padam Projek Berjaya.', 'Padam projek telah berjaya.');
+
+        return redirect('/moduls/'.$request->modulId.'/projek');
+    }
+
+    public function proses_list(Request $request)
+    {
+        $idProjek = (int)$request->route('projek_id');
+        $prosess = Proses::where('projek_id', $idProjek)->orderBy("sequence", "ASC")->get();
+        
+        $projek = Projek::find($idProjek);
+        
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
+
+        return view('pengurusanModul.senaraiProses', compact('noti','projek', 'prosess',  'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function proses_add(Request $request)
@@ -239,7 +328,7 @@ class ModulController extends Controller
         $prosess->nama = $request->namaProses;
         $prosess->status = 1;
         $prosess->sequence = $request->sequence;
-        $prosess->modul_id = $request->modulId;
+        $prosess->projek_id = $request->projekId;
         $prosess->save();
 
         $audit = new Audit;
@@ -248,34 +337,10 @@ class ModulController extends Controller
         $audit->save();
 
         Alert::success('Cipta proses berjaya.', 'Cipta proses telah berjaya.');
-        $modul = Modul::find($request->modulId);
-        $prosess = Proses::where('modul_id', $request->modulId)->orderBy("sequence", "ASC")->get();
-
-        //for notification tugasan
-        $noti = $this->notification();
-
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
-
-        return view('pengurusanModul.senaraiProses', compact('noti','modul', 'prosess',  'menuModul', 'menuProses', 'menuBorang'));
+       
+        return redirect('/moduls/'.$prosess->projek_id.'/proses');
     }
 
-    public function proses_list(Request $request)
-    {
-        $idModul = (int)$request->route('modul_id');
-        $prosess = Proses::where('modul_id', $idModul)->orderBy("sequence", "ASC")->get();
-        $modul = Modul::find($idModul);
-
-        //for notification tugasan
-        $noti = $this->notification();
-
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
-
-        return view('pengurusanModul.senaraiProses', compact('noti','modul', 'prosess',  'menuModul', 'menuProses', 'menuBorang'));
-    }
 
     public function proses_update(Request $request)
     {
@@ -293,17 +358,7 @@ class ModulController extends Controller
 
         Alert::success('Kemaskini Proses berjaya.', 'Kemaskini Proses telah berjaya.');
 
-        $prosess = Proses::where('modul_id', $request->modulID)->orderBy("sequence", "ASC")->get();
-        $modul = Modul::find($request->modulID);
-
-        //for notification tugasan
-        $noti = $this->notification();
-
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
-
-        return view('pengurusanModul.senaraiProses', compact('noti','modul', 'prosess',  'menuModul', 'menuProses', 'menuBorang'));
+        return redirect('/moduls/'.$request->projekId.'/proses');
     }
 
     public function proses_delete(Request $request)
@@ -317,19 +372,10 @@ class ModulController extends Controller
         $audit->save();
 
         $proses->delete();
+
         Alert::success('Padam Proses Berjaya.', 'Padam proses telah berjaya.');
 
-        $prosess = Proses::where('modul_id', $request->modulId)->orderBy("sequence", "ASC")->get();
-        $modul = Modul::find($request->modulId);
-
-        //for notification tugasan
-        $noti = $this->notification();
-
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
-
-        return view('pengurusanModul.senaraiProses', compact('noti','modul', 'prosess',  'menuModul', 'menuProses', 'menuBorang'));
+        return redirect('/moduls/'.$request->projekId.'/proses');
     }
 
     public function borang_add(Request $request)
@@ -361,18 +407,18 @@ class ModulController extends Controller
 
         $idModul = (int)$request->route('modul_id');
         $modul = Modul::find($idModul);
-        $tugasans = Senarai_tugasan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
+        $tugasans = Tugasan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
         $jenisTernakan = jenis_ternakan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
-        $users = User::where('status', 1)->get();
+        $user_Categories = KategoriPengguna::all();
         
         //for notification tugasan
         $noti = $this->notification();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusanModul.senaraiBorang', compact('noti','modul','borangs', 'proses', 'tugasans', 'users',  'menuModul', 'menuProses', 'menuBorang', 'jenisTernakan'));
+        return view('pengurusanModul.senaraiBorang', compact('noti','modul','borangs', 'proses', 'tugasans', 'user_Categories',  'menuModul', 'menuProses', 'menuProjek', 'jenisTernakan'));
     }
 
     public function borang_update(Request $request)
@@ -409,44 +455,44 @@ class ModulController extends Controller
         return redirect('/moduls/'.$request->modulId.'/'.$request->prosesId.'/borang');
     }
 
-    public function tugasan_add(Request $request){
-        $tugasan = new Senarai_tugasan;
-        $tugasan->nama = $request->namaTugas;
-        $tugasan->due_date = $request->tarikh;
-        $tugasan->user_id = $request->user;
-        $tugasan->proses_id = $request->prosesId;
-        $tugasan->save();
+    // public function tugasan_add(Request $request){
+    //     $tugasan = new Senarai_tugasan;
+    //     $tugasan->nama = $request->namaTugas;
+    //     $tugasan->due_date = $request->tarikh;
+    //     $tugasan->user_id = $request->user;
+    //     $tugasan->proses_id = $request->prosesId;
+    //     $tugasan->save();
 
 
-        Alert::success('Tambah Tugasan Berjaya.', 'Tambah tugasan telah berjaya.');
+    //     Alert::success('Tambah Tugasan Berjaya.', 'Tambah tugasan telah berjaya.');
 
-        $proses = Proses::find($request->prosesId);
+    //     $proses = Proses::find($request->prosesId);
 
-        $audit = new Audit;
-        $audit->user_id = Auth::user()->id;
-        $audit->action = "Cipta Tugasan ".$tugasan->nama." pada Proses ".$proses->nama;
-        $audit->save();
+    //     $audit = new Audit;
+    //     $audit->user_id = Auth::user()->id;
+    //     $audit->action = "Cipta Tugasan ".$tugasan->nama." pada Proses ".$proses->nama;
+    //     $audit->save();
 
-        return redirect('/moduls/'.$request->modulId.'/'.$request->prosesId.'/borang');
-    }
+    //     return redirect('/moduls/'.$request->modulId.'/'.$request->prosesId.'/borang');
+    // }
 
-    public function tugasan_edit(Request $request){
-        $idTugasan = $request->tugasanID;
-        $tugasans = Senarai_tugasan::find($idTugasan);
-        $proses = Proses::find($request->prosesId);
+    // public function tugasan_edit(Request $request){
+    //     $idTugasan = $request->tugasanID;
+    //     $tugasans = Senarai_tugasan::find($idTugasan);
+    //     $proses = Proses::find($request->prosesId);
 
-        $modul = Modul::find($request->modulId);
-        $kategoriPengguna = KategoriPengguna::all();
+    //     $modul = Modul::find($request->modulId);
+    //     $kategoriPengguna = KategoriPengguna::all();
 
-        //for notification tugasan
-        $noti = $this->notification();
+    //     //for notification tugasan
+    //     $noti = $this->notification();
 
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+    //     $menuModul = Modul::where('status', 'Go-live')->get();
+    //     $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+    //     $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusanModul.editTugasan', compact('noti','tugas_ans','cb_ans','proses', 'modul', 'tugasans', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuBorang'));
-    }
+    //     return view('pengurusanModul.editTugasan', compact('noti','tugas_ans','cb_ans','proses', 'modul', 'tugasans', 'kategoriPengguna', 'checkboxes',  'menuModul', 'menuProses', 'menuProjek'));
+    // }
     
     public function jenisTernakan_add(Request $request){
 
@@ -483,9 +529,9 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusanModul.editTernakan', compact('noti','modul','proses','menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'jenisTernakan'));
+        return view('pengurusanModul.editTernakan', compact('noti','modul','proses','menuModul', 'menuProses', 'menuProjek', 'kemaskini', 'jenisTernakan'));
     }
 
     public function jenisTernakan_update(Request $request){
@@ -514,11 +560,11 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
         Alert::success('Kemaskini Jenis Ternakan/Tanaman Berjaya.', 'Kemaskini Jenis Ternakan/Tanaman telah berjaya.');
 
-        return view('pengurusanModul.editTernakan', compact('noti','borangs', 'proses', 'modul', 'tugasans', 'menuModul', 'menuProses', 'menuBorang', 'kemaskini','jenisTernakan'));
+        return view('pengurusanModul.editTernakan', compact('noti','borangs', 'proses', 'modul', 'tugasans', 'menuModul', 'menuProses', 'menuProjek', 'kemaskini','jenisTernakan'));
 
     }
 
@@ -563,11 +609,11 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
         Alert::success('Cipta Jenis Kemaskini Berjaya.', 'Cipta Jenis Kemaskini telah berjaya.');
 
-        return view('pengurusanModul.editTernakan', compact('noti','jenisTernakan', 'proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
+        return view('pengurusanModul.editTernakan', compact('noti','jenisTernakan', 'proses', 'modul',  'menuModul', 'menuProses', 'menuProjek', 'kemaskini'));
 
     }
 
@@ -608,9 +654,9 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusanModul.editKemas', compact('noti','jenisTernakan', 'proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
+        return view('pengurusanModul.editKemas', compact('noti','jenisTernakan', 'proses', 'modul',  'menuModul', 'menuProses', 'menuProjek', 'kemaskini', 'aktivitis'));
 
     }
 
@@ -638,11 +684,11 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
         Alert::success('Kemaskini Jenis Kemaskini Berjaya.', 'Kemaskini Jenis Kemaskini telah berjaya.');
 
-        return view('pengurusanModul.editKemas', compact('noti','jenisTernakan', 'proses', 'modul', 'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
+        return view('pengurusanModul.editKemas', compact('noti','jenisTernakan', 'proses', 'modul', 'menuModul', 'menuProses', 'menuProjek', 'kemaskini', 'aktivitis'));
 
     }
 
@@ -668,11 +714,11 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
         Alert::success('Padam Jenis Kemaskini Berjaya.', 'Padam Jenis Kemaskini telah berjaya.');
 
-        return view('pengurusanModul.editTernakan', compact('noti','proses', 'modul', 'jenisTernakan', 'menuModul', 'menuProses', 'menuBorang', 'kemaskini'));
+        return view('pengurusanModul.editTernakan', compact('noti','proses', 'modul', 'jenisTernakan', 'menuModul', 'menuProses', 'menuProjek', 'kemaskini'));
 
     }
     public function aktiviti_add(Request $request){
@@ -699,11 +745,11 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
         Alert::success('Tambah Aktiviti Berjaya.', 'Tambah aktiviti telah berjaya.');
 
-        return view('pengurusanModul.editKemas', compact('noti','jenisTernakan' ,'proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
+        return view('pengurusanModul.editKemas', compact('noti','jenisTernakan' ,'proses', 'modul',  'menuModul', 'menuProses', 'menuProjek', 'kemaskini', 'aktivitis'));
 
     }
 
@@ -731,11 +777,11 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
         Alert::success('Kemaskini Aktiviti Berjaya.', 'Kemaskini aktiviti telah berjaya.');
 
-        return view('pengurusanModul.editKemas', compact('noti','jenisTernakan','proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
+        return view('pengurusanModul.editKemas', compact('noti','jenisTernakan','proses', 'modul',  'menuModul', 'menuProses', 'menuProjek', 'kemaskini', 'aktivitis'));
 
     }
 
@@ -761,11 +807,11 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
         Alert::success('Padam Aktiviti Berjaya.', 'Aktiviti telah berjaya dipadam.');
 
-        return view('pengurusanModul.editKemas', compact('noti','jenisTernakan', 'proses', 'modul',  'menuModul', 'menuProses', 'menuBorang', 'kemaskini', 'aktivitis'));
+        return view('pengurusanModul.editKemas', compact('noti','jenisTernakan', 'proses', 'modul',  'menuModul', 'menuProses', 'menuProjek', 'kemaskini', 'aktivitis'));
 
     }
 
@@ -786,9 +832,9 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusanModul.paramList', compact('noti','proses', 'modul', 'menuModul', 'menuProses', 'menuBorang', 'aktiviti', 'params'));
+        return view('pengurusanModul.paramList', compact('noti','proses', 'modul', 'menuModul', 'menuProses', 'menuProjek', 'aktiviti', 'params'));
 
     }
 
@@ -821,11 +867,11 @@ class ModulController extends Controller
         
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
         Alert::success('Tambah Parameter Berjaya.', 'Tambah parameter telah berjaya.');
 
-        return view('pengurusanModul.paramList', compact('noti','proses', 'modul', 'menuModul', 'menuProses', 'menuBorang', 'aktiviti', 'params'));
+        return view('pengurusanModul.paramList', compact('noti','proses', 'modul', 'menuModul', 'menuProses', 'menuProjek', 'aktiviti', 'params'));
 
     }
 
@@ -857,11 +903,11 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
         Alert::success('Kemaskini Parameter Berjaya.', 'Kemaskini parameter telah berjaya.');
 
-        return view('pengurusanModul.paramList', compact('noti','proses', 'modul', 'menuModul', 'menuProses', 'menuBorang', 'aktiviti', 'params'));
+        return view('pengurusanModul.paramList', compact('noti','proses', 'modul', 'menuModul', 'menuProses', 'menuProjek', 'aktiviti', 'params'));
 
     }
 
@@ -887,78 +933,80 @@ class ModulController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
         Alert::success('Padam Parameter Berjaya.', 'Padam Parameter telah berjaya.');
 
-        return view('pengurusanModul.paramList', compact('noti','proses', 'modul', 'menuModul', 'menuProses', 'menuBorang', 'aktiviti', 'params'));
+        return view('pengurusanModul.paramList', compact('noti','proses', 'modul', 'menuModul', 'menuProses', 'menuProjek', 'aktiviti', 'params'));
     }
 
-    public function TugasanPengguna_list(Request $request)
-    { 
-        $borang_id = (int) $request->route('borang_id');
-        $borang = Borang::with('proses')->where('id',$borang_id)->first();
+    // public function TugasanPengguna_list(Request $request)
+    // { 
+    //     $borang_id = (int) $request->route('borang_id');
+    //     $borang = Borang::with('proses')->where('id',$borang_id)->first();
 
-        $user_Categories = KategoriPengguna::all();
-        $tugasans = Tugasan::where('borang_id', $borang_id)->orderBy('created_at', "DESC")->get();
+    //     $user_Categories = KategoriPengguna::all();
+    //     $tugasans = Tugasan::where('borang_id', $borang_id)->orderBy('created_at', "DESC")->get();
 
-        //for notification tugasan
-        $noti = $this->notification();
+    //     //for notification tugasan
+    //     $noti = $this->notification();
 
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+    //     $menuModul = Modul::where('status', 'Go-live')->get();
+    //     $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+    //     $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pegawaiKontrak.tugas', compact('borang','tugasans','user_Categories','noti','menuModul', 'menuProses', 'menuBorang'));
-    }
+    //     return view('pegawaiKontrak.tugas', compact('borang','tugasans','user_Categories','noti','menuModul', 'menuProses', 'menuProjek'));
+    // }
 
     public function Tugas_add(Request $request)
     { 
+        $proses = Proses::with('Projek')->where('id', $request->prosesId)->first();
+
         $tugasan = new Tugasan;
         $tugasan->perkara = $request->perkara;
         $tugasan->jenis_input = $request->jenis;
-        $tugasan->due_date = $request->tarikh;
         $tugasan->userCategory_id = $request->category;
-        $tugasan->borang_id = $request->borang_id;
+        $tugasan->proses_id = $request->prosesId;
         $tugasan->save();
-
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Cipta Tugasan ".$tugasan->perkara." pada Borang ".$tugasan->Borang->namaBorang;
+        $audit->action = "Cipta Tugasan ".$tugasan->perkara." pada Proses ".$tugasan->Proses->nama;
         $audit->save();
 
         Alert::success('Cipta Tugasan Berjaya.', 'Tugasan telah berjaya dicipta.');
 
-        return redirect('/moduls/tugasan/'.$request->borang_id.'/List');
+        return redirect('/moduls/'.$proses->Projek->modul_id.'/'.$proses->id.'/borang');
     }
 
     public function Tugas_update(Request $request)
     { 
+        $proses = Proses::with('Projek')->where('id', $request->prosesId)->first();
+
         $tugasan = Tugasan::find($request->tugasanID);
         $tugasan->perkara = $request->perkara;
         $tugasan->jenis_input = $request->jenis;
-        $tugasan->due_date = $request->tarikh;
         $tugasan->userCategory_id = $request->category;
         $tugasan->save();
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "kemaskini Tugasan ".$tugasan->perkara." pada Borang ".$tugasan->Borang->namaBorang;
+        $audit->action = "kemaskini Tugasan ".$tugasan->perkara." pada Proses ".$tugasan->Proses->nama;
         $audit->save();
 
         Alert::success('Kemaskini Tugasan Berjaya.', 'Tugasan telah berjaya dikemaskini.');
 
-        return redirect('/moduls/tugasan/'.$tugasan->borang_id.'/List');
+        return redirect('/moduls/'.$proses->Projek->modul_id.'/'.$proses->id.'/borang');
     }
 
     public function Tugas_delete(Request $request)
     { 
+        $proses = Proses::with('Projek')->where('id', $request->prosesId)->first();
         $tugasan = Tugasan::find($request->tugasanID);
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Padam Tugasan ".$tugasan->perkara." pada Borang ".$tugasan->Borang->namaBorang;
+        $audit->action = "Padam Tugasan ".$tugasan->perkara." pada Borang ".$proses->nama;
         $audit->save();
 
 
@@ -966,22 +1014,24 @@ class ModulController extends Controller
 
         Alert::success('Padam Tugasan Berjaya.', 'Tugasan telah berjaya dipadam.');
 
-        return redirect('/moduls/tugasan/'.$request->borang_id.'/List');
+        return redirect('/moduls/'.$proses->Projek->modul_id.'/'.$proses->id.'/borang');
     }
 
     public function MedanPO_List(Request $request)
     { 
         $tugasan_id = (int) $request->route('tugasan_id');
-        $tugasan = Tugasan::with('Borang')->where('id', $tugasan_id)->first();
+        $tugasan = Tugasan::find($tugasan_id);
         $medans = MedanPO::where('tugasan_id', $tugasan_id)->orderBy('created_at', "DESC")->get();
 
+        $proses = Proses::with('Projek')->where('id', $tugasan->proses_id)->first();
+        
         $noti = $this->notification();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusanModul.purchaseOrder', compact('tugasan','medans','noti','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.purchaseOrder', compact('tugasan','medans','proses','noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function MedanPO_add(Request $request)
@@ -1032,5 +1082,71 @@ class ModulController extends Controller
         Alert::success('Padam Medan PO Berjaya.', 'Medan PO telah berjaya dipadam.');
 
         return redirect('/moduls/medanPO/'.$request->tugasan_id.'/List');
+    }
+
+    public function Perkara_List(Request $request)
+    { 
+        $borang_id = (int) $request->route('borang_id');
+        $borang = Borang::with('proses','proses.Projek')->where('id',$borang_id)->first();
+        $perkaras = Perkara_Pemohonan::where('borang_id', $borang_id)->orderBy('sequence', "ASC")->get();
+        
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
+
+        return view('pengurusanModul.perkaraPemohonan', compact('perkaras','borang','noti','menuModul', 'menuProses', 'menuProjek'));
+    }
+
+    public function Perkara_add(Request $request)
+    { 
+        $perkara = new Perkara_Pemohonan;
+        $perkara->nama = $request->nama;
+        $perkara->sequence = $request->sequence;
+        $perkara->borang_id = $request->borangId;
+        $perkara->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Cipta Perkara Pemohonan ".$perkara->nama." pada Borang ".$perkara->borangs->namaBorang;
+        $audit->save();
+
+        Alert::success('Cipta Perkara Pemohonan Berjaya.', 'Perkara pemohonan telah berjaya dicipta.');
+    
+        return redirect('/moduls/perkara/'.$request->borangId.'/list');
+    }
+    public function Perkara_update(Request $request)
+    { 
+        $perkara = Perkara_Pemohonan::find($request->perkaraID);
+        $perkara->nama = $request->nama;
+        $perkara->sequence = $request->sequence;
+        $perkara->borang_id = $request->borangId;
+        $perkara->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Perkara Pemohonan ".$perkara->nama." pada Borang ".$perkara->borangs->namaBorang;
+        $audit->save();
+
+        Alert::success('Kemaskini Perkara Pemohonan Berjaya.', 'Perkara pemohonan telah berjaya dikemaskini.');
+
+        return redirect('/moduls/perkara/'.$request->borangId.'/list');
+    }
+
+    public function Perkara_delete(Request $request)
+    { 
+        $perkara = Perkara_Pemohonan::find($request->perkaraID);
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Perkara Pemohonan ".$perkara->nama." pada Borang ".$perkara->borangs->namaBorang;
+        $audit->save();
+
+        $perkara->delete();
+
+        Alert::success('Padam Perkara Pemohonan Berjaya.', 'Perkara pemohonan telah berjaya dipadam.');
+
+        return redirect('/moduls/perkara/'.$request->borangId.'/list');
     }
 }

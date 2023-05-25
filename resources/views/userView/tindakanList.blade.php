@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            SENARAI MAKLUM BALAS TUGASAN BAGI PROJEK {{$tugasan->Borang->namaBorang}}
+            SENARAI PESANAN PEMBELIAN TUGASAN BAGI PROJEK {{$tugasan->Proses->Projek->nama}}
         </h1>
     </div>
     <div class="row">
@@ -22,19 +22,66 @@
                         <tr>
                             <td colspan="2"><h2 class="text-center">{{$tugasan->perkara}}</h2></td>
                         </tr>
-                        <tr>
-                            <td><h2 class="text-right" style="margin-right:3%">Tarikh Sasaran:</h2></td>
-                            <td><h2 class="text-left">{{date('d-m-Y', strtotime($tugasan->due_date))}}</h2></td>
-                        </tr>
+                        @if ($tarikh != null)
+                            <tr>
+                                <td><h2 class="text-right" style="margin-right:3%">Tarikh Sasaran:</h2></td>
+                                <td><h2 class="text-left">{{date('d-m-Y', strtotime($tarikh->tarikh_sasaran))}}</h2></td>
+                            </tr>
+                        @endif
                     </table>
                 </div>
                 <div class="card-footer">
-                    <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAdd" 
-                    @if (now()->toDateString() > $tugasan->due_date)
-                        disabled
-                    @endif >
+                    <button class="frame9403-frame7445" style="margin-right: auto;" data-toggle="modal" data-target="#exampleModalDate" 
+                    @if ($tarikh != null)
+                        @if (now()->toDateString() > $tarikh->tarikh_sasaran)
+                            disabled
+                        @endif 
+                    @endif
+                    >
                         <div class="frame9403-frame7293">
-                            <span class="frame9403-text21"><span>Kemaskini</span></span>
+                            <span class="frame9403-text21"><span>Kemaskini Tugasan</span></span>
+                            <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                        </div>
+                    </button>
+                    <div class="modal fade" id="exampleModalDate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Kemaskini Tugasan</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="post" action="/user/projek/tindakan/date/add" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <label for="reply" class="form-label">Tarikh Sasaran</label>
+                                        <input type="date" class="form-control" name="tarikh" min="{{now()->toDateString()}}" required>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button> 
+                                        <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
+                                        <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
+                                        <button class="btn btn-danger">KEMASKINI</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Senarai Maklum Balas</h5>
+                    <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAdd" 
+                    @if ($tarikh != null)
+                        @if (now()->toDateString() > $tarikh->tarikh_sasaran)
+                            disabled
+                        @endif 
+                    @endif
+                    >
+                        <div class="frame9403-frame7293">
+                            <span class="frame9403-text21"><span>Lakukan Tugasan</span></span>
                             <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
                         </div>
                     </button>
@@ -42,7 +89,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Kemaskini Tugasan</h5>
+                                  <h5 class="modal-title" id="exampleModalLabel">Lakukan Tugasan</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                   </button>
@@ -53,6 +100,20 @@
                                     <div class="modal-body">
                                         <label for="reply" class="form-label">Maklum Balas</label>
                                         <input type="text" class="form-control" name="reply" id="reply" required oninput="this.value = this.value.toUpperCase()">
+                                        
+                                        <label for="progress" class="form-label">Kemajuan</label>
+                                        <select class="form-select" name="progress" id="progress">
+                                            <option value="10">10%</option>
+                                            <option value="20">20%</option>
+                                            <option value="30">30%</option>
+                                            <option value="40">40%</option>
+                                            <option value="50">50%</option>
+                                            <option value="60">60%</option>
+                                            <option value="70">70%</option>
+                                            <option value="80">80%</option>
+                                            <option value="90">90%</option>
+                                            <option value="100">100%</option>
+                                        </select>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button> 
@@ -68,6 +129,20 @@
                                     <div class="modal-body">
                                         <label for="reply" class="form-label">Maklum Balas</label>
                                         <input type="file" class="form-control" name="reply" required>
+                                        <br>
+                                        <label for="progress" class="form-label">Kemajuan</label>
+                                        <select class="form-select" name="progress" id="progress">
+                                            <option value="10">10%</option>
+                                            <option value="20">20%</option>
+                                            <option value="30">30%</option>
+                                            <option value="40">40%</option>
+                                            <option value="50">50%</option>
+                                            <option value="60">60%</option>
+                                            <option value="70">70%</option>
+                                            <option value="80">80%</option>
+                                            <option value="90">90%</option>
+                                            <option value="100">100%</option>
+                                        </select>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button> 
@@ -82,17 +157,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Senarai Maklum Balas</h5>
-                </div>
                 <div class="card-body">
                     @if (!$tindakans->isEmpty())
                     <table class="table table-bordered table-striped w-100 arial">
                         <thead class="text-white bg-primary w-100">
                         <tr class="text-center">
                             <th scope="col" style="width: 50%;">Maklum Balas</th>
+                            <th scope="col">Kemajuan</th>
                             <th scope="col">Tarikh Maklum Balas</th>
                             <th scope="col">Tindakan</th>
                         </tr>
@@ -107,6 +178,7 @@
                                         <a href="{{$tindakan->file}}">Lihat Fail</a>
                                     @endif
                                 </td>
+                                <td class="text-center arial">{{$tindakan->progress}}%</td>
                                 <td class="text-center arial">{{date('d-m-Y', strtotime($tindakan->created_at))}}</td>
                                 <td class="text-center arial">
                                     <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModaldelete{{$tindakan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
@@ -178,7 +250,6 @@
     background-color: #A2335D;
     cursor: pointer;
     margin-left: auto;
-    margin-right: auto;
   }
   .frame9403-frame7293 {
   display: flex;

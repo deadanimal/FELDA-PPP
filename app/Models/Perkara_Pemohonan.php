@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProsesKelulusan extends Model
+class Perkara_Pemohonan extends Model
 {
     use HasFactory;
 
-    public function borang(){
+    public function borangs() {
         return $this->belongsTo(Borang::class, 'borang_id');
     }
 
-    public function TahapKelulusan(){
-        return $this->hasMany(Tahap_kelulusan::class, 'prosesKelulusan_id');
+    public function Pemohonan_Peneroka(){
+        return $this->hasMany(Pemohonan_Peneroka::class);
     }
 }

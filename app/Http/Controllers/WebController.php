@@ -28,6 +28,8 @@ use App\Models\Jawapan;
 use App\Mail\contactUs;
 use App\Models\Aduan;
 use App\Models\Senarai_tugasan;
+use App\Models\Projek;
+
 use Illuminate\Http\Request;
 use Alert;
 use Illuminate\Support\Facades\Mail;
@@ -163,9 +165,9 @@ class WebController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('homepage.pageList', compact ('noti','events','docs','pages', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.pageList', compact ('noti','events','docs','pages', 'menuModul', 'menuProses', 'menuProjek'));
     }
     
     public function page_add(Request $request)
@@ -231,9 +233,9 @@ class WebController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('homepage.pageItem', compact ('noti','page','pageItems', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.pageItem', compact ('noti','page','pageItems', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function item_add(Request $request)
@@ -349,9 +351,9 @@ class WebController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('homepage.slider', compact ('noti','sliders','item', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.slider', compact ('noti','sliders','item', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function card_list(Request $request)
@@ -367,9 +369,9 @@ class WebController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('homepage.card', compact ('noti','cards','item', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.card', compact ('noti','cards','item', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function dropdown_list(Request $request)
@@ -385,9 +387,9 @@ class WebController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('homepage.dropdown', compact ('noti','dropdowns','item', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.dropdown', compact ('noti','dropdowns','item', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function article_list(Request $request)
@@ -403,9 +405,9 @@ class WebController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('homepage.article', compact ('noti','articles','item', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.article', compact ('noti','articles','item', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function gallery_list(Request $request)
@@ -421,9 +423,9 @@ class WebController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('homepage.gallery', compact ('noti','galleries','item', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.gallery', compact ('noti','galleries','item', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function doc_list(Request $request)
@@ -439,9 +441,9 @@ class WebController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('homepage.docList', compact ('noti','docs','item', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.docList', compact ('noti','docs','item', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
 
@@ -807,9 +809,9 @@ class WebController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('homepage.picture', compact ('noti','pictures','gallery', 'item' ,'menuModul', 'menuProses', 'menuBorang'));
+        return view('homepage.picture', compact ('noti','pictures','gallery', 'item' ,'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function picture_add(Request $request)

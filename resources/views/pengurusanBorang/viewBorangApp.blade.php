@@ -40,36 +40,79 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <table class="table table-borderless w-100">
+                    <tr>
+                        <td ><label for="nama" style="font-family:'Arial'">NAMA <span style="color: red;">*</span></label><br></td>
+                        <td style="display:flex;"><input class="form-control" name="nama" id="nama" value="{{$borangJwpn->nama}}" readonly style="text-transform: uppercase;"><br></td>
+                    </tr>
+                    <tr>
+                        <td ><label for="wilayah" style="font-family:'Arial', sans-serif">PERINGKAT <span style="color: red;">*</span></label></td>
+                        <td style="display:flex;"><input class="form-control" name="wilayah" id="wilayah" value="{{$borangJwpn->wilayahs->nama}}" readonly style="text-transform: uppercase;"></td>
+                    </tr>
+                    <tr>
+                        <td ><label for="rancangan" style="font-family:'Arial', sans-serif">RANCANGAN <span style="color: red;">*</span></label><br></td>
+                        <td style="display:flex;"><input class="form-control" name="rancangan" id="rancangan" value="{{$borangJwpn->rancangans->nama}}" readonly style="text-transform: uppercase;"></td>
+                    </tr>
+                        @foreach($jawapanMedan as $jwpnMedan)
+                            @if($jwpnMedan->medan->datatype == "checkbox")
+                                <tr>
+                                    <td  style="width: 25%;"><label for="nama" style="font-family:'Arial', sans-serif; text-transform:uppercase;">{{$jwpnMedan->medan->nama}}</label></td>
+                                    <td style="display:flex;">
+                                        <div style="vertical-align: middle;">
+                                            @foreach($checkboxes as $chkbox)
+                                                @if($chkbox->medan_id == $jwpnMedan->medan->id)
+                                                    <input type="radio" id="check{{$chkbox->id}}" name="jawapancheck{{$jwpnMedan->id}}[]" disabled
+                                                    @if ($jwpnMedan->jawapan == $chkbox->nama)
+                                                        checked
+                                                    @endif
+                                                    value="{{$chkbox->nama}}" style="border: 2px solid #ced4da;">
+                                                    <label for="check{{$chkbox->id}}">{{$chkbox->nama}}</label><br>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </td>
+                                </tr>
+                            @elseif($jwpnMedan->medan->datatype == "calendar")
+                                <tr>
+                                    <td ><label for="jawapan{{$jwpnMedan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase">{{$jwpnMedan->medan->nama}}</label></td>
+                                    <td style="display:flex;">
+                                        <input type="date" class="form-control" value="{{$jwpnMedan->jawapan}}" id="jawapan{{$jwpnMedan->id}}" style="border: 2px solid #ced4da;" readonly>
+                                        <br>
+                                    </td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td ><label for="jawapan{{$jwpnMedan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase;">
+                                            {{$jwpnMedan->medan->nama}}
+                                            @if ($jwpnMedan->medan->pilihan == "required")
+                                                <span style="color: red;">*</span> 
+                                            @endif
+                                        </label>
+                                    </td>
+                                    <td style="display:flex;">
+                                        <input style="border: 2px solid #ced4da;" class="form-control" value="{{$jwpnMedan->jawapan}}" id="jawapan{{$jwpnMedan->id}}" readonly><br>
+                                    </td>
+                                </tr>
+                            @endif
+                        @endforeach    
+                    </tr>
+                </table>
+            </div>
+            <div class="card">
                 <div class="card-header">
-                    <h1 class="header-title" style="color: var(--bs-body-color)">Nama Permohon: <p style="color: var(--bs-body-color);text-transform:uppercase">{{$borangJwpn->user->nama}}</p></h1>
+                    <h5 class="card-title mb-0">Senarai perkara yang dimohon</h5>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="mb-3">
-                            <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Arial'; text-transform: uppercase;">NAMA</label>
-                            <input class="form-control" name="jwpn{{$borangJwpn->id}}" id="jwpn{{$borangJwpn->id}}" value="{{$borangJwpn->nama}}" readonly style="text-transform: uppercase;">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="mb-3">
-                            <label for="wilayah" style="font-family:'Arial'; text-transform: uppercase;">WILAYAH</label>
-                            <input class="form-control" name="wilayah" id="wilayah" value="{{$borangJwpn->wilayahs->nama}}" readonly style="text-transform: uppercase;">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="mb-3">
-                            <label for="rancangan" style="font-family:'Arial'; text-transform: uppercase;">RANCANGAN</label>
-                            <input class="form-control" name="rancangan" id="rancangan" value="{{$borangJwpn->rancangans->nama}}" readonly style="text-transform: uppercase;">
-                        </div>
-                      </div>
-                @foreach($jawapanMedan as $jwpnMedan)
-                    <div class="row">
-                        <div class="mb-3">
-                            <label for="jwpn{{$jwpnMedan->id}}" style="font-family:'Arial'; text-transform: uppercase;">{{$jwpnMedan->medan->nama}}</label>
-                            <input class="form-control" name="jwpn{{$jwpnMedan->id}}" id="jwpn{{$jwpnMedan->id}}" value="{{$jwpnMedan->jawapan}}" readonly style="text-transform: uppercase;">
-                        </div>
-                    </div>
-                @endforeach
+                    <table class="table table-borderless">
+                        @foreach($items as $item)
+                        <tr>
+                            <td style="width: 35%;"><label for="perkara{{$item->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase;">{{$item->Perkara_Pemohonan->nama}}</label></td>
+                            <td style="display:flex;">
+                                <input style="border: 2px solid #ced4da;" class="form-control" value="{{$item->jumlah}}" id="perkara{{$jwpnMedan->id}}" readonly><br>
+                            </td>
+                        </tr>
+                        @endforeach    
+                    </table>
                 </div>
             </div>
             @if($lulusBorangs->isEmpty())
@@ -162,6 +205,14 @@
 </div>
 
 <style>
+    .table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+}
     .frame9403-frame7445 {
     height: 44px;
     display: flex;

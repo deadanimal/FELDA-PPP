@@ -10,8 +10,8 @@ class Proses extends Model
     use HasFactory;
     protected $table = 'proses';
 
-    public function modul() {
-        return $this->belongsTo(Modul::class, 'modul_id');
+    public function Projek() {
+        return $this->belongsTo(Projek::class, 'projek_id');
     }
     
     public function borang() {

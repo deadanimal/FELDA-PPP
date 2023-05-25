@@ -8,7 +8,7 @@
 
   <div class="header">
     <h1 class="header-title">
-      SENARAI PERMOHONAN BAGI {{$oneBorang->namaBorang}}
+      SENARAI BORANG BAGI PROSES {{$proses->nama}}
     </h1>
   </div>
   
@@ -20,71 +20,23 @@
         </div>
       </div>
       <div class="card">
-
-        @if (!$borangJwpns->isEmpty())
-          <div class="card-header">
-            <button type="button" class="btn btn-success" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModal17">Lulus Semua</button>
-          </div>
-
-          <form action="/user/borang_app/{{$oneBorang->id}}/lulusAll" method="POST">
-            @csrf
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal17" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Lulus Permohonan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Anda Pasti Mahu Lulus Permohonan Yang Telah Di Semak?</p><p>
-                </p></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>      
-                    <button type="submit" class="btn btn-primary">Ya</button>
-                    <input type="hidden" name="tahapLulusID" value="{{$tahapLulus}}">
-                    <input type="hidden" name="borangID" value="{{$oneBorang->id}}">
-                </div>
-              </div>
-            </div>
-            </div>
-
+        <div class="card-body">
+        @if (!$borangs->isEmpty())
             {{-- senarai borang --}}
-            <table class="table table-bordered table-striped w-100 Arial pemohonan-datatable" id="example" >
+            <table class="table table-bordered table-striped w-100 Arial" id="example" >
               <thead class="text-white bg-primary w-100" style="text-align: center;">
                 <tr>
-                    <th scope="col" style="vertical-align: top;"><input class="form-check-input text-center" type="checkbox" id="master"></th>
-                    <th scope="col" class="Arial">Nama Pemohon</th>                    
-                    <th scope="col" class="Arial">Wilayah</th>
-                    <th scope="col" class="Arial">Rancangan</th>
-                    <th scope="col" class="Arial">Status</th>
-                    <th scope="col" class="Arial">Tindakan</th>
+                    <th scope="col" class="Arial">Nama Borang</th>
+                    <th scope="col" class="Arial" style="width: 20%">Tindakan</th>
                 </tr>
               </thead>
               <tbody id="myTable">
-                @foreach ($borangJwpns as $borangJwpn)
+                @foreach ($borangs as $borang)
                     <tr>
-                        <td style="vertical-align: top; width:5%" class="text-center">  
-                          <input class="form-check-input text-center sub_chk" type="checkbox" value="{{$borangJwpn->id}}" name="LulusList[]">
-                        </td>
-                        <td class="text-center Arial">{{$borangJwpn->user->nama}}</td>
-                        <td class="text-center Arial">{{$borangJwpn->wilayahs->nama}}</td>
-                        <td class="text-center Arial">{{$borangJwpn->rancangans->nama}}</td>
-                        <td class="text-center Arial" style="width: 25%">
-                        @if (!$lulusBorangs->isEmpty())
-                            @foreach ($lulusBorangs as $lulusBorang)
-                                @if ($borangJwpn->id == $lulusBorang->jawapan_id)
-                                    {{$lulusBorang->keputusan}} Oleh {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}<br>
-                                    @break
-                                @endif
-                            @endforeach
-                        @endif
-                        </td>
+                        <td class="text-center Arial">{{$borang->namaBorang}}</td>
                         <td class="text-center">
-                            <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->id}}/view/{{$tahapLulus}}" style="color: white; text-decoration:none;">
-                              Papar Borang Pemohon
+                            <a class="btn btn-info" href="/userBorang/view/{{$borang->id}}" style="color: white; text-decoration:none;">
+                              Papar Borang
                             </a>
                         </td>
                     </tr>
@@ -93,23 +45,14 @@
             </table>
           </form>
         @else
-          <h1 style="text-align: center; padding-bottom:5%;">Tiada Permohonan</h1>
+          <h1 style="text-align: center; padding-bottom:5%;">Tiada Borang</h1>
         @endif
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<script type="text/javascript">
-$('.pemohonan-datatable').DataTable({
-    searching: false,
-    paging: false,
-    info: false,
-    columnDefs: [
-      { targets: 0 , orderable: false, searchable: false, visible: true  }
-    ],
-  });
-</script>
 <script>
   function myFunction() {
   var input, filter, table, tr, td, i;
@@ -125,62 +68,9 @@ $('.pemohonan-datatable').DataTable({
       } else {
         tr[i].style.display = "none";
       }
-    }       
+    }      
   }
 }
-</script>
-<script>
-function save(no)
-  {
-   var nama_val=document.getElementById("nama"+no).value;
-   var status_val=document.getElementById("status"+no).value;
-   document.getElementById("statusUpdate"+no).value = status_val;
-   document.getElementById("namaupdate"+no).value=nama_val;
-  }
-  function savetugasan(no)
-  {
-   var namatugas_val=document.getElementById("namaTugas"+no).value;
-   var jenistugas_val=document.getElementById("jenisTugas"+no).value;
-   var userKategori_val=document.getElementById("userKategori"+no).value;
-   document.getElementById("namaTugasupdate"+no).value = namatugas_val;
-   document.getElementById("jenisTugasupdate"+no).value=jenistugas_val;
-   document.getElementById("userKategoriupdate"+no).value=userKategori_val;
-  }
-</script>
-<script type="text/javascript">  
-  $(document).ready(function () {  
-
-      $('#master').on('click', function(e) {  
-       if($(this).is(':checked',true))    
-       {  
-          $(".sub_chk").prop('checked', true);    
-       } else {    
-          $(".sub_chk").prop('checked',false);    
-       }    
-      });  
-
-  });  
-</script> 
-<script>
-function openForm() {
-  document.getElementById("popupForm").style.display = "block";
-}
-function closeForm() {
-  document.getElementById("popupForm").style.display = "none";
-}
-function openFormTugas() {
-  document.getElementById("popupFormTugas").style.display = "block";
-}
-function closeFormTugas() {
-  document.getElementById("popupFormTugas").style.display = "none";
-}
-function openFormKemas() {
-  document.getElementById("popupFormKemas").style.display = "block";
-}
-function closeFormKemas() {
-  document.getElementById("popupFormKemas").style.display = "none";
-}
-
 </script>
    
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

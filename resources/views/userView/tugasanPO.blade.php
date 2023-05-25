@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            SENARAI PESANAN PEMBELIAN TUGASAN BAGI PROJEK {{$tugasan->Borang->namaBorang}}
+            SENARAI PESANAN PEMBELIAN TUGASAN BAGI PROJEK {{$tugasan->Proses->Projek->nama}}
         </h1>
     </div>
     <div class="row">
@@ -22,17 +22,10 @@
                         <tr>
                             <td colspan="2"><h2 class="text-center">{{$tugasan->perkara}}</h2></td>
                         </tr>
-                        <tr>
-                            <td><h2 class="text-right" style="margin-right:3%">Tarikh Sasaran:</h2></td>
-                            <td><h2 class="text-left">{{date('d-m-Y', strtotime($tugasan->due_date))}}</h2></td>
-                        </tr>
                     </table>
                 </div>
                 <div class="card-footer">
-                    <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAdd" 
-                    @if (now()->toDateString() > $tugasan->due_date)
-                        disabled
-                    @endif >
+                    <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAdd">
                         <div class="frame9403-frame7293">
                             <span class="frame9403-text21"><span>Kemaskini</span></span>
                             <img src="/SVG/daftar.svg" class="frame9403-group7527"/>

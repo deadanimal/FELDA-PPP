@@ -10,119 +10,162 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Sila isikan maklumat anda berikut dengan betul.</h5>
-                </div>
-                <form action="/userBorang/view/add" method="POST">
-                    @csrf
+            <form action="/userBorang/view/add" method="POST">
+                @csrf
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Sila isikan maklumat anda berikut dengan betul.</h5>
+                    </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="mb-3">
-                                <label for="nama" style="font-family:'Arial'">NAMA</label>
-                                <input type="text" class="form-control" style="text-transform: uppercase;" name="nama" id="nama" required oninput="this.value = this.value.toUpperCase()">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="mb-3">
-                                <label for="wilayah" style="font-family:'Arial', sans-serif">Peringkat</label>
-                                <select name="wilayah" id="wilayah" class="form-control">
-                                  <option value="" selected disabled>Pilih Peringkat</option>
-                                  @foreach ($wilayah as $key => $value)
-                                      <option value="{{ $key }}">{{ $value }}</option>
-                                  @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="mb-3">
-                                <label for="rancangan" style="font-family:'Arial', sans-serif">Rancangan</label>
-                                <select name="rancangan" id="rancangan" class="form-control" required>
-                                    <option value="" selected disabled>Pilih Rancangan</option>
-                                </select>
-                            </div>
-                        </div>
-                        @php
-                            $count = 0;
-                        @endphp
-                        @foreach($medans as $medan)
-                            @if($medan->datatype == "checkbox")
-                                <div class="row">
-                                    <label for="nama" style="font-family:'Arial', sans-serif; text-transform:uppercase;">{{$medan->nama}}</label>
-                                </div>
-                                <div class="row">
-                                    <div class="mb-3">
-                                        @foreach($checkboxes as $checkbox=>$value)
-                                            @foreach($value as $chkbox)
-                                                @if($chkbox->medan_id == $medan->id)
-                                                    <input type="radio" id="check{{$chkbox->id}}" name="jawapancheck{{$medan->id}}[]" value="{{$chkbox->nama}}">
-                                                    <label for="check{{$chkbox->id}}">{{$chkbox->nama}}</label><br>
-                                                @endif
-                                            @endforeach
+                        <table class="table table-borderless w-100">
+                            <tr>
+                                <td ><label for="nama" style="font-family:'Arial'">NAMA <span style="color: red;">*</span></label><br></td>
+                                <td style="display:flex;"><input type="text" class="form-control align-middle" style="text-transform: uppercase;margin: auto; border: 2px solid #ced4da;" name="nama" id="nama" required oninput="this.value = this.value.toUpperCase()"><br></td>
+                            </tr>
+                            <tr>
+                                <td ><label for="wilayah" style="font-family:'Arial', sans-serif">PERINGKAT <span style="color: red;">*</span></label></td>
+                                <td style="display:flex;">
+                                    <select name="wilayah" id="wilayah" class="form-control" style="border: 2px solid #ced4da;">
+                                        <option value="" selected disabled>Pilih Peringkat</option>
+                                        @foreach ($wilayah as $key => $value)
+                                            <option value="{{ $key }}">{{ $value }}</option>
                                         @endforeach
-                                    <input type="hidden" name="medanID[]" value="{{$medan->id}}">
-                                    </div>
-                                </div>
-                            @elseif($medan->datatype == "calendar")
-                                <div class="row">
-                                    <div class="col-12 col-lg-6">
-                                        <div class="mb-3">
-                                            <label for="jawapan{{$medan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase">{{$medan->nama}}</label>
-                                            <input type="date" class="form-control" name="jawapan[]" id="jawapan{{$medan->id}}">
-
+                                    </select>
+                                    <br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td ><label for="rancangan" style="font-family:'Arial', sans-serif">RANCANGAN <span style="color: red;">*</span></label><br></td>
+                                <td style="display:flex;">
+                                    <select name="rancangan" id="rancangan" class="form-control" style="border: 2px solid #ced4da;" required>
+                                        <option value="" selected disabled>Pilih Rancangan</option>
+                                    </select>
+                                    <br>
+                                </td>
+                            </tr>
+                                @php
+                                    $count = 0;
+                                @endphp
+                                @foreach($medans as $medan)
+                                    @if($medan->datatype == "checkbox")
+                                    <tr>
+                                        <td  style="width: 25%;">
+                                            <label for="nama" style="font-family:'Arial', sans-serif; text-transform:uppercase;">
+                                                {{$medan->nama}}
+                                                @if ($medan->pilihan == "required")
+                                                    <span style="color: red;">*</span> 
+                                                @endif
+                                            </label>
+                                        </td>
+                                        <td style="display:flex;">
+                                            <div style="vertical-align: middle;">
+                                                @foreach($checkboxes as $checkbox=>$value)
+                                                    @foreach($value as $chkbox)
+                                                        @if($chkbox->medan_id == $medan->id)
+                                                            <input type="radio" id="check{{$chkbox->id}}" name="jawapancheck{{$medan->id}}[]"
+                                                            @if ($medan->pilihan == 'required')
+                                                                required
+                                                            @endif
+                                                            value="{{$chkbox->nama}}" style="border: 2px solid #ced4da;">
+                                                            <label for="check{{$chkbox->id}}">{{$chkbox->nama}}</label><br>
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                            </div>
                                             <input type="hidden" name="medanID[]" value="{{$medan->id}}">
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            @else
-                                <div class="row">
-                                    <div class="mb-3">
-                                        <label for="jawapan{{$medan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase">{{$medan->nama}}</label>
-                                        <input 
-                                        @if ($medan->datatype == "string")
-                                            type="text" 
-                                        @else
-                                            type="number" step="any"
-                                        @endif
+                                        </td>
+                                    </tr>
+                                    @elseif($medan->datatype == "calendar")
+                                        <tr>
+                                            <td ><label for="jawapan{{$medan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase">{{$medan->nama}}</label></td>
+                                            <td style="display:flex;">
+                                                <input type="date" class="form-control" name="jawapan[]" 
+                                                @if ($medan->pilihan == 'required')
+                                                    required
+                                                @endif
+                                                id="jawapan{{$medan->id}}" style="border: 2px solid #ced4da;">
+                                                <br>
+                                                <input type="hidden" name="medanID[]" value="{{$medan->id}}">
+                                            </td>
+                                        </tr>
+                                    @else
+                                    <tr>
+                                        <td ><label for="jawapan{{$medan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase;">
+                                                {{$medan->nama}}
+                                                @if ($medan->pilihan == "required")
+                                                    <span style="color: red;">*</span> 
+                                                @endif
+                                            </label>
+                                        </td>
+                                        <td style="display:flex;">
+                                            <input style="border: 2px solid #ced4da;"
+                                            @if ($medan->datatype == "string")
+                                                type="text" 
+                                            @else
+                                                type="number" step="any"
+                                            @endif
 
-                                        @if ($medan->pilihan == "required")
-                                            required 
-                                        @endif
-                                        @if ($medan->nama != 'emel')
-                                            style="text-transform: uppercase;"
-                                        @endif
-                                        class="form-control" maxlength="{{$medan->max}}" minlength="{{$medan->min}}" name="jawapan[]" id="jawapan{{$medan->id}}">
-                                        <input type="hidden" name="medanID[]" value="{{$medan->id}}">
-                                    </div>
-                                </div>
-                            @endif
-                            @php
-                                $count += 1;
-                            @endphp
-                        @endforeach
+                                            @if ($medan->pilihan == "required")
+                                                required 
+                                            @endif
+                                            @if ($medan->nama != 'emel')
+                                                style="text-transform: uppercase;"
+                                            @endif
+                                            class="form-control" maxlength="{{$medan->max}}" minlength="{{$medan->min}}" name="jawapan[]" id="jawapan{{$medan->id}}" ><br>
+                                            <input type="hidden" name="medanID[]" value="{{$medan->id}}">
+                                        </td>
+                                    </tr>
+                                @endif
+                                @php
+                                    $count += 1;
+                                @endphp
+                            @endforeach    
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                    <h5 class="card-title mb-0">Sila isikan jumlah bagi perkara yang ingin dimohon.</h5>
+                    </div>
+                    <div class="card-body">
+                    @foreach($perkaras as $perkara)
+                        <div class="row">
+                            <div class="mb-3">
+                                <label for="Perkara" style="font-family:'Arial', sans-serif; text-transform:uppercase;">{{$perkara->nama}}</label>
+                                <input type="Number" class="form-control" name="perkara[]" id="Perkara" required>
+                                <input type="hidden" name="perkara_id[]" value="{{$perkara->id}}">
+                            </div>
+                        </div>
+                    @endforeach
+                    </div>
+                </div>        
+                <div class="card">
+                    <div class="card-body">
                         @if ($borang->consent != null || $borang->consent != "")
-                            <input type="checkbox" id="consent" name="const" onchange="document.getElementById('hantar').disabled = !this.checked;">
-                            <label for="consent" style="font-size: 120%;">{{$borang->consent}}</label><br>
+                            <label for="consent" style="font-size: 120%;">
+                                <input type="checkbox" id="consent" name="const" onchange="document.getElementById('hantar').disabled = !this.checked;">
+                                {{$borang->consent}}
+                            </label><br>
                             <input type="hidden" name="borangID" value="{{$borang->id}}">
                             <button type="submit" class="frame9403-frame7445" id="hantar" disabled>
                         @else
                             <input type="hidden" name="borangID" value="{{$borang->id}}">
                             <button type="submit" class="frame9403-frame7445" id="hantar">
                         @endif
-                            <input type="hidden" name="countJwpn" value="{{$count}}">
+                                <input type="hidden" name="countJwpn" value="{{$count}}">
 
-                            <div class="frame9403-frame7293">
-                                <span class="frame9403-text21"><span>Hantar</span></span>
-                                <img
-                                src="/SVG/kemaskini.svg"
-                                class="frame9403-group7527"
-                                />
-                            </div>
-                        </button>
+                                <div class="frame9403-frame7293">
+                                    <span class="frame9403-text21"><span>Hantar</span></span>
+                                    <img
+                                    src="/SVG/kemaskini.svg"
+                                    class="frame9403-group7527"
+                                    />
+                                </div>
+                            </button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -152,6 +195,8 @@
 });
 </script>
 <style>
+    td input, td label { vertical-align: middle; }
+
     .frame9403-frame7445:disabled {
         background-color: rgba(162, 51, 93, 0.75);
     }

@@ -227,16 +227,18 @@
                     <i class="align-middle me-2 ion ion-ios-folder"></i> <span class="align-middle" style="text-transform: uppercase;">{{$mModul->nama}}</span>
                 </a>
                 <ul id="auth{{$mModul->id}}" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#sidebar">
-                    @foreach ($menuProses as $mProses)
-                        @if ($mProses->modul_id == $mModul->id)
+                    @foreach ($menuProjek as $mProjek)
+                        @if ($mProjek->modul_id == $mModul->id)
                         <li class="sidebar-item">
-                            <a data-bs-target="#subauth{{$mProses->id}}" data-bs-toggle="collapse" class="sidebar-link submenu collapsed" aria-expanded="false">
-                                <i class="align-middle me-2 ion ion-ios-journal"></i> <span class="align-middle">{{$mProses->nama}}</span>
+                            <a data-bs-target="#subauth{{$mProjek->id}}" data-bs-toggle="collapse" class="sidebar-link submenu collapsed" aria-expanded="false">
+                                <i class="align-middle me-2 ion ion-ios-briefcase"></i> <span class="align-middle">{{$mProjek->nama}}</span>
                             </a>
-                            <ul id="subauth{{$mProses->id}}" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#submenu">
-                                @foreach ($menuBorang as $mBorang)
-                                    @if ($mBorang->proses_id == $mProses->id)
-                                        <li class="sidebar-item"><a class="sidebar-link" href="/userBorang/view/{{$mBorang->id}}"><i class="align-middle me-2 fas fa-fw fa-file-alt"></i>{{$mBorang->namaBorang}}</a></li>  
+                            <ul id="subauth{{$mProjek->id}}" class="sidebar-dropdown list-unstyled collapse " data-bs-parent="#submenu">
+                                @foreach ($menuProses as $mProses)
+                                    @if ($mProses->projek_id == $mProjek->id)
+                                        <li class="sidebar-item"><a class="sidebar-link" href="/userBorang/{{$mProses->id}}/list"><i class="align-middle me-2 ion ion-ios-journal"></i>{{$mProses->nama}}</a></li>  
+
+                                        {{-- <li class="sidebar-item"><a class="sidebar-link" href="/userBorang/view/{{$mBorang->id}}"><i class="align-middle me-2 fas fa-fw fa-file-alt"></i>{{$mBorang->namaBorang}}</a></li>   --}}
                                     @endif                                  
                                 @endforeach
                             </ul>

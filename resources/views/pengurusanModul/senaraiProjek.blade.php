@@ -8,13 +8,12 @@
 
   <div class="header">
     <h1 class="header-title">
-        PROJEK {{$projek->nama}}
+        MODUL {{$modul->nama}}
     </h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/moduls">Modul</a></li>
-        <li class="breadcrumb-item"><a href="/moduls/{{$projek->modul_id}}/projek">{{$projek->modul->nama}}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{$projek->nama}}</li>
+        <li class="breadcrumb-item active" aria-current="page">{{$modul->nama}}</li>
       </ol>
     </nav>
   </div>
@@ -30,25 +29,24 @@
           </button>
         </div>
 
-        {{-- Modal form Tambah proses --}}
+        {{-- Modal form Tambah projek --}}
         <div class="modal fade" id="exampleModalAddProses" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA PROSES</h2>
+                <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA PROJEK</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form action="/moduls/proses/add" method="POST">
+              <form action="/moduls/projek/add" method="POST">
                 @csrf
                 <div class="modal-body">
-                  <label for="namaProses" class="frame9402-text04">
-                    <strong>Nama Proses</strong>
+                  <label for="nama" class="frame9402-text04">
+                    <strong>Nama Projek</strong>
                   </label>
-                  <input type="text" class="frame9402-kotaknamaProses" id="namaProses" placeholder="Nama Proses" name="namaProses" required oninput="this.value = this.value.toUpperCase()">
-                  <input type="hidden" value="{{$projek->id}}" name="projekId">
-                  <input type="hidden" value="{{count($prosess)+1}}" name="sequence">
+                  <input type="text" class="frame9402-kotaknamaProses" id="nama" placeholder="Nama Projek" name="nama" required oninput="this.value = this.value.toUpperCase()">
+                  <input type="hidden" value="{{$modul->id}}" name="modulId">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
@@ -59,99 +57,77 @@
           </div>
         </div>
       
-        {{-- senarai proses --}}
+        {{-- senarai projek --}}
         <table style="overflow: auto; height: auto; max-height: 750px; width:100%;">
-          @if (!$prosess->isEmpty())
-            @php
-              $i = 1;
-              $var = 0;
-            @endphp
-            @foreach ($prosess as $proses)
-              @if ($i == 1 || $i% 2 == 1)
-                <tr class="frame9402-input">
-              @else
-                <tr class="frame9402-input" style="background-color: rgba(162, 50, 93, 0.08);"> 
-              @endif
-                <td class="frame9402-text30">Nama Proses:</td>
-                <td class="frame9402-text31"><input type="text" id="nama{{$i}}" class="frame9402-kotaknama" value="{{$proses->nama}}" oninput="this.value = this.value.toUpperCase()"></td>
-                <td class="frame9402-text32">Turutan Proses:
-                  <select name="sequence" id="sequence{{$i}}" class="frame9403-kotaknama3">
-                    @for($x=1; $x<=count($prosess); $x++)
-                      <option value="{{$x}}" @if($x == $proses->sequence)selected @endif>{{$x}}</option>
-                    @endfor
-                </td>
+          @if (!$projeks->isEmpty())
+          <tbody>
+            @foreach ($projeks as $projek)
+            @if ($loop->iteration == 1 || $loop->iteration% 2 == 1)
+              <tr class="frame9402-input">
+            @else
+              <tr class="frame9402-input" style="background-color: rgba(162, 50, 93, 0.08);"> 
+            @endif
+                <td class="frame9402-text30">Nama Projek:</td>
+                <td class="frame9402-text31"><input type="text" id="nama{{$loop->iteration}}" class="frame9402-kotaknama" value="{{$projek->nama}}" oninput="this.value = this.value.toUpperCase()"></td>
 
                 <td class="frame9402-text32">
-                  Status Proses:
-                  <select name="status" id="status{{$i}}" class="frame9403-kotaknama3">
-                  @if ($proses->status == 1)
-                    <option value="1" selected>Aktif</option>
-                    <option value="0">Tidak Aktif</option>
-                  @else
-                    <option value="1">Aktif</option>
-                    <option value="0" selected>Tidak Aktif</option>
-                  @endif
-                  </select></td>
+                    Status Projek:
+                    <select name="status" id="status{{$loop->iteration}}" class="frame9403-kotaknama3">
+                        <option value="{{$projek->status}}" selected hidden>{{$projek->status}}</option>
+                        <option value="Aktif">Aktif</option>
+                        <option value="Tidak Aktif">Tidak Aktif</option>
+                    </select>
+                </td>
                 <td class="frame9402-frame8727" id="tindakan">
-                  <a href="/moduls/{{$projek->modul_id}}/{{$proses->id}}/borang" class="frame9402-rectangle828245" title="Masuk">
-                    <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 556 502"><path d="M88.7 223.8L0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z"/></svg>
-                  </a>
-                  {{-- <a href='' onclick="this.href='/pengurusanModul/kemaskiniProses/{{$proses->id}}/'+document.getElementById('nama').value" class="frame9402-rectangle8282452">                
-                  </a> --}}
-                  <form method="Post" action="/moduls/proses/update">
-                    @csrf
-                    @method('PUT')
+                    <a href="/moduls/{{$projek->id}}/proses" class="frame9402-rectangle828245" title="Masuk">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 556 502"><path d="M88.7 223.8L0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z"/></svg>
+                    </a>
+                    
+                    <form method="Post" action="/moduls/projek/update">
+                        @csrf
+                        @method('PUT')
 
-                    <input type="hidden" name="namaupdate" id="namaupdate{{$i}}" >
-                    <input type="hidden" name="statusUpdate" id="statusUpdate{{$i}}" >
-                    <input type="hidden" name="sequenceUpdate" id="sequenceUpdate{{$i}}" >
-                    <input type="hidden" name="prosesId" id="prosesId" value="{{$proses->id}}">
-                    <input type="hidden" name="projekId" id="projekId" value="{{$projek->id}}">
-                    <button class="frame9402-rectangle828245" type="submit" onclick="save({{$i}})" style="margin-left:10px;padding: 0px;background-color: transparent;border-color: transparent;" title="Simpan">                
-                      <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;margin-top: 20%;" viewBox="0 0 530 512" width="31px"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
-                    </button>
-                  </form>
-                  {{-- <a href="/pengurusanModul/kemaskiniProses/{{$proses->id}}/{{}}" class="frame9402-rectangle8282452" id="kemaskini">
-                    <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 548 612"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
-                  </a> --}}
-                  <button type="button" class="frame9402-rectangle828246" style="margin-left: 5px" data-toggle="modal" data-target="#exampleModal{{$i}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                        <input type="hidden" name="namaupdate" id="namaupdate{{$loop->iteration}}" >
+                        <input type="hidden" name="statusUpdate" id="statusUpdate{{$loop->iteration}}" >
+                        <input type="hidden" name="projekId" id="projekId" value="{{$projek->id}}">
+                        <input type="hidden" name="modulId" id="modulId" value="{{$modul->id}}">
+                        <button class="frame9402-rectangle828245" type="submit" onclick="save({{$loop->iteration}})" style="margin-left:10px;padding: 0px;background-color: transparent;border-color: transparent;" title="Simpan">                
+                        <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;margin-top: 20%;" viewBox="0 0 530 512" width="31px"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"/></svg>
+                        </button>
+                    </form>
 
-                  <!-- Modal -->
-                  <div class="modal fade" id="exampleModal{{$i}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content">
-                      <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Padam Proses {{$proses->nama}}</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                          </button>
-                      </div>
-                      <div class="modal-body">
-                          <p>Anda Pasti Mahu Padam Proses {{$proses->nama}}?<p>
-                      </div>
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>
-                          <form method="post" action="/moduls/proses/delete">
-                            @csrf
-                            @method('DELETE')
-                            <input type="hidden" value="{{$projek->id}}" name="projekId">
-                            <input type="hidden" name="prosesId" value="{{$proses->id}}"/>
-                            <button class="btn btn-danger">YA</button>
-                          </form>
-                      </div>
-                      </div>
-                  </div>
-                  </div>
+                    <button type="button" class="frame9402-rectangle828246" style="margin-left: 5px" data-toggle="modal" data-target="#exampleModal{{$loop->iteration}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal{{$loop->iteration}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Padam Projek {{$projek->nama}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Anda Pasti Mahu Padam Projek {{$projek->nama}}?<p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>
+                            <form method="post" action="/moduls/projek/delete">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" value="{{$modul->id}}" name="modulId">
+                                <input type="hidden" name="projekId" value="{{$projek->id}}"/>
+                                <button class="btn btn-danger">YA</button>
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
                 </td>
               </tr>
-              @php
-                $i++;
-                if ($var == $proses->sequence) {
-                   Alert::warning('Terdapat Duplikasi.', 'Terdapat duplikasi pada turutan proses.');   
-                }
-                $var = $proses->sequence;
-              @endphp
             @endforeach 
+            </tbody>
           @else
             <tr class="frame9402-input" style="background-color: #FFFFFF;"><h2 class="frame9402-text01" style="color:black;"> Tiada Proses </h2></tr>
           @endif
@@ -502,8 +478,6 @@ function save(no)
   {
    var nama_val=document.getElementById("nama"+no).value;
    var status_val=document.getElementById("status"+no).value;
-   var sequence_val=document.getElementById("sequence"+no).value;
-   document.getElementById("sequenceUpdate"+no).value = sequence_val;
    document.getElementById("statusUpdate"+no).value = status_val;
    document.getElementById("namaupdate"+no).value=nama_val;
   }

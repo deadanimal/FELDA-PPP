@@ -10,13 +10,30 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            BORANG {{$borangJwpns->borangs->namaBorang}}
+            BORANG {{$borangJwpn->borangs->namaBorang}}
         </h1>
-        <a href="/user/sub_borang/list"  class="frame9403-frame7445" style="margin-left:0px;">
-            <div class="frame9403-frame7293">
-              <span class="frame9403-text21"><span>Kembali</span></span>
-            </div>
-        </a>
+        <table class="bdless w-100">
+            <tr class="bdless">
+                <td class="bdless">
+                    <a href="/user/projek/{{$borangJwpn->id}}/list"  class="frame9403-frame7445" style="margin-left:0px;max-width:157px;">
+                        <div class="frame9403-frame7293">
+                        <span class="frame9403-text21"><span>Kembali</span></span>
+                        </div>
+                    </a>
+                </td>
+                <td class="bdless">
+                    <form action="/user/projek/surat/print" method="get">
+                        <input type="hidden" name="jawapan_id" value="{{$borangJwpn->id}}">
+                        <button type="submit"  class="frame9403-frame7445" style="width:auto;">
+                            <div class="frame9403-frame7293">
+                            <span class="frame9403-text21"><span>Jana Surat (PDF)</span></span>
+                            </div>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        
     </div>
     <div class="row">
         <div class="col-12">
@@ -41,7 +58,7 @@
                             <td class="bdless"><span class="c7"> 25 Julai 2022</span></td>
                         </tr>
                     </table>
-                    <p class="c15"><span class="c7">{{$borangJwpns->user->nama}},</span></p>
+                    <p class="c15"><span class="c7">{{$borangJwpn->user->nama}},</span></p>
                     <p class="c15"><span class="c37"></span></p>
                     <div class="c3"><span class="c7">@if($jawapan_alamat != null){!! nl2br(e($jawapan_alamat->jawapan))  !!}@endif</span></div>
                     <br>
@@ -82,102 +99,65 @@
                         <p class="c35 c66"><span class="c43"></span></p>
                     </div>
                 </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h2 style="text-transform: uppercase">Tindakan</h2>
-                </div>
-                <div class="card-body">
-                    <table class="table-borderless bdless">
-                        <tr class="bdless">
-                            <td class="bdless"><button class="btn btn-success btn-lg" data-toggle="modal" data-target="#exampleModalTerima">Terima</button></td>
-                            <td class="bdless"><button class="btn btn-danger btn-lg" data-toggle="modal" data-target="#exampleModalMenolak" style="margin-left:7%;">Menolak</button></td>    
-                        </tr>
-                    </table>
-                    
-                    {{-- modal Terima --}}
-                    <div class="modal fade" id="exampleModalTerima" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Tindakan</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <form action="/user/sub_borang/update" method="post">
-                                @csrf
-                                @method('put')
-                                <div class="modal-body">
-                                    @foreach ($acceptance as $accept)
-                                        @if ($accept->types == "Terima")
-                                            <div class="arial">{!!nl2br(e($accept->name))!!}</div>
-                                        @endif
-                                    @endforeach
-                                    <input type="hidden" value="Terima" name="tindakan">
-                                    <input type="hidden" value="{{$borangJwpns->id}}" name="jawapan_id">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">TIDAK</button>      
-                                    <button type="submit" class="btn btn-primary">SETUJU</button>
-                                </div>
-                            </form>
-                          </div>
-                      </div>
+                <div class="container-fluid" style="padding-left: 5%;">
+                    <div class="card-header">
+                        <p class="c32">
+                           <span class="c10">SPESIFIKASI/PERINCIAN KERJA INFRASTRUKTUR BAGI PROJEK {{$borangJwpn->borangs->Proses->Projek->nama}}</span> 
+                        </p>
                     </div>
+                    <div class="card-body">
+                        @php
+                            $total=0;
+                        @endphp
+                        <table class="w-75" style="color: #000000;">
+                            <thead>
+                                <tr style="text-align: center;">
+                                    <th>BIL</th>
+                                    <th>KETERANGAN</th>
+                                    <th>JUMLAH (RM)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($items as $item)
+                                    <tr>
+                                        <td style="text-align:center;padding:3% 0%;">{{$loop->iteration}}</td>
+                                        <td>
+                                            <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Arial'; text-transform: uppercase;margin-left:2%">{{$item->Perkara_Pemohonan->nama}}</label>
+                                        </td>
+                                        <td style="width: 30%; text-align:center;">{{$item->jumlah}}</td>
+                                    </tr>
 
-                    {{-- modal Menolak --}}
-                    <div class="modal fade" id="exampleModalMenolak" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Tindakan</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <form action="/user/sub_borang/update" method="post">
-                                @csrf
-                                @method('put')
-                                <div class="modal-body">
-                                    @foreach ($acceptance as $accept)
-                                        @if ($accept->types == "Menolak")
-                                            <div class="arial">{!!nl2br(e($accept->name))!!}</div>
-                                        @endif
-                                    @endforeach
-                                    <input type="hidden" value="Menolak" name="tindakan">
-                                    <input type="hidden" value="{{$borangJwpns->id}}" name="jawapan_id">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
-                                    <button type="submit" class="btn btn-danger">YA</button>
-                                </div>
-                            </form>
-                          </div>
-                      </div>
+                                    @php
+                                        $total += (double)$item->jumlah;
+                                    @endphp
+                                @endforeach
+                                <tr>
+                                    <td></td>
+                                    <td style="padding:3% 0%;"><label style="font-family:'Arial';margin-left: 2%">
+                                        JUMLAH KESELURUHAN DI BAWA KE BORANG TENDER</label>
+                                    </td>
+                                    <td style="text-align:center;">{{$total}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <style>
-    table, th, td, tr {
+     table, th, td, tr {
         border: 1px solid black;
     }
 
     .bdless{
         border: 0px;
     }
-    .page_break { page-break-before: always; }
-
     .frame9403-frame7445 {
     width: 125px;
     height: 44px;
     display: flex;
-    max-width: 157px;
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
     box-sizing: border-box;
     align-items: center;
@@ -225,18 +205,6 @@
     margin-bottom: 0;
     text-decoration: none;
   }
-  .frame9403-group7527 {
-    width: 24px;
-    height: 24px;
-    position: relative;
-    box-sizing: border-box;
-    border-color: transparent;
-    margin-right: 0;
-    margin-bottom: 0;
-  } 
-  .arial{
-    font-family: 'Arial', sans-serif;
-    text-transform: uppercase;
-  }
 </style>
 @endsection
+            

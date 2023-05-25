@@ -33,10 +33,6 @@ class Jawapan extends Model
     public function kelulusanBorang(){
         return $this->hasMany(Kelulusan_borang::class);
     }
-
-    public function tahapKelulusan(){
-        return $this->hasManythrough(Tahap_kelulusan::class, Kelulusan_borang::class);
-    }
     
     public function tarikDiri(){
         return $this->hasMany(TarikDiri::class);
@@ -48,6 +44,10 @@ class Jawapan extends Model
 
     public function TindakanTugasan(){
         return $this->hasMany(TindakanTugasan::class);
+    }
+
+    public function Pemohonan_Peneroka(){
+        return $this->hasMany(Pemohonan_Peneroka::class);
     }
 }
 

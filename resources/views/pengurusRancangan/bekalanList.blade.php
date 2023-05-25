@@ -4,11 +4,13 @@
 @section('innercontent')
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
 <div class="container-fluid">
 
   <div class="header">
     <h1 class="header-title">
-      SENARAI PERMOHONAN BAGI {{$oneBorang->namaBorang}}
+        PEMOHONAN {{$jawapan->user->nama}}
     </h1>
   </div>
   
@@ -16,180 +18,97 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Carian..">
+            <h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Senarai Pemohonan Bekalan</h1>
         </div>
-      </div>
-      <div class="card">
 
-        @if (!$borangJwpns->isEmpty())
-          <div class="card-header">
-            <button type="button" class="btn btn-success" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModal17">Lulus Semua</button>
-          </div>
+        {{-- senarai bekalan --}}
+        @if (!$penerimaan->isEmpty())
+        <div class="card-body">
 
-          <form action="/user/borang_app/{{$oneBorang->id}}/lulusAll" method="POST">
-            @csrf
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal17" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Lulus Permohonan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Anda Pasti Mahu Lulus Permohonan Yang Telah Di Semak?</p><p>
-                </p></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>      
-                    <button type="submit" class="btn btn-primary">Ya</button>
-                    <input type="hidden" name="tahapLulusID" value="{{$tahapLulus}}">
-                    <input type="hidden" name="borangID" value="{{$oneBorang->id}}">
-                </div>
-              </div>
-            </div>
-            </div>
-
-            {{-- senarai borang --}}
-            <table class="table table-bordered table-striped w-100 Arial pemohonan-datatable" id="example" >
-              <thead class="text-white bg-primary w-100" style="text-align: center;">
-                <tr>
-                    <th scope="col" style="vertical-align: top;"><input class="form-check-input text-center" type="checkbox" id="master"></th>
-                    <th scope="col" class="Arial">Nama Pemohon</th>                    
-                    <th scope="col" class="Arial">Wilayah</th>
-                    <th scope="col" class="Arial">Rancangan</th>
-                    <th scope="col" class="Arial">Status</th>
-                    <th scope="col" class="Arial">Tindakan</th>
-                </tr>
-              </thead>
-              <tbody id="myTable">
-                @foreach ($borangJwpns as $borangJwpn)
+        <table class="table table-bordered table-striped w-100 aduan-datatable">
+            <thead class="text-white bg-primary w-100">
+              <tr>
+                  <th scope="col" class="text-center" style="width: 40%">Perkara</th>
+                  <th scope="col" class="text-center">Jumlah</th>
+                  <th scope="col" class="text-center">Pengesahan</th>
+                  <th scope="col" class="text-center" style="width: 30%">Penyataan</th>
+                  <th scope="col" class="text-center">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody>
+                @foreach ($penerimaan as $item)
                     <tr>
-                        <td style="vertical-align: top; width:5%" class="text-center">  
-                          <input class="form-check-input text-center sub_chk" type="checkbox" value="{{$borangJwpn->id}}" name="LulusList[]">
-                        </td>
-                        <td class="text-center Arial">{{$borangJwpn->user->nama}}</td>
-                        <td class="text-center Arial">{{$borangJwpn->wilayahs->nama}}</td>
-                        <td class="text-center Arial">{{$borangJwpn->rancangans->nama}}</td>
-                        <td class="text-center Arial" style="width: 25%">
-                        @if (!$lulusBorangs->isEmpty())
-                            @foreach ($lulusBorangs as $lulusBorang)
-                                @if ($borangJwpn->id == $lulusBorang->jawapan_id)
-                                    {{$lulusBorang->keputusan}} Oleh {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}<br>
-                                    @break
-                                @endif
-                            @endforeach
-                        @endif
-                        </td>
-                        <td class="text-center">
-                            <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->id}}/view/{{$tahapLulus}}" style="color: white; text-decoration:none;">
-                              Papar Borang Pemohon
-                            </a>
+                        <td>{{$item->Pemohonan_Peneroka->Perkara_Pemohonan->nama}}</td>
+                        <td>{{$item->Pemohonan_Peneroka->jumlah}}</td>
+                        <td>{{$item->pengesahan ?? ""}}</td>
+                        <td>{!! nl2br(e($item->kenyataan ?? ""))  !!}</td>
+                        <td>
+                            <button class="btn btn-success"  data-toggle="modal" data-target="#exampleModalUpdate{{$item->id}}">Kemaskini</button>
+
+                            {{-- Modal Tambah Borang --}}
+                            <div class="modal fade" id="exampleModalUpdate{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA ADUAN</h2>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="/user/pengurus/item/update" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-body">
+                                        <label for="pengesahan" class="frame9402-text04">
+                                            <strong>Pengesahan</strong>
+                                        </label>
+                                        <select class="form-select frame9402-kotaknamaBorang" name="pengesahan" id="pengesahan" required>
+                                          @if ($item->pengesahan != null)
+                                            <option value="{{$item->pengesahan}}" selected disabled>{{$item->pengesahan}}</option>   
+                                          @endif
+                                            <option value="Cukup">Cukup</option>
+                                            <option value="Tidak">Tidak</option>
+                                        </select>
+                                        
+                                        <label for="Penyataan" class="frame9402-text04">
+                                            <strong>Penyataan</strong>
+                                        </label>
+                                        <textarea class="form-control frame9403-kotaknama" name="penyataan" id="Penyataan" rows="4" oninput="this.value = this.value.toUpperCase()">{!! nl2br(e($item->kenyataan ?? ""))  !!}</textarea><br>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="hidden" name="penerimaan_id" value="{{$item->id}}">
+                                        <input type="hidden" name="jawapan_id" value="{{$jawapan->id}}">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                        <button class="btn btn-primary">Cipta</button>
+                                    </div>
+                                    </form> 
+                                </div>  
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
-              </tbody>
-            </table>
-          </form>
+
+            </tbody>
+          </table>
+        </div>
         @else
-          <h1 style="text-align: center; padding-bottom:5%;">Tiada Permohonan</h1>
+          <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Aduan </h2>
         @endif
       </div>
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
-$('.pemohonan-datatable').DataTable({
-    searching: false,
-    paging: false,
-    info: false,
-    columnDefs: [
-      { targets: 0 , orderable: false, searchable: false, visible: true  }
-    ],
-  });
-</script>
-<script>
-  function myFunction() {
-  var input, filter, table, tr, td, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i];
-    if (td) {
-      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
-</script>
-<script>
-function save(no)
-  {
-   var nama_val=document.getElementById("nama"+no).value;
-   var status_val=document.getElementById("status"+no).value;
-   document.getElementById("statusUpdate"+no).value = status_val;
-   document.getElementById("namaupdate"+no).value=nama_val;
-  }
-  function savetugasan(no)
-  {
-   var namatugas_val=document.getElementById("namaTugas"+no).value;
-   var jenistugas_val=document.getElementById("jenisTugas"+no).value;
-   var userKategori_val=document.getElementById("userKategori"+no).value;
-   document.getElementById("namaTugasupdate"+no).value = namatugas_val;
-   document.getElementById("jenisTugasupdate"+no).value=jenistugas_val;
-   document.getElementById("userKategoriupdate"+no).value=userKategori_val;
-  }
-</script>
-<script type="text/javascript">  
-  $(document).ready(function () {  
-
-      $('#master').on('click', function(e) {  
-       if($(this).is(':checked',true))    
-       {  
-          $(".sub_chk").prop('checked', true);    
-       } else {    
-          $(".sub_chk").prop('checked',false);    
-       }    
-      });  
-
-  });  
-</script> 
-<script>
-function openForm() {
-  document.getElementById("popupForm").style.display = "block";
-}
-function closeForm() {
-  document.getElementById("popupForm").style.display = "none";
-}
-function openFormTugas() {
-  document.getElementById("popupFormTugas").style.display = "block";
-}
-function closeFormTugas() {
-  document.getElementById("popupFormTugas").style.display = "none";
-}
-function openFormKemas() {
-  document.getElementById("popupFormKemas").style.display = "block";
-}
-function closeFormKemas() {
-  document.getElementById("popupFormKemas").style.display = "none";
-}
-
-</script>
-   
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
 <style>
-
-  .Arial{
+  .tr, td{
+    text-align: center;
+  }
+  .arial{
       font-family: 'Arial', sans-serif;
       text-transform: uppercase;
+  }
+  .text-Upp{
+    text-transform: uppercase;
   }
   .frame9402-frame9402 {
     width: 100%;
@@ -351,8 +270,8 @@ function closeFormKemas() {
     text-decoration: none;
   }
   .frame9402-kotaknama {
-    width: 350px;
-    height: 45px;
+    width: 95%;
+    height: 80%;
     position: relative;
     box-sizing: content-box;
     border-color: rgba(140, 38, 60, 1);
@@ -365,7 +284,8 @@ function closeFormKemas() {
     font-size: 18px;
     padding-left:10px;
     box-shadow: inset -3.46162px -3.46162px 7.78865px rgba(255, 255, 255, 0.6), inset 3.46162px 3.46162px 12.1157px rgba(140, 38, 60, 0.2);
-    background-color: #FFFFFF;
+    background-color: #FFFFFF;  
+    text-transform: uppercase;
   }
   .frame9403-frame7445 {
       width: auto;
@@ -421,7 +341,7 @@ function closeFormKemas() {
   }
   .frame9403-kotaknama3 {
       top: 0px;
-      width: 50%;
+      width: 65%;
       height: 50px;
       position: relative;
       box-sizing: content-box;
@@ -434,7 +354,9 @@ function closeFormKemas() {
       background-position:99% center;
       display:block;
       font-family: 'Arial', sans-serif;
-      font-size: 17.3081px;
+      font-size: 17.3081px;  
+      text-transform: uppercase;
+      text-align: center;
     }
   * {
       box-sizing: border-box;
@@ -475,7 +397,7 @@ function closeFormKemas() {
       margin-bottom: 0px;
     }
     .frame9402-kotaknamaBorang {
-    width: 299px;
+    width: -webkit-fill-available;
     height: 50px;
     position: relative;
     box-sizing: content-box;
@@ -488,7 +410,8 @@ function closeFormKemas() {
     margin-bottom: 30px;
     font-family: 'Arial', sans-serif;
     font-size: 18px;
-    padding-left:10px;
+    padding-left:10px;  
+    text-transform: uppercase;
   }
     .formContainer .btn {
       padding: 12px 20px;
@@ -582,25 +505,28 @@ function closeFormKemas() {
     margin-bottom: 0;
     justify-content: center;
   }
-  .frame9402-rectangle828246 {
-    width: 35px;
-    height: 30px;
-    padding: 0px;
-    margin-top: -5px;
-    position: relative;
-    box-sizing: border-box;
-    background-color: transparent;
-    border-color: transparent;
-    cursor:pointer;
-  }
+  
   .frame9402-rectangle828245 {
-    width: 32px;
-    height: 30px;
-    position: relative;
-    box-sizing: border-box;
-    margin-right: 10px;
-    border: none;
-  }
+  width: 32px;
+  height: 31px;
+  box-sizing: border-box;
+  background-color: transparent;
+  border: none;
+  cursor:pointer;
+  background: url("/SVG/pencil.svg")
+}
+
+.frame9402-rectangle828246 {
+  width: 32px;
+  height: 31px;
+  position: relative;
+  box-sizing: border-box;
+  background-color: transparent;
+  margin-left: 10px;
+  border: none;
+  cursor:pointer;
+  background: url("/SVG/bin.svg")
+}
   .frame9402-rectangle8282452 {
     width: 32px;
     height: 30px;

@@ -570,6 +570,13 @@ display: flex;
       <table style="width:100%;">
         <tr>
           <td>
+              <a href="/moduls/perkara/{{$borang->id}}/list" class="btn frame9403-frame7445" style="width:fit-content; margin-right:auto; margin-left:auto;">
+                <div class="frame9403-frame7293">
+                <span class="frame9403-text21">Perkara Pemohonan</span>
+                </div>
+              </a>
+          </td>
+          <td>
             <form action="/moduls/borang/viewBorang" method="GET">
               <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;">
                 <input type="hidden" value="{{$proses->id}}" name="prosesId">
@@ -608,7 +615,7 @@ display: flex;
           <td>
             <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;" data-toggle="modal" data-target="#exampleModaladdConsent">
               <div class="frame9403-frame7293">
-              <span class="frame9403-text21"><span>Persutujuan borang</span></span>
+              <span class="frame9403-text21"><span>Persetujuan borang</span></span>
               </div>
             </button>
 
@@ -617,7 +624,7 @@ display: flex;
               <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                       <div class="modal-header">
-                          <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">PERSUTUJUAN BORANG</h2>
+                          <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">PERSETUJUAN BORANG</h2>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                           </button>
@@ -628,7 +635,7 @@ display: flex;
                         @method("PUT")
                         <div class="modal-body">
                           <label for="consent" class="frame9402-text04">
-                              <strong>Persutujuan</strong>
+                              <strong>Persetujuan</strong>
                           </label>
                           <textarea class="form-control" id="consent" rows="5" name="consent" placeholder="Persutujuan Borang">{{$borang->consent ?? ""}}</textarea>
                       

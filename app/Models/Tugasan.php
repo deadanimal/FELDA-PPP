@@ -9,8 +9,8 @@ class Tugasan extends Model
 {
     use HasFactory;
 
-    public function Borang(){
-        return $this->belongsTo(Borang::class, 'borang_id');
+    public function Proses(){
+        return $this->belongsTo(Proses::class, 'proses_id');
     }
 
     public function KategoriPengguna(){
@@ -21,4 +21,7 @@ class Tugasan extends Model
         return $this->hasMany(MedanPO::class);
     }
     
+    public function TindakanTugasan(){
+        return $this->hasMany(TindakanTugasan::class);
+    }
 }

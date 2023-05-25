@@ -12,11 +12,11 @@
     </h1>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/moduls">Modul </a></li>
-          <li class="breadcrumb-item"><a href="/moduls/{{$tugasan->Borang->proses->modul->id}}/proses">{{$tugasan->Borang->proses->modul->nama}}</a></li>
-          <li class="breadcrumb-item"><a href="/moduls/{{$tugasan->Borang->proses->modul->id}}/{{$tugasan->Borang->proses->id}}/borang">{{$tugasan->Borang->proses->nama}}</a></li>
-          <li class="breadcrumb-item"><a href="/moduls/tugasan/{{$tugasan->borang_id}}/List">{{$tugasan->Borang->namaBorang}}</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Tugasan</a></li>
+          <li class="breadcrumb-item"><a href="/moduls">Modul </a></li>          
+          <li class="breadcrumb-item"><a href="/moduls/{{$proses->Projek->modul->id}}/projek">{{$proses->Projek->modul->nama}}</a></li>
+          <li class="breadcrumb-item"><a href="/moduls/{{$proses->Projek->id}}/proses">{{$proses->Projek->nama}}</a></li>
+          <li class="breadcrumb-item"><a href="/moduls/{{$proses->Projek->modul->id}}/{{$proses->id}}/borang">{{$proses->nama}}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Tugasan {{$tugasan->nama}}</a></li>
         </ol>
     </nav>
   </div>

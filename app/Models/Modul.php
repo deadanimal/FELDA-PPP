@@ -17,7 +17,9 @@ class Modul extends Model
         return $this->belongsTo(User::class, 'dikemaskiniOleh');
     }
 
-    public function proses() {
-        return $this->hasMany(Proses::class);
+    public function Projek() {
+        return $this->hasMany(Projek::class);
     }
+
+    
 }

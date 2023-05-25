@@ -19,14 +19,17 @@ class Borang extends Model
 
     public function jwpn(){
         return $this->hasMany(Jawapan::class);
-
     }
-    public function MedanPO(){
-        return $this->hasMany(MedanPO::class);
 
-    }
     public function Acceptance(){
         return $this->hasMany(Acceptance::class);
+    }
 
+    public function ProsesKelulusan(){
+        return $this->hasOne(ProsesKelulusan::class);
+    }
+    
+    public function Perkara_Pemohonan(){
+        return $this->hasMany(Perkara_Pemohonan::class);
     }
 }

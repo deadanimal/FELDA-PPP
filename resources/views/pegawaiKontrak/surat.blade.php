@@ -10,7 +10,7 @@
         <h1 class="header-title">
             SURAT BORANG {{$borang->namaBorang}}
         </h1>
-        <a href="/user/tugasan/petiMasuk/{{$borang->id}}/list" class="frame9403-frame7445" style="margin-left:0px;">
+        <a href="/moduls/{{$borang->proses->Projek->modul_id}}/{{$borang->proses_id}}/borang" class="frame9403-frame7445" style="margin-left:0px;">
             <div class="frame9403-frame7293">
               <span class="frame9403-text21"><span>Kembali</span></span>
             </div>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="card-body">
                     @if ($surat !=null)
-                        <form action="/user/borang_app/surat/update" method="POST" id="form">
+                        <form action="/modul/borang_app/surat/update" method="POST" id="form">
                             @csrf
                             @method('PUT')
                             <label for="title" class="form-label">Tajuk Surat</label>
@@ -92,7 +92,7 @@
                             </div>
                         </form>
                     @else
-                        <form action="/user/borang_app/surat/add" method="POST" id="form">
+                        <form action="/modul/borang_app/surat/add" method="POST" id="form">
                             @csrf
                             <label for="title" class="form-label">Tajuk Surat</label>
                             <input type="text" class="form-control" name="title" id="title" placeholder="Tajuk Surat" required  oninput="this.value = this.value.toUpperCase()">

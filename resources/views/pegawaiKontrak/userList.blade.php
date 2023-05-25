@@ -17,10 +17,9 @@
       <div class="card">
 
         @if (!$jawapans->isEmpty())
-          <div class="card-header" style="display: flex">
-            <button type="button" class="btn btn-success" style="margin-left: 10px; border-radius: 8.598855018615723px;" data-toggle="modal" data-target="#exampleModalAll">HANTAR SURAT</button>
-            <a href="/user/borang_app/surat/{{$borangs->id}}/template" class="btn frame9403-frame7446">TEMPLAT SURAT</a>  
-        </div>
+          <div class="card-header">
+            <button type="button" class="btn btn-success" style="margin-left: 10px; border-radius: 8.598855018615723px; padding: 1.2%" data-toggle="modal" data-target="#exampleModalAll"> HANTAR SURAT</button>
+          </div>
 
           <form action="/user/borang_app/generateAll" method="POST">
             @csrf
@@ -33,7 +32,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                     </button>
-                </div>
+                </div><br>
                 <button class="frame9403-frame7445"  type="button" id="rowAdder">
                     <div class="frame9403-frame7293">
                         <span class="frame9403-text21"><span>Tambah Kategori Pengguna</span></span>

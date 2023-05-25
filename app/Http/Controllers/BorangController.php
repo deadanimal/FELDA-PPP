@@ -26,6 +26,10 @@ use App\Models\Aduan;
 use App\Models\checkbox;
 use App\Models\Senarai_tugasan;
 use App\Models\Acceptance;
+use App\Models\Projek;
+use App\Models\Perkara_Pemohonan;
+use App\Models\Pemohonan_Peneroka;
+
 
 use Illuminate\Http\Request;
 use Alert;
@@ -62,9 +66,9 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('pengurusanModul.borang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.borang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function uploadBorang(Request $request)
@@ -80,9 +84,9 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('pengurusanModul.borang', compact('noti','borang', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.borang', compact('noti','borang', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function borang_field_add(Request $request)
@@ -121,9 +125,9 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusanModul.borang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.borang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function borang_field_update(Request $request)
@@ -161,9 +165,9 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('pengurusanModul.borang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.borang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function borang_field_delete(Request $request)
@@ -196,9 +200,9 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusanModul.borang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.borang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function borang_view(Request $request)
@@ -212,6 +216,8 @@ class BorangController extends Controller
         $idProses = $request->prosesId;
         $proses = Proses::find($idProses);
 
+        $perkaras = Perkara_Pemohonan::where('borang_id', $idBorang)->orderBy('sequence', "ASC")->get();
+
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
         $checkboxes = new \Illuminate\Database\Eloquent\Collection();
         
@@ -226,9 +232,25 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusanModul.viewBorang', compact('checkboxes','noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.viewBorang', compact('perkaras','checkboxes','noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuProjek'));
+    }
+
+    public function userBorang_list(Request $request)
+    {
+        $idProses = (int)$request->route('proses_id');
+        $proses = Proses::find($idProses);
+        $borangs = Borang::where('proses_id', $idProses)->get();
+
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
+        
+        return view('userView.borangList', compact('borangs','proses','noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function userBorang_view(Request $request)
@@ -237,7 +259,7 @@ class BorangController extends Controller
         $borang = Borang::find($idBorang);
         $wilayah = Wilayah::all()->pluck('nama','id');
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
-        $checkboxes = new \Illuminate\Database\Eloquent\Collection();
+        $perkaras = Perkara_Pemohonan::where('borang_id', $borang->id)->orderBy('sequence', "ASC")->get();
         
         $checkboxes = new \Illuminate\Database\Eloquent\Collection();
         
@@ -252,9 +274,9 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('userView.userBorang', compact('checkboxes','noti','wilayah','borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userBorang', compact('perkaras','checkboxes','noti','wilayah','borang', 'medans','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function userBorang_submit(Request $request)
@@ -263,7 +285,10 @@ class BorangController extends Controller
         $jawapan = $request->jawapan;
         $count = $request->countJwpn;
         $borangid = $request->borangID;
-
+        
+        $perkara = $request->perkara;
+        $perkara_id = $request->perkara_id;
+        
         $ans = new Jawapan;
         $ans->nama = $request->nama;
         $ans->user_id = Auth::user()->id;
@@ -294,6 +319,14 @@ class BorangController extends Controller
             $jwpn_Medan->save();
         }
 
+        for($y=0; $y<count($perkara); $y++){
+            $item = new Pemohonan_Peneroka;
+            $item->jumlah = $perkara[$y];
+            $item->perkara_id = $perkara_id[$y];
+            $item->user_id = Auth::user()->id;
+            $item->save();
+        }
+
         $borang = Borang::find($borangid);
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
@@ -316,23 +349,23 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('userView.userBorang', compact('noti','borang', 'medans','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userBorang', compact('noti','borang', 'medans','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function borangList_app(Request $request)
     {
-        $borangs = Borang::where('status', 1)->whereHas('jwpn')->get();
+        $borangs = Borang::with('jwpn','jwpn.kelulusanBorang')->whereHas('jwpn')->whereRelation('jwpn.kelulusanBorang.tahap_kelulusan', 'user_category', Auth::user()->kategoripengguna)->get();
 
         //for notification tugasan
         $noti = $this->notification();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('pengurusanBorang.borangList', compact('noti','borangs','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanBorang.borangList', compact('noti','borangs','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function borangApp_search(Request $request)
@@ -345,9 +378,9 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('pengurusanBorang.borangList', compact('noti','borangs','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanBorang.borangList', compact('noti','borangs','menuModul', 'menuProses', 'menuProjek'));
     }
     
 
@@ -517,9 +550,9 @@ class BorangController extends Controller
 
             $menuModul = Modul::where('status', 'Go-live')->get();
             $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-            $menuBorang = Borang::where('status', 1)->get();
+            $menuProjek = Projek::where('status', "Aktif")->get();
             
-            return view('pengurusanBorang.userListBorang', compact('noti','noLulusBorang','tahapKelulusan','lulusBorangs','borangJwpns','tahapLulus','oneBorang','menuModul', 'menuProses', 'menuBorang'));
+            return view('pengurusanBorang.userListBorang', compact('noti','noLulusBorang','tahapKelulusan','lulusBorangs','borangJwpns','tahapLulus','oneBorang','menuModul', 'menuProses', 'menuProjek'));
         }
         else{
             Alert::error('Borang Tiada Tahap Kelulusan', 'Borang Ini Tiada Tahap Kelulusan');   
@@ -535,15 +568,17 @@ class BorangController extends Controller
         $borangJwpn = Jawapan::find($jawapan_id);
         $lulusBorangs = Kelulusan_borang::where('tahapKelulusan_id', $tahapLulus)->where('jawapan_id', $borangJwpn->id)->get();
         $jawapanMedan = Jawapan_medan::where('jawapan_id', $borangJwpn->id)->get();
-        
+        $checkboxes = checkbox::with('medan')->whereRelation('medan', 'borang_id', $borangJwpn->borang_id)->get();
+        $items = Pemohonan_Peneroka::where('jawapan_id', $jawapan_id)->get();
+
         //for notification tugasan
         $noti = $this->notification();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('pengurusanBorang.viewBorangApp', compact('noti','lulusBorangs','tahapLulus','jawapanMedan','borangJwpn','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanBorang.viewBorangApp', compact('items','noti','checkboxes','lulusBorangs','tahapLulus','jawapanMedan','borangJwpn','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function borangApp_pdf(Request $request)
@@ -637,11 +672,12 @@ class BorangController extends Controller
         ini_set('memory_limit', '512M');
 
         $userId = Auth::user()->id;
-        // $borangJwpns = Jawapan::where('user_id', $userId)->orwhere('status','!=','Terima')->orWhere('status', '!=', Null)->get();
-        $borangJwpns = Jawapan::where('user_id', $userId)->orwhere([
-            ['status', '!=', 1],
-            ['status', '=', Null]
-        ])->get();
+        
+        $borangJwpns = Jawapan::where('user_id', $userId)
+        ->where(function ($query) {
+            $query->where('status', '!=', 'Terima')
+                  ->orWhere('status', NULL);
+        })->get();
 
         if (!$borangJwpns->isEmpty()) {
             foreach($borangJwpns as $jwpn ){
@@ -657,9 +693,9 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('userView.userBorangList', compact('noti','kelulusanBorang','borangJwpns','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userBorangList', compact('noti','kelulusanBorang','borangJwpns','menuModul', 'menuProses', 'menuProjek'));
     }
     
     public function subBorang_view(Request $request)
@@ -668,15 +704,18 @@ class BorangController extends Controller
 
         $borangJwpns = Jawapan::find($jwpnId);
         $jawapanMedans = Jawapan_medan::where('jawapan_id', $borangJwpns->id)->get();
+        $checkboxes = checkbox::with('medan')->whereRelation('medan', 'borang_id', $borangJwpns->borang_id)->get();
+        
+        $items = Pemohonan_Peneroka::where('jawapan_id', $jwpnId)->get();
 
         //for notification tugasan
         $noti = $this->notification();
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('userView.viewSubBorang', compact('noti','borangJwpns','jawapanMedans','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.viewSubBorang', compact('items','noti','checkboxes','borangJwpns','jawapanMedans','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function subBorang_tindakan(Request $request)
@@ -717,9 +756,9 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('userView.userUpdateBorang', compact('acceptance','noti','jawapan_alamat','surat_body','surat','borangJwpns','menuModul', 'menuProses', 'menuBorang'));
+        return view('userView.userUpdateBorang', compact('acceptance','noti','jawapan_alamat','surat_body','surat','borangJwpns','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function subBorang_update(Request $request)
@@ -771,9 +810,9 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('pengurusanModul.prosesKelulusan', compact('noti','tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.prosesKelulusan', compact('noti','tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function tahapKelulusan_add(Request $request)
@@ -803,11 +842,11 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
         Alert::success('Tambah Tahap Kelulusan Berjaya.', 'Tahap Kelulusan telah berjaya ditambah.');
 
-        return view('pengurusanModul.prosesKelulusan', compact('noti','tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.prosesKelulusan', compact('noti','tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function tahapKelulusan_update(Request $request)
@@ -836,11 +875,11 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
         Alert::success('Kemaskini Tahap Kelulusan Berjaya.', 'Tahap Kelulusan telah berjaya dikemaskini.');
 
-        return view('pengurusanModul.prosesKelulusan', compact('noti','tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.prosesKelulusan', compact('noti','tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function tahapKelulusan_delete(Request $request)
@@ -867,11 +906,11 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
         Alert::success('Padam Tahap Kelulusan Berjaya.', 'Tahap Kelulusan telah berjaya dipadama.');
 
-        return view('pengurusanModul.prosesKelulusan', compact('noti','tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.prosesKelulusan', compact('noti','tahapKelulusan','proseskelulusan','category', 'borang','modul','proses','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function surat_kelulusan(Request $request)
@@ -894,9 +933,9 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('pengurusanModul.suratKelulusan', compact('noti','surat','tahapKelulusan', 'borang','modul','proses','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.suratKelulusan', compact('noti','surat','tahapKelulusan', 'borang','modul','proses','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function suratKelulusan_add(Request $request)
@@ -981,7 +1020,7 @@ class BorangController extends Controller
     public function checkbox_list(Request $request)
     {
         $medan_id = (int)$request->route('medan_id');
-        $medan = Medan::with('borang', 'borang.proses', 'borang.proses.modul', 'borang.proses.modul')->where('id',$medan_id)->first();
+        $medan = Medan::with('borang', 'borang.proses', 'borang.proses.Projek', 'borang.proses.Projek.modul')->where('id',$medan_id)->first();
         // dd($medan);
         $checkboxes = checkbox::where('medan_id', $medan_id)->get();
         //for notification tugasan
@@ -989,9 +1028,9 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('pengurusanModul.borangCheckbox', compact('checkboxes','medan','noti','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.borangCheckbox', compact('checkboxes','medan','noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function checkbox_add(Request $request)
@@ -1063,9 +1102,9 @@ class BorangController extends Controller
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuBorang = Borang::where('status', 1)->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('pengurusanModul.acceptance', compact('acceptance','borang','modul','proses','noti','menuModul', 'menuProses', 'menuBorang'));
+        return view('pengurusanModul.acceptance', compact('acceptance','borang','modul','proses','noti','menuModul', 'menuProses', 'menuProjek'));
     }
     
     public function acceptance_add(Request $request)

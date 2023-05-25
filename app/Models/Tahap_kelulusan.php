@@ -9,7 +9,8 @@ class Tahap_kelulusan extends Model
 {
     use HasFactory;
 
-    public function prosesKelulusan(){
+
+    public function ProsesKelulusan(){
         return $this->belongsTo(ProsesKelulusan::class, 'prosesKelulusan_id');
     }
 
@@ -18,7 +19,7 @@ class Tahap_kelulusan extends Model
     }
 
     public function kelulusanBorang(){
-        return $this->hasMany(Kelulusan_borang::class);
+        return $this->hasMany(Kelulusan_borang::class, 'tahapKelulusan_id');
     }
 
     public function surat(){

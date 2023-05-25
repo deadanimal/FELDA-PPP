@@ -12,8 +12,9 @@
     </h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/moduls">Modul </a></li>
-        <li class="breadcrumb-item"><a href="/moduls/{{$modul->id}}/proses">{{$modul->nama}}</a></li>
+        <li class="breadcrumb-item"><a href="/moduls">MODUL </a></li>
+        <li class="breadcrumb-item"><a href="/moduls/{{$modul->id}}/projek">{{$modul->nama}}</a></li>
+        <li class="breadcrumb-item"><a href="/moduls/{{$proses->Projek->id}}/proses">{{$proses->Projek->nama}}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{$proses->nama}}</li>
       </ol>
     </nav>
@@ -97,15 +98,15 @@
                   <a href="/moduls/{{$modul->id}}/{{$proses->id}}/borang/{{$borang->id}}" class="frame9402-rectangle828245">
                     <svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;" viewBox="0 0 556 502"><path d="M88.7 223.8L0 375.8V96C0 60.7 28.7 32 64 32H181.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7H416c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224H544c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z"/></svg>
                   </a>
-                  <a href="/moduls/tugasan/{{$borang->id}}/List"><i class="align-middle me-2 fas fa-fw fa-clipboard-check" style="color: #CD352A; font-size:27px;"></i></a>
-                  {{-- <a href="/moduls/medanPO/{{$tugasan->id}}/List"><i class="align-middle me-2 fas fa-fw fa-file-invoice-dollar" style="color: #CD352A; font-size:27px;"></i></a> --}}
+                  
+                  {{-- <a href="/moduls/tugasan/{{$borang->id}}/List"><i class="align-middle me-2 fas fa-fw fa-clipboard-check" style="color: #CD352A; font-size:27px;"></i></a> --}}
+                  <a href="/modul/borang_app/surat/{{$borang->id}}/template" style="padding-left:1.5%;"><i class="align-middle me-2 fas fa-fw fa-envelope" style="color: #CD352A; font-size:2em;"></i></a>
 
                   {{-- <a href='' onclick="this.href='/pengurusanModul/kemaskiniProses/{{$proses->id}}/'+document.getElementById('nama').value" class="frame9402-rectangle8282452">                
                   </a> --}}
                   <form method="Post" action="/moduls/borang/update">
                     @csrf
                     @method('PUT')
-
                     <input type="hidden" name="namaupdate" id="namaupdate{{$i}}" >
                     <input type="hidden" name="statusUpdate" id="statusUpdate{{$i}}" >
                     <input type="hidden" value="{{$modul->id}}" name="modulId">
@@ -186,48 +187,51 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form action="/moduls/tugasan/add" method="POST">
+              <form action="/moduls/borang/tugasan/add" method="POST">
                 @csrf
                 <div class="modal-body">
                   <table>
                     <tr>
                       <td>
-                        <label for="namaTugas" class="frame9402-text04">
-                          <strong>Nama Tugasan</strong>
+                        <label for="perkara" class="frame9402-text04">
+                          <strong>Perkara</strong>
                         </label>
                       </td>
                       <td>
-                        <input type="text" class="frame9402-kotaknamaBorang" id="namaBorang" placeholder="Nama Tugasan" name="namaTugas" required oninput="this.value = this.value.toUpperCase()">
+                        <input type="text" class="frame9402-kotaknamaBorang" id="perkara" placeholder="Perkara Tugasan" name="perkara" required oninput="this.value = this.value.toUpperCase()">
                       </td>
                     </tr>
                     <tr>
-                      <td>
-                        <label for="user" class="frame9402-text04">
-                          <strong>Pengguna Ditugaskan</strong>
+                      <td style="vertical-align: middle;">
+                        <label for="userCategory" class="frame9402-text04">
+                          <strong>Kategori Pengguna</strong>
                         </label>
                       </td>
-                      <td>
-                        <select name="user" class="frame9402-kotaknamaBorang" id="user">
-                          @foreach($users as $user)
-                            <option value="{{$user->id}}">{{$user->nama}}</option>
+                      <td style="vertical-align: middle;">
+                        <select name="category" class="frame9402-kotaknamaBorang" id="userCategory">
+                          @foreach($user_Categories as $category)
+                            <option value="{{$category->id}}">{{$category->nama}}</option>
                           @endforeach
                         </select>
                       </td>
                     </tr>
                     <tr>
-                      <td>
-                        <label for="jenisTugas" class="frame9402-text04">
-                          <strong>Tarikh</strong>
-                        </label>
-                      </td>
-                      <td>
-                        <input type="date" class="frame9402-kotaknamaBorang" id="tarikh" name="tarikh" required>
-                      </td>
-                    </tr>
+                        <td>
+                          <label for="jenis" class="frame9402-text04">
+                            <strong>Jenis Input</strong>
+                          </label>
+                        </td>
+                        <td>
+                            <select name="jenis" class="frame9402-kotaknamaBorang" id="jenis">
+                                <option value="Text">Text</option>
+                                <option value="File">File</option>
+                                <option value="P.O">P.O</option>
+                            </select>                            
+                        </td>
+                      </tr>
                   </table>
                 </div>
                 <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                <input type="hidden" value="{{$modul->id}}" name="modulId">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
                     <button class="btn btn-primary">Cipta</button>
@@ -242,59 +246,122 @@
         <table class="table table-bordered table-striped w-100 arial">
           <thead class="text-white bg-primary w-100 arial">
             <tr class="text-center">
-                <th scope="col" class="text-center">Nama Tugasan</th>
+                <th scope="col" class="text-center">Perkara</th>
                 <th scope="col" class="text-center">Pengguna Ditugaskan</th>
-                <th scope="col" class="text-center">Tarikh</th>
-                {{-- <th scope="col">Tindakan</th> --}}
+                <th scope="col">Tindakan</th>
             </tr>
           </thead>
           <tbody>
               @foreach ($tugasans as $tugasan)
               <tr>
-                <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->nama}}</td>
-                <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->user->nama}}</td>
-                <td class="text-center arial">{{$tugasan->due_date}}</td>
-                {{-- <td class="text-center arial">
-                  <form action="/moduls/tugasan/edit" method="GET">
-                    <input type="hidden" name="tugasanID" value="{{$tugasan->id}}">
-                    <input type="hidden" name="prosesId" value="{{$proses->id}}">
-                    <input type="hidden" name="modulId" value="{{$modul->id}}">
+                <td class="text-center arial" style="width:50%">{{$tugasan->perkara}}</td>
+                <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->KategoriPengguna->nama}}</td>
+                <td class="text-center arial">
 
-                    <button class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Masuk">
-                      <img src="/SVG/pencil.svg" title="kemaskini"/>
-                    </button>
-                  </form>
-                 
-                  <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModaltugas{{$tugasan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
-
-                  <!-- Modal -->
-                  <div class="modal fade" id="exampleModaltugas{{$tugasan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Padam Tugasan {{$tugasan->nama}}</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                              </button>
-                          </div>
-                          <div class="modal-body">
-                              <p>Anda Pasti Mahu Padam Tugasan {{$tugasan->nama}}?<p>
-                          </div>
-                          <div class="modal-footer">
-                              <button type="button" class="btn btn-primary" data-dismiss="modal">Tidak</button>      
-                              <form method="post" action="/moduls/tugasan/delete">
+                    @if ($tugasan->jenis_input == "P.O")
+                        <a href="/moduls/medanPO/{{$tugasan->id}}/List"><i class="align-middle me-2 fas fa-fw fa-file-invoice-dollar" style="color: #CD352A; font-size:27px;" title="PESANAN PEMBELIAN"></i></a>
+                    @endif
+                    <button class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Kemaskini" data-toggle="modal" data-target="#exampleModaledit{{$tugasan->id}}"><img src="/SVG/pencil.svg" title="kemaskini"/></button>
+                      
+                    <div class="modal fade" id="exampleModaledit{{$tugasan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Kemaskini Tugasan</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <form action="/moduls/borang/tugasan/update" method="POST">
                                 @csrf
-                                @method('DELETE')
+                                @method('PUT')
+                                <div class="modal-body">
+                                    <table class="table table-borderless">
+                                      <tr>
+                                        <td>
+                                          <label for="perkara" class="frame9402-text04">
+                                            <strong>Perkara</strong>
+                                          </label>
+                                        </td>
+                                        <td>
+                                          <input type="text" class="frame9402-kotaknamaBorang" id="perkara" value="{{$tugasan->perkara}}" name="perkara" required oninput="this.value = this.value.toUpperCase()">
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td style="vertical-align: middle;">
+                                          <label for="userCategory" class="frame9402-text04">
+                                            <strong>Kategori Pengguna</strong>
+                                          </label>
+                                        </td>
+                                        <td style="vertical-align: middle;">
+                                          <select name="category" class="frame9402-kotaknamaBorang" id="category">
+                                            @foreach($user_Categories as $category)
+                                                @if($tugasan->userCategory_id == $category->id)
+                                                    <option value="{{$category->id}}" selected>{{$category->nama}}</option>
+                                                @else
+                                                    <option value="{{$category->id}}">{{$category->nama}}</option>
+                                                @endif
+                                            @endforeach
+                                          </select>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                            <label for="jenis" class="frame9402-text04">
+                                              <strong>Jenis Input</strong>
+                                            </label>
+                                          </td>
+                                          <td>
+                                              <select name="jenis" class="frame9402-kotaknamaBorang" id="jenis">
+                                                  <option value="{{$tugasan->jenis_input}}" selected>{{$tugasan->jenis_input}}</option>
+                                                  <option value="Text">Text</option>
+                                                  <option value="File">File</option>
+                                                  <option value="P.O">P.O</option>
+                                              </select>                            
+                                          </td>
+                                        </tr>
+                                    </table>
+                                </div>
                                 <input type="hidden" value="{{$tugasan->id}}" name="tugasanID">
-                                <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                                <input type="hidden" value="{{$modul->id}}" name="modulId">
-                                <button class="btn btn-danger">Ya</button>
+                                <input type="hidden" value="{{$tugasan->Proses->id}}" name="prosesId">
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button>   
+                                    <button class="btn btn-danger">KEMASKINI</button>
+                                </div>
                               </form>
-                          </div>
+                            </div>
                         </div>
                     </div>
-                  </div>
-                </td> --}}
+                  
+                    <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModaltugas{{$tugasan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+    
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModaltugas{{$tugasan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Padam Tugasan {{$tugasan->nama}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Anda Pasti Mahu Padam Tugasan {{$tugasan->perkara}}?<p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                                <form method="post" action="/moduls/borang/tugasan/delete">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" value="{{$tugasan->Proses->id}}" name="prosesId">
+                                    <input type="hidden" value="{{$tugasan->id}}" name="tugasanID">
+                                    <button class="btn btn-danger">YA</button>
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
               </tr>
               @endforeach 
           </tbody>

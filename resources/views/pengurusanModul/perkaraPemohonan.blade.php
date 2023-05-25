@@ -6,52 +6,56 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <div class="container-fluid">
-
-  <div class="header">
-    <h1 class="header-title">
-        BORANG {{$medan->borang->namaBorang}}
-    </h1>
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/moduls">Modul </a></li>
-        <li class="breadcrumb-item"><a href="/moduls/{{$medan->borang->proses->Projek->modul_id}}/projek">{{$medan->borang->proses->Projek->modul->nama}}</a></li>
-        <li class="breadcrumb-item"><a href="/moduls/{{$medan->borang->proses->Projek->id}}/proses">{{$medan->borang->proses->Projek->nama}}</a></li>
-        <li class="breadcrumb-item"><a href="/moduls/{{$medan->borang->proses->Projek->modul_id}}/{{$medan->borang->proses->id}}/borang">{{$medan->borang->proses->nama}}</a></li>
-        <li class="breadcrumb-item"><a href="/moduls/{{$medan->borang->proses->Projek->modul_id}}/{{$medan->borang->proses->id}}/borang/{{$medan->borang->id}}">{{$medan->borang->namaBorang}}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{$medan->nama}}</li>
-      </ol>
-    </nav>
-  </div>
-  <div class="row">
-      <div class="card mb-3" style="padding-left: 0px; padding-right: 0px;">
-        <div class="card-header">
-            <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladdMedan">
-                <div class="frame9403-frame7293">
-                    <span class="frame9403-text21"><span>Tambah Pilihan</span></span>
+    <div class="header">
+        <h1 class="header-title">
+            PERKARA PEMOHONAN
+        </h1>
+        <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/moduls">MODUL</a></li>
+            <li class="breadcrumb-item"><a href="/moduls/{{$borang->proses->Projek->modul_id}}/proses">{{$borang->proses->Projek->modul->nama}}</a></li>
+            <li class="breadcrumb-item"><a href="/moduls/{{$borang->proses->Projek->modul_id}}/{{$borang->proses->id}}/borang">{{$borang->proses->nama}}</a></li>
+            <li class="breadcrumb-item"><a href="/moduls/{{$borang->proses->Projek->modul_id}}/{{$borang->proses->id}}/borang/{{$borang->id}}">{{$borang->namaBorang}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Perkara Pemohonan</li>
+        </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="card mb-3" style="padding-left: 0px; padding-right: 0px;">
+            <div class="card-header">
+                <h1 class="card-title mb-0">Senarai Perkara Pemohonan</h1>
+                <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladdMedan">
+                    <div class="frame9403-frame7293">
+                    <span class="frame9403-text21">Tambah Perkara</span>
                     <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                </div>
-            </button>
-        
+                    </div>
+                </button>
+            </div>
+            
             {{-- Modal Tambah Medan --}}
             <div class="modal fade" id="exampleModaladdMedan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA PILIHAN</h2>
+                        <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA PERKARA PEMOHONAN</h2>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="/moduls/borang/checkbox/add" method="POST">
+                    <form action="/moduls/perkara/add" method="POST">
                         @csrf
                         <div class="modal-body">
-                        <table class="table table-borderless">
+                        <table class="table table-borderless w-100">
                             <tr>
-                            <td class="frame9402-text04"><p class="text-xs-center" style="margin: auto;">Nama Pilihan Kotak Semak</p></td>
-                            <td><input type="text" class="frame9402-kotaknama" placeholder="Nama Pilihan" name="nama" required oninput="this.value = this.value.toUpperCase()"></td>
+                            <td class="frame9402-text04" style="width: 20%"><p class="text-xs-center" style="margin: auto;">Perkara Pemohonan</p></td>
+                            <td><input type="text" class="frame9402-kotaknama" placeholder="Perkara Pemohonan" name="nama" required oninput="this.value = this.value.toUpperCase()"></td>
                             </tr>
                         </table>
-                            <input type="hidden" name="medan_id" value="{{$medan->id}}">
+                        @php
+                        $count = count($perkaras);
+                        @endphp
+                        <input type="hidden" value="{{$count = $count+1}}" name="sequence">
+                        <input type="hidden" value="{{$borang->id}}" name="borangId">        
                         </div>
                         <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
@@ -62,96 +66,79 @@
             </div>
             </div>
 
-
-        @if (!$checkboxes->isEmpty())
-        <div class="card-body">
-            <table class="table table-bordered table-striped w-100 arial">
-                <thead class="text-white bg-primary w-100">
-                <tr class="text-center">
-                    <th scope="col">Pilihan</th>
-                    <th scope="col" style="width: 20%">Tindakan</th>
-                </tr>
-                </thead>
+            @php
+                $var= 0;
+            @endphp
+                
+            <table style="overflow: scroll; max-height: 750px; width:100%;">
+                @if (!$perkaras->isEmpty())
                 <tbody>
-                    @foreach ($checkboxes as $checkbox)
-                    <tr>
-                        <td class="text-center arial" style="text-transform: uppercase;">{{$checkbox->nama}}</td>
-                        <td class="text-center arial">
-                            <div class="col-md-12 text-center">
-                                <button type="button" class="btn frame9402-rectangle828245" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModaledit{{$checkbox->id}}" title="Kemaskini"></button>
-                                <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModalcheck{{$checkbox->id}}" title="Padam"></button>
-                            </div>
-
-                            <!-- Modal edit-->
-                            <div class="modal fade" id="exampleModaledit{{$checkbox->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Kemaskini Kotak Semak</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <form action="/moduls/borang/checkbox/update" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="modal-body">
-                                                <table class="table table-borderless">
-                                                    <tr>
-                                                        <td class="frame9402-text04"><p class="text-xs-center" style="margin: auto;">Nama Pilihan Kotak Semak</p></td>
-                                                        <td><input type="text" class="frame9402-kotaknama" value="{{$checkbox->nama}}" name="nama" required oninput="this.value = this.value.toUpperCase()"></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
-                                
-                                                <input type="hidden" name="medan_id" value="{{$medan->id}}">
-                                                <input type="hidden" name="checkbox_id" value="{{$checkbox->id}}">
-                                                <button class="btn btn-danger">YA</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Modal delete-->
-                            <div class="modal fade" id="exampleModalcheck{{$checkbox->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Padam Kotak Semak</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Anda Pasti Mahu Padam Kotak Semak {{$checkbox->nama}}?</p>                                        </p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
-                                        <form action="/moduls/borang/checkbox/delete" method="post" enctype="multipart/form-data">
-                                            @csrf
-                                            @method('Delete')
-                                            <input type="hidden" name="medan_id" value="{{$medan->id}}">
-                                            <input type="hidden" name="checkbox_id" value="{{$checkbox->id}}">
-                                            <button class="btn btn-danger">YA</button>
-                                        </form>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
+                    @foreach($perkaras as $perkara)
+                    <tr class="frame9402-input">          
+                        <form action="/moduls/perkara/update" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <td class="frame9402-text31">Nama Medan:<input type="text" name="nama" class="frame9402-kotaknama" value="{{$perkara->nama}}" oninput="this.value = this.value.toUpperCase()"></td>
+                        <td class="frame9402-text33">Turutan:
+                            <select name="sequence" class="frame9403-kotaknama3">
+                            @for($x=1; $x<=count($perkaras); $x++)
+                            <option value="{{$x}}" @if($x == $perkara->sequence)selected @endif>{{$x}}</option>
+                            @endfor
                         </td>
+                        <input type="hidden" name="perkaraID" value="{{$perkara->id}}">
+                        <input type="hidden" value="{{$borang->id}}" name="borangId">
+                        <td class="frame9402-frame8727" id="tindakan">
+                            <button class="frame9402-rectangle828246" style="height: auto;" title="Simpan"><svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;margin-top: 5px;" viewBox="0 0 530 512" width="31px"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"></path></svg></button>
+                        </td>
+                        </form>
+                        <td class="frame9402-frame8727">
+                        <button type="button" class="frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModal{{$perkara->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                        </td>
+                        
+                        <div class="modal fade" id="exampleModal{{$perkara->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog  modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Padam Perkara {{$perkara->nama}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Anda Pasti Mahu Padam Perkara {{$perkara->nama}}?<p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                                    <form method="post" action="/moduls/perkara/delete">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" value="{{$borang->id}}" name="borangId">
+                                    <input type="hidden" name="perkaraID" value="{{$perkara->id}}">
+                                    <button class="btn btn-danger">YA</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        
+                        @php
+                        // popup alert for duplicate sequence
+                        if ($var == $perkara->sequence) {
+                            Alert::warning('Terdapat Duplikasi.', 'Terdapat duplikasi pada turutan perkara pemohonan.');   
+                        }
+                        $var = $perkara->sequence;
+                        @endphp
                     </tr>
-                    @endforeach 
+                    @endforeach
                 </tbody>
+                @else
+                    <tr class="frame9402-input" style="background-color: #FFFFFF; justify-content:center;"><td><h2 class="frame9402-text01" style="color:black;"> Tiada Perkara Pemohonan </h2></td></tr>
+                @endif
             </table>
         </div>
-        @else
-            <h2 class="frame9402-text01 text-center" style="color:black; padding-bottom: 5%; margin:auto"> Tiada Pilihan </h2>
-        @endif
     </div>
 </div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
     .frame9402-frame9402 {
       width: 100%;
@@ -276,7 +263,6 @@
       height: auto;
       font-size: 17px;
       align-self: auto;
-      text-align: end;
       font-family: 'Arial', sans-serif;
       font-weight: 400;
       line-height: normal;
@@ -375,7 +361,6 @@
       font-family: 'Arial', sans-serif;
       font-weight: 600;
       font-stretch: normal;
-      margin-right: 10px;
       margin-bottom: 0;
       text-decoration: none;
     }
@@ -493,7 +478,7 @@
     }
     .frame9402-text31 {
       color: #494949;
-      width: 40%;
+      width: 70%;
       height: auto;
       font-size: 17px;
       align-self: auto;
@@ -538,7 +523,7 @@
       text-decoration: none;
     }
     .frame9402-frame8727 {
-      width:4%;
+      width:5%;
       display: flex;
       opacity: 1;
       position: relative;
@@ -551,27 +536,17 @@
       margin-bottom: 0;
       justify-content: center;
     }
-    .frame9402-rectangle828245 {
-  width: 32px;
-  height: 31px;
-  box-sizing: border-box;
-  background-color: transparent;
-  border: none;
-  cursor:pointer;
-  background: url("/SVG/pencil.svg")
-}
-
-.frame9402-rectangle828246 {
-  width: 32px;
-  height: 31px;
-  position: relative;
-  box-sizing: border-box;
-  background-color: transparent;
-  margin-left: 10px;
-  border: none;
-  cursor:pointer;
-  background: url("/SVG/bin.svg")
-}
+    .frame9402-rectangle828246 {
+      width: 35px;
+      height: 30px;
+      padding: 0px;
+      margin-top: -5px;
+      position: relative;
+      box-sizing: border-box;
+      background-color: transparent;
+      border-color: transparent;
+      cursor:pointer;
+    }
     .frame9402-rectangle828245 {
         width: 32px;
         height: 30px;
@@ -704,5 +679,4 @@
         opacity: 1;
       }
     </style>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 @endsection

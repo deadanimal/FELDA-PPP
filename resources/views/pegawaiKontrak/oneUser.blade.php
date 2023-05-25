@@ -19,32 +19,40 @@
             <h3 style="text-transform: uppercase;">PERMOHONAN {{$jawapans->borangs->namaBorang}}</h3>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="mb-3">
-                    <label for="nama" class="frame9402-text04">
-                        <strong>Nama</strong>
-                    </label>
-                    <input type="text" class="form-control frame9402-kotaknama" id="nama" value="{{$jawapans->nama}}" readonly>                
-                </div>
-                <div class="mb-3"> 
-                    <label for="kod_projek" class="frame9402-text04">
-                        <strong>Kod Projek</strong>
-                    </label>
-                    <input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->kod_projek}}" readonly> 
-                </div>
-                <div class="mb-3"> 
-                    <label for="kod_projek" class="frame9402-text04">
-                        <strong>Wilayah</strong>
-                    </label>
-                    <input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->wilayahs->nama}}" readonly> 
-                </div>
-                <div class="mb-3"> 
-                    <label for="kod_projek" class="frame9402-text04">
-                        <strong>Rancangan</strong>
-                    </label>
-                    <input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->rancangans->nama}}" readonly> 
-                </div><br>
-            </div>
+            <table class="w-100">
+                <tr>
+                    <td>
+                        <label for="nama" class="frame9402-text04">
+                            <strong>Nama</strong>
+                        </label>
+                    </td>
+                    <td><input type="text" class="form-control frame9402-kotaknama" id="nama" value="{{$jawapans->nama}}" readonly></td>                
+                </tr>
+                <tr> 
+                    <td>
+                        <label for="kod_projek" class="frame9402-text04">
+                            <strong>Kod Projek</strong>
+                        </label>
+                    </td>
+                    <td><input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->kod_projek}}" readonly></td> 
+                </tr>
+                <tr> 
+                    <td>
+                        <label for="kod_projek" class="frame9402-text04">
+                            <strong>Wilayah</strong>
+                        </label>
+                    </td>
+                    <td><input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->wilayahs->nama}}" readonly></td> 
+                </tr>
+                <tr> 
+                    <td>
+                        <label for="kod_projek" class="frame9402-text04">
+                            <strong>Rancangan</strong>
+                        </label>
+                    </td>
+                    <td><input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->rancangans->nama}}" readonly></td> 
+                </tr>
+            </table>
         </div>
       </div>
       <div class="card">
@@ -288,7 +296,8 @@ $("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
     border-width: 0.865405261516571px;
     margin-right: 0;
     border-radius: 3.461621046066284px;
-    margin-bottom: 0;
+    margin-bottom: 1%;
+    margin-top: 1%;
     font-family: 'Arial', sans-serif;
     font-size: 18px;
     padding-left:10px;
