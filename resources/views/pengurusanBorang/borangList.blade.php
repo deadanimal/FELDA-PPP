@@ -15,7 +15,7 @@
   <div class="row">
     <div class="col-12">
       <div class="card">
-        @if (!$borangs->isEmpty())\
+        @if (!$borangs->isEmpty())
           <div class="card-header">
               <form action="/user/borang_app/list/search" method="post">
                   @csrf

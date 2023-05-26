@@ -323,7 +323,7 @@ class BorangController extends Controller
             $item = new Pemohonan_Peneroka;
             $item->jumlah = $perkara[$y];
             $item->perkara_id = $perkara_id[$y];
-            $item->user_id = Auth::user()->id;
+            $item->jawapan_id = $ans->id;
             $item->save();
         }
 

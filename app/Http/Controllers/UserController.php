@@ -555,16 +555,16 @@ class UserController extends Controller
         }
 
         $tugasans= Senarai_tugasan::where('user_id', $user)->get();
-        $borangs = Borang::with('jwpn')->where('status', 1)->whereRelation('jwpn','status', '=','Terima')->doesntHave('jwpn.hantarSurat')->get();
-        
+        $borangs = Borang::with('jwpn')->where('status', 1)->whereRelation('jwpn','status', '=','Terima')->get();
+        // dd($borangs);
         if(Str::contains(Auth::user()->kategori->nama, 'HQ')){
-            $hantarSurats = Hantar_surat::with('jawapan')->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','status', 'Terima')->orderBy('created_at', "DESC")->get();
+            $hantarSurats = Hantar_surat::with('jawapan')->where('userCategory_id', Auth::user()->kategoripengguna)->orderBy('created_at', "DESC")->get();
         }elseif(Str::contains(Auth::user()->kategori->nama, 'Super Admin')){
-            $hantarSurats = Hantar_surat::with('jawapan')->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','status', 'Terima')->orderBy('created_at', "DESC")->get();
+            $hantarSurats = Hantar_surat::with('jawapan')->where('userCategory_id', Auth::user()->kategoripengguna)->orderBy('created_at', "DESC")->get();
         }elseif(Str::contains(Auth::user()->kategori->nama, 'wilayah')|| Str::contains(Auth::user()->kategori->nama, 'WILAYAH')){
-            $hantarSurats = Hantar_surat::with('jawapan')->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','status', 'Terima')->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->orderBy('created_at', "DESC")->get();
+            $hantarSurats = Hantar_surat::with('jawapan')->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->orderBy('created_at', "DESC")->get();
         }else{
-            $hantarSurats = Hantar_surat::with('jawapan')->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','status', 'Terima')->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->whereRelation('jawapan','rancangan', Auth::user()->rancangan)->orderBy('created_at', "DESC")->get();
+            $hantarSurats = Hantar_surat::with('jawapan')->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->whereRelation('jawapan','rancangan', Auth::user()->rancangan)->orderBy('created_at', "DESC")->get();
         }
 
         $jawapan_rancangan = Jawapan::where('status','Penerimaan')->where('rancangan', Auth::user()->rancangan)->has('Pemohonan_Peneroka')->has('hantarSurat')->get();

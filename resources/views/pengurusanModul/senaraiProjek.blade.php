@@ -129,7 +129,7 @@
             @endforeach 
             </tbody>
           @else
-            <tr class="frame9402-input" style="background-color: #FFFFFF;"><h2 class="frame9402-text01" style="color:black;"> Tiada Proses </h2></tr>
+            <tr class="frame9402-input" style="background-color: #FFFFFF;"><h2 class="frame9402-text01" style="color:black;"> Tiada Projek </h2></tr>
           @endif
         </table>
       </div>

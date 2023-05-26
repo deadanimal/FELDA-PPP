@@ -15,7 +15,7 @@
         <div class="col-12">
             <div class="tab">
               <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item" style="background-color: rgb(210 210 210);">
+                {{-- <li class="nav-item" style="background-color: rgb(210 210 210);">
                   <a 
                   @if (Request::is('user/tugasan') || Request::is('user/tugasan/*'))
                     class="nav-link active"
@@ -32,7 +32,7 @@
                         @endif
                     </span>
                   </a>
-                </li>
+                </li> --}}
                 <li class="nav-item" style="background-color: rgb(210 210 210);">
                   <a 
                   @if (Request::is('user/tugasan/aduan/*'))
@@ -151,7 +151,7 @@
                       @endif
                   </div>
                 </div>
-                <div 
+                {{-- <div 
                   @if (Request::is('user/projek/') || Request::is('user/projek/*'))
                     class="tab-pane fade active show" 
                   @else
@@ -191,7 +191,7 @@
                           <h1 style="text-align: center;"> Tiada Tugasan </h1>
                       @endif
                   </div>
-                </div>
+                </div> --}}
                 <div 
                   @if (Request::is('user/tugasan') || Request::is('user/tugasan/*'))
                     class="tab-pane fade active show" 
