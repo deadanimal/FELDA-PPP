@@ -35,7 +35,7 @@
                 </li> --}}
                 <li class="nav-item" style="background-color: rgb(210 210 210);">
                   <a 
-                  @if (Request::is('user/tugasan/aduan/*'))
+                  @if (Request::is('user/tugasan/aduan/*')|| Request::is('user/tugasan') || Request::is('user/tugasan/*'))
                     class="nav-link active"
                   @else
                     class="nav-link" 
@@ -151,7 +151,7 @@
                       @endif
                   </div>
                 </div>
-                {{-- <div 
+                <div 
                   @if (Request::is('user/projek/') || Request::is('user/projek/*'))
                     class="tab-pane fade active show" 
                   @else
@@ -191,8 +191,8 @@
                           <h1 style="text-align: center;"> Tiada Tugasan </h1>
                       @endif
                   </div>
-                </div> --}}
-                <div 
+                </div>
+                {{-- <div 
                   @if (Request::is('user/tugasan') || Request::is('user/tugasan/*'))
                     class="tab-pane fade active show" 
                   @else
@@ -216,7 +216,7 @@
                               @foreach ($tugasans as $tugasan)
                               <tr>
                                   <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->nama}}</td>
-                                  {{-- <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->borang}}</td> --}}
+                                  <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->borang}}</td>
                                   <td class="text-center arial">{{$tugasan->due_date}}</td>
                                   <td class="text-center arial">
                                       <a class="btn btn-success" href="/user/tugasan/{{$tugasan->id}}/item_list" style="color: white; text-decoration:none;">
@@ -233,9 +233,9 @@
                           <h1 style="text-align: center;"> Tiada Tugasan </h1>
                       @endif
                   </div>
-                </div>
+                </div> --}}
                 <div 
-                  @if (Request::is('user/tugasan/aduan/*'))
+                  @if (Request::is('user/tugasan/aduan/*')|| Request::is('user/tugasan') || Request::is('user/tugasan/*'))
                     class="tab-pane fade active show" 
                   @else
                     class="tab-pane" 
