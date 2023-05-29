@@ -100,42 +100,38 @@
                 </p>
             </div>
             <br>
-            <div class="card">
-                <div class="card-body">
-                    @php
-                        $total=0;
-                    @endphp
-                    <table style="width: 100%;">
-                        <thead>
-                            <tr style="line-height: 30px;">
-                                <th style="width: 7%;text-align: center;">BIL</th>
-                                <th style="text-align: center;">KETERANGAN</th>
-                                <th style="width: 20%;text-align: center;">JUMLAH (RM)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($items as $item)
-                                <tr style="line-height: 40px;">
-                                    <td style="text-align:center;">{{$loop->iteration}}</td>
-                                    <td>
-                                        <label for="jwpn{{$item->id}}" style="font-family:'Arial'; text-transform: uppercase; margin-left: 1%;">{{$item->Perkara_Pemohonan->nama}}</label>
-                                    </td>
-                                    <td style="text-align:center;">{{$item->jumlah}}</td>
-                                </tr>
-
-                                @php
-                                    $total += (double)$item->jumlah;
-                                @endphp
-                            @endforeach
+                @php
+                    $total=0;
+                @endphp
+                <table style="width: 95%;">
+                    <thead>
+                        <tr style="line-height: 30px;">
+                            <th style="width: 7%;text-align: center;">BIL</th>
+                            <th style="text-align: center;">KETERANGAN</th>
+                            <th style="width: 18%;text-align: center;">JUMLAH (RM)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($items as $item)
                             <tr style="line-height: 40px;">
-                                <td></td>
-                                <td><span style="margin-left: 1%;">JUMLAH KESELURUHAN DI BAWA KE BORANG TENDER</span></td>
-                                <td style="text-align:center;">{{$total}}</td>
+                                <td style="text-align:center;">{{$loop->iteration}}</td>
+                                <td>
+                                    <label for="jwpn{{$item->id}}" style="font-family:'Arial'; text-transform: uppercase; margin-left: 1%;">{{$item->Perkara_Pemohonan->nama}}</label>
+                                </td>
+                                <td style="text-align:center;">{{$item->jumlah}}</td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+
+                            @php
+                                $total += (double)$item->jumlah;
+                            @endphp
+                        @endforeach
+                        <tr style="line-height: 40px;">
+                            <td></td>
+                            <td><span style="margin-left: 1%;">JUMLAH KESELURUHAN DI BAWA KE BORANG TENDER</span></td>
+                            <td style="text-align:center;">{{$total}}</td>
+                        </tr>
+                    </tbody>
+                </table>
         </div>
     </div>
 </body>
