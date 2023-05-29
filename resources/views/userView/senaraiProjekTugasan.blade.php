@@ -73,7 +73,7 @@
                             <td>
                                 <h5 class="card-title mb-0">Senarai Pemohonan Peserta.</h5></td>
                             <td> 
-                                <a href="/user/projek/surat/{{$jawapan->id}}/view"  class="frame9403-frame7445" style="width: 30%">
+                                <a href="/user/projek/surat/{{$jawapan->id}}/view"  class="frame9403-frame7445" style="width: 35%">
                                     <div class="frame9403-frame7293">
                                     <span class="frame9403-text21"><span>Papar Surat</span></span>
                                     </div>

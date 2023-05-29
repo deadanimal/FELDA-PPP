@@ -77,7 +77,9 @@
                     @if ($tarikh != null)
                         @if (now()->toDateString() > $tarikh->tarikh_sasaran)
                             disabled
-                        @endif 
+                        @endif
+                    @else
+                        disabled 
                     @endif
                     >
                         <div class="frame9403-frame7293">
