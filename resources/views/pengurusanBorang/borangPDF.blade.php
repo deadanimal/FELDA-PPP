@@ -108,9 +108,9 @@
                     <table style="width: 100%;">
                         <thead>
                             <tr style="line-height: 30px;">
-                                <th style="width: 7%;">BIL</th>
-                                <th>KETERANGAN</th>
-                                <th style="width: 20%;">JUMLAH (RM)</th>
+                                <th style="width: 7%;text-align: center;">BIL</th>
+                                <th style="text-align: center;">KETERANGAN</th>
+                                <th style="width: 20%;text-align: center;">JUMLAH (RM)</th>
                             </tr>
                         </thead>
                         <tbody>
