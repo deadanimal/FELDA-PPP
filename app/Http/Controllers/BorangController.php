@@ -591,15 +591,15 @@ class BorangController extends Controller
 
         $borangJwpn = Jawapan::find($jawapan_id);
         $jawapanMedan = Jawapan_medan::where('jawapan_id', $jawapan_id)->get();
+        $items = Pemohonan_Peneroka::where('jawapan_id', $jawapan_id)->get();
 
-        $data = compact('borangJwpn', 'jawapanMedan', 'surat');
+        $data = compact('borangJwpn', 'jawapanMedan', 'surat','items');
         $pdf = PDF::loadView('pengurusanBorang.borangPDF', $data)
         ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true, 'defaultFont' => 'Arial'])
         ->setPaper('A4', 'portrait');
 
         // return view('pengurusanBorang.borangPDF', compact('borangJwpn', 'jawapanMedan', 'surat'));
-
-        
+ 
         return $pdf->download(date("Y-m-d").'_Borang_Permohonan_'.$borangJwpn->user->nama.'.pdf');
     }
     

@@ -93,44 +93,47 @@
     </div>
     
     <div class="page_break">
-        <div class="container-fluid">
+        <div class="container-fluid" style="padding-left: 5%;">
             <div class="header">
-                <h1 class="header-title">
-                    BORANG {{$borangJwpn->borangs->namaBorang}}
-                </h1>
+                <p class="c32">
+                   <span class="c10">SPESIFIKASI/PERINCIAN KERJA INFRASTRUKTUR BAGI PROJEK {{$borangJwpn->borangs->Proses->Projek->nama}}</span> 
+                </p>
             </div>
+            <br>
             <div class="card">
-                <div class="card-header">
-                    <h1 class="header-title" style="color: var(--bs-body-color)">Nama Permohon: <p style="color: var(--bs-body-color);text-transform:uppercase">{{$borangJwpn->user->nama}}</p></h1>
-                </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="mb-3">
-                            <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Arial'; text-transform: uppercase;">NAMA: {{$borangJwpn->nama}}</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="mb-3">
-                            <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Arial'; text-transform: uppercase;">NO KAD PENGENALAN: {{$borangJwpn->ic}}</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="mb-3">
-                            <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Arial'; text-transform: uppercase;">WILAYAH: {{$borangJwpn->wilayahs->nama}}</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="mb-3">
-                            <label for="jwpn{{$borangJwpn->id}}" style="font-family:'Arial'; text-transform: uppercase;">NO KAD PENGENALAN: {{$borangJwpn->rancangans->nama}}</label>
-                        </div>
-                    </div>
-                    @foreach($jawapanMedan as $jwpnMedan)
-                        <div class="row">
-                            <div class="mb-3">
-                                <label for="jwpn{{$jwpnMedan->id}}" style="font-family:'Arial'; text-transform: uppercase;">{{$jwpnMedan->medan->nama}}: {{$jwpnMedan->jawapan}}</label>
-                            </div>
-                        </div>
-                    @endforeach
+                    @php
+                        $total=0;
+                    @endphp
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr style="line-height: 30px;">
+                                <th style="width: 7%;">BIL</th>
+                                <th>KETERANGAN</th>
+                                <th style="width: 20%;">JUMLAH (RM)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($items as $item)
+                                <tr style="line-height: 40px;">
+                                    <td style="text-align:center;">{{$loop->iteration}}</td>
+                                    <td>
+                                        <label for="jwpn{{$item->id}}" style="font-family:'Arial'; text-transform: uppercase; margin-left: 1%;">{{$item->Perkara_Pemohonan->nama}}</label>
+                                    </td>
+                                    <td style="text-align:center;">{{$item->jumlah}}</td>
+                                </tr>
+
+                                @php
+                                    $total += (double)$item->jumlah;
+                                @endphp
+                            @endforeach
+                            <tr style="line-height: 40px;">
+                                <td></td>
+                                <td><span style="margin-left: 1%;">JUMLAH KESELURUHAN DI BAWA KE BORANG TENDER</span></td>
+                                <td style="text-align:center;">{{$total}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
