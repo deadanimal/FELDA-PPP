@@ -61,7 +61,7 @@
                   @endif
                   
                   data-bs-toggle="tab" href="#tab-6" style="height: 100%;">
-                      <span class="arial-N" style="display: flex;white-space: nowrap;">Peti Masuk
+                      <span class="arial-N" style="display: flex;white-space: nowrap;">PETI MASUK
                         @if ($borangs_noti != 0)
                           <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin-left:2%;">
                             {{$borangs_noti}}
@@ -80,7 +80,7 @@
                   @endif
                   
                   data-bs-toggle="tab" href="#tab-7" style="height: 100%;">
-                      <span class="arial-N" style="display: flex;white-space: nowrap;">Tugasan Projek
+                      <span class="arial-N" style="display: flex;white-space: nowrap;">TUGASAN
                         {{-- @if ($borangs_noti != 0)
                           <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin-left:2%;">
                             {{$borangs_noti}}
@@ -98,7 +98,7 @@
                   @endif
                   
                   data-bs-toggle="tab" href="#tab-8" style="height: 100%;">
-                      <span class="arial-N" style="display: flex;white-space: nowrap;">Pengurus Rancangan
+                      <span class="arial-N" style="display: flex;white-space: nowrap;">PENGURUS RANCANGAN
                         {{-- @if ($borangs_noti != 0)
                           <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin-left:2%;">
                             {{$borangs_noti}}
