@@ -658,7 +658,7 @@ class BorangController extends Controller
             $jawapan->save();
         }
 
-        if($lulusBorang->ulasan == 'Lulus'){
+        if($lulusBorang->keputusan == 'Lulus'){
             Alert::success('Lulus Borang Pemohonan Berjaya.', 'Borang telah berjaya Diluluskan.');
         }else{
             Alert::success('Gagal Borang Pemohonan Berjaya.', 'Borang telah berjaya digagalkan.');
