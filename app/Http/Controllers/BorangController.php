@@ -319,7 +319,7 @@ class BorangController extends Controller
             $jwpn_Medan->save();
         }
 
-        if($perkara == null){
+        if($perkara != null){
             for($y=0; $y<count($perkara); $y++){
                 $item = new Pemohonan_Peneroka;
                 $item->jumlah = $perkara[$y];
