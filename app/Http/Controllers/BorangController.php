@@ -319,12 +319,14 @@ class BorangController extends Controller
             $jwpn_Medan->save();
         }
 
-        for($y=0; $y<count($perkara); $y++){
-            $item = new Pemohonan_Peneroka;
-            $item->jumlah = $perkara[$y];
-            $item->perkara_id = $perkara_id[$y];
-            $item->jawapan_id = $ans->id;
-            $item->save();
+        if($perkara == null){
+            for($y=0; $y<count($perkara); $y++){
+                $item = new Pemohonan_Peneroka;
+                $item->jumlah = $perkara[$y];
+                $item->perkara_id = $perkara_id[$y];
+                $item->jawapan_id = $ans->id;
+                $item->save();
+            }
         }
 
         $borang = Borang::find($borangid);
