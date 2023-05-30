@@ -311,7 +311,12 @@ class BorangController extends Controller
                 $checkbox_amount +=1;
             }
             else{
-                $jwpn_Medan->jawapan = $jawapan[($x-$checkbox_amount)];
+                if($jawapan[($x-$checkbox_amount)] == null){
+                    $jwpn_Medan->jawapan = "";
+                }
+                else{
+                    $jwpn_Medan->jawapan = $jawapan[($x-$checkbox_amount)];
+                }
             }
             
             $jwpn_Medan->jawapan_id = $jawapan_id;
