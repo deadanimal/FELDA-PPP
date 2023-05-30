@@ -358,7 +358,7 @@ class BorangController extends Controller
 
     public function borangList_app(Request $request)
     {
-        $borangs = Borang::with('jwpn','jwpn.kelulusanBorang')->whereHas('jwpn')->whereRelation('jwpn.kelulusanBorang.tahap_kelulusan', 'user_category', Auth::user()->kategoripengguna)->get();
+        $borangs = Borang::with('ProsesKelulusan')->whereHas('jwpn')->whereRelation('ProsesKelulusan.TahapKelulusan', 'user_category', Auth::user()->kategoripengguna)->get();
 
         //for notification tugasan
         $noti = $this->notification();
