@@ -303,14 +303,34 @@ class BorangController extends Controller
         for($x=0; $x<$count; $x++){
             $medan = Medan::find($medanID[$x]);
             $jwpn_Medan = new Jawapan_medan;
-
+            
             if($medan->datatype == "checkbox"){
                 $jawapancheck = ("jawapancheck".$medanID[$x]);
                 $checkjawapan = $request->$jawapancheck;
                 $jwpn_Medan->jawapan = $checkjawapan[0];
                 $checkbox_amount +=1;
+
+
+                if($medan->nama == "KATEGORI" || $medan->nama == "kategori"){
+                    $jenis = $checkjawapan[0];
+                    preg_match_all('/(?<=\s|^)\w/iu', $jenis, $matches);
+                    $result = implode('', $matches[0]);
+                    $projek = strtoupper($result);
+
+                    $w = $ans->wilayahs->nama;
+                    preg_match_all('/(?<=\s|^)\w/iu', $w, $matches);
+                    $result2 = implode('', $matches[0]);
+                    $wilayah = strtoupper($result2);
+
+                    $kod = $projek.$wilayah;
+
+                    $kodProjek = $this->generate_kod($kod);
+                    $ans->kod_projek = $kodProjek;
+                    $ans->save();
+                }
             }
             else{
+
                 if($jawapan[($x-$checkbox_amount)] == null){
                     $jwpn_Medan->jawapan = "";
                 }
@@ -343,6 +363,15 @@ class BorangController extends Controller
         Alert::success('Maklumat Anda Berjaya Disimpan.', 'Maklumat anda telah berjaya disimpan.');   
         
         return redirect('/user/sub_borang/list');
+    }
+
+    private function generate_kod($kod){
+        $number = mt_rand(1000, 9999);
+        $kod_projek = $kod.$number;
+        if (Jawapan::where('kod_projek',$kod_projek)->exists()) {
+            return generate_kod($kod);
+        }
+        return $kod_projek;
     }
 
     public function user_listBorang(Request $request)
@@ -506,7 +535,7 @@ class BorangController extends Controller
                     }
                     elseif((Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Wilayah') || Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'WILAYAH')) && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $tahapKelulusan[$z]->sequence){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->where('borang_id', $borangId)
-                        ->where('wilayah', Auth::user()->wilayah)->get();
+                        ->where('wilayah', Auth::user()->wilayah)->where('kelulusanBorang', 'keputusan')->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
@@ -518,6 +547,7 @@ class BorangController extends Controller
                         ->where('wilayah', Auth::user()->wilayah)
                         ->WhereRelation('kelulusanBorang','keputusan', 'Lulus')
                         ->whereRelation('kelulusanBorang.tahap_kelulusan','sequence', $tahapKelulusan[$z]->sequence)->get();
+                        
                         $tahapLulus = $tahapKelulusan[$x]->id;
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
@@ -585,6 +615,7 @@ class BorangController extends Controller
             return back();
         }
     }
+
     public function borangApp_view(Request $request)
     {
         $userId = (int) $request->route('user_id');

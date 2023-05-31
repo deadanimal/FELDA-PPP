@@ -25,7 +25,7 @@
                             <tr>
                                 <td ><label for="wilayah" style="font-family:'Arial', sans-serif">PERINGKAT <span style="color: red;">*</span></label></td>
                                 <td style="display:flex;">
-                                    <select name="wilayah" id="wilayah" class="form-control" style="border: 2px solid #ced4da;">
+                                    <select name="wilayah" id="wilayah" class="form-control" style="border: 2px solid #ced4da; text-transform:uppercase;">
                                         <option value="" selected disabled>Pilih Peringkat</option>
                                         @foreach ($wilayah as $key => $value)
                                             <option value="{{ $key }}">{{ $value }}</option>
@@ -37,7 +37,7 @@
                             <tr>
                                 <td ><label for="rancangan" style="font-family:'Arial', sans-serif">RANCANGAN <span style="color: red;">*</span></label><br></td>
                                 <td style="display:flex;">
-                                    <select name="rancangan" id="rancangan" class="form-control" style="border: 2px solid #ced4da;" required>
+                                    <select name="rancangan" id="rancangan" class="form-control" style="border: 2px solid #ced4da; text-transform:uppercase;" required>
                                         <option value="" selected disabled>Pilih Rancangan</option>
                                     </select>
                                     <br>
@@ -77,7 +77,14 @@
                                     </tr>
                                     @elseif($medan->datatype == "calendar")
                                         <tr>
-                                            <td ><label for="jawapan{{$medan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase">{{$medan->nama}}</label></td>
+                                            <td>
+                                                <label for="jawapan{{$medan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase">
+                                                    {{$medan->nama}}  
+                                                    @if ($medan->pilihan == "required")
+                                                        <span style="color: red;">*</span> 
+                                                    @endif
+                                                </label>
+                                            </td>
                                             <td style="display:flex;">
                                                 <input type="date" class="form-control" name="jawapan[]" 
                                                 @if ($medan->pilihan == 'required')
@@ -108,10 +115,12 @@
                                             @if ($medan->pilihan == "required")
                                                 required 
                                             @endif
-                                            @if ($medan->nama != 'emel')
-                                                style="text-transform: uppercase;"
+
+                                            class="form-control" maxlength="{{$medan->max}}" minlength="{{$medan->min}}" name="jawapan[]" id="jawapan{{$medan->id}}" 
+                                            @if ($medan->nama != "EMEL")
+                                                oninput="this.value = this.value.toUpperCase()"
                                             @endif
-                                            class="form-control" maxlength="{{$medan->max}}" minlength="{{$medan->min}}" name="jawapan[]" id="jawapan{{$medan->id}}" ><br>
+                                            ><br>
                                             <input type="hidden" name="medanID[]" value="{{$medan->id}}">
                                         </td>
                                     </tr>
