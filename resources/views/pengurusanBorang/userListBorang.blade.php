@@ -23,7 +23,7 @@
 
         @if (!$borangJwpns->isEmpty())
           <div class="card-header">
-            <button type="button" class="btn btn-success" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModal17">Lulus Semua</button>
+            <button type="button" class="btn btn-success" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModal17"  disabled="disabled" id="lulus">Lulus Semua</button>
           </div>
 
           <form action="/user/borang_app/{{$oneBorang->id}}/lulusAll" method="POST">
@@ -67,7 +67,7 @@
                 @foreach ($borangJwpns as $borangJwpn)
                     <tr>
                         <td style="vertical-align: top; width:5%" class="text-center">  
-                          <input class="form-check-input text-center sub_chk" type="checkbox" value="{{$borangJwpn->id}}" name="LulusList[]">
+                          <input class="form-check-input text-center sub_chk" type="checkbox" value="{{$borangJwpn->id}}" name="LulusList[]" id="LulusList">
                         </td>
                         <td class="text-center Arial">{{$borangJwpn->user->nama}}</td>
                         <td class="text-center Arial">{{$borangJwpn->wilayahs->nama}}</td>
@@ -129,23 +129,12 @@ $('.pemohonan-datatable').DataTable({
   }
 }
 </script>
-<script>
-function save(no)
-  {
-   var nama_val=document.getElementById("nama"+no).value;
-   var status_val=document.getElementById("status"+no).value;
-   document.getElementById("statusUpdate"+no).value = status_val;
-   document.getElementById("namaupdate"+no).value=nama_val;
-  }
-  function savetugasan(no)
-  {
-   var namatugas_val=document.getElementById("namaTugas"+no).value;
-   var jenistugas_val=document.getElementById("jenisTugas"+no).value;
-   var userKategori_val=document.getElementById("userKategori"+no).value;
-   document.getElementById("namaTugasupdate"+no).value = namatugas_val;
-   document.getElementById("jenisTugasupdate"+no).value=jenistugas_val;
-   document.getElementById("userKategoriupdate"+no).value=userKategori_val;
-  }
+<script type="text/javascript">
+ var checkBoxes = $('tbody .sub_chk');
+checkBoxes.change(function () {
+    $('#lulus').prop('disabled', checkBoxes.filter(':checked').length < 1);
+});
+checkBoxes.change();
 </script>
 <script type="text/javascript">  
   $(document).ready(function () {  
@@ -153,36 +142,16 @@ function save(no)
       $('#master').on('click', function(e) {  
        if($(this).is(':checked',true))    
        {  
-          $(".sub_chk").prop('checked', true);    
+          $(".sub_chk").prop('checked', true); 
+          $('#lulus').prop('disabled', false);   
        } else {    
-          $(".sub_chk").prop('checked',false);    
+          $(".sub_chk").prop('checked',false); 
+          $('#lulus').prop('disabled', true);   
        }    
       });  
 
   });  
-</script> 
-<script>
-function openForm() {
-  document.getElementById("popupForm").style.display = "block";
-}
-function closeForm() {
-  document.getElementById("popupForm").style.display = "none";
-}
-function openFormTugas() {
-  document.getElementById("popupFormTugas").style.display = "block";
-}
-function closeFormTugas() {
-  document.getElementById("popupFormTugas").style.display = "none";
-}
-function openFormKemas() {
-  document.getElementById("popupFormKemas").style.display = "block";
-}
-function closeFormKemas() {
-  document.getElementById("popupFormKemas").style.display = "none";
-}
-
 </script>
-   
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <style>
