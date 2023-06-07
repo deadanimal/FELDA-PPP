@@ -133,22 +133,36 @@
                         </table>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                    <h5 class="card-title mb-0">Sila isikan jumlah bagi perkara yang ingin dimohon.</h5>
-                    </div>
-                    <div class="card-body">
-                    @foreach($perkaras as $perkara)
-                        <div class="row">
-                            <div class="mb-3">
-                                <label for="Perkara" style="font-family:'Arial', sans-serif; text-transform:uppercase;">{{$perkara->nama}}</label>
-                                <input type="Number" class="form-control" name="perkara[]" id="Perkara" required>
-                                <input type="hidden" name="perkara_id[]" value="{{$perkara->id}}">
-                            </div>
+
+                @foreach($perkaras as $perkara)
+                    <input type="hidden" name="perkaraCount" id="PerkaraCount">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Sila isikan perkara yang ingin dimohon.</h5>
+                            <table class="w-100">
+                                <tr>
+                                    <td style="text-align: center"><h5 class="card-title mb-0">{{$perkara->nama}}</h5></td>
+                                    <td style="width:5%; text-align: end"><button class="btn btn-primary" type="button" id="rowAdder{{$loop->iteration}}">Tambah</button></td>
+                                </tr>
+                            </table>
                         </div>
-                    @endforeach
+                        <div class="card-body">
+                            <table class="w-100">
+                                <tr>
+                                    <th style="text-align: center"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
+                                    <th style="text-align: center"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
+                                    <th style="width: 5%;"></th>
+                                </tr>
+                                <tbody id="borangField{{$loop->iteration}}">
+                                </tbody>
+                            </table>
+                        </div>
+                        <input type="hidden" name="perkara_id[]" value="{{$perkara->id}}">
+                        <input type="hidden" id="maxPerkara{{$loop->iteration}}" value="{{$perkara->total}}">
                     </div>
-                </div>        
+                @endforeach 
+                <input type="hidden" id="count" name="countPerkara">
+
                 <div class="card">
                     <div class="card-body">
                         @if ($borang->consent != null || $borang->consent != "")
@@ -179,6 +193,74 @@
     </div>
 </div>
 <script src="/js/jquery.js"></script>
+<script type="text/javascript">
+    var count = 0;
+    var count2 = 0;
+    $("#rowAdder1").click(function () {
+        count +=1;
+            newRowAdd = 
+            '<tr id="row">'+
+                '<td>'+
+                    '<input type="text" class="form-control border2" name="perkara[]" required oninput="this.value = this.value.toUpperCase()">'+
+                '</td>'+
+                '<td>'+
+                    '<input type="Number" class="form-control border2" name="jumlah[]"required>'+
+                '</td>'+
+                '<td style=" text-align:end;">'+
+                    '<button class="btn btn-primary" type="button" id="DeleteRow1"><i class="fas fa-fw fa-trash-alt" ></i></button>'+
+                '</td>'+
+            '</tr>';
+            $('#borangField1').append(newRowAdd);
+            var total = document.getElementById("maxPerkara1").value;
+            var cansubmit = (count < total);
+            document.getElementById("rowAdder1").disabled = !cansubmit;
+
+    });
+    $("#rowAdder2").click(function () {
+        count2 +=1;
+        newRowAdd = 
+        '<tr id="row">'+
+            '<td>'+
+                '<input type="text" class="form-control border2" name="perkara[]" required oninput="this.value = this.value.toUpperCase()">'+
+            '</td>'+
+            '<td>'+
+                '<input type="Number" class="form-control border2" name="jumlah[]"required>'+
+            '</td>'+
+            '<td style=" text-align:end;">'+
+                '<button class="btn btn-primary" type="button" id="DeleteRow2"><i class="fas fa-fw fa-trash-alt" ></i></button>'+
+            '</td>'+
+        '</tr>';
+        $('#borangField2').append(newRowAdd);
+
+        var total2 = document.getElementById("maxPerkara2").value;
+        var cansubmit = (count2 < total2);
+        document.getElementById("rowAdder2").disabled = !cansubmit;
+
+    });
+     
+    $("body").on("click", "#DeleteRow1", function () {
+      $(this).parents("#row").remove();
+        count -=1;
+        var total = document.getElementById("maxPerkara1").value;
+        var cansubmit = (count < total);
+        document.getElementById("rowAdder2").disabled = !cansubmit;
+    });
+    $("body").on("click", "#DeleteRow2", function () {
+      $(this).parents("#row").remove();
+        count2 -=1;
+        var total2 = document.getElementById("maxPerkara2").value;
+        var cansubmit = (count2 < total2);
+        document.getElementById("rowAdder2").disabled = !cansubmit;
+    });
+    $("#hantar").click(function () {
+        var x = [];
+
+        x.push(count2);
+        x.push(count);
+
+        document.getElementById("count").value = x;
+    });
+    </script>
 <script>
   $(document).ready(function(){
   $('select[name="wilayah"]').on('change',function(){
@@ -204,6 +286,14 @@
 });
 </script>
 <style>
+    .trash{
+        border: 0px solid !important;
+        background: none;
+        font-size: 100%;
+    }
+    .border2{
+        border: 2px solid #ced4da !important;
+    }
     td input, td label { vertical-align: middle; }
 
     .frame9403-frame7445:disabled {

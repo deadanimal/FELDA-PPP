@@ -86,16 +86,25 @@
                     <form action="/user/projek/tugasan/jawapan/update" method="post">
                         @csrf
                         @method('PUT')
-                        <table class="table table-borderless">
-                            @foreach($items as $item)
+                        <table class="w-100">
                             <tr>
-                                <td style="width: 35%;"><label for="perkara{{$item->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase;">{{$item->Perkara_Pemohonan->nama}}</label></td>
-                                <td style="display:flex;">
-                                    <input style="border: 2px solid #ced4da;" class="form-control" value="{{$item->jumlah}}" id="perkara{{$item->id}}" name="perkara[]"><br>
-                                    <input type="hidden" name="perkara_id[]" value="{{$item->id}}">
-                                </td>
+                                <th class="perkara"><h5 class="card-title mb-0">JENIS PERKARA</h5></th>
+                                <th class="perkara"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
+                                <th class="perkara"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
                             </tr>
-                            @endforeach    
+                            <tbody>
+                                @foreach($items as $item)
+                                <tr id="row">
+                                <td><input type="text" class="form-control perkara" value="{{$item->Perkara_Pemohonan->nama}}" readonly></td>
+                                <td>
+                                    <input type="text" class="form-control perkara" name="perkara[]" value="{{$item->nama}}" required>
+                                </td>
+                                <td>
+                                    <input type="Number" class="form-control perkara" name="jumlah[]" value="{{$item->jumlah}}" required>
+                                </td>
+                                <input type="hidden" name="perkara_id[]" value="{{$item->id}}">
+                                @endforeach
+                            </tbody>
                         </table>
                         <button type="submit" class="frame9403-frame7445">
                             <div class="frame9403-frame7293">
@@ -110,7 +119,10 @@
     </div>
 </div>
 <style>
-
+.perkara{
+    text-align: center;
+    background-color: #FFFFFF !important;
+  }
     .center{
          margin-left: auto;
         margin-right: auto;
@@ -130,6 +142,7 @@
     padding-bottom: 0px;
     justify-content: center;
     background-color: #A2335D;
+    margin-top:2%;
     margin-left:auto;
     margin-right: 2% !important; 
     cursor: pointer;

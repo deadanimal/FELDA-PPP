@@ -34,10 +34,10 @@
             
             {{-- Modal Tambah Medan --}}
             <div class="modal fade" id="exampleModaladdMedan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-lg modal-dialog-centered " role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA PERKARA PEMOHONAN</h2>
+                        <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA BAHAGIAN PERKARA PEMOHONAN</h2>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -47,14 +47,14 @@
                         <div class="modal-body">
                         <table class="table table-borderless w-100">
                             <tr>
-                            <td class="frame9402-text04" style="width: 20%"><p class="text-xs-center" style="margin: auto;">Perkara Pemohonan</p></td>
-                            <td><input type="text" class="frame9402-kotaknama" placeholder="Perkara Pemohonan" name="nama" required oninput="this.value = this.value.toUpperCase()"></td>
+                                <td class="frame9402-text04" style="width: 30%"><p class="text-xs-center" style="margin: auto;">Nama Bahagian Perkara Pemohonan</p></td>
+                                <td><input type="text" class="frame9402-kotaknama" placeholder="Perkara Pemohonan" name="nama" required oninput="this.value = this.value.toUpperCase()"></td>
+                            </tr>
+                            <tr>
+                                <td class="frame9402-text04" style="width: 30%"><p class="text-xs-center" style="margin: auto;">Jumlah Input</p></td>
+                                <td><input type="number" class="frame9402-kotaknama" placeholder="Jumlah Input" name="total" required></td>
                             </tr>
                         </table>
-                        @php
-                        $count = count($perkaras);
-                        @endphp
-                        <input type="hidden" value="{{$count = $count+1}}" name="sequence">
                         <input type="hidden" value="{{$borang->id}}" name="borangId">        
                         </div>
                         <div class="modal-footer">
@@ -65,11 +65,7 @@
                 </div>
             </div>
             </div>
-
-            @php
-                $var= 0;
-            @endphp
-                
+   
             <table style="overflow: scroll; max-height: 750px; width:100%;">
                 @if (!$perkaras->isEmpty())
                 <tbody>
@@ -78,13 +74,8 @@
                         <form action="/moduls/perkara/update" method="POST">
                         @csrf
                         @method('PUT')
-                        <td class="frame9402-text31">Nama Medan:<input type="text" name="nama" class="frame9402-kotaknama" value="{{$perkara->nama}}" oninput="this.value = this.value.toUpperCase()"></td>
-                        <td class="frame9402-text33">Turutan:
-                            <select name="sequence" class="frame9403-kotaknama3">
-                            @for($x=1; $x<=count($perkaras); $x++)
-                            <option value="{{$x}}" @if($x == $perkara->sequence)selected @endif>{{$x}}</option>
-                            @endfor
-                        </td>
+                        <td class="frame9402-text31">Nama Bahagian Perkara Pemohonan:<input type="text" name="nama" class="frame9402-kotaknama" value="{{$perkara->nama}}" oninput="this.value = this.value.toUpperCase()"></td>
+                        <td class="frame9402-text33">Jumlah Input: <input type="number" name="total" class="frame9403-kotaknama3" value="{{$perkara->total}}"></td>
                         <input type="hidden" name="perkaraID" value="{{$perkara->id}}">
                         <input type="hidden" value="{{$borang->id}}" name="borangId">
                         <td class="frame9402-frame8727" id="tindakan">
@@ -99,13 +90,13 @@
                         <div class="modal-dialog  modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Padam Perkara {{$perkara->nama}}</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Padam Bahagian Perkara Pemohonan {{$perkara->nama}}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Anda Pasti Mahu Padam Perkara {{$perkara->nama}}?<p>
+                                    <p>Anda Pasti Mahu Padam Bahagian Perkara Pemohonan {{$perkara->nama}}?<p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
@@ -120,14 +111,6 @@
                             </div>
                         </div>
                         </div>
-                        
-                        @php
-                        // popup alert for duplicate sequence
-                        if ($var == $perkara->sequence) {
-                            Alert::warning('Terdapat Duplikasi.', 'Terdapat duplikasi pada turutan perkara pemohonan.');   
-                        }
-                        $var = $perkara->sequence;
-                        @endphp
                     </tr>
                     @endforeach
                 </tbody>

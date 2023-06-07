@@ -28,6 +28,7 @@
         <table class="table table-bordered table-striped w-100 aduan-datatable">
             <thead class="text-white bg-primary w-100">
               <tr>
+                  <th scope="col" class="text-center">Jenis</th>
                   <th scope="col" class="text-center" style="width: 40%">Perkara</th>
                   <th scope="col" class="text-center">Jumlah</th>
                   <th scope="col" class="text-center">Pengesahan</th>
@@ -39,6 +40,7 @@
                 @foreach ($penerimaan as $item)
                     <tr>
                         <td>{{$item->Pemohonan_Peneroka->Perkara_Pemohonan->nama}}</td>
+                        <td>{{$item->Pemohonan_Peneroka->nama}}</td>
                         <td>{{$item->Pemohonan_Peneroka->jumlah}}</td>
                         <td>{{$item->pengesahan ?? ""}}</td>
                         <td>{!! nl2br(e($item->kenyataan ?? ""))  !!}</td>
@@ -66,8 +68,8 @@
                                           @if ($item->pengesahan != null)
                                             <option value="{{$item->pengesahan}}" selected disabled>{{$item->pengesahan}}</option>   
                                           @endif
-                                            <option value="Cukup">Cukup</option>
-                                            <option value="Tidak">Tidak</option>
+                                            <option value="CUKUP">Cukup</option>
+                                            <option value="TIDAK">Tidak</option>
                                         </select>
                                         
                                         <label for="Penyataan" class="frame9402-text04">

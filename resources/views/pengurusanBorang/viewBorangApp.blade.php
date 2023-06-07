@@ -100,18 +100,23 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Senarai perkara yang dimohon</h5>
+                    <h5 class="card-title mb-0">Senarai perkara yang dimohon.</h5>
                 </div>
                 <div class="card-body">
-                    <table class="table table-borderless">
-                        @foreach($items as $item)
+                    <table class="table table-bordered w-100">
                         <tr>
-                            <td style="width: 35%;"><label for="perkara{{$item->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase;">{{$item->Perkara_Pemohonan->nama}}</label></td>
-                            <td style="display:flex;">
-                                <input style="border: 2px solid #ced4da;" class="form-control" value="{{$item->jumlah}}" id="perkara{{$jwpnMedan->id}}" readonly><br>
-                            </td>
+                            <th class="perkara"><h5 class="card-title mb-0">JENIS PERKARA</h5></th>
+                            <th class="perkara"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
+                            <th class="perkara"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
                         </tr>
-                        @endforeach    
+                        <tbody>
+                          @foreach($items as $item)
+                          <tr id="row">
+                            <td class="perkara">{{$item->Perkara_Pemohonan->nama}}</td>
+                            <td class="perkara">{{$item->nama}}</td>
+                            <td class="perkara">{{$item->jumlah}}</td>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -205,6 +210,10 @@
 </div>
 
 <style>
+    .perkara{
+    text-align: center;
+    background-color: #FFFFFF !important;
+  }
     .table-borderless > tbody > tr > td,
 .table-borderless > tbody > tr > th,
 .table-borderless > tfoot > tr > td,

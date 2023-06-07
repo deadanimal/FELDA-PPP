@@ -61,7 +61,7 @@
                   @endif
                   
                   data-bs-toggle="tab" href="#tab-6" style="height: 100%;">
-                      <span class="arial-N" style="display: flex;white-space: nowrap;">PETI MASUK
+                      <span class="arial-N" style="display: flex;white-space: nowrap;">PETI MASUK (Pegawai Kontrak)
                         @if ($borangs_noti != 0)
                           <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin-left:2%;">
                             {{$borangs_noti}}
@@ -167,7 +167,7 @@
                           <thead class="text-white bg-primary w-100">
                             <tr class="text-center">
                                 <th scope="col">Nama Peserta</th>                                
-                                <th scope="col">Nama Projek</th>
+                                <th scope="col">Jenis Projek</th>
                                 <th scope="col">Tindakan</th>
                             </tr>
                           </thead>
@@ -175,7 +175,11 @@
                               @foreach ($hantarSurats as $hantarSurat)
                               <tr>
                                   <td class="text-center arial" style="text-transform: uppercase;">{{$hantarSurat->jawapan->nama}}</td>
-                                  <td class="text-center arial" style="text-transform: uppercase;">{{$hantarSurat->jawapan->borangs->namaBorang}}</td>
+                                  <td class="text-center arial" style="text-transform: uppercase;">
+                                    @foreach($hantarSurat->jawapan->jawapanMedan as $medan)
+                                    {{$medan->jawapan ?? ""}}
+                                    @endforeach
+                                  </td>
                                   <td class="text-center arial">
                                     <a class="btn btn-success" href="/user/projek/{{$hantarSurat->jawapan_id}}/list" style="color: white; text-decoration:none;">
                                       Lihat Tugasan

@@ -52,11 +52,12 @@
             </div>
 
             {{-- senarai borang --}}
-            <table class="table table-bordered table-striped w-100 Arial pemohonan-datatable" id="example" >
+            <table class="table table-bordered w-100 Arial pemohonan-datatable" id="example" >
               <thead class="text-white bg-primary w-100" style="text-align: center;">
                 <tr>
                     <th scope="col" style="vertical-align: top;"><input class="form-check-input text-center" type="checkbox" id="master"></th>
                     <th scope="col" class="Arial">Nama Pemohon</th>                    
+                    <th scope="col" class="Arial">Jenis Projek</th>
                     <th scope="col" class="Arial">Wilayah</th>
                     <th scope="col" class="Arial">Rancangan</th>
                     <th scope="col" class="Arial">Status</th>
@@ -65,29 +66,38 @@
               </thead>
               <tbody id="myTable">
                 @foreach ($borangJwpns as $borangJwpn)
-                    <tr>
-                        <td style="vertical-align: top; width:5%" class="text-center">  
-                          <input class="form-check-input text-center sub_chk" type="checkbox" value="{{$borangJwpn->id}}" name="LulusList[]" id="LulusList">
-                        </td>
-                        <td class="text-center Arial">{{$borangJwpn->user->nama}}</td>
-                        <td class="text-center Arial">{{$borangJwpn->wilayahs->nama}}</td>
-                        <td class="text-center Arial">{{$borangJwpn->rancangans->nama}}</td>
-                        <td class="text-center Arial" style="width: 25%">
-                        @if (!$lulusBorangs->isEmpty())
+                  <tr 
+                  @if (!$lulusBorangs->isEmpty())
+                    @foreach ($lulusBorangs as $result)
+                      @if ($borangJwpn->id == $result->jawapan_id && $result->tahap_kelulusan->user_category == Auth::user()->kategoripengguna)
+                        style="background-color: antiquewhite;"
+                      @endif
+                    @endforeach
+                  @endif
+                  >
+                          <td style="vertical-align: top; width:5%" class="text-center">  
+                            <input class="form-check-input text-center sub_chk" type="checkbox" value="{{$borangJwpn->id}}" name="LulusList[]" id="LulusList">
+                          </td>
+                          <td class="text-center Arial">{{$borangJwpn->user->nama}}</td>
+                          <td class="text-center Arial">{{$borangJwpn->jawapanMedan[0]->jawapan ?? ""}}</td>
+                          <td class="text-center Arial">{{$borangJwpn->wilayahs->nama}}</td>
+                          <td class="text-center Arial">{{$borangJwpn->rancangans->nama}}</td>
+                          <td class="text-center Arial" style="width: 25%">
+                          @if (!$lulusBorangs->isEmpty())
                             @foreach ($lulusBorangs as $lulusBorang)
-                                @if ($borangJwpn->id == $lulusBorang->jawapan_id)
-                                    {{$lulusBorang->keputusan}} Oleh {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}<br>
-                                    @break
-                                @endif
+                              @if ($borangJwpn->id == $lulusBorang->jawapan_id)
+                                {{$lulusBorang->keputusan}} Oleh {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}<br>
+                                @break
+                              @endif
                             @endforeach
-                        @endif
-                        </td>
-                        <td class="text-center">
+                          @endif
+                          </td>
+                          <td class="text-center">
                             <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->id}}/view/{{$tahapLulus}}" style="color: white; text-decoration:none;">
                               Papar Borang Pemohon
                             </a>
-                        </td>
-                    </tr>
+                          </td>
+                        </tr>
                 @endforeach
               </tbody>
             </table>

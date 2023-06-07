@@ -558,15 +558,23 @@ class UserController extends Controller
         $borangs = Borang::with('jwpn')->where('status', 1)->whereRelation('jwpn','status', '=','Terima')->get();
         // dd($borangs);
         if(Str::contains(Auth::user()->kategori->nama, 'HQ')){
-            $hantarSurats = Hantar_surat::with('jawapan')->where('userCategory_id', Auth::user()->kategoripengguna)->orderBy('created_at', "DESC")->get();
+            $hantarSurats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
+                $query->WhereRelation('medan', 'nama', 'like', "kategori");
+            }])->where('userCategory_id', Auth::user()->kategoripengguna)->orderBy('created_at', "DESC")->get();
         }elseif(Str::contains(Auth::user()->kategori->nama, 'Super Admin')){
-            $hantarSurats = Hantar_surat::with('jawapan')->where('userCategory_id', Auth::user()->kategoripengguna)->orderBy('created_at', "DESC")->get();
+            $hantarSurats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
+                $query->WhereRelation('medan', 'nama', 'like', "kategori");
+            }])->where('userCategory_id', Auth::user()->kategoripengguna)->orderBy('created_at', "DESC")->get();
         }elseif(Str::contains(Auth::user()->kategori->nama, 'wilayah')|| Str::contains(Auth::user()->kategori->nama, 'WILAYAH')){
-            $hantarSurats = Hantar_surat::with('jawapan')->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->orderBy('created_at', "DESC")->get();
+            $hantarSurats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
+                $query->WhereRelation('medan', 'nama', 'like', "kategori");
+            }])->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->orderBy('created_at', "DESC")->get();
         }else{
-            $hantarSurats = Hantar_surat::with('jawapan')->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->whereRelation('jawapan','rancangan', Auth::user()->rancangan)->orderBy('created_at', "DESC")->get();
+            $hantarSurats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
+                $query->WhereRelation('medan', 'nama', 'like', "kategori");
+            }])->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->whereRelation('jawapan','rancangan', Auth::user()->rancangan)->orderBy('created_at', "DESC")->get();
         }
-
+        
         $jawapan_rancangan = Jawapan::where('status','Penerimaan')->where('rancangan', Auth::user()->rancangan)->has('Pemohonan_Peneroka')->has('hantarSurat')->get();
 
         $date = Carbon::now();
@@ -1389,10 +1397,12 @@ class UserController extends Controller
 
         $perkara = $request->perkara;
         $perkara_id = $request->perkara_id;
+        $jumlah = $request->jumlah;
 
-        for($x=0; $x<(count($perkara_id)); $x++){
+        for($x=0; $x<count($perkara_id); $x++){
             $items = Pemohonan_Peneroka::find($perkara_id[$x]);
-            $items->jumlah = $perkara[$x];
+            $items->nama = $perkara[$x];
+            $items->jumlah = $jumlah[$x];
             $items->save();
         }
 

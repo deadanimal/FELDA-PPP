@@ -16,7 +16,10 @@
             border: 0px;
         }
         .page_break { page-break-before: always; }
-
+        .perkara{
+        text-align: center !important ;
+        background-color: #FFFFFF !important;
+        }
     </style>
 </head>
 <body >
@@ -87,36 +90,22 @@
                 </p>
             </div>
             <br>
-                @php
-                    $total=0;
-                @endphp
-                <table style="width: 95%;">
-                    <thead>
-                        <tr style="line-height: 30px;">
-                            <th style="width: 7%;text-align: center;">BIL</th>
-                            <th style="text-align: center;">KETERANGAN</th>
-                            <th style="width: 18%;text-align: center;">JUMLAH (RM)</th>
-                        </tr>
-                    </thead>
+            @php
+                $total=0;
+            @endphp
+                <table class="table table-bordered w-100">
+                    <tr>
+                        <th style="text-align: center"><h5 class="card-title mb-0">JENIS PERKARA</h5></th>
+                        <th style="text-align: center"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
+                        <th style="text-align: center"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
+                    </tr>
                     <tbody>
-                        @foreach ($items as $item)
-                            <tr style="line-height: 40px;">
-                                <td style="text-align:center;">{{$loop->iteration}}</td>
-                                <td>
-                                    <label for="jwpn{{$item->id}}" style="font-family:'Arial'; text-transform: uppercase; margin-left: 1%;">{{$item->Perkara_Pemohonan->nama}}</label>
-                                </td>
-                                <td style="text-align:center;">{{$item->jumlah}}</td>
-                            </tr>
-
-                            @php
-                                $total += (double)$item->jumlah;
-                            @endphp
+                        @foreach($items as $item)
+                        <tr id="row">
+                        <td class="perkara">{{$item->Perkara_Pemohonan->nama}}</td>
+                        <td class="perkara">{{$item->nama}}</td>
+                        <td class="perkara">{{$item->jumlah}}</td>
                         @endforeach
-                        <tr style="line-height: 40px;">
-                            <td></td>
-                            <td><span style="margin-left: 1%;">JUMLAH KESELURUHAN DI BAWA KE BORANG TENDER</span></td>
-                            <td style="text-align:center;">{{$total}}</td>
-                        </tr>
                     </tbody>
                 </table>
         </div>

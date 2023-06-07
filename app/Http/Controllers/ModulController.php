@@ -1088,7 +1088,7 @@ class ModulController extends Controller
     { 
         $borang_id = (int) $request->route('borang_id');
         $borang = Borang::with('proses','proses.Projek')->where('id',$borang_id)->first();
-        $perkaras = Perkara_Pemohonan::where('borang_id', $borang_id)->orderBy('sequence', "ASC")->get();
+        $perkaras = Perkara_Pemohonan::where('borang_id', $borang_id)->get();
         
         $noti = $this->notification();
 
@@ -1103,7 +1103,7 @@ class ModulController extends Controller
     { 
         $perkara = new Perkara_Pemohonan;
         $perkara->nama = $request->nama;
-        $perkara->sequence = $request->sequence;
+        $perkara->total = $request->total;
         $perkara->borang_id = $request->borangId;
         $perkara->save();
 
@@ -1120,7 +1120,7 @@ class ModulController extends Controller
     { 
         $perkara = Perkara_Pemohonan::find($request->perkaraID);
         $perkara->nama = $request->nama;
-        $perkara->sequence = $request->sequence;
+        $perkara->total = $request->total;
         $perkara->borang_id = $request->borangId;
         $perkara->save();
 
