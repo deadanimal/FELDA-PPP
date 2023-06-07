@@ -33,20 +33,21 @@
             @foreach ($borangJwpns as $borangJwpn)
               <tr>
                 <td class="text-center arial">{{$borangJwpn->borangs->namaBorang}}</td>
-                @if ($borangJwpn->status != "" || $borangJwpn->status == "Lulus"|| $borangJwpn->status == "Menolak")
+                @if ($borangJwpn->status != null || $borangJwpn->status == "Lulus"|| $borangJwpn->status == "Menolak")
                   <td class="text-center arial">{{$borangJwpn->status}}</td>
-                  <td class="text-center arial"></td>
+                  <td class="text-center arial"></td>    
                 @elseif(!$kelulusanBorang->isEmpty())
                   @foreach($kelulusanBorang as $lulusBorang)
                     @if ($lulusBorang->jawapan_id == $borangJwpn->id)
                         <td class="text-center arial">{{$lulusBorang->keputusan}} di Peringkat {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}</td>
                         <td class="text-center arial">{{$lulusBorang->ulasan ?? ""}}</td>
                         @break
+                    @else
+                      <td class="text-center arial">Sedang di Proses</td>
+                      <td class="text-center arial"></td>
+                      @break
                     @endif
                   @endforeach
-                @else
-                <td class="text-center arial">Sedang di Proses</td>
-                    <td class="text-center arial"></td>
                 @endif
                 <td class="text-center arial">
                     @if ($borangJwpn->status == "Lulus")

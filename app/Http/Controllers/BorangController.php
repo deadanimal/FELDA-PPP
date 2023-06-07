@@ -796,7 +796,6 @@ class BorangController extends Controller
 
         //for notification tugasan
         $noti = $this->notification();
-
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
