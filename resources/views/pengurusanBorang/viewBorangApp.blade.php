@@ -81,6 +81,27 @@
                                     </td>
                                 </tr>
                             @else
+                                @if((Str::contains(Auth::user()->kategori->nama, 'FIC Wilayah')|| Str::contains(Auth::user()->kategori->nama, 'HQ') || Str::contains(Auth::user()->kategori->nama, 'Admin')) && Str::contains($jwpnMedan->medan->nama, 'GERAN AKHIR'))
+                                    <tr>
+                                        <td ><label for="jawapan{{$jwpnMedan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase;">
+                                                {{$jwpnMedan->medan->nama}}
+                                                @if ($jwpnMedan->medan->pilihan == "required")
+                                                    <span style="color: red;">*</span> 
+                                                @endif
+                                            </label>
+                                        </td>
+                                        <td style="display:flex;">
+                                            <form action="/user/borang_app/nilai_Geran/update" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="medanID" value="{{$jwpnMedan->id}}">
+                                                <input style="border: 2px solid #ced4da;" class="form-control" value="{{$jwpnMedan->jawapan}}" name="jawapan" maxlength="{{$jwpnMedan->medan->max}}" minlength="{{$jwpnMedan->medan->min}}"><br>
+                                                <button type="submit" class="btn btn-primary">Kemaskini</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+                                @else
                                 <tr>
                                     <td ><label for="jawapan{{$jwpnMedan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase;">
                                             {{$jwpnMedan->medan->nama}}
@@ -93,6 +114,7 @@
                                         <input style="border: 2px solid #ced4da;" class="form-control" value="{{$jwpnMedan->jawapan}}" id="jawapan{{$jwpnMedan->id}}" readonly><br>
                                     </td>
                                 </tr>
+                                @endif
                             @endif
                         @endforeach    
                     </tr>
@@ -108,6 +130,7 @@
                             <th class="perkara"><h5 class="card-title mb-0">JENIS PERKARA</h5></th>
                             <th class="perkara"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
                             <th class="perkara"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
+                            <th class="perkara"><h5 class="card-title mb-0">JUMLAH KOS (RM)</h5></th>
                         </tr>
                         <tbody>
                           @foreach($items as $item)
@@ -115,6 +138,7 @@
                             <td class="perkara">{{$item->Perkara_Pemohonan->nama}}</td>
                             <td class="perkara">{{$item->nama}}</td>
                             <td class="perkara">{{$item->jumlah}}</td>
+                            <td class="perkara">{{$item->harga}}</td>
                             @endforeach
                         </tbody>
                     </table>

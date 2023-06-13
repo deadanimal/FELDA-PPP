@@ -209,6 +209,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/borang_app/list', [BorangController::class, 'borangList_app']);
     Route::get('/user/borang_app/{borang_id}/user_list', [BorangController::class, 'borangApp_list']);
     Route::get('/user/borang_app/{borang_id}/{jawapan_id}/view/{level_app}', [BorangController::class, 'borangApp_view']);
+    Route::put('/user/borang_app/nilai_Geran/update', [BorangController::class, 'geran_update']);
     Route::get('/user/borang_app/pdf', [BorangController::class, 'borangApp_pdf']);
     Route::post('/user/borang_app/list/search', [BorangController::class, 'borangApp_search']);
     Route::post('/user/borang_app/update', [BorangController::class, 'borangApp_update']);

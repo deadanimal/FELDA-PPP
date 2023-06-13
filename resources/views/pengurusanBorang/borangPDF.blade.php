@@ -95,16 +95,18 @@
             @endphp
                 <table class="table table-bordered w-100">
                     <tr>
-                        <th style="text-align: center"><h5 class="card-title mb-0">JENIS PERKARA</h5></th>
-                        <th style="text-align: center"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
-                        <th style="text-align: center"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
+                        <th class="perkara"><h5 class="card-title mb-0">JENIS PERKARA</h5></th>
+                        <th class="perkara"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
+                        <th class="perkara"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
+                        <th class="perkara"><h5 class="card-title mb-0">JUMLAH KOS (RM)</h5></th>
                     </tr>
                     <tbody>
-                        @foreach($items as $item)
-                        <tr id="row">
+                      @foreach($items as $item)
+                      <tr id="row">
                         <td class="perkara">{{$item->Perkara_Pemohonan->nama}}</td>
                         <td class="perkara">{{$item->nama}}</td>
                         <td class="perkara">{{$item->jumlah}}</td>
+                        <td class="perkara">{{$item->harga}}</td>
                         @endforeach
                     </tbody>
                 </table>

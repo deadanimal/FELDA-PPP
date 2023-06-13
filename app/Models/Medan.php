@@ -21,5 +21,9 @@ class Medan extends Model
     public function checkbox() {
         return $this->hasMany(checkbox::class);
     }
+
+    public function medanCategory() {
+        return $this->belongsTo(medanCategory::class, 'category_id');
+    }
     
 }

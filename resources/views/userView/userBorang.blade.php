@@ -109,7 +109,7 @@
                                             @if ($medan->datatype == "string")
                                                 type="text" 
                                             @else
-                                                type="number" step="any"
+                                                 type="text" pattern="\d*" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                             @endif
 
                                             @if ($medan->pilihan == "required")
@@ -151,6 +151,7 @@
                                 <tr>
                                     <th style="text-align: center"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
                                     <th style="text-align: center"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
+                                    <th style="text-align: center"><h5 class="card-title mb-0">JUMLAH KOS (RM)</h5></th>
                                     <th style="width: 5%;"></th>
                                 </tr>
                                 <tbody id="borangField{{$loop->iteration}}">
@@ -206,6 +207,9 @@
                 '<td>'+
                     '<input type="Number" class="form-control border2" name="jumlah[]"required>'+
                 '</td>'+
+                '<td>'+
+                    '<input type="Number" class="form-control border2" name="kos[]"required>'+
+                '</td>'+
                 '<td style=" text-align:end;">'+
                     '<button class="btn btn-primary" type="button" id="DeleteRow1"><i class="fas fa-fw fa-trash-alt" ></i></button>'+
                 '</td>'+
@@ -225,6 +229,9 @@
             '</td>'+
             '<td>'+
                 '<input type="Number" class="form-control border2" name="jumlah[]"required>'+
+            '</td>'+
+            '<td>'+
+                '<input type="Number" class="form-control border2" name="kos[]"required>'+
             '</td>'+
             '<td style=" text-align:end;">'+
                 '<button class="btn btn-primary" type="button" id="DeleteRow2"><i class="fas fa-fw fa-trash-alt" ></i></button>'+

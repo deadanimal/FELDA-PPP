@@ -48,6 +48,9 @@
                       @break
                     @endif
                   @endforeach
+                @else
+                  <td class="text-center arial">Sedang di Proses</td>
+                  <td class="text-center arial"></td>
                 @endif
                 <td class="text-center arial">
                     @if ($borangJwpn->status == "Lulus")
