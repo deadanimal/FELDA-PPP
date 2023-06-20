@@ -304,14 +304,14 @@ class BorangController extends Controller
                 $total_dana += (double) $harga[$x];
             }
         }
-
+        
         $ans = new Jawapan;
         $ans->nama = $request->nama;
         $ans->user_id = Auth::user()->id;
         $ans->borang_id = $borangid;
         $ans->wilayah = $request->wilayah;
         $ans->rancangan = $request->rancangan;
-        $ans->permohonan_dana = $request->total_dana;
+        $ans->permohonan_dana = $total_dana;
         $ans->save();
 
         $jawapan_id= $ans->id;

@@ -73,6 +73,20 @@
                   @endif
               @endforeach    
               </tr>
+              <tr>
+                <td ><label for="rancangan" style="font-family:'Arial', sans-serif">NILAI PERMOHONAN DANA (RM)</label><br></td>
+                <td style="display:flex;"><input class="form-control" name="rancangan" id="rancangan" value="{{$borangJwpns->permohonan_dana}}" readonly style="text-transform: uppercase;"></td>
+              </tr>
+              @if ($borangJwpns->nilai_akhir != Null)
+                  <tr>
+                      <td><label for="ftotal" style="font-family:'Arial', sans-serif">NILAI DANA TAMBAHAN (RM)</label></td>
+                      <td style="display:flex;"><input class="form-control" name="ftotal" value="{{$borangJwpns->tambah_dana}}" readonly style="text-transform: uppercase;"></td>
+                  </tr>
+                  <tr>
+                      <td><label for="ftotal" style="font-family:'Arial', sans-serif">NILAI GERAN AKHIR (RM)</label></td>
+                      <td style="display:flex;"><input class="form-control" name="ftotal" value="{{$borangJwpns->nilai_akhir}}" readonly style="text-transform: uppercase;"></td>
+                  </tr>
+              @endif
           </table>
         </div>
       </div>
