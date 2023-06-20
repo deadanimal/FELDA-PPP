@@ -78,7 +78,7 @@ class UserController extends Controller
     }
     public function user_add_page()
     {
-        $wilayah = Wilayah::all()->pluck('nama','id');
+        $wilayah = Wilayah::orderBy('nama', 'ASC')->pluck('nama','id');
         $kategoriPengguna = KategoriPengguna::all();
  
         //for notification tugasan
@@ -93,7 +93,7 @@ class UserController extends Controller
     }
 
     public function getRancangan($wilayahid){
-        $rancangan= Rancangan::where('wilayah',$wilayahid)->pluck('nama','id');
+        $rancangan= Rancangan::where('wilayah',$wilayahid)->orderBy('nama', 'ASC')->pluck('nama','id');
         return json_encode($rancangan);
     }
 
@@ -137,7 +137,7 @@ class UserController extends Controller
 
     public function user_info()
     {
-        $wilayah = Wilayah::all()->pluck('nama','id');
+        $wilayah = Wilayah::orderBy('nama', 'ASC')->pluck('nama','id');
         $rancangan = Rancangan::all();
         $kategoriPengguna = KategoriPengguna::all();
 
@@ -276,7 +276,7 @@ class UserController extends Controller
     public function user_detail(Request $request)
     {
         $id = (int)$request->route('id');
-        $wilayah = Wilayah::all()->pluck('nama','id');;
+        $wilayah = Wilayah::orderBy('nama', 'ASC')->pluck('nama','id');;
         $kategoriPengguna = KategoriPengguna::all();
         $user = User::find($id);
 
@@ -1026,7 +1026,7 @@ class UserController extends Controller
 
         //for notification tugasan
         $noti = $this->notification();
-        $wilayah = Wilayah::all()->pluck('nama','id');
+        $wilayah = Wilayah::orderBy('nama', 'ASC')->pluck('nama','id');
 
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();

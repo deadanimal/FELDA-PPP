@@ -261,7 +261,7 @@ class BorangController extends Controller
     {
         $idBorang = (int)$request->route('idBorang');
         $borang = Borang::find($idBorang);
-        $wilayah = Wilayah::all()->pluck('nama','id');
+        $wilayah = Wilayah::orderBy('nama', 'ASC')->pluck('nama','id');
         $medans = Medan::where('borang_id', $borang->id)->orderBy("sequence", "ASC")->get();
         $perkaras = Perkara_Pemohonan::where('borang_id', $borang->id)->get();
         $lampirans = Lampiran::where('borang_id', $borang->id)->get();
@@ -300,7 +300,7 @@ class BorangController extends Controller
         //calculate permohonan dana
         $total_dana = 0;
         if ($harga != null) {
-            for($x=0; $x<$harga; $x++){
+            for($x=0; $x<count($harga); $x++){
                 $total_dana += (double) $harga[$x];
             }
         }
