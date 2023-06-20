@@ -66,38 +66,38 @@
               </thead>
               <tbody id="myTable">
                 @foreach ($borangJwpns as $borangJwpn)
-                  <tr 
+                  <tr class="bolder"
                   @if (!$lulusBorangs->isEmpty())
                     @foreach ($lulusBorangs as $result)
                       @if ($borangJwpn->id == $result->jawapan_id && $result->tahap_kelulusan->user_category == Auth::user()->kategoripengguna)
-                        style="background-color: antiquewhite;"
+                        style="text-shadow: none !important;"
                       @endif
                     @endforeach
                   @endif
                   >
-                          <td style="vertical-align: top; width:5%" class="text-center">  
-                            <input class="form-check-input text-center sub_chk" type="checkbox" value="{{$borangJwpn->id}}" name="LulusList[]" id="LulusList">
-                          </td>
-                          <td class="text-center Arial">{{$borangJwpn->user->nama}}</td>
-                          <td class="text-center Arial">{{$borangJwpn->jawapanMedan[0]->jawapan ?? ""}}</td>
-                          <td class="text-center Arial">{{$borangJwpn->wilayahs->nama}}</td>
-                          <td class="text-center Arial">{{$borangJwpn->rancangans->nama}}</td>
-                          <td class="text-center Arial" style="width: 25%">
-                          @if (!$lulusBorangs->isEmpty())
-                            @foreach ($lulusBorangs as $lulusBorang)
-                              @if ($borangJwpn->id == $lulusBorang->jawapan_id)
-                                {{$lulusBorang->keputusan}} Oleh {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}<br>
-                                @break
-                              @endif
-                            @endforeach
-                          @endif
-                          </td>
-                          <td class="text-center">
-                            <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->id}}/view/{{$tahapLulus}}" style="color: white; text-decoration:none;">
-                              Papar Borang Pemohon
-                            </a>
-                          </td>
-                        </tr>
+                    <td style="vertical-align: top; width:5%" class="text-center">  
+                      <input class="form-check-input text-center sub_chk" type="checkbox" value="{{$borangJwpn->id}}" name="LulusList[]" id="LulusList">
+                    </td>
+                    <td class="text-center Arial">{{$borangJwpn->user->nama}}</td>
+                    <td class="text-center Arial">{{$borangJwpn->jawapanMedan[0]->jawapan ?? ""}}</td>
+                    <td class="text-center Arial">{{$borangJwpn->wilayahs->nama}}</td>
+                    <td class="text-center Arial">{{$borangJwpn->rancangans->nama}}</td>
+                    <td class="text-center Arial" style="width: 25%">
+                    @if (!$lulusBorangs->isEmpty())
+                      @foreach ($lulusBorangs as $lulusBorang)
+                        @if ($borangJwpn->id == $lulusBorang->jawapan_id)
+                          {{$lulusBorang->keputusan}} Oleh {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}<br>
+                          @break
+                        @endif
+                      @endforeach
+                    @endif
+                    </td>
+                    <td class="text-center">
+                      <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->id}}/view/{{$tahapLulus}}" style="color: white; text-decoration:none;text-shadow: 0px 0px, 0px 0px, 0px 0px !important;">
+                        Papar Borang Pemohon
+                      </a>
+                    </td>
+                  </tr>
                 @endforeach
               </tbody>
             </table>
@@ -165,7 +165,9 @@ checkBoxes.change();
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <style>
-
+.bolder{
+  text-shadow: 0px 0.7px, 0.7px 0px, 0.7px 0.7px;
+}
   .Arial{
       font-family: 'Arial', sans-serif;
       text-transform: uppercase;

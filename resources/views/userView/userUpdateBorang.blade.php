@@ -33,53 +33,34 @@
                         <tr class="bdless">
                             <td class="bdless"><span class="c7">Ruj. Kami </span></td>
                             <td class="bdless"><span>:</span></td>
-                            <td class="bdless"><span class="c7">FELDA.400-6/1/6 JLD 2()</span></td>
+                            <td class="bdless"><span class="c7"> {{$borangJwpns->borangs->no_rujukan}}({{$borangJwpns->id}})</span></td>
                         </tr>
                         <tr class="bdless">
                             <td class="bdless"><span class="c7">Tarikh </span></td>
                             <td class="bdless"><span>:</span></td>
-                            <td class="bdless"><span class="c7"> 25 Julai 2022</span></td>
+                            <td class="bdless"><span class="c7">{{ date('j F Y') }}</span></td>
                         </tr>
                     </table>
                     <p class="c15"><span class="c7">{{$borangJwpns->user->nama}},</span></p>
                     <p class="c15"><span class="c37"></span></p>
-                    <div class="c3"><span class="c7">@if($jawapan_alamat != null){!! nl2br(e($jawapan_alamat->jawapan))  !!}@endif</span></div>
+                    <div class="c3"><span class="c7"><x-markdown>{!! nl2br(e($surat->address)) !!}</x-markdown></span></div>
                     <br>
-                    <p class="c8"><span class="c7">Tuan/Puan,</span></p>
+                    <p class="c8"><span class="c7">YBhg Datuk/Dato'/Tuan/Puan,</span></p>
                     <p class="c8 c35"><span class="c7"></span></p>
                     <p class="c32">
                         <span class="c10">{{$surat->title}}</span>
                     </p>
                     <p class="c8 c35"><span class="c7"></span></p>
                     <div class="c32">
-                        <x-markdown>{!!$surat_body!!}</x-markdown>
+                        <x-markdown>{!!$surat->body!!}</x-markdown>
                     </div>
-                    <p class="c8 c35 c42"><span class="c7"></span></p>
-                    <p class="c19"><span class="c7">Sekian.</span></p>
-                    <p class="c12"><span class="c7"></span></p>
-                    <p class="c19"><span class="c7">Saya yang menjalankan amanah,</span></p>
-                    <p class="c12"><span class="c7"></span></p>
-                    <p class="c12"><span class="c7"></span></p>
-                    <p class="c12"><span class="c7"></span></p>
-                    <p class="c39"><span class="c45">(HASRIN ISMAIL)</span></p>
-                    <p class="c39"><span class="c7">Pengarah</span></p>
-                    <p class="c39"><span class="c7">Jabatan Pembangunan Pertanian &amp; Ternakan</span></p>
-                    <p class="c39"><span class="c7">FELDA</span></p>
-                    <p class="c9"><span class="c7"></span></p>
-                    <p class="c19">
-                        <span class="c20">s.k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <span class="c2">Pengarah Wilayah</span>
-                    </p>
-                    <p class="c19">
-                        <span class="c20 c44">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FELDA Wilayah Mempaga</span>
-                    </p>
-                    <p class="c12"><span class="c7"></span></p>
-                    <p class="c12"><span class="c52 c60 c68"></span></p>
-                    <p class="c17"><span class="c37"></span></p>
-                    <p class="c35 c40"><span class="c7"></span></p>
-                    <div>
-                        <p class="c6 c35"><span class="c29"></span></p>
-                        <p class="c35 c66"><span class="c43"></span></p>
+                    @if ($surat->signature != null)
+                        <div class="c32">
+                            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path($surat->signature))) }}" style="width: 40%;">    
+                        </div>
+                    @endif
+                    <div class="c32">
+                        <x-markdown>{!! nl2br(e($surat->signatory))!!}</x-markdown>
                     </div>
                 </div>
             </div>

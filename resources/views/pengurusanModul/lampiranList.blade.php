@@ -4,154 +4,181 @@
 @section('innercontent')
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
 <div class="container-fluid">
 
   <div class="header">
     <h1 class="header-title">
-        PERMOHONAN {{$jawapans->nama}}
+        BORANG {{$borang->namaBorang}}
     </h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/moduls">Modul </a></li>
+          <li class="breadcrumb-item"><a href="/moduls/{{$borang->proses->Projek->id}}/projek">{{$borang->proses->Projek->modul->nama}}</a></li>
+          <li class="breadcrumb-item"><a href="/moduls/{{$borang->proses->Projek->id}}/proses">{{$borang->proses->Projek->nama}}</a></li>
+          <li class="breadcrumb-item"><a href="/moduls/{{$borang->proses->Projek->modul->id}}/{{$borang->proses->id}}/borang">{{$borang->proses->nama}}</a></li>
+          <li class="breadcrumb-item"><a href="/moduls/{{$borang->proses->Projek->modul->id}}/{{$borang->proses->id}}/borang/{{$borang->id}}">{{$borang->namaBorang}}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Lampiran</li>
+        </ol>
+    </nav>
   </div>
+  
   <div class="row">
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-            <h3 style="text-transform: uppercase;">PERMOHONAN {{$jawapans->borangs->namaBorang}}</h3>
+          <table style="width: 100%">
+            <tr>
+              <td><h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Senarai Lampiran</h1></td>
+              <td>
+                <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAddTugasan">
+                  <div class="frame9403-frame7293">
+                  <span class="frame9403-text21"><span>Cipta Lampiran</span></span>
+                  <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                  </div>
+                </button>
+              </td>
+            </tr>
+          </table>
         </div>
-        <div class="card-body">
-            <table class="w-100">
-                <tr>
-                    <td>
+
+        {{-- ModalTambah Lampiran --}}
+        <div class="modal fade" id="exampleModalAddTugasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="min-width: fit-content;">
+              <div class="modal-header">
+                <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA LAMPIRAN</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form action="/moduls/lampiran/add" method="POST">
+                @csrf
+                <div class="modal-body">
+                  <table class="w-100">
+                    <tr>
+                      <td>
                         <label for="nama" class="frame9402-text04">
-                            <strong>Nama</strong>
+                          <strong>Nama Lampiran</strong>
                         </label>
-                    </td>
-                    <td><input type="text" class="form-control frame9402-kotaknama" id="nama" value="{{$jawapans->nama}}" readonly></td>                
-                </tr>
-                <tr> 
-                    <td>
-                        <label for="kod_projek" class="frame9402-text04">
-                            <strong>Kod Projek</strong>
-                        </label>
-                    </td>
-                    <td><input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->kod_projek}}" readonly></td> 
-                </tr>
-                <tr> 
-                    <td>
-                        <label for="kod_projek" class="frame9402-text04">
-                            <strong>Wilayah</strong>
-                        </label>
-                    </td>
-                    <td><input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->wilayahs->nama}}" readonly></td> 
-                </tr>
-                <tr> 
-                    <td>
-                        <label for="kod_projek" class="frame9402-text04">
-                            <strong>Rancangan</strong>
-                        </label>
-                    </td>
-                    <td><input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->rancangans->nama}}" readonly></td> 
-                </tr>
-            </table>
-        </div>
-      </div>
-      @if (!$surats->isEmpty())
-        <div class="card">
-          <div class="card-body">
-            <table class="w-100">
-              <tr>
-                @foreach ($surats as $surat)
-                  <td>
-                    <form action="/user/borang_app/surat/view" method="get" style="margin-bottom:0px;margin-right:2%;">
-                      <input type="hidden" name="jawapan_id" value="{{$jawapans->id}}">
-                      <input type="hidden" name="surat_id" value="{{$surat->id}}">
-                      
-                      <button class="btn frame9403-frame7445" style="max-width:none; margin-right:auto;">
-                        <div class="frame9403-frame7293">
-                          <span class="frame9403-text21">LIHAT SURAT {{$surat->jenis}}</span>
-                        </div>
-                      </button>
-                    </form>
-                  </td>
-                @endforeach
-              </tr>
-            </table>
+                      </td>
+                      <td>
+                        <input type="text" class="frame9402-kotaknamaBorang" id="nama" placeholder="Nama Lampiran" name="nama" required oninput="this.value = this.value.toUpperCase()">
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <input type="hidden" value="{{$borang->id}}" name="borangId">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button class="btn btn-primary">Cipta</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      @endif
-      <div class="card">
-        <div class="card-header">
-            <button class="frame9403-frame7445"  type="button" id="rowAdder">
-                <div class="frame9403-frame7293">
-                    <span class="frame9403-text21"><span>Tambah Kategori Pengguna</span></span>
-                    <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                </div>
-            </button>
+
+        <div class="card-body">
+            {{-- senarai Tugasan --}}
+            @if (!$lampirans->isEmpty())
+            <table class="table table-bordered table-striped w-100 arial">
+            <thead class="text-white bg-primary w-100 arial">
+                <tr class="text-center">
+                    <th scope="col" class="text-center">Nama Lampiran</th>
+                    <th scope="col">Tindakan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($lampirans as $lampiran)
+                <tr>
+                    <td class="text-center arial" style="width:50%">{{$lampiran->nama}}</td>
+                    <td class="text-center arial">
+
+                        <button class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Kemaskini" data-toggle="modal" data-target="#exampleModaledit{{$lampiran->id}}"><img src="/SVG/pencil.svg" title="kemaskini"/></button>
+                        
+                        <div class="modal fade" id="exampleModaledit{{$lampiran->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Kemaskini Lampiran</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="/moduls/lampiran/update" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-body">
+                                        <table class="table table-borderless" style="border:0px">
+                                            <tr style="background-color:#FFFFFF;border:0px;">
+                                                <td style="border:0px">
+                                                <label for="nama" class="frame9402-text04">
+                                                    <strong>Nama Lampiran</strong>
+                                                </label>
+                                                </td>
+                                                <td style="border:0px">
+                                                <input type="text" class="frame9402-kotaknamaBorang" id="nama" value="{{$lampiran->nama}}" name="nama" required oninput="this.value = this.value.toUpperCase()">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <input type="hidden" value="{{$lampiran->id}}" name="lampiranID">
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button>   
+                                        <button class="btn btn-danger">KEMASKINI</button>
+                                    </div>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModaltugas{{$lampiran->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+        
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModaltugas{{$lampiran->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Padam Lampiran {{$lampiran->nama}}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Anda Pasti Mahu Padam Lampiran {{$lampiran->nama}}?<p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                                    <form method="post" action="/moduls/lampiran/delete">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="hidden" value="{{$lampiran->id}}" name="lampiranID">
+                                        <button class="btn btn-danger">YA</button>
+                                    </form>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach 
+            </tbody>
+            </table>
+            @else
+            <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Lampiran </h2>
+            @endif
         </div>
-        <form action="/user/tugasan/send/generate_one" method="post">
-            @csrf
-            <div class="card-body">
-                <table style="overflow: scroll; max-height: 750px; width:100%;" id="borangField" class="draggable-table">
-                    <tbody class="row_drag">
-                
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-footer">
-                <input type="hidden" id="count" name="count" value="">
-                <input type="hidden" name="jawapan_id" value="{{$jawapans->id}}"> 
-                <button type="submit" class="frame9403-frame7445" id="hantar" disabled="disabled">
-                    <div class="frame9403-frame7293">
-                        <span class="frame9403-text21"><span>Hantar</span></span>
-                        <img src="/SVG/kemaskini.svg" class="frame9403-group7527">
-                    </div>
-                </button>
-            </div>
-        </form>
       </div>
     </div>
   </div>
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
-var count = 0;
-$("#rowAdder").click(function () {
-    count +=1;
-        newRowAdd =
-        '<tr class="frame9402-input" id="row">'+
-            '<td style="display:flex;"><span style="text-align:right;margin-right:2%;">Kategori Pengguna</span>'+
-                '<select type="text" name="category[]" class="form-select frame9402-kotaknama">'+
-                    '@foreach($kategoriPengguna as $kategoriPengguna)'+
-                    '<option value="{{$kategoriPengguna->id}}">{{$kategoriPengguna->nama}}</option>'+
-                    '@endforeach'+
-                '</select>'+
-                '<button class="frame9402-rectangle828245" id="DeleteRow"><img src="/SVG/bin.svg"/></button>'+
-            '</td>'+
-        '</tr>';
-        $('#borangField').append(newRowAdd);
-        document.getElementById("count").value = count;
-        
-        var cansubmit = (count > 0);
-        document.getElementById("hantar").disabled = !cansubmit;
-    });
- 
-$("body").on("click", "#DeleteRow", function () {
-  $(this).parents("#row").remove();
-  count -=1;
-  document.getElementById("count").value = count;
 
-  var cansubmit = (count > 0);
-  document.getElementById("hantar").disabled = !cansubmit;
+<script src="/js/jquery.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-});
-$("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
-</script>
 <style>
   .arial{
       font-family: 'Arial', sans-serif;
-      text-transform: uppercase;
   }
-  
   .frame9402-frame9402 {
     width: 100%;
     display: flex;
@@ -312,7 +339,8 @@ $("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
     text-decoration: none;
   }
   .frame9402-kotaknama {
-    width: -webkit-fill-available;
+    width: 95%;
+    height: 80%;
     position: relative;
     box-sizing: content-box;
     border-color: rgba(140, 38, 60, 1);
@@ -320,8 +348,7 @@ $("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
     border-width: 0.865405261516571px;
     margin-right: 0;
     border-radius: 3.461621046066284px;
-    margin-bottom: 1%;
-    margin-top: 1%;
+    margin-bottom: 0;
     font-family: 'Arial', sans-serif;
     font-size: 18px;
     padding-left:10px;
@@ -329,14 +356,11 @@ $("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
     background-color: #FFFFFF;  
     text-transform: uppercase;
   }
-  .frame9403-frame7445:disabled {
-    opacity: 0.5;
-    cursor: default;
-  }
   .frame9403-frame7445 {
       width: auto;
     height: 50px;
     display: flex;
+    max-width: 250px;
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
     box-sizing: border-box;
     padding-top: 0px;
@@ -348,6 +372,7 @@ $("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
     justify-content: center;
     background-color: #A2335D;
     cursor: pointer;
+    align-self: flex-end;
     margin-left: auto;
     margin-right: 10px;
   }
@@ -451,7 +476,6 @@ $("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
     margin-right: 0;
     border-radius: 3.461621046066284px;
     margin-top: 10px;
-    margin-bottom: 30px;
     font-family: 'Arial', sans-serif;
     font-size: 18px;
     padding-left:10px;  
@@ -507,7 +531,6 @@ $("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
     padding-right: 20px;
   }
   .frame9402-text31 {
-    display: inline;
     color: #494949;
     width: 50%;
     height: auto;
@@ -550,16 +573,24 @@ $("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
     margin-bottom: 0;
     justify-content: center;
   }
-  
+  .frame9402-rectangle828246 {
+    width: 35px;
+    height: 30px;
+    padding: 0px;
+    position: relative;
+    box-sizing: border-box;
+    background-color: transparent;
+    border-color: transparent;
+    cursor:pointer;
+  }
   .frame9402-rectangle828245 {
-  width: 32px;
-  height: 31px;
-  margin: auto 0px;
-  box-sizing: border-box;
-  background-color: transparent;
-  border: none;
-  cursor:pointer;
-}
+    width: 32px;
+    height: 30px;
+    position: relative;
+    box-sizing: border-box;
+    margin-right: 10px;
+    border: none;
+  }
   .frame9402-rectangle8282452 {
     width: 32px;
     height: 30px;

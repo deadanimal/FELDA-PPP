@@ -4,13 +4,17 @@
 
 @section('innercontent')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+  
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  
+    <script type="text/javascript" src={{ URL::asset('js/jquery.signature.min.js') }}></script>
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
             SURAT BORANG {{$borang->namaBorang}}
         </h1>
-        <a href="/moduls/{{$borang->proses->Projek->modul_id}}/{{$borang->proses_id}}/borang" class="frame9403-frame7445" style="margin-left:0px;">
+        <a href="/modul/borang_app/surat/{{$borang->id}}/list" class="frame9403-frame7445" style="margin-left:0px;">
             <div class="frame9403-frame7293">
               <span class="frame9403-text21"><span>Kembali</span></span>
             </div>
@@ -29,8 +33,9 @@
                             </td>
                             <td class="text-end" style="border:0px">
                                 @if ($surat !=null)
-                                    <form action="/moduls/borang/suratKelulusan/view">
+                                    <form action="/modul/borang_app/surat/view">
                                         <input type="hidden" name="suratID" value="{{$surat->id}}">
+                                        <input type="hidden" name="borangID" value="{{$borang->id}}">
                                         <button class="btn btn-primary btn-lg" style="background-color: #A2335D"><span class="arial">Papar Surat</span></button>
                                     </form>
                                 @endif
@@ -40,7 +45,7 @@
                 </div>
                 <div class="card-body">
                     @if ($surat !=null)
-                        <form action="/modul/borang_app/surat/update" method="POST" id="form">
+                        <form action="/modul/borang_app/surat/update" method="POST" onsubmit="return onSubmit(this)" id="form">
                             @csrf
                             @method('PUT')
                             <label for="title" class="form-label">Tajuk Surat</label>
@@ -84,62 +89,48 @@
                                     </x-markdown>
                                 </div>
                             </div>
+                            <br>
+                            <label class="form-label">Tandatangan</label>
+                            @if($surat->signature)
+                                <div class="row">
+                                    <div class="col-md">
+                                        <img src="{{$surat->signature ?? ""}}">
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="row">
+                                <div class="col-lg">
+                                    <div id="sig" ></div>
+                                </div>
+                                <div class="col-lg">                            
+                                    <button id="clear" class="btn btn-danger">Padam Tandatangan</button>
+                                </div>
+                            </div>
+                            <br/>
+                            <textarea id="signature64" name="signed" style="display: none"></textarea>
+                            <br/>
+                            <textarea rows="4" cols="20" type="text" class="form-control" name="signatory" id="name" oninput="this.value = this.value.toUpperCase()">{{$surat->signatory}}</textarea>
                             <input type='hidden' name="body" id="content">
                             <div class="text-end">
                                 <input type="hidden" name="suratID" value="{{$surat->id}}">
-                                <input type="hidden" name="borangId" value="{{$borang->id}}">
                                 <button type="submit" class="btn btn-primary btn-lg" style="margin-right: 4%; margin-top:1%;"> Kemaskini</button>
                             </div>
                         </form>
-                    @else
-                        <form action="/modul/borang_app/surat/add" method="POST" id="form">
-                            @csrf
-                            <label for="title" class="form-label">Tajuk Surat</label>
-                            <input type="text" class="form-control" name="title" id="title" placeholder="Tajuk Surat" required  oninput="this.value = this.value.toUpperCase()">
-                            
-                            <br>                                
-                            <label for="kandungan_surat" class="form-label">Kandungan Surat</label>
-                            <div class="clearfix">
-                                <div id="quill-toolbar">
-                                    <span class="ql-formats">
-                                        <select class="ql-font"></select>
-                                        <select class="ql-size"></select>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <button class="ql-bold"></button>
-                                        <button class="ql-italic"></button>
-                                        <button class="ql-underline"></button>
-                                        <button class="ql-strike"></button>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <button class="ql-script" value="sub"></button>
-                                        <button class="ql-script" value="super"></button>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <button class="ql-list" value="ordered"></button>
-                                        <button class="ql-list" value="bullet"></button>
-                                    </span>
-                                    <span class="ql-formats">
-                                        <button class="ql-clean"></button>
-                                    </span>
-                                </div>
-                                <div id="editor"></div>
-                            </div>
-                            <input type='hidden' name="body" id="content">
-                            <div class="text-end">
-                                <input type="hidden" name="borangId" value="{{$borang->id}}">
-                                <input type="hidden" name="borangId" value="{{$borang->id}}">
-                                <button type="submit" class="btn btn-primary btn-lg" style="margin-right: 4%; margin-top:1%;" id="simpan" disabled="disabled">Simpan</button>
-                            </div>
-                        </form>
                     @endif
-                    
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <style>
+    .kbw-signature { width: 100%; height: 200px;}
+        #sig canvas{
+            width: 100% !important;
+            height: auto;
+            border: black solid;
+    }
+
     .arial{
         font-size: 16px;
         font-family: 'Arial', sans-serif;
@@ -155,7 +146,7 @@
 
     .frame9403-frame7445 {
       width: auto;
-    height: 6%;
+    height: 4%;
     display: flex;
     max-width: 10%;
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
@@ -195,6 +186,14 @@
     text-decoration: none;
   }
 </style>
+    <script type="text/javascript">
+    var sig = $('#sig').signature({syncField: '#signature64', syncFormat: 'PNG'});
+    $('#clear').click(function(e) {
+        e.preventDefault();
+        sig.signature('clear');
+        $("#signature64").val('');
+    });
+</script>
 {{-- <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>  	
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/plugins/markdown.min.js"></script> --}}
 <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
@@ -232,4 +231,5 @@
     
 });
 </script>
+
 @endsection

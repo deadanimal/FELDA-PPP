@@ -409,6 +409,7 @@ class ModulController extends Controller
         $modul = Modul::find($idModul);
         $tugasans = Tugasan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
         $jenisTernakan = jenis_ternakan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
+        
         $user_Categories = KategoriPengguna::all();
         
         //for notification tugasan
@@ -965,7 +966,6 @@ class ModulController extends Controller
         $tugasan = new Tugasan;
         $tugasan->perkara = $request->perkara;
         $tugasan->jenis_input = $request->jenis;
-        $tugasan->userCategory_id = $request->category;
         $tugasan->proses_id = $request->prosesId;
         $tugasan->save();
 
@@ -986,7 +986,6 @@ class ModulController extends Controller
         $tugasan = Tugasan::find($request->tugasanID);
         $tugasan->perkara = $request->perkara;
         $tugasan->jenis_input = $request->jenis;
-        $tugasan->userCategory_id = $request->category;
         $tugasan->save();
 
         $audit = new Audit;

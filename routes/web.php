@@ -161,7 +161,13 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/moduls/borang/checkbox/delete', [BorangController::class, 'checkbox_delete']);
 
     Route::put('/moduls/borang/consent/add', [BorangController::class, 'borangConsent_add']);
-    
+    Route::put('/moduls/borang/noRujukan/add', [BorangController::class, 'borangRujukan_add']);
+
+    Route::get('/moduls/lampiran/{borang_id}/list', [BorangController::class, 'borangLampiran_list']);
+    Route::post('/moduls/lampiran/add', [BorangController::class, 'borangLampiran_add']);
+    Route::put('/moduls/lampiran/update', [BorangController::class, 'borangLampiran_update']);
+    Route::delete('/moduls/lampiran/delete', [BorangController::class, 'borangLampiran_delete']);
+
     Route::get('/moduls/borang/acceptance', [BorangController::class, 'acceptance_list']);
     Route::post('/moduls/borang/acceptance/add', [BorangController::class, 'acceptance_add']);
     Route::put('/moduls/borang/acceptance/edit', [BorangController::class, 'acceptance_edit']);
@@ -172,10 +178,10 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/moduls/borang/kelulusan/update', [BorangController::class, 'tahapKelulusan_update']);
     Route::delete('/moduls/borang/kelulusan/delete', [BorangController::class, 'tahapKelulusan_delete']);
 
-    Route::get('/moduls/borang/suratKelulusan', [BorangController::class, 'surat_kelulusan']);
-    Route::post('/moduls/borang/suratKelulusan/add', [BorangController::class, 'suratKelulusan_add']);
-    Route::put('/moduls/borang/suratKelulusan/update', [BorangController::class, 'suratKelulusan_update']);
-    Route::get('/moduls/borang/suratKelulusan/view', [BorangController::class, 'suratKelulusan_view']);
+    // Route::get('/moduls/borang/suratKelulusan', [BorangController::class, 'surat_kelulusan']);
+    // Route::post('/moduls/borang/suratKelulusan/add', [BorangController::class, 'suratKelulusan_add']);
+    // Route::put('/moduls/borang/suratKelulusan/update', [BorangController::class, 'suratKelulusan_update']);
+    // Route::get('/moduls/borang/suratKelulusan/view', [BorangController::class, 'suratKelulusan_view']);
 
     // Route::post('/moduls/tugasan/add', [ModulController::class, 'tugasan_add']);
 
@@ -206,12 +212,14 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/moduls/jenisKemas/aktiviti/Param/update', [ModulController::class, 'Param_update']);
     Route::delete('/moduls/jenisKemas/aktiviti/Param/delete', [ModulController::class, 'Param_delete']);
 
-    Route::get('/user/borang_app/list', [BorangController::class, 'borangList_app']);
+    // Route::get('/user/borang_app/list', [BorangController::class, 'borangList_app']);
     Route::get('/user/borang_app/{borang_id}/user_list', [BorangController::class, 'borangApp_list']);
     Route::get('/user/borang_app/{borang_id}/{jawapan_id}/view/{level_app}', [BorangController::class, 'borangApp_view']);
     Route::put('/user/borang_app/nilai_Geran/update', [BorangController::class, 'geran_update']);
-    Route::get('/user/borang_app/pdf', [BorangController::class, 'borangApp_pdf']);
-    Route::post('/user/borang_app/list/search', [BorangController::class, 'borangApp_search']);
+    Route::get('/user/borang_app/tawaran/pdf', [BorangController::class, 'borangApp_pdf']);
+    Route::get('/user/borang_app/surat/view', [BorangController::class, 'borangApp_surat']);
+
+    // Route::post('/user/borang_app/list/search', [BorangController::class, 'borangApp_search']);
     Route::post('/user/borang_app/update', [BorangController::class, 'borangApp_update']);
     Route::post('/user/borang_app/{borang_id}/lulusAll', [BorangController::class, 'borangApp_all']);
 
@@ -277,9 +285,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/tugasan/send/generate_one', [UserController::class, 'generate_one']);
     Route::post('/user/tugasan/send/generate_all', [UserController::class, 'generate_all']);
 
-    Route::get('/modul/borang_app/surat/{borang_id}/template', [UserController::class, 'kontrak_surat']);
-    Route::post('/modul/borang_app/surat/add', [UserController::class, 'kontrak_addSurat']);
-    Route::put('/modul/borang_app/surat/update', [UserController::class, 'kontrak_updateSurat']);
+    Route::get('/modul/borang_app/surat/{borang_id}/list', [BorangController::class, 'surat_list']);
+    Route::get('/modul/borang_app/surat/{surat_id}/template', [BorangController::class, 'surat_one']);
+    Route::post('/modul/borang_app/surat/add', [BorangController::class, 'surat_add']);
+    Route::put('/modul/borang_app/surat/update', [BorangController::class, 'surat_update']);
+    Route::put('/modul/borang_app/surat/delete', [BorangController::class, 'surat_delete']);
+    Route::get('/modul/borang_app/surat/view', [BorangController::class, 'surat_view']);
 
     // Route::get('/moduls/tugasan/{borang_id}/List', [ModulController::class, 'TugasanPengguna_list']);
     Route::post('/moduls/borang/tugasan/add', [ModulController::class, 'Tugas_add']);
@@ -288,7 +299,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user/projek/{jawapan_id}/list', [UserController::class, 'TugasanProjek_list']);
 
-    Route::put('/user/projek/tugasan/jawapan/update', [UserController::class, 'TugasanJawapan_update']);
+    Route::put('/user/projek/tugasan/jawapan/update', [UserController::class, 'Jawapan_update']);
 
     Route::get('/user/projek/tugasan/{tugasan_id}/{jawapan_id}/list', [UserController::class, 'Tugasan_list']);
     Route::post('/user/projek/tindakan/text/add', [UserController::class, 'TindakanText_add']);

@@ -110,7 +110,7 @@
                 </form>
                 
                 {{-- Surat --}}
-                <td class="frame9402-frame8727">
+                {{-- <td class="frame9402-frame8727">
                   <form action="/moduls/borang/suratKelulusan" method="GET" style="margin-bottom: 0px;">
                     <button type="submit" class="frame9402-rectangle828246" style="margin-left: auto; margin-right:auto;">
                       <input type="hidden" name="tahapKelulusanID" value="{{$tKelulusan->id}}">
@@ -120,7 +120,7 @@
                       <i class="fas fa-fw fa-envelope-open-text" style="color: #CD352A; font-size: 1.8em"></i>
                     </button>
                   </form>
-                </td>
+                </td> --}}
 
                 {{-- Delete Kelulusan --}}
                 <td class="frame9402-frame8727">

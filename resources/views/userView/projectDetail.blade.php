@@ -7,7 +7,7 @@
                 <tr>
                     <td>
                         <h1 class="header-title">
-                            PROJEK {{$jawapan->borangs->namaBorang}}
+                            PROFIL PROJEK {{$jawapan->borangs->namaBorang}}
                         </h1>
                     </td>
                     <td>
@@ -28,6 +28,32 @@
             </table>
             
         </div>
+        @if (!$surats->isEmpty())
+            <div class="row">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="w-100">
+                            <tr>
+                                @foreach ($surats as $surat)
+                                    <td>
+                                        <form action="/user/borang_app/surat/view" method="get" style="margin-bottom:0px;margin-right:2%;">
+                                            <input type="hidden" name="jawapan_id" value="{{$jawapan->id}}">
+                                            <input type="hidden" name="surat_id" value="{{$surat->id}}">
+                                            
+                                            <button class="btn frame9403-frame7445" style="max-width:none; margin-right:auto;">
+                                                <div class="frame9403-frame7293">
+                                                    <span class="frame9403-text21">LIHAT SURAT {{$surat->jenis}}</span>
+                                                </div>
+                                            </button>
+                                        </form>
+                                    </td>
+                                @endforeach
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-12">
                 <div class="card">

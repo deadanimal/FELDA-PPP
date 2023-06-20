@@ -16,4 +16,8 @@ class Surat extends Model
     public function hantarSurat(){
         return $this->hasOne(Hantar_Surat::class);
     }
+
+    public function borang(){
+        return $this->belongsTo(Borang::class);
+    }
 }

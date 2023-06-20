@@ -576,6 +576,7 @@ class UserController extends Controller
         }
         
         $jawapan_rancangan = Jawapan::where('status','Penerimaan')->where('rancangan', Auth::user()->rancangan)->has('Pemohonan_Peneroka')->has('hantarSurat')->get();
+        $borangKelulusan = Borang::with('ProsesKelulusan')->whereHas('jwpn')->whereRelation('ProsesKelulusan.TahapKelulusan', 'user_category', Auth::user()->kategoripengguna)->get();
 
         $date = Carbon::now();
         $tugasans_noti= Senarai_tugasan::where('user_id', $user)->where('due_date', '>=', $date->format('Y-m-d'))->count();
@@ -587,7 +588,7 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('userView.userTugasan', compact('jawapan_rancangan','noti','borangs_noti','tugasans_noti','aduans_noti','hantarSurats','borangs','aduans','tugasans', 'menuModul', 'menuProses', 'menuProjek'));
+        return view('userView.userTugasan', compact('borangKelulusan','jawapan_rancangan','noti','borangs_noti','tugasans_noti','aduans_noti','hantarSurats','borangs','aduans','tugasans', 'menuModul', 'menuProses', 'menuProjek'));
          
     }
 
@@ -677,7 +678,8 @@ class UserController extends Controller
 
         $jawapan = Jawapan::find($jawapanId);
         $jawapanMedan = Jawapan_medan::where('jawapan_id', $jawapan->id)->get();
-        
+        $surats = Surat::where('borang_id', $jawapan->borangs->id)->get();
+
         //for notification tugasan
         $noti = $this->notification();
 
@@ -685,7 +687,7 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('userView.projectDetail', compact('noti','jawapan', 'jawapanMedan','menuModul', 'menuProses', 'menuProjek'));
+        return view('userView.projectDetail', compact('surats','jawapan', 'jawapanMedan','noti','menuModul', 'menuProses', 'menuProjek'));
     }   
     
     public function viewTarik_diri(Request $request)
@@ -1269,7 +1271,7 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pegawaiKontrak.userList', compact('noti','kategoriPengguna','borangs','jawapans','menuModul', 'menuProses', 'menuProjek'));
+        return view('pegawaiKontrak.userList', compact('kategoriPengguna','borangs','jawapans','noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function kontrak_user(Request $request)
@@ -1278,6 +1280,8 @@ class UserController extends Controller
 
         $jawapans = Jawapan::find($jawapan_id);
         $kategoriPengguna = KategoriPengguna::all();
+        $surats = Surat::where('borang_id', $jawapans->borangs->id)->get();
+
         //for notification tugasan
         $noti = $this->notification();
 
@@ -1285,7 +1289,7 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pegawaiKontrak.oneUser', compact('noti','kategoriPengguna','jawapans','menuModul', 'menuProses', 'menuProjek'));
+        return view('pegawaiKontrak.oneUser', compact('surats','kategoriPengguna','jawapans','noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function generate_one(Request $request)
@@ -1323,61 +1327,15 @@ class UserController extends Controller
 
         return redirect('/user/tugasan/petiMasuk/'.$borang_id.'/list');
     }
-
-    public function kontrak_surat(Request $request)
-    { 
-        $borang_id = (int) $request->route('borang_id');
-       
-        $borang = Borang::with('proses', 'proses.Projek')->where('id', $borang_id)->first();
-        $surat = Surat::where('borang_id',$borang_id)->first();
-
-        //for notification tugasan
-        $noti = $this->notification();
-
-        $menuModul = Modul::where('status', 'Go-live')->get();
-        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
-        $menuProjek = Projek::where('status', "Aktif")->get();
-
-        return view('pegawaiKontrak.surat', compact('noti','borang','surat','menuModul', 'menuProses', 'menuProjek'));
-    }
-    
-    public function kontrak_addSurat(Request $request)
-    { 
-        $borang_id = $request->borangId;
-
-        $surat = new Surat;
-        $surat->title = $request->title;
-        $surat->body = $request->body;
-        $surat->borang_id = $borang_id;
-        $surat->save();
-
-        Alert::success('Cipta Templat Surat Berjaya.', 'Templat surat telah berjaya dicipta.');   
-
-        return redirect('/modul/borang_app/surat/'.$borang_id.'/template');
-    }
-
-    public function kontrak_updateSurat(Request $request)
-    { 
-        $borang_id = $request->borangId;
-
-        $surat = Surat::find($request->suratID);
-        $surat->title = $request->title;
-        $surat->body = $request->body;
-        $surat->borang_id = $borang_id;
-        $surat->save();
-
-        Alert::success('Kemaskini Templat Surat Berjaya.', 'Templat surat telah berjaya dikemaskini.');   
-
-        return redirect('/modul/borang_app/surat/'.$borang_id.'/template');
-    }
     
     public function TugasanProjek_list(Request $request)
     {        
         $jawapan_id = (int)$request->route('jawapan_id'); 
         $jawapan = Jawapan::with('borangs', 'borangs.proses')->where('id',$jawapan_id)->first(); 
 
-        $tugasans = Tugasan::where('proses_id',$jawapan->borangs->proses_id)->where('userCategory_id', Auth::user()->kategoripengguna)->get();
+        $tugasans = Tugasan::where('proses_id',$jawapan->borangs->proses_id)->get();
         $items = Pemohonan_Peneroka::where('jawapan_id', $jawapan_id)->get();
+        $surats = Surat::where('borang_id', $jawapan->borang_id)->get();
 
         //for notification tugasan
         $noti = $this->notification();
@@ -1386,34 +1344,61 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('userView.senaraiProjekTugasan', compact('items','jawapan','tugasans','noti','menuModul', 'menuProses', 'menuProjek'));
+        return view('userView.senaraiProjekTugasan', compact('surats','items','jawapan','tugasans','noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
-    public function TugasanJawapan_update(Request $request)
+    public function Jawapan_update(Request $request)
     {        
         $jawapan_id = $request->jawapan_id;
-        
-        $jawapan = Jawapan::with('borangs', 'borangs.proses')->where('id',$jawapan_id)->first(); 
+        $harga_akhir = $request->harga_akhir;
+        $perkara_id = $request->perkaraID;
 
-        $perkara = $request->perkara;
-        $perkara_id = $request->perkara_id;
-        $jumlah = $request->jumlah;
+        if ($harga_akhir != null) {
+            $total = 0;
+            $ftotal = 0;
+            
+            for($x=0; $x<count($perkara_id); $x++){
+                $items = Pemohonan_Peneroka::find($perkara_id[$x]);
+                $items->harga_akhir = $harga_akhir[$x];
+                $items->save();
 
-        for($x=0; $x<count($perkara_id); $x++){
-            $items = Pemohonan_Peneroka::find($perkara_id[$x]);
-            $items->nama = $perkara[$x];
-            $items->jumlah = $jumlah[$x];
-            $items->save();
+                $total += (double) $items->harga;
+
+                if ($items->harga_akhir != null) {
+                    $ftotal += (double) $items->harga_akhir;
+                } else {
+                    $ftotal += (double) 0;
+                }
+            }
+
+            $jawapan = Jawapan::find($jawapan_id); 
+            $jawapan->nilai_akhir = $ftotal;
+            $jawapan->tambah_dana = (double)($ftotal - $total);
+            $jawapan->save();
+
+        } else {
+            $total = 0;
+            for($x=0; $x<count($perkara_id); $x++){
+                $items = Pemohonan_Peneroka::find($perkara_id[$x]);
+                $total += $items->harga;
+            }
+
+            $jawapan = Jawapan::find($jawapan_id); 
+            $jawapan->nilai_akhir = $total;
+            $jawapan->tambah_dana = 0;
+            $jawapan->save();
         }
+        
+        
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Edit Perkara Pemohonan Peneroka ".$jawapan->user->nama;
+        $audit->action = "Kemaskini Perkara Pemohonan Peneroka ".$jawapan->user->nama;
         $audit->save();
 
         Alert::success('Kemaskini Perkara Pemohonan Peneroka Berjaya.', 'Perkara Pemohonan Peneroka telah berjaya disimpan.');   
 
-        return redirect('/user/projek/'.$jawapan_id.'/list');
+        return back();
     }
 
     public function Tugasan_list(Request $request)

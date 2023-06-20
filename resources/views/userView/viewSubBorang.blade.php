@@ -100,6 +100,30 @@
             </table>
         </div>
       </div>
+
+      @if (!$lampirans->isEmpty())
+        <div class="card">
+          <div class="card-header">
+              <h5 class="card-title mb-0">Lampiran</h5>
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered w-50">
+              <tr>
+                <th>Nama Lampiran</th>
+                <th>Dimuat Naik</th>
+              </tr>
+              @foreach ($lampirans as $lmp)
+                <tr>
+                  <td>{{$lmp->Lampiran->nama}}</td>
+                  <td style="width: 25%;">
+                      <a href="{{$lmp->file}}">Lihat</a>
+                  </td>
+                </tr>
+              @endforeach
+            </table>
+          </div>
+        </div>
+      @endif
     </div>
   </div>
 </div>

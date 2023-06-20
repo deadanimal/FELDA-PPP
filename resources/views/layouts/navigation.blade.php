@@ -176,7 +176,7 @@
                     </ul>
                 </li>
 
-                @if (Request::is('user/borang_app') || Request::is('user/borang_app/*'))
+                {{-- @if (Request::is('user/borang_app') || Request::is('user/borang_app/*'))
                     <li class="sidebar-item active">
                 @else
                     <li class="sidebar-item">
@@ -184,7 +184,7 @@
                     <a  class="sidebar-link" href="/user/borang_app/list">
                         <i class="align-middle me-2 fas fa-fw fa-file-signature"></i> <span class="align-middle">KELULUSAN BORANG</span>
                     </a>
-                </li>
+                </li> --}}
 
                 @if (Request::is('audit'))
                 <li class="sidebar-item active">
@@ -196,7 +196,7 @@
                     </a>
                 </li>
                 
-            @elseif(Auth::user()->kategori->nama != "Peserta")
+            {{-- @elseif(Auth::user()->kategori->nama != "Peserta")
                 @if (Request::is('user/borang_app') || Request::is('user/borang_app/*'))
                     <li class="sidebar-item active">
                 @else
@@ -205,7 +205,7 @@
                     <a  class="sidebar-link" href="/user/borang_app/list">
                         <i class="align-middle me-2 fas fa-fw fa-file-signature"></i> <span class="align-middle">KELULUSAN BORANG</span>
                     </a>
-                </li>
+                </li> --}}
             @endif
 
             <li class="sidebar-header">

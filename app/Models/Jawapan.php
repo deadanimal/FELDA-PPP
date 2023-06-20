@@ -49,5 +49,9 @@ class Jawapan extends Model
     public function Pemohonan_Peneroka(){
         return $this->hasMany(Pemohonan_Peneroka::class);
     }
+
+    public function Lampiran(){
+        return $this->hasMany(Lampiran::class);
+    }
 }
 

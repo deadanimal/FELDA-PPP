@@ -15,24 +15,7 @@
         <div class="col-12">
             <div class="tab">
               <ul class="nav nav-tabs" role="tablist">
-                {{-- <li class="nav-item" style="background-color: rgb(210 210 210);">
-                  <a 
-                  @if (Request::is('user/tugasan') || Request::is('user/tugasan/*'))
-                    class="nav-link active"
-                  @else
-                    class="nav-link" 
-                  @endif
-                  
-                  data-bs-toggle="tab" href="#tab-4" style="height: 100%;">
-                    <span class="arial-N" style="display: flex;">TUGASAN
-                      @if ($tugasans_noti != 0)
-                          <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin:0 2%;">
-                            {{$tugasans_noti}}
-                          </div>
-                        @endif
-                    </span>
-                  </a>
-                </li> --}}
+                
                 <li class="nav-item" style="background-color: rgb(210 210 210);">
                   <a 
                   @if (Request::is('user/tugasan/aduan/*')|| Request::is('user/tugasan') || Request::is('user/tugasan/*'))
@@ -107,6 +90,25 @@
                       </span>
                   </a>   
                 </li>
+
+                <li class="nav-item" style="background-color: rgb(210 210 210);">
+                  <a 
+                  {{-- @if (Request::is('user/tugasan') || Request::is('user/tugasan/*'))
+                    class="nav-link active"
+                  @else --}}
+                    class="nav-link" 
+                  {{-- @endif --}}
+                  
+                  data-bs-toggle="tab" href="#tab-4" style="height: 100%;">
+                    <span class="arial-N" style="display: flex;">KELULUSAN BORANG
+                      @if ($tugasans_noti != 0)
+                          <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin:0 2%;">
+                            {{$tugasans_noti}}
+                          </div>
+                        @endif
+                    </span>
+                  </a>
+                </li>
               </ul>
               
               <div class="tab-content">
@@ -177,7 +179,7 @@
                                   <td class="text-center arial" style="text-transform: uppercase;">{{$hantarSurat->jawapan->nama}}</td>
                                   <td class="text-center arial" style="text-transform: uppercase;">
                                     @foreach($hantarSurat->jawapan->jawapanMedan as $medan)
-                                    {{$medan->jawapan ?? ""}}
+                                      {{$medan->jawapan ?? ""}}
                                     @endforeach
                                   </td>
                                   <td class="text-center arial">
@@ -196,48 +198,44 @@
                       @endif
                   </div>
                 </div>
-                {{-- <div 
-                  @if (Request::is('user/tugasan') || Request::is('user/tugasan/*'))
-                    class="tab-pane fade active show" 
-                  @else
+                <div 
+                  @if (Request::is('user/borang_app') || Request::is('user/borang_app/*'))
+                      class="tab-pane fade active show" 
+                  @else 
                     class="tab-pane fade" 
                   @endif
                   id="tab-4" role="tabpanel">
                   <div class="card-header">
-                      <h5 class="card-title mb-0">Sila lengkapkan tugasan berikut sebelum tarikh yang ditetapkan.</h5>
+                    <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Carian..">           
                   </div>
                   <div class="card-body">
-                      @if (!$tugasans->isEmpty())
-                      <table class="table table-bordered table-striped w-100 arial">
-                          <thead class="text-white bg-primary w-100">
-                            <tr class="text-center">
-                                <th scope="col">Nama Tugasan</th>
-                                <th scope="col">Tarikh</th>
-                                <th scope="col">Tindakan</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                              @foreach ($tugasans as $tugasan)
+                    @if (!$borangKelulusan->isEmpty())
+                      {{-- senarai borang --}}
+                      <table class="table table-bordered table-striped w-100 Arial" id="borangTable">
+                        <thead class="text-white bg-primary w-100" style="text-align: center;">
+                          <tr>
+                              <th scope="col" class="Arial">Nama Borang</th>
+                              <th scope="col" class="Arial">Tindakan</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach ($borangKelulusan as $borangK)
                               <tr>
-                                  <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->nama}}</td>
-                                  <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->borang}}</td>
-                                  <td class="text-center arial">{{$tugasan->due_date}}</td>
-                                  <td class="text-center arial">
-                                      <a class="btn btn-success" href="/user/tugasan/{{$tugasan->id}}/item_list" style="color: white; text-decoration:none;">
-                                      Semak Tugasan
+                                  <td class="text-center Arial">{{$borangK->namaBorang}}</td>
+                                  <td class="text-center Arial">
+                                      <a class="btn btn-success" href="/user/borang_app/{{$borangK->id}}/user_list" style="color: white; text-decoration:none;">
+                                          Senarai Pemohon
                                       </a>
                                   </td>
-                              </tr>
-                              @endforeach 
-                          </tbody>
-                        </table>
-                        
-                                      
-                      @else
-                          <h1 style="text-align: center;"> Tiada Tugasan </h1>
-                      @endif
+                              </tr> 
+                          @endforeach
+                        </tbody>
+                      </table>
+                    @else
+                      <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Borang Perlu Diluluskan </h2>
+                    @endif
                   </div>
-                </div> --}}
+                </div>
                 <div 
                   @if (Request::is('user/tugasan/aduan/*')|| Request::is('user/tugasan') || Request::is('user/tugasan/*'))
                     class="tab-pane fade active show" 
@@ -323,7 +321,25 @@
         </div>
     </div>
 </div>
-
+<script>
+  function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("borangTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
 <style>
   .arial{
     font-family: 'Arial', sans-serif;

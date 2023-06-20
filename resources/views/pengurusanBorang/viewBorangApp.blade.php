@@ -19,18 +19,33 @@
                         </div>
                     </a>
                 </td>
-                <td>
-                    <form action="/user/borang_app/pdf" method="get">
-                        <input type="hidden" name="user_id" value="{{$borangJwpn->user->id}}">
-                        <input type="hidden" name="jawapan_id" value="{{$borangJwpn->id}}">
-                        <input type="hidden" name="tahapKelulusanID" value="{{$tahapLulus}}">
+                <td  class="text-right" >
+                    @if (!$surats->isEmpty())
+                        <div style="display: flex; Justify-content: flex-end;">
+                            @foreach ($surats as $surat)
+                                    <form action="/user/borang_app/surat/view" method="get" style="margin-bottom:0px;margin-right:2%;">
+                                        <input type="hidden" name="jawapan_id" value="{{$borangJwpn->id}}">
+                                        <input type="hidden" name="surat_id" value="{{$surat->id}}">
+                                        
+                                        <button class="btn frame9403-frame7445" style="max-width:none;">
+                                            <div class="frame9403-frame7293">
+                                                <span class="frame9403-text21">LIHAT SURAT {{$surat->jenis}}</span>
+                                            </div>
+                                        </button>
+                                    </form>
+                            @endforeach
+                        </div>
+                    @else
+                        <form action="/user/borang_app/tawaran/pdf" method="get">
+                            <input type="hidden" name="jawapan_id" value="{{$borangJwpn->id}}">
 
-                        <button class="btn frame9403-frame7445" style="margin-right:0px;">
-                            <div class="frame9403-frame7293">
-                                <span class="frame9403-text21"><span>Jana Surat (PDF)</span></span>
-                            </div>
-                        </button>
-                    </form>
+                            <button class="btn frame9403-frame7445" style="margin-right:0px;">
+                                <div class="frame9403-frame7293">
+                                    <span class="frame9403-text21">Surat Tawaran</span>
+                                </div>
+                            </button>
+                        </form>
+                    @endif
                 </td>
             </tr>
         </table>
@@ -118,6 +133,20 @@
                             @endif
                         @endforeach    
                     </tr>
+                    <tr>
+                        <td ><label for="rancangan" style="font-family:'Arial', sans-serif">NILAI PERMOHONAN DANA (RM)</label><br></td>
+                        <td style="display:flex;"><input class="form-control" name="rancangan" id="rancangan" value="{{$borangJwpn->permohonan_dana}}" readonly style="text-transform: uppercase;"></td>
+                    </tr>
+                    @if ($borangJwpn->nilai_akhir != Null)
+                        <tr>
+                            <td><label for="ftotal" style="font-family:'Arial', sans-serif">NILAI DANA TAMBAHAN (RM)</label></td>
+                            <td style="display:flex;"><input class="form-control" name="ftotal" value="{{$borangJwpn->tambah_dana}}" readonly style="text-transform: uppercase;"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="ftotal" style="font-family:'Arial', sans-serif">NILAI GERAN AKHIR (RM)</label></td>
+                            <td style="display:flex;"><input class="form-control" name="ftotal" value="{{$borangJwpn->nilai_akhir}}" readonly style="text-transform: uppercase;"></td>
+                        </tr>
+                    @endif
                 </table>
             </div>
             <div class="card">
@@ -131,19 +160,99 @@
                             <th class="perkara"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
                             <th class="perkara"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
                             <th class="perkara"><h5 class="card-title mb-0">JUMLAH KOS (RM)</h5></th>
+                            <th class="perkara"><h5 class="card-title mb-0">JUMLAH KOS AKHIR (RM)</h5></th>
                         </tr>
                         <tbody>
-                          @foreach($items as $item)
-                          <tr id="row">
-                            <td class="perkara">{{$item->Perkara_Pemohonan->nama}}</td>
-                            <td class="perkara">{{$item->nama}}</td>
-                            <td class="perkara">{{$item->jumlah}}</td>
-                            <td class="perkara">{{$item->harga}}</td>
-                            @endforeach
+                            @if($lulusBorangs->isEmpty())
+                                @if (Str::contains(Auth::user()->kategori->nama, 'FIC Wilayah') || Str::contains(Auth::user()->kategori->nama, 'FIC HQ') || Auth::user()->kategoripengguna == '1' || Str::contains(Auth::user()->kategori->nama, 'PEGAWAI KPF')) 
+                                    <form action="/user/projek/tugasan/jawapan/update" method="post">
+                                        @csrf
+                                        @method('PUT')
+                                        @foreach($items as $item)
+                                            <tr id="row">
+                                                <td class="perkara">{{$item->Perkara_Pemohonan->nama}}</td>
+                                                <td class="perkara">{{$item->nama}}</td>
+                                                <td class="perkara">{{$item->jumlah}}</td>
+                                                <td class="perkara">{{$item->harga}}</td>
+                                                <td class="perkara">
+                                                    @if (Str::contains($item->Perkara_Pemohonan->nama, "INFRA") && ((Str::contains(Auth::user()->kategori->nama, 'FIC Wilayah') || Str::contains(Auth::user()->kategori->nama, 'FIC HQ') || Auth::user()->kategoripengguna == '1' )))
+                                                        <input type="number" class="form-control text-center" name="harga_akhir[]" value="{{$item->harga_akhir ?? ""}}">
+                                                        <input type="hidden" name="perkaraID[]" value="{{$item->id}}">
+                                                        
+                                                    @elseif (Str::contains($item->Perkara_Pemohonan->nama, "BEKALAN") && (Auth::user()->kategoripengguna == '1' || Str::contains(Auth::user()->kategori->nama, 'PEGAWAI KPF')))
+                                                        <input type="number" class="form-control text-center" name="harga_akhir[]" value="{{$item->harga_akhir ?? ""}}">
+                                                        <input type="hidden" name="perkaraID[]" value="{{$item->id}}">
+                                                    @else
+                                                        <input type="number" class="form-control text-center" name="harga_akhir[]" value="{{$item->harga_akhir ?? ""}}" readonly>
+                                                        <input type="hidden" name="perkaraID[]" value="{{$item->id}}">
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        <input type="hidden" name="jawapan_id" value="{{$borangJwpn->id}}">
+                                        
+                                        <tr style="border: 0px">
+                                            <td colspan="4" style="border: 0px"></td>
+                                            <td class="text-center" style="border: 0px">
+                                                <button type="submit" class="btn btn-primary">Kemaskini</button>
+                                            </td>
+                                        </tr>
+                                    </form>
+                                @else
+                                    @foreach($items as $item)
+                                    <tr id="row">
+                                        <td class="perkara">{{$item->Perkara_Pemohonan->nama}}</td>
+                                        <td class="perkara">{{$item->nama}}</td>
+                                        <td class="perkara">{{$item->jumlah}}</td>
+                                        <td class="perkara">{{$item->harga}}</td>
+                                        <td class="perkara">
+                                            <input type="number" class="form-control text-center" value="{{$item->harga_akhir ?? ""}}" readonly>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                @endif
+                            @else
+                                @foreach($items as $item)
+                                <tr id="row">
+                                    <td class="perkara">{{$item->Perkara_Pemohonan->nama}}</td>
+                                    <td class="perkara">{{$item->nama}}</td>
+                                    <td class="perkara">{{$item->jumlah}}</td>
+                                    <td class="perkara">{{$item->harga}}</td>
+                                    <td class="perkara">
+                                        <input type="number" class="form-control text-center" value="{{$item->harga_akhir ?? ""}}" readonly>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
             </div>
+
+            @if (!$lampirans->isEmpty())
+                <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Lampiran</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered w-50">
+                    <tr>
+                        <th>Nama Lampiran</th>
+                        <th>Dimuat Naik</th>
+                    </tr>
+                    @foreach ($lampirans as $lmp)
+                        <tr>
+                        <td>{{$lmp->Lampiran->nama}}</td>
+                        <td style="width: 25%;">
+                            <a href="{{$lmp->file}}">Lihat</a>
+                        </td>
+                        </tr>
+                    @endforeach
+                    </table>
+                </div>
+                </div>
+            @endif
+
             @if($lulusBorangs->isEmpty())
                 <div class="card">
                     <table class="table table-borderless">
@@ -165,7 +274,13 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Anda Pasti Mahu Lulus Permohonan {{$borangJwpn->user->nama}}?<p>
+                                            @if (!$surats->isEmpty())
+                                                <b><span style="color: red;">*</span> Sila Pastikan Anda Telah Menyemak Surat-Surat Yang Akan Dijana</b>
+                                                <br>
+                                                <p>Anda Pasti Mahu Lulus Permohonan {{$borangJwpn->user->nama}}?</p>
+                                            @else
+                                                <p>Anda Pasti Mahu Lulus Permohonan {{$borangJwpn->user->nama}}?</p>
+                                            @endif
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>      
@@ -232,7 +347,9 @@
         </div>
     </div>
 </div>
+<script>
 
+</script>
 <style>
     .perkara{
     text-align: center;

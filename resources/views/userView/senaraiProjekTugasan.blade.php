@@ -73,11 +73,22 @@
                             <td>
                                 <h5 class="card-title mb-0">Senarai Pemohonan Peserta.</h5></td>
                             <td> 
-                                <a href="/user/projek/surat/{{$jawapan->id}}/view"  class="frame9403-frame7445" style="width: 35%">
-                                    <div class="frame9403-frame7293">
-                                    <span class="frame9403-text21"><span>Papar Surat</span></span>
+                                @if (!$surats->isEmpty())
+                                    <div style="display: flex; Justify-content: flex-end;">
+                                        @foreach ($surats as $surat)
+                                                <form action="/user/borang_app/surat/view" method="get" style="margin-bottom:0px;margin-right:2%;">
+                                                    <input type="hidden" name="jawapan_id" value="{{$jawapan->id}}">
+                                                    <input type="hidden" name="surat_id" value="{{$surat->id}}">
+                                                    
+                                                    <button class="btn frame9403-frame7445" style="max-width:none;">
+                                                        <div class="frame9403-frame7293">
+                                                            <span class="frame9403-text21">LIHAT SURAT {{$surat->jenis}}</span>
+                                                        </div>
+                                                    </button>
+                                                </form>
+                                        @endforeach
                                     </div>
-                                </a>
+                                @endif
                             </td>
                         </tr>
                     </table>

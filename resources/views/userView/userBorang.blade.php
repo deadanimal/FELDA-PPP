@@ -1,7 +1,6 @@
 @extends('layouts.guest')
 
 @section('innercontent')
-
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
@@ -10,7 +9,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <form action="/userBorang/view/add" method="POST">
+            <form action="/userBorang/view/add" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card">
                     <div class="card-header">
@@ -133,37 +132,62 @@
                         </table>
                     </div>
                 </div>
-
-                @foreach($perkaras as $perkara)
-                    <input type="hidden" name="perkaraCount" id="PerkaraCount">
+                
+                @if ($perkaras)
+                    
+                    @foreach($perkaras as $perkara)
+                        <input type="hidden" name="perkaraCount" id="PerkaraCount">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Sila isikan perkara yang ingin dimohon.</h5>
+                                <table class="w-100">
+                                    <tr>
+                                        <td style="text-align: center"><h5 class="card-title mb-0">{{$perkara->nama}}</h5></td>
+                                        <td style="width:5%; text-align: end"><button class="btn btn-primary" type="button" id="rowAdder{{$loop->iteration}}">Tambah</button></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="card-body">
+                                <table class="w-100">
+                                    <tr>
+                                        <th style="text-align: center"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
+                                        <th style="text-align: center"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
+                                        <th style="text-align: center"><h5 class="card-title mb-0">JUMLAH KOS (RM)</h5></th>
+                                        <th style="width: 5%;"></th>
+                                    </tr>
+                                    <tbody id="borangField{{$loop->iteration}}">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <input type="hidden" name="perkara_id[]" value="{{$perkara->id}}">
+                            <input type="hidden" id="maxPerkara{{$loop->iteration}}" value="{{$perkara->total}}">
+                        </div>
+                    @endforeach 
+                @endif
+                <input type="hidden" id="count" name="countPerkara">
+                
+                @if (!$lampirans->isEmpty())
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="card-title mb-0">Sila isikan perkara yang ingin dimohon.</h5>
-                            <table class="w-100">
-                                <tr>
-                                    <td style="text-align: center"><h5 class="card-title mb-0">{{$perkara->nama}}</h5></td>
-                                    <td style="width:5%; text-align: end"><button class="btn btn-primary" type="button" id="rowAdder{{$loop->iteration}}">Tambah</button></td>
-                                </tr>
-                            </table>
+                            <h5 class="card-title mb-0">Lampiran</h5>
                         </div>
                         <div class="card-body">
                             <table class="w-100">
-                                <tr>
-                                    <th style="text-align: center"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
-                                    <th style="text-align: center"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
-                                    <th style="text-align: center"><h5 class="card-title mb-0">JUMLAH KOS (RM)</h5></th>
-                                    <th style="width: 5%;"></th>
-                                </tr>
-                                <tbody id="borangField{{$loop->iteration}}">
-                                </tbody>
+                                @foreach ($lampirans as $lampiran)
+                                    <tr>
+                                        <td style="width: 25%;">{{$lampiran->nama}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-info" onclick="document.getElementById('getFile{{$lampiran->id}}').click()">Muat Naik</button>
+                                            <input type='file' id="getFile{{$lampiran->id}}" name="lampiran[]" style="display:none">
+                                            <input type="hidden" name="lampiranId[]" value="{{$lampiran->id}}">
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </table>
                         </div>
-                        <input type="hidden" name="perkara_id[]" value="{{$perkara->id}}">
-                        <input type="hidden" id="maxPerkara{{$loop->iteration}}" value="{{$perkara->total}}">
-                    </div>
-                @endforeach 
-                <input type="hidden" id="count" name="countPerkara">
-
+                    </div>        
+                @endif
+                
                 <div class="card">
                     <div class="card-body">
                         @if ($borang->consent != null || $borang->consent != "")
@@ -178,12 +202,12 @@
                             <button type="submit" class="frame9403-frame7445" id="hantar">
                         @endif
                                 <input type="hidden" name="countJwpn" value="{{$count}}">
-
+                                
                                 <div class="frame9403-frame7293">
                                     <span class="frame9403-text21"><span>Hantar</span></span>
                                     <img
                                     src="/SVG/kemaskini.svg"
-                                    class="frame9403-group7527"
+                                    class="frame9403-group7527" id="submit"
                                     />
                                 </div>
                             </button>
@@ -260,12 +284,20 @@
         document.getElementById("rowAdder2").disabled = !cansubmit;
     });
     $("#hantar").click(function () {
-        var x = [];
+        
+    });
+    </script>
+    <script>
+    $(function() {
+        $( "form" ).submit(function() {
+            var x = [];
 
-        x.push(count2);
-        x.push(count);
+            x.push(count2);
+            x.push(count);
 
-        document.getElementById("count").value = x;
+            document.getElementById("count").value = x;
+            $('#hantar').hide();
+        });
     });
     </script>
 <script>

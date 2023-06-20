@@ -13,7 +13,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/moduls">MODUL </a></li>
-        <li class="breadcrumb-item"><a href="/moduls/{{$modul->id}}/projek">{{$modul->nama}}</a></li>
+        <li class="breadcrumb-item"><a href="/moduls/{{$proses->Projek->modul->id}}/projek">{{$proses->Projek->Modul->nama}}</a></li>
         <li class="breadcrumb-item"><a href="/moduls/{{$proses->Projek->id}}/proses">{{$proses->Projek->nama}}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{$proses->nama}}</li>
       </ol>
@@ -100,7 +100,7 @@
                   </a>
                   
                   {{-- <a href="/moduls/tugasan/{{$borang->id}}/List"><i class="align-middle me-2 fas fa-fw fa-clipboard-check" style="color: #CD352A; font-size:27px;"></i></a> --}}
-                  <a href="/modul/borang_app/surat/{{$borang->id}}/template" style="padding-left:1.5%;"><i class="align-middle me-2 fas fa-fw fa-envelope" style="color: #CD352A; font-size:2em;"></i></a>
+                  <a href="/modul/borang_app/surat/{{$borang->id}}/list" style="padding-left:1.5%;"><i class="align-middle me-2 fas fa-fw fa-envelope" style="color: #CD352A; font-size:2em;"></i></a>
 
                   {{-- <a href='' onclick="this.href='/pengurusanModul/kemaskiniProses/{{$proses->id}}/'+document.getElementById('nama').value" class="frame9402-rectangle8282452">                
                   </a> --}}
@@ -190,7 +190,7 @@
               <form action="/moduls/borang/tugasan/add" method="POST">
                 @csrf
                 <div class="modal-body">
-                  <table>
+                  <table class=" w-100">
                     <tr>
                       <td>
                         <label for="perkara" class="frame9402-text04">
@@ -199,20 +199,6 @@
                       </td>
                       <td>
                         <input type="text" class="frame9402-kotaknamaBorang" id="perkara" placeholder="Perkara Tugasan" name="perkara" required oninput="this.value = this.value.toUpperCase()">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="vertical-align: middle;">
-                        <label for="userCategory" class="frame9402-text04">
-                          <strong>Kategori Pengguna</strong>
-                        </label>
-                      </td>
-                      <td style="vertical-align: middle;">
-                        <select name="category" class="frame9402-kotaknamaBorang" id="userCategory">
-                          @foreach($user_Categories as $category)
-                            <option value="{{$category->id}}">{{$category->nama}}</option>
-                          @endforeach
-                        </select>
                       </td>
                     </tr>
                     <tr>
@@ -247,7 +233,6 @@
           <thead class="text-white bg-primary w-100 arial">
             <tr class="text-center">
                 <th scope="col" class="text-center">Perkara</th>
-                <th scope="col" class="text-center">Pengguna Ditugaskan</th>
                 <th scope="col">Tindakan</th>
             </tr>
           </thead>
@@ -255,7 +240,6 @@
               @foreach ($tugasans as $tugasan)
               <tr>
                 <td class="text-center arial" style="width:50%">{{$tugasan->perkara}}</td>
-                <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->KategoriPengguna->nama}}</td>
                 <td class="text-center arial">
 
                     @if ($tugasan->jenis_input == "P.O")
@@ -276,7 +260,7 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="modal-body">
-                                    <table class="table table-borderless">
+                                    <table class="table table-borderless w-100">
                                       <tr>
                                         <td>
                                           <label for="perkara" class="frame9402-text04">
@@ -285,24 +269,6 @@
                                         </td>
                                         <td>
                                           <input type="text" class="frame9402-kotaknamaBorang" id="perkara" value="{{$tugasan->perkara}}" name="perkara" required oninput="this.value = this.value.toUpperCase()">
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td style="vertical-align: middle;">
-                                          <label for="userCategory" class="frame9402-text04">
-                                            <strong>Kategori Pengguna</strong>
-                                          </label>
-                                        </td>
-                                        <td style="vertical-align: middle;">
-                                          <select name="category" class="frame9402-kotaknamaBorang" id="category">
-                                            @foreach($user_Categories as $category)
-                                                @if($tugasan->userCategory_id == $category->id)
-                                                    <option value="{{$category->id}}" selected>{{$category->nama}}</option>
-                                                @else
-                                                    <option value="{{$category->id}}">{{$category->nama}}</option>
-                                                @endif
-                                            @endforeach
-                                          </select>
                                         </td>
                                       </tr>
                                       <tr>

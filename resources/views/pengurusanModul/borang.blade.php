@@ -555,8 +555,9 @@ display: flex;
     </h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/moduls">Modul </a></li>
-        <li class="breadcrumb-item"><a href="/moduls/{{$modul->id}}/proses">{{$modul->nama}}</a></li>
+        <li class="breadcrumb-item"><a href="/moduls">MODUL </a></li>
+        <li class="breadcrumb-item"><a href="/moduls/{{$proses->Projek->id}}/projek">{{$proses->Projek->modul->nama}}</a></li>
+        <li class="breadcrumb-item"><a href="/moduls/{{$proses->Projek->id}}/proses">{{$proses->Projek->nama}}</a></li>
         <li class="breadcrumb-item"><a href="/moduls/{{$modul->id}}/{{$proses->id}}/borang">{{$proses->nama}}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{$borang->namaBorang}}</li>
       </ol>
@@ -569,6 +570,50 @@ display: flex;
       </div>
       <table style="width:100%;">
         <tr>
+          <td>
+            <a href="/moduls/lampiran/{{$borang->id}}/list" class="btn frame9403-frame7445" style="width:fit-content; margin-right:auto; margin-left:auto;">
+              <div class="frame9403-frame7293">
+              <span class="frame9403-text21">Lampiran</span>
+              </div>
+            </a>
+          </td>
+          <td>
+            <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;" data-toggle="modal" data-target="#exampleModaladdRujukan">
+              <div class="frame9403-frame7293">
+              <span class="frame9403-text21">No Rujukan</span>
+              </div>
+            </button>
+
+            {{-- Modal Persutujuan borang --}}
+            <div class="modal fade" id="exampleModaladdRujukan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">No. Rujukan</h2>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+
+                      <form action="/moduls/borang/noRujukan/add" method="POST">
+                        @csrf
+                        @method("PUT")
+                        <div class="modal-body">
+                          <label for="rujukan" class="frame9402-text04">
+                              <strong>No Rujukan</strong>
+                          </label>
+                          <input type="text" class="frame9402-kotaknama" placeholder="No. Rujukan" value="{{$borang->no_rujukan}}" name="rujukan" id="rujukan" required oninput="this.value = this.value.toUpperCase()">
+                        </div>
+                        <input type="hidden" value="{{$borang->id}}" name="borangId">
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                          <button class="btn btn-primary">Tambah</button>
+                        </div>
+                      </form>
+                  </div>
+              </div>
+            </div>
+          </td>
           <td>
               <a href="/moduls/perkara/{{$borang->id}}/list" class="btn frame9403-frame7445" style="width:fit-content; margin-right:auto; margin-left:auto;">
                 <div class="frame9403-frame7293">
