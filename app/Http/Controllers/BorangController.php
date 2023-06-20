@@ -381,13 +381,14 @@ class BorangController extends Controller
         if($request->countPerkara != null){
             $cp = explode(',', (string)$request->countPerkara);
 
+            //error redundant data entry 2 kali
             if($perkara_id != null){
                 for($x=0;  $x<count($cp); $x++){  
                     for($y=0; $y < $cp[$x]; $y++){
                         if($x != 0){
                             $cp[$x] -=1;
                             $z =  $cp[$x] + $y;
-    
+                            
                             $item = new Pemohonan_Peneroka;
                             $item->nama = $perkara[$z];
                             $item->jumlah = $jumlah[$z];
@@ -497,7 +498,7 @@ class BorangController extends Controller
                 if($x==0){
                     if(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'HQ') && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == 1){
                         $borangJwpns = Jawapan::with(['jawapanMedan' => function ($query) {
-                            $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->where('borang_id', $borangId)->orderBy('created_at', 'DESC')->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
@@ -509,7 +510,7 @@ class BorangController extends Controller
                     }
                     elseif(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Pengarah Jabatan') && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == 1){
                         $borangJwpns = Jawapan::with(['jawapanMedan' => function ($query) {
-                            $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->where('borang_id', $borangId)->orderBy('created_at', 'DESC')->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
@@ -521,7 +522,7 @@ class BorangController extends Controller
                     }
                     elseif((Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Wilayah') || Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'WILAYAH')) && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $y){
                         $borangJwpns = Jawapan::with(['jawapanMedan' => function ($query) {
-                            $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->where('borang_id', $borangId)->where('wilayah', Auth::user()->wilayah)->orderBy('created_at', 'DESC')->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
@@ -533,7 +534,7 @@ class BorangController extends Controller
                     }
                     elseif($tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == 1){
                         $borangJwpns = Jawapan::with(['jawapanMedan' => function ($query) {
-                            $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->where('borang_id', $borangId)
                         ->where('wilayah', Auth::user()->wilayah)
                         ->where('rancangan',  Auth::user()->rancangan)->orderBy('created_at', 'DESC')->get();
@@ -550,7 +551,7 @@ class BorangController extends Controller
                     $y = $tahapKelulusan[$z]->sequence + 1;
                     if(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'HQ') && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $y){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
-                            $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->whereHas('kelulusanBorang', function ($q) use ($tahapKelulusan, $z) {
                             $q->where('tahapKelulusan_id', $tahapKelulusan[$z]->id)->where('keputusan', 'Lulus');
                         })
@@ -565,7 +566,7 @@ class BorangController extends Controller
                     }
                     elseif(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'HQ') && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $tahapKelulusan[$z]->sequence){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
-                            $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])
                         ->where('borang_id', $borangId)->orderBy('created_at', 'DESC')->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
@@ -578,7 +579,7 @@ class BorangController extends Controller
                     }
                     elseif(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Jawatankuasa Pelulus') && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $y){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
-                            $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->where('borang_id', $borangId)
                         ->whereHas('kelulusanBorang', function ($q) use ($tahapKelulusan, $z) {
                             $q->where('tahapKelulusan_id', $tahapKelulusan[$z]->id)->where('keputusan', 'Lulus');
@@ -594,7 +595,7 @@ class BorangController extends Controller
                     }
                     elseif(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Jawatankuasa Pelulus') && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $tahapKelulusan[$z]->sequence){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
-                            $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->whereHas('kelulusanBorang', function ($query) {
                             $query->latest()->where('keputusan', 'Lulus');
                         })
@@ -609,7 +610,7 @@ class BorangController extends Controller
                     }
                     elseif(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Pengarah Jabatan') && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $y){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
-                            $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->where('borang_id', $borangId)
                         ->whereHas('kelulusanBorang', function ($q) use ($tahapKelulusan, $z) {
                             $q->where('tahapKelulusan_id', $tahapKelulusan[$z]->id)->where('keputusan', 'Lulus');
@@ -625,7 +626,7 @@ class BorangController extends Controller
                     }
                     elseif(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Pengarah Jabatan') && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $tahapKelulusan[$z]->sequence){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
-                            $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->whereHas('kelulusanBorang', function ($query) {
                             $query->latest()->where('keputusan', 'Lulus');
                         })
@@ -640,7 +641,7 @@ class BorangController extends Controller
                     }
                     elseif((Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Wilayah') || Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'WILAYAH')) && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $tahapKelulusan[$z]->sequence){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
-                            $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->where('borang_id', $borangId)
                         ->where('wilayah', Auth::user()->wilayah)
                         ->whereHas('kelulusanBorang', function ($query) {
@@ -657,7 +658,7 @@ class BorangController extends Controller
                     }
                     elseif((Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Wilayah') || Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'WILAYAH')) && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $y){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
-                            $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->where('borang_id', $borangId)
                         ->where('wilayah', Auth::user()->wilayah)
                         ->whereHas('kelulusanBorang', function ($q) use ($tahapKelulusan, $z) {
@@ -676,7 +677,7 @@ class BorangController extends Controller
                     
                     elseif($tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $tahapKelulusan[$z]->sequence){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
-                            $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->where('borang_id', $borangId)
                         ->whereHas('kelulusanBorang', function ($q) use ($tahapKelulusan, $y) {
                             $q->where('tahapKelulusan_id', $tahapKelulusan[$y]->id)->where('keputusan', 'Lulus');
@@ -694,7 +695,7 @@ class BorangController extends Controller
                     elseif($tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $y){
                         
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
-                            $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->where('borang_id', $borangId)
                         ->where('wilayah', Auth::user()->wilayah )->where('rancangan',  Auth::user()->rancangan)
                         ->whereHas('kelulusanBorang', function ($q) use ($tahapKelulusan, $z) {
