@@ -35,16 +35,6 @@
                                     </form>
                             @endforeach
                         </div>
-                    @else
-                        <form action="/user/borang_app/tawaran/pdf" method="get">
-                            <input type="hidden" name="jawapan_id" value="{{$borangJwpn->id}}">
-
-                            <button class="btn frame9403-frame7445" style="margin-right:0px;">
-                                <div class="frame9403-frame7293">
-                                    <span class="frame9403-text21">Surat Tawaran</span>
-                                </div>
-                            </button>
-                        </form>
                     @endif
                 </td>
             </tr>
@@ -96,27 +86,6 @@
                                     </td>
                                 </tr>
                             @else
-                                @if((Str::contains(Auth::user()->kategori->nama, 'FIC Wilayah')|| Str::contains(Auth::user()->kategori->nama, 'HQ') || Str::contains(Auth::user()->kategori->nama, 'Admin')) && Str::contains($jwpnMedan->medan->nama, 'GERAN AKHIR'))
-                                    <tr>
-                                        <td ><label for="jawapan{{$jwpnMedan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase;">
-                                                {{$jwpnMedan->medan->nama}}
-                                                @if ($jwpnMedan->medan->pilihan == "required")
-                                                    <span style="color: red;">*</span> 
-                                                @endif
-                                            </label>
-                                        </td>
-                                        <td style="display:flex;">
-                                            <form action="/user/borang_app/nilai_Geran/update" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <input type="hidden" name="medanID" value="{{$jwpnMedan->id}}">
-                                                <input style="border: 2px solid #ced4da;" class="form-control" value="{{$jwpnMedan->jawapan}}" name="jawapan" maxlength="{{$jwpnMedan->medan->max}}" minlength="{{$jwpnMedan->medan->min}}"><br>
-                                                <button type="submit" class="btn btn-primary">Kemaskini</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-
-                                @else
                                 <tr>
                                     <td ><label for="jawapan{{$jwpnMedan->id}}" style="font-family:'Arial', sans-serif; text-transform:uppercase;">
                                             {{$jwpnMedan->medan->nama}}
@@ -129,7 +98,6 @@
                                         <input style="border: 2px solid #ced4da;" class="form-control" value="{{$jwpnMedan->jawapan}}" id="jawapan{{$jwpnMedan->id}}" readonly><br>
                                     </td>
                                 </tr>
-                                @endif
                             @endif
                         @endforeach    
                     </tr>
@@ -154,78 +122,117 @@
                     <h5 class="card-title mb-0">Senarai perkara yang dimohon.</h5>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered w-100">
-                        <tr>
-                            <th class="perkara"><h5 class="card-title mb-0">JENIS PERKARA</h5></th>
-                            <th class="perkara"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
-                            <th class="perkara"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
-                            <th class="perkara"><h5 class="card-title mb-0">JUMLAH KOS (RM)</h5></th>
-                            <th class="perkara"><h5 class="card-title mb-0">JUMLAH KOS AKHIR (RM)</h5></th>
-                        </tr>
-                        <tbody>
-                            @if($lulusBorangs->isEmpty())
-                                @if (Str::contains(Auth::user()->kategori->nama, 'FIC Wilayah') || Str::contains(Auth::user()->kategori->nama, 'FIC HQ') || Auth::user()->kategoripengguna == '1' || Str::contains(Auth::user()->kategori->nama, 'PEGAWAI KPF')) 
-                                    <form action="/user/projek/tugasan/jawapan/update" method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        @foreach($items as $item)
-                                            <tr id="row">
-                                                <td class="perkara">{{$item->Perkara_Pemohonan->nama}}</td>
-                                                <td class="perkara">{{$item->nama}}</td>
-                                                <td class="perkara">{{$item->jumlah}}</td>
-                                                <td class="perkara">{{$item->harga}}</td>
-                                                <td class="perkara">
-                                                    @if (Str::contains($item->Perkara_Pemohonan->nama, "INFRA") && ((Str::contains(Auth::user()->kategori->nama, 'FIC Wilayah') || Str::contains(Auth::user()->kategori->nama, 'FIC HQ') || Auth::user()->kategoripengguna == '1' )))
-                                                        <input type="number" class="form-control text-center" name="harga_akhir[]" value="{{$item->harga_akhir ?? ""}}">
-                                                        <input type="hidden" name="perkaraID[]" value="{{$item->id}}">
-                                                        
-                                                    @elseif (Str::contains($item->Perkara_Pemohonan->nama, "BEKALAN") && (Auth::user()->kategoripengguna == '1' || Str::contains(Auth::user()->kategori->nama, 'PEGAWAI KPF')))
-                                                        <input type="number" class="form-control text-center" name="harga_akhir[]" value="{{$item->harga_akhir ?? ""}}">
-                                                        <input type="hidden" name="perkaraID[]" value="{{$item->id}}">
-                                                    @else
-                                                        <input type="number" class="form-control text-center" name="harga_akhir[]" value="{{$item->harga_akhir ?? ""}}" readonly>
-                                                        <input type="hidden" name="perkaraID[]" value="{{$item->id}}">
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        <input type="hidden" name="jawapan_id" value="{{$borangJwpn->id}}">
-                                        
-                                        <tr style="border: 0px">
-                                            <td colspan="4" style="border: 0px"></td>
-                                            <td class="text-center" style="border: 0px">
-                                                <button type="submit" class="btn btn-primary">Kemaskini</button>
-                                            </td>
-                                        </tr>
-                                    </form>
-                                @else
-                                    @foreach($items as $item)
-                                    <tr id="row">
+                @if (Str::contains(Auth::user()->kategori->nama, 'FIC Wilayah') || Str::contains(Auth::user()->kategori->nama, 'FIC HQ') || Auth::user()->kategoripengguna == '1' || Str::contains(Auth::user()->kategori->nama, 'PEGAWAI KPF')) 
+                    @if($lulusBorangs->isEmpty())
+                        <form action="/user/projek/tugasan/jawapan/update" method="post" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <table class="table table-bordered w-100">
+                                <thead>
+                                    <th class="perkara"><h5 class="card-title mb-0">JENIS PERKARA</h5></th>
+                                    <th class="perkara"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
+                                    <th class="perkara"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
+                                    <th class="perkara"><h5 class="card-title mb-0">JUMLAH AKHIR</h5></th>
+                                    <th class="perkara"><h5 class="card-title mb-0">JUMLAH KOS (RM)</h5></th>
+                                    <th class="perkara"><h5 class="card-title mb-0">JUMLAH KOS AKHIR (RM)</h5></th>
+                                </thead>
+                                <tbody id="borangField">
+                                @foreach($items as $item)
+                                    <tr>
                                         <td class="perkara">{{$item->Perkara_Pemohonan->nama}}</td>
                                         <td class="perkara">{{$item->nama}}</td>
                                         <td class="perkara">{{$item->jumlah}}</td>
+                                        <td class="perkara">
+                                            @if (Str::contains($item->Perkara_Pemohonan->nama, "INFRA") && ((Str::contains(Auth::user()->kategori->nama, 'FIC Wilayah') || Str::contains(Auth::user()->kategori->nama, 'FIC HQ') || Auth::user()->kategoripengguna == '1' )))
+                                                <input type="number" class="form-control text-center" name="jumlah_akhir[]" value="{{$item->jumlah_akhir ?? ""}}">
+                                                
+                                            @elseif (Str::contains($item->Perkara_Pemohonan->nama, "BEKALAN") && (Auth::user()->kategoripengguna == '1' || Str::contains(Auth::user()->kategori->nama, 'PEGAWAI KPF')))
+                                                <input type="number" class="form-control text-center" name="jumlah_akhir[]" value="{{$item->jumlah_akhir ?? ""}}">
+                                            @else
+                                                <input type="number" class="form-control text-center" name="jumlah_akhir[]" value="{{$item->jumlah_akhir ?? ""}}" readonly>
+                                            @endif
+                                        </td>
                                         <td class="perkara">{{$item->harga}}</td>
                                         <td class="perkara">
-                                            <input type="number" class="form-control text-center" value="{{$item->harga_akhir ?? ""}}" readonly>
+                                            @if (Str::contains($item->Perkara_Pemohonan->nama, "INFRA") && ((Str::contains(Auth::user()->kategori->nama, 'FIC Wilayah') || Str::contains(Auth::user()->kategori->nama, 'FIC HQ') || Auth::user()->kategoripengguna == '1' )))
+                                                <input type="number" class="form-control text-center" name="harga_akhir[]" value="{{$item->harga_akhir ?? ""}}">
+                                                <input type="hidden" name="perkaraID[]" value="{{$item->id}}">
+                                                
+                                            @elseif (Str::contains($item->Perkara_Pemohonan->nama, "BEKALAN") && (Auth::user()->kategoripengguna == '1' || Str::contains(Auth::user()->kategori->nama, 'PEGAWAI KPF')))
+                                                <input type="number" class="form-control text-center" name="harga_akhir[]" value="{{$item->harga_akhir ?? ""}}">
+                                                <input type="hidden" name="perkaraID[]" value="{{$item->id}}">
+                                            @else
+                                                <input type="number" class="form-control text-center" name="harga_akhir[]" value="{{$item->harga_akhir ?? ""}}" readonly>
+                                                <input type="hidden" name="perkaraID[]" value="{{$item->id}}">
+                                            @endif
                                         </td>
                                     </tr>
-                                    @endforeach
-                                @endif
-                            @else
-                                @foreach($items as $item)
-                                <tr id="row">
-                                    <td class="perkara">{{$item->Perkara_Pemohonan->nama}}</td>
-                                    <td class="perkara">{{$item->nama}}</td>
-                                    <td class="perkara">{{$item->jumlah}}</td>
-                                    <td class="perkara">{{$item->harga}}</td>
-                                    <td class="perkara">
-                                        <input type="number" class="form-control text-center" value="{{$item->harga_akhir ?? ""}}" readonly>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            <table class="w-100">
+                                <input type="hidden" name="jawapan_id" value="{{$borangJwpn->id}}">
+                                <tr style="border: 0px">
+                                    <td style="border: 0px"><button class="btn btn-primary" type="button" id="rowAdder">Tambah</button></td>
+                                    <td style="border: 0px; text-align:end;">
+                                        <button type="submit" class="btn btn-primary">Kemaskini</button>
                                     </td>
                                 </tr>
-                                @endforeach
-                            @endif
-                        </tbody>
+                            </table>
+                            </form>
+                    @else
+                    <table class="table table-bordered w-100">
+                        <thead>
+                            <th class="perkara"><h5 class="card-title mb-0">JENIS PERKARA</h5></th>
+                            <th class="perkara"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
+                            <th class="perkara"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
+                            <th class="perkara"><h5 class="card-title mb-0">JUMLAH AKHIR</h5></th>
+                            <th class="perkara"><h5 class="card-title mb-0">JUMLAH KOS (RM)</h5></th>
+                            <th class="perkara"><h5 class="card-title mb-0">JUMLAH KOS AKHIR (RM)</h5></th>
+                        </thead>
+                        @foreach($items as $item)
+                            <tr>
+                                <td class="perkara">{{$item->Perkara_Pemohonan->nama}}</td>
+                                <td class="perkara">{{$item->nama}}</td>
+                                <td class="perkara">{{$item->jumlah}}</td>
+                                <td class="perkara">
+                                    <input type="number" class="form-control text-center" value="{{$item->jumlah_akhir ?? ""}}" readonly>
+                                </td>
+                                <td class="perkara">{{$item->harga}}</td>
+                                <td class="perkara">
+                                    <input type="number" class="form-control text-center" value="{{$item->harga_akhir ?? ""}}" readonly>
+                                </td>
+                            </tr>
+                        @endforeach
                     </table>
+                    @endif
+                @else
+                    <table class="table table-bordered w-100">
+                        <thead>
+                            <th class="perkara"><h5 class="card-title mb-0">JENIS PERKARA</h5></th>
+                            <th class="perkara"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
+                            <th class="perkara"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
+                            <th class="perkara"><h5 class="card-title mb-0">JUMLAH AKHIR</h5></th>
+                            <th class="perkara"><h5 class="card-title mb-0">JUMLAH KOS (RM)</h5></th>
+                            <th class="perkara"><h5 class="card-title mb-0">JUMLAH KOS AKHIR (RM)</h5></th>
+                        </thead>
+                        @foreach($items as $item)
+                            <tr>
+                                <td class="perkara">{{$item->Perkara_Pemohonan->nama}}</td>
+                                <td class="perkara">{{$item->nama}}</td>
+                                <td class="perkara">{{$item->jumlah}}</td>
+                                <td class="perkara">
+                                    <input type="number" class="form-control text-center" value="{{$item->jumlah_akhir ?? ""}}" readonly>
+                                </td>
+                                <td class="perkara">{{$item->harga}}</td>
+                                <td class="perkara">
+                                    <input type="number" class="form-control text-center" value="{{$item->harga_akhir ?? ""}}" readonly>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+
+                @endif
                 </div>
             </div>
 
@@ -347,8 +354,45 @@
         </div>
     </div>
 </div>
-<script>
+<script src="/js/jquery.js"></script>
+<script type="text/javascript">
+    $("#rowAdder").click(function () {
+            newRowAdd = 
+            '<tr id="row">'+
+                '<td>'+
+                    '<select class="form-select border2 text-center" name="jenisAdd[]">'+
+                        '@foreach($perkaras as $p)'+
+                        '<option value="{{$p->id}}"'+
+                            '@if (Str::contains($p->nama, "BEKALAN") && ((Str::contains(Auth::user()->kategori->nama, "FIC Wilayah") || Str::contains(Auth::user()->kategori->nama, "FIC HQ") || Auth::user()->kategoripengguna == "1" )))'+
+                                'disabled'+
+                            '@elseif (Str::contains($p->nama, "INFRA") && (Auth::user()->kategoripengguna == "1" || Str::contains(Auth::user()->kategori->nama, "PEGAWAI KPF")))'+
+                                'disabled'+
+                            '@endif'+
+                            '>{{$p->nama}}</option>'+
+                        '@endforeach'+
+                    '</select>'+
+                '</td>'+
+                '<td>'+
+                    '<input type="text" class="form-control border2" name="perkaraAdd[]" required oninput="this.value = this.value.toUpperCase()">'+
+                '</td>'+
+                '<td>'+
+                    '<input type="number" class="form-control border2" name="jumlahAdd[]" required>'+
+                '</td>'+
+                '<td style="background-color:#e9ecef;">'+
+                '</td>'+
+                '<td>'+
+                    '<input type="number" class="form-control border2" name="kosAdd[]" required>'+
+                '</td>'+
+                '<td style=" text-align:center;">'+
+                    '<button class="btn btn-primary" type="button" id="DeleteRow"><i class="fas fa-fw fa-trash-alt" ></i></button>'+
+                '</td>'+
+            '</tr>';
+            $('#borangField').append(newRowAdd);
+    });
 
+    $("body").on("click", "#DeleteRow", function () {
+      $(this).parents("#row").remove();
+    });
 </script>
 <style>
     .perkara{

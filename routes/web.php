@@ -224,9 +224,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/borang_app/{borang_id}/lulusAll', [BorangController::class, 'borangApp_all']);
 
     Route::get('/user/sub_borang/list', [BorangController::class, 'subBorang_list']);
-    Route::get('/user/sub_borang/{borang_id}/view', [BorangController::class, 'subBorang_view']);
-    Route::get('/user/sub_borang/{borang_id}/tindakan', [BorangController::class, 'subBorang_tindakan']);
+    Route::get('/user/sub_borang/{jawapan_id}/view', [BorangController::class, 'subBorang_view']);
+    Route::get('/user/sub_borang/{jawapan_id}/tindakan', [BorangController::class, 'subBorang_tindakan']);
     Route::put('/user/sub_borang/update', [BorangController::class, 'subBorang_update']);
+    Route::get('/user/sub_borang/{jawapan_id}/aku_janji', [BorangController::class, 'subBorang_akuJanji']);
+    Route::put('/user/sub_borang/aku_janji', [BorangController::class, 'akuJanji_sign']);
 
     Route::get('/user/project', [UserController::class, 'project_list']);
     Route::get('/user/project/{jawapan_id}', [UserController::class, 'project_view']);

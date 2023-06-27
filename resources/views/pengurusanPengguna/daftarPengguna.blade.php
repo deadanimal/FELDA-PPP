@@ -250,22 +250,22 @@
   </style>
 <script src="/js/jquery.js"></script>
 <script>
-  $(document).ready(function(){
+$(document).ready(function(){
   $('select[name="wilayah"]').on('change',function(){
       var wilayahid= $(this).val();
       var newUrl = window.location.protocol + "//" + window.location.host;
       if (wilayahid) {
         $.ajax({
           url: newUrl+"/getRancangan/"+wilayahid,
-        type: "GET",
-        dataType: "json",
-        success: function(data){
-          console.log(data);
-          $('select[name="rancangan"]').empty();
-          $.each(data,function(key,value){
-              $('select[name="rancangan"]').append('<option value="'+key+'">'+value+'</option>');
-          });
-        }
+          type: "GET",
+          dataType: "json",
+          success: function(data){
+              console.log(data);
+            $('select[name="rancangan"]').empty();
+            $.each(data,function(key,value){
+              $('select[name="rancangan"]').append('<option value="'+value.id+'">'+value.nama+'</option>');
+            });
+          }
         });
       }else {
             $('select[name="rancangan"]').empty();

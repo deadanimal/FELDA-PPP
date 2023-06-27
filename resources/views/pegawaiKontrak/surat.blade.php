@@ -48,6 +48,17 @@
                         <form action="/modul/borang_app/surat/update" method="POST" onsubmit="return onSubmit(this)" id="form">
                             @csrf
                             @method('PUT')
+                            <label for="head" class="form-label">Kepala Surat</label>
+                            <select name="head" id="head" class="form-select">
+                                @if ($surat->letter_head == 1)
+                                    <option value="1" selected>Ya</option>
+                                    <option value="0">Tidak</option>
+                                @else
+                                    <option value="1">Ya</option>
+                                    <option value="0" selected>Tidak</option>  
+                                @endif
+                            </select>
+                            <br>
                             <label for="title" class="form-label">Tajuk Surat</label>
                             <input type="text" class="form-control" name="title" id="title" value="{{$surat->title}}"  oninput="this.value = this.value.toUpperCase()">
                             
@@ -186,7 +197,7 @@
     text-decoration: none;
   }
 </style>
-    <script type="text/javascript">
+<script type="text/javascript">
     var sig = $('#sig').signature({syncField: '#signature64', syncFormat: 'PNG'});
     $('#clear').click(function(e) {
         e.preventDefault();

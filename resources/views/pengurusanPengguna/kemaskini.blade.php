@@ -218,7 +218,7 @@
           console.log(data);
           $('select[name="rancangan"]').empty();
           $.each(data,function(key,value){
-              $('select[name="rancangan"]').append('<option value="'+key+'">'+value+'</option>');
+            $('select[name="rancangan"]').append('<option value="'+value.id+'">'+value.nama+'</option>');
           });
         }
         });

@@ -156,6 +156,18 @@
                                         <th style="width: 5%;"></th>
                                     </tr>
                                     <tbody id="borangField{{$loop->iteration}}">
+                                        <tr id="row">
+                                            <td>
+                                                <input type="text" class="form-control border2" name="perkara[]" required oninput="this.value = this.value.toUpperCase()">
+                                            </td>
+                                            <td>
+                                                <input type="Number" class="form-control border2" name="jumlah[]"required>
+                                            </td>
+                                            <td>
+                                                <input type="Number" class="form-control border2" name="kos[]"required>
+                                            </td>
+                                            <td style=" text-align:end;"></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -177,8 +189,12 @@
                                     <tr>
                                         <td style="width: 25%;">{{$lampiran->nama}}</td>
                                         <td>
-                                            <button type="button" class="btn btn-info" onclick="document.getElementById('getFile{{$lampiran->id}}').click()">Muat Naik</button>
-                                            <input type='file' id="getFile{{$lampiran->id}}" name="lampiran[]" style="display:none">
+                                            <div class="file-block">
+                                                <button class="btn btn-info btn-select-file" type="button">Muat Naik</button>
+                                                <input type="file" name="lampiran[]" style="display:none" required>
+                                            </div>
+                                            {{-- <button type="button" class="btn btn-info" onclick="document.getElementById('getFile{{$lampiran->id}}').click()">Muat Naik</button>
+                                            <input type='file' id="getFile{{$lampiran->id}}" name="lampiran[]" style="display:none" required> --}}
                                             <input type="hidden" name="lampiranId[]" value="{{$lampiran->id}}">
                                         </td>
                                     </tr>
@@ -217,10 +233,38 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+const fileBlocks = document.querySelectorAll('.file-block')
+const buttons = document.querySelectorAll('.btn-select-file')
+
+;[...buttons].forEach(function (btn) {
+  btn.onclick = function () {
+    btn.parentElement.querySelector('input[type="file"]').click()
+  }
+})
+
+;[...fileBlocks].forEach(function (block) {
+  block.querySelector('input[type="file"]').onchange = function () {
+    const filename = this.files[0].name
+
+    block.querySelector('.btn-select-file').textContent = filename
+  }
+})
+</script>
 <script src="/js/jquery.js"></script>
 <script type="text/javascript">
-    var count = 0;
-    var count2 = 0;
+    if ($("rowAdder1").length > 0)
+    { 
+        $("#rowAdder1").trigger('click');
+    }
+    if ($("rowAdder2").length > 0)
+    { 
+        $("#rowAdder2").trigger('click');
+    }
+</script>
+<script type="text/javascript">
+    var count = 1;
+    var count2 = 1;
     $("#rowAdder1").click(function () {
         count +=1;
             newRowAdd = 
@@ -308,15 +352,16 @@
       if (wilayahid) {
         $.ajax({
           url: newUrl+"/getRancangan/"+wilayahid,
-        type: "GET",
-        dataType: "json",
-        success: function(data){
-          console.log(data);
-          $('select[name="rancangan"]').empty();
-          $.each(data,function(key,value){
-              $('select[name="rancangan"]').append('<option value="'+key+'">'+value+'</option>');
-          });
-        }
+            type: "GET",
+            dataType: "json",
+            success: function(data){
+                console.log(data);
+                $('select[name="rancangan"]').empty();
+                $.each(data,function(key,value){
+                    $('select[name="rancangan"]').append('<option value="'+value.id+'">'+value.nama+'</option>');
+
+                });
+            }
         });
       }else {
             $('select[name="rancangan"]').empty();

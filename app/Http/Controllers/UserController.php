@@ -93,7 +93,7 @@ class UserController extends Controller
     }
 
     public function getRancangan($wilayahid){
-        $rancangan= Rancangan::where('wilayah',$wilayahid)->orderBy('nama', 'ASC')->pluck('nama','id');
+        $rancangan= Rancangan::where('wilayah',$wilayahid)->orderBy('nama', 'ASC')->get(['id','nama']);
         return json_encode($rancangan);
     }
 
@@ -1352,44 +1352,50 @@ class UserController extends Controller
         $jawapan_id = $request->jawapan_id;
         $harga_akhir = $request->harga_akhir;
         $perkara_id = $request->perkaraID;
+        $jum_akhir = $request->jumlah_akhir;
+        
+        if($request->perkaraAdd){
+            $perkara = $request->perkaraAdd;
+            $jenis = $request->jenisAdd;
+            $jumlah = $request->jumlahAdd;
+            $kos = $request->kosAdd;
+
+            for($y=0; $y<count($perkara); $y++){
+                $item = new Pemohonan_Peneroka;
+                $item->nama = $perkara[$y];
+                $item->jumlah = $jumlah[$y];
+                $item->jumlah_akhir = $jumlah[$y];
+                $item->harga = $kos[$y];
+                $items->harga_akhir = $harga_akhir[$x];
+                $item->perkara_id = $jenis[$y];
+                $item->jawapan_id = $jawapan_id;
+                $item->save();
+            }
+        }
 
         if ($harga_akhir != null) {
-            $total = 0;
-            $ftotal = 0;
-            
             for($x=0; $x<count($perkara_id); $x++){
                 $items = Pemohonan_Peneroka::find($perkara_id[$x]);
                 $items->harga_akhir = $harga_akhir[$x];
+                $items->jumlah_akhir = $jum_akhir[$x];
                 $items->save();
-
-                $total += (double) $items->harga;
-
-                if ($items->harga_akhir != null) {
-                    $ftotal += (double) $items->harga_akhir;
-                } else {
-                    $ftotal += (double) 0;
-                }
             }
-
-            $jawapan = Jawapan::find($jawapan_id); 
-            $jawapan->nilai_akhir = $ftotal;
-            $jawapan->tambah_dana = (double)($ftotal - $total);
-            $jawapan->save();
-
-        } else {
-            $total = 0;
-            for($x=0; $x<count($perkara_id); $x++){
-                $items = Pemohonan_Peneroka::find($perkara_id[$x]);
-                $total += $items->harga;
-            }
-
-            $jawapan = Jawapan::find($jawapan_id); 
-            $jawapan->nilai_akhir = $total;
-            $jawapan->tambah_dana = 0;
-            $jawapan->save();
         }
-        
-        
+
+        $items = Pemohonan_Peneroka::where('jawapan_id', $jawapan_id)->get();
+        $ftotal = 0;
+
+        foreach ($items as $item){
+            if($item->harga_akhir == null){
+                $ftotal+= (double)$item->harga; 
+            }else{
+                $ftotal+= (double)$item->harga_akhir; 
+            }
+        }
+
+        $jawapan = Jawapan::find($jawapan_id); 
+        $jawapan->nilai_akhir = $ftotal;
+        $jawapan->save();
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;

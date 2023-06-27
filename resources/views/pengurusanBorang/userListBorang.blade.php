@@ -83,11 +83,16 @@
                     <td class="text-center Arial">{{$borangJwpn->wilayahs->nama}}</td>
                     <td class="text-center Arial">{{$borangJwpn->rancangans->nama}}</td>
                     <td class="text-center Arial" style="width: 25%">
+                    {{-- @if (!$borangJwpn->kelulusanBorang->isEmpty())
+                      @foreach($borangJwpn->kelulusanBorang as $lulusBorang)
+                          {{$lulusBorang->keputusan}} Oleh {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}<br>
+                        @break
+                      @endforeach
+                    @endif --}}
                     @if (!$lulusBorangs->isEmpty())
                       @foreach ($lulusBorangs as $lulusBorang)
                         @if ($borangJwpn->id == $lulusBorang->jawapan_id)
                           {{$lulusBorang->keputusan}} Oleh {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}<br>
-                          @break
                         @endif
                       @endforeach
                     @endif
