@@ -1455,6 +1455,35 @@ class UserController extends Controller
         return view('surat.viewSurat', compact('noti','items','carbon','kp','jawapan','surat','hantar_surat','menuModul', 'menuProses', 'menuProjek'));
     }
 
+    public function tugasSurat_update(Request $request)
+    { 
+        $surat = Surat::find($request->suratID);
+        $surat->letter_head = $request->head;
+        $surat->title = $request->title;
+        $surat->body = $request->body;
+
+        // for signature pad
+        if($request->signed)
+        {
+            $folder = public_path('signature/');
+            $image_parts = explode(";base64,", $request->signed);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $signature = uniqid() . '.'.$image_type;
+            $file = $folder . $signature;
+            file_put_contents($file, $image_base64);
+            $surat->signature = "/signature/".$signature;
+        }
+
+        $surat->signatory = $request->signatory;
+        $surat->save();
+
+        Alert::success('Kemaskini Templat Surat Berjaya.', 'Templat surat telah berjaya dikemaskini.');   
+
+        return back();
+    }
+
     public function generate_one(Request $request)
     { 
         $jawapan_id = $request->jawapan_id;
@@ -1649,12 +1678,13 @@ class UserController extends Controller
 
     public function aktivitiProgress_add(Request $request)
     {
+        dd($request);
         $kemajuan = new Tindakan_progress;
         $kemajuan->progress = $request->progress;
         $kemajuan->catatan = $request->catatan;
         if($request->file()){
-            $files = time().'.'.$request->bukti->extension();  
-            $request->bukti->move(public_path('progress'), $files);
+            $files = time().'.'.$request->upload->extension();  
+            $request->upload->move(public_path('progress'), $files);
             $kemajuan->bukti = '/progress/' . $files;
         }
         $kemajuan->tindakan_id = $request->tindakan_id;

@@ -77,17 +77,17 @@
                                         </label>
                                       </td>
                                       <td>
-                                        <input class="form-control" id="Catatan" placeholder="Catatan Kemajuan" name="catatan" oninput="this.value = this.value.toUpperCase()">
+                                        <textarea class="form-control" id="Catatan" placeholder="Catatan Kemajuan" name="catatan" oninput="this.value = this.value.toUpperCase()"></textarea>
                                       </td>
                                     </tr>
                                     <tr style="border: none;">
                                       <td>
-                                        <label for="bukti" class="form-label"><strong>Bukti Kemajuan</strong></label>
+                                        <label for="upload" class="form-label"><strong>Bukti Kemajuan</strong></label>
                                       </td>
                                       <td>
                                         <div class="file-block">
                                             <button class="btn btn-info btn-select-file" type="button">Muat Naik</button>
-                                            <input type="file" name="bukti" style="display:none" required>
+                                            <input type="file" name="upload" style="display:none" required>
                                         </div> 
                                       </td>
                                     </tr>
