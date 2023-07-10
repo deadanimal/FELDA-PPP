@@ -22,28 +22,27 @@
       <div class="card">
         <div class="card-body">
         @if (!$borangs->isEmpty())
-            {{-- senarai borang --}}
-            <table class="table table-bordered table-striped w-100 Arial" id="example" >
-              <thead class="text-white bg-primary w-100" style="text-align: center;">
+          {{-- senarai borang --}}
+          <table class="table table-bordered table-striped w-100 Arial" id="example" >
+            <thead class="text-white bg-primary w-100" style="text-align: center;">
+              <tr>
+                <th scope="col" class="Arial">Nama Borang</th>
+                <th scope="col" class="Arial" style="width: 20%">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="myTable">
+              @foreach ($borangs as $borang)
                 <tr>
-                    <th scope="col" class="Arial">Nama Borang</th>
-                    <th scope="col" class="Arial" style="width: 20%">Tindakan</th>
+                  <td class="text-center Arial">{{$borang->namaBorang}}</td>
+                  <td class="text-center">
+                    <a class="btn btn-info" href="/userBorang/view/{{$borang->id}}" style="color: white; text-decoration:none;">
+                      Papar Borang
+                    </a>
+                  </td>
                 </tr>
-              </thead>
-              <tbody id="myTable">
-                @foreach ($borangs as $borang)
-                    <tr>
-                        <td class="text-center Arial">{{$borang->namaBorang}}</td>
-                        <td class="text-center">
-                            <a class="btn btn-info" href="/userBorang/view/{{$borang->id}}" style="color: white; text-decoration:none;">
-                              Papar Borang
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
-              </tbody>
-            </table>
-          </form>
+              @endforeach
+            </tbody>
+          </table>
         @else
           <h1 style="text-align: center; padding-bottom:5%;">Tiada Borang</h1>
         @endif

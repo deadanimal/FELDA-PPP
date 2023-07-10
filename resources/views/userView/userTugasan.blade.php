@@ -8,7 +8,7 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            TUGASAN BAGI {{Auth::user()->nama}}
+            NOTIFIKASI
         </h1>
     </div>
     <div class="row">
@@ -35,34 +35,34 @@
                   </a>   
                 </li>
 
-                <li class="nav-item" style="background-color: rgb(210 210 210);">
-                  <a 
-                  @if (Request::is('user/tugasan/petiMasuk/*'))
-                    class="nav-link active"
-                  @else
-                    class="nav-link" 
-                  @endif
-                  
-                  data-bs-toggle="tab" href="#tab-6" style="height: 100%;">
-                      <span class="arial-N" style="display: flex;white-space: nowrap;">PETI MASUK (Pegawai Kontrak)
-                        @if ($borangs_noti != 0)
-                          <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin-left:2%;">
-                            {{$borangs_noti}}
-                          </div>
-                        @endif
-                      </span>
-                  </a>   
-                </li>
+                @if (Str::contains(Auth::user()->kategori->nama, 'PEGAWAI KONTRAK'))
+                  <li class="nav-item" style="background-color: rgb(210 210 210);">
+                    <a class="nav-link" data-bs-toggle="tab" href="#tab-6" style="height: 100%;">
+                        <span class="arial-N" style="display: flex;white-space: nowrap;">PETI MASUK (Pegawai Kontrak)
+                          @if ($borangs_noti != 0)
+                            <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin-left:2%;">
+                              {{$borangs_noti}}
+                            </div>
+                          @endif
+                        </span>
+                    </a>   
+                  </li>
+                @else
+                  <li class="nav-item" style="background-color: rgb(210 210 210);">
+                    <a class="nav-link" data-bs-toggle="tab" href="#tab-10" style="height: 100%;">
+                        <span class="arial-N" style="display: flex;white-space: nowrap;">PETI MASUK
+                          @if ($borangs_noti != 0)
+                            <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin-left:2%;">
+                              {{$borangs_noti}}
+                            </div>
+                          @endif
+                        </span>
+                    </a>   
+                  </li>
+                @endif
 
                 <li class="nav-item" style="background-color: rgb(210 210 210);">
-                  <a 
-                  @if (Request::is('user/projek/*'))
-                    class="nav-link active"
-                  @else
-                    class="nav-link" 
-                  @endif
-                  
-                  data-bs-toggle="tab" href="#tab-7" style="height: 100%;">
+                  <a class="nav-link" data-bs-toggle="tab" href="#tab-7" style="height: 100%;">
                       <span class="arial-N" style="display: flex;white-space: nowrap;">TUGASAN
                         {{-- @if ($borangs_noti != 0)
                           <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin-left:2%;">
@@ -153,13 +153,7 @@
                       @endif
                   </div>
                 </div>
-                <div 
-                  @if (Request::is('user/projek/') || Request::is('user/projek/*'))
-                    class="tab-pane fade active show" 
-                  @else
-                    class="tab-pane fade" 
-                  @endif
-                  id="tab-7" role="tabpanel">
+                <div class="tab-pane fade" id="tab-7" role="tabpanel">
                   <div class="card-header">
                       <h5 class="card-title mb-0">Senarai projek yang perlu dikemaskini.</h5>
                   </div>
@@ -178,9 +172,11 @@
                               <tr>
                                   <td class="text-center arial" style="text-transform: uppercase;">{{$hantarSurat->jawapan->nama}}</td>
                                   <td class="text-center arial" style="text-transform: uppercase;">
-                                    @foreach($hantarSurat->jawapan->jawapanMedan as $medan)
-                                      {{$medan->jawapan ?? ""}}
-                                    @endforeach
+                                    @if (!$hantarSurat->jawapan->jawapanMedan->isEmpty())
+                                      @foreach($hantarSurat->jawapan->jawapanMedan as $medan)
+                                        {{$medan->jawapan ?? ""}}
+                                      @endforeach
+                                    @endif
                                   </td>
                                   <td class="text-center arial">
                                     <a class="btn btn-success" href="/user/projek/{{$hantarSurat->jawapan_id}}/list" style="color: white; text-decoration:none;">
@@ -198,6 +194,7 @@
                       @endif
                   </div>
                 </div>
+
                 <div 
                   @if (Request::is('user/borang_app') || Request::is('user/borang_app/*'))
                       class="tab-pane fade active show" 
@@ -316,6 +313,44 @@
                           <h1 style="text-align: center;"> Tiada Borang </h1>
                       @endif
                   </div>
+                </div>
+
+                <div class="tab-pane fade" id="tab-10" role="tabpanel">
+                  <div class="card-header">
+                      <h5 class="card-title mb-0">Senarai Surat Peserta.</h5>
+                  </div>
+                  @if (!$surats->isEmpty())
+                    <table class="table table-bordered table-striped w-100 arial">
+                      <thead class="text-white bg-primary w-100">
+                        <tr class="text-center">
+                          <th scope="col">Nama Peserta</th>                                
+                          <th scope="col">Jenis Projek</th>
+                          <th scope="col">Tindakan</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach ($surats as $surat)
+                          <tr>
+                            <td class="text-center arial" style="text-transform: uppercase;">{{$surat->jawapan->nama}}</td>
+                            <td class="text-center arial" style="text-transform: uppercase;">
+                              @if (!$surat->jawapan->jawapanMedan->isEmpty())
+                                @foreach($surat->jawapan->jawapanMedan as $medan)
+                                  {{$medan->jawapan ?? ""}}
+                                @endforeach
+                              @endif
+                            </td>
+                            <td class="text-center arial">
+                              <a class="btn btn-success" href="/user/petiMasuk/{{$surat->surat_id}}/{{$surat->jawapan_id}}/view" style="color: white; text-decoration:none;">
+                                Lihat Surat
+                              </a>
+                            </td>
+                          </tr>
+                        @endforeach 
+                      </tbody>
+                    </table>
+                  @else
+                    <h1 style="text-align: center;"> Tiada Tugasan </h1>
+                  @endif
                 </div>
             </div>
         </div>

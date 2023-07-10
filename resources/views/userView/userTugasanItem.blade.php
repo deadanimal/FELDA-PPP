@@ -7,73 +7,92 @@
 
 <div class="container-fluid">
     <div class="header">
-        <h1 class="header-title">
-            TUGASAN {{$tugasans->nama}}
-        </h1>
+      <a href="#" class="btn frame9403-frame7445" style="margin-left:0px; width:50%;">
+        <span class="frame9403-text21">Kembali</span>
+      </a>
     </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <table style="width: -webkit-fill-available;">
+                    <table class="w-50" style="margin: 0px auto 0px auto">
                         <tr>
-                            <td>
-                                <a href="/user/tugasan/list" class="btn frame9403-frame7445" style="margin-left:0px; width:50%;">
-                                    <span class="frame9403-text21">Kembali</span>
-                                </a>
-                            </td>
-                            <td>
-                                <button type="button" class="btn frame9403-frame7445" data-toggle="modal" data-target="#exampleModalCenter" 
-                                @if (now()->toDateString() > $tugasans->due_date)
-                                    disabled
-                                @endif>
-                                    <div class="frame9403-frame7293">
-                                        <span class="frame9403-text21">Tambah Perkara Tugasan</span>
-                                        <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                                    </div>
-                                </button>
+                            <td colspan="2" class="text-center">
+                                <h2 class="Arial">{{$tindakan->aktiviti}}</h2>
                             </td>
                         </tr>
+                        <tr>
+                          <td class="w-50 text-end">
+                            <h4 class="Arial" style="margin:0 10% 0 0">TARIKH SASARAN</h4>
+                          </td>
+                          <td class="text-start">
+                            <h4 class="Arial" style="margin:0;">{{$tindakan->tarikh_sasaran}}</h4>
+                          </td>
+                        </tr>
                     </table>
-                    
-                    
-
+                    <button type="button" class="btn frame9403-frame7445" data-toggle="modal" data-target="#exampleModalAdd">
+                      <div class="frame9403-frame7293">
+                          <span class="frame9403-text21">Tambah Perkara Tugasan</span>
+                          <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                      </div>
+                    </button>
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal fade" id="exampleModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Tambah Perkara Tugasan</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Tambah Kemajuan Aktiviti Tugasan</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="/user/tugasan/item_add" method="post">
+                            <form action="/user/tugasan/tindakan/progress/add" method="post" >
                                 @csrf
                             <div class="modal-body">
                                 <table class="table table-borderless">
                                     <tr style="border: none;">
                                       <td>
-                                        <label for="nama" class="frame9402-text04">
-                                          <strong>Nama Perkara Tugasan</strong>
+                                        <label for="progress" class="form-label"><strong>Kemajuan</strong></label>
+                                      </td>
+                                      <td>  
+                                        <select class="form-select" name="progress" id="progress">
+                                          <option value="Lambat">Lambat</option>
+                                          <option value="10">10%</option>
+                                          <option value="20">20%</option>
+                                          <option value="30">30%</option>
+                                          <option value="40">40%</option>
+                                          <option value="50">50%</option>
+                                          <option value="60">60%</option>
+                                          <option value="70">70%</option>
+                                          <option value="80">80%</option>
+                                          <option value="90">90%</option>
+                                          <option value="100">100%</option>
+                                        </select>
+                                      </td>
+                                    </tr>
+                                    <tr style="border: none;"> 
+                                      <td>
+                                        <label for="Catatan" class="frame9402-text04">
+                                          <strong>Catatan</strong>
                                         </label>
                                       </td>
                                       <td>
-                                        <input class="form-control" id="nama" placeholder="Nama Perkara Tugasan" name="namaTugas" required oninput="this.value = this.value.toUpperCase()">
+                                        <input class="form-control" id="Catatan" placeholder="Catatan Kemajuan" name="catatan" oninput="this.value = this.value.toUpperCase()">
                                       </td>
                                     </tr>
                                     <tr style="border: none;">
                                       <td>
-                                        <label for="datepicker" class="frame9402-text04">
-                                          <strong>Tarikh Rancangan</strong>
-                                        </label>
+                                        <label for="bukti" class="form-label"><strong>Bukti Kemajuan</strong></label>
                                       </td>
                                       <td>
-                                        <input type="date" class="form-control" id="datepicker" name="plan_date" required>
+                                        <div class="file-block">
+                                            <button class="btn btn-info btn-select-file" type="button">Muat Naik</button>
+                                            <input type="file" name="bukti" style="display:none" required>
+                                        </div> 
                                       </td>
                                     </tr>
                                 </table>
-                                <input type="hidden" name="tugasan_id" value="{{$tugasans->id}}">
+                                <input type="hidden" name="tindakan_id" value="{{$tindakan->id}}">
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">Tambah</button>
@@ -83,24 +102,52 @@
                       </div>
                     </div>          
                 <div class="card-body">
-                    @if (!$tugasan_item->isEmpty())
+                    @if (!$kemajuans->isEmpty())
                     <table class="table table-bordered table-striped w-100 Arial">
                         <thead class="text-white bg-primary w-100">
                           <tr class="text-center">
-                              <th scope="col">Perkara Tugasan</th>
-                              <th scope="col">Tarikh Rancangan</th>
-                              <th scope="col">Tindakan</th>
+                              <th scope="col">Kemajuan</th>
+                              <th scope="col">Catatan</th>
+                              <th scope="col">Bukti Kemajuan</th>
+                              <th scope="col"></th>
                           </tr>
                         </thead>
                         <tbody>
-                            @foreach ($tugasan_item as $item)
+                            @foreach ($kemajuans as $kemajuan)
                             <tr>
-                                <td class="text-center Arial" style="text-transform: uppercase;">{{$item->nama}}</td>
-                                <td class="text-center Arial">{{$item->plan_date}}</td>
+                                <td class="text-center Arial" style="text-transform: uppercase;">{{$kemajuan->progress}}</td>
+                                <td class="text-center Arial">{{$kemajuan->catatan ?? ""}}</td>
                                 <td class="text-center Arial">
-                                    <a class="btn btn-success" href="/user/tugasan/{{$tugasans->id}}/tugas_item/{{$item->id}}/progress_list" style="color: white; text-decoration:none;">
-                                        Kemaskini
-                                    </a>
+                                    <a href="{{$kemajuan->bukti}}">Bukti Gambar</a>
+                                </td>
+                                <td>
+                                  <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModaldelete{{$kemajuan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+        
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModaldelete{{$kemajuan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Padam Kemajuan</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Anda Pasti Mahu Padam Kemajuan Ini?<p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                                                    <form method="post" action="/user/tugasan/tindakan/progress/delete">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="hidden" value="{{$kemajuan->id}}" name="kemajuan_id">
+                                                        <button class="btn btn-danger">YA</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach 
@@ -112,12 +159,30 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+  const fileBlocks = document.querySelectorAll('.file-block')
+  const buttons = document.querySelectorAll('.btn-select-file')
+  
+  ;[...buttons].forEach(function (btn) {
+    btn.onclick = function () {
+      btn.parentElement.querySelector('input[type="file"]').click()
+    }
+  })
+  
+  ;[...fileBlocks].forEach(function (block) {
+    block.querySelector('input[type="file"]').onchange = function () {
+      const filename = this.files[0].name
+  
+      block.querySelector('.btn-select-file').textContent = filename
+    }
+  })
+  </script>
 <style>
   .Arial{
     font-family: 'Arial', sans-serif;
 }
     .frame9403-frame7445 {
-    width: 125px;
+    width: 20%;
     height: 44px;
     display: flex;
     max-width: 157px;

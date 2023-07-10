@@ -18,75 +18,34 @@
 
         @if (!$jawapans->isEmpty())
           <div class="card-header">
-            <button type="button" class="btn btn-success" style="margin-left: 10px; border-radius: 8.598855018615723px; padding: 1.2%" data-toggle="modal" data-target="#exampleModalAll"> HANTAR SURAT</button>
+            <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Carian..">
           </div>
 
-          <form action="/user/borang_app/generateAll" method="POST">
-            @csrf
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalAll" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Hantar Surat</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                    </button>
-                </div><br>
-                <button class="frame9403-frame7445"  type="button" id="rowAdder">
-                    <div class="frame9403-frame7293">
-                        <span class="frame9403-text21"><span>Tambah Kategori Pengguna</span></span>
-                        <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                    </div>
-                </button>
-                <form action="/user/tugasan/send/generate_all" method="post">
-                    @csrf
-                    <div class="modal-body">
-                        <table style="overflow: scroll; max-height: 750px; width:100%;" id="borangField" class="draggable-table">
-                            <tbody class="row_drag">
-                        
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="hidden" name="borangID" value="{{$borangs->id}}">
-                        <input type="hidden" id="count" name="count" value=""> 
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>      
-                    <button type="submit" class="btn btn-primary" id="hantar" disabled="disabled">Hantar</button>
-                    </div>
-                </form>
-              </div>
-            </div>
-            </div>
-
-            {{-- senarai borang --}}
-            <table class="table table-bordered table-striped w-100 Arial">
-              <thead class="text-white bg-primary w-100" style="text-align: center;">
-                <tr>
-                    <th scope="col" style="vertical-align: top;"><input class="form-check-input text-center" type="checkbox" id="master"></th>
-                    <th scope="col" class="Arial">Nama Pemohon</th>
-                    <th scope="col" class="Arial">Status</th>
-                    <th scope="col" class="Arial">Tindakan</th>
-                </tr>
-              </thead>
-              <tbody>
-                @foreach ($jawapans as $jawapan)
-                    <tr>
-                        <td style="vertical-align: top; width:5%" class="text-center">  
-                          <input class="form-check-input text-center sub_chk" type="checkbox" value="{{$jawapan->id}}" name="jawapanList[]">
-                        </td>
-                        <td class="text-center Arial">{{$jawapan->user->nama}}</td>
-                        <td class="text-center Arial" style="width: 25%">{{$jawapan->status}}</td>
-                        <td class="text-center">
-                            <a class="btn btn-info" href="/user/tugasan/petiMasuk/{{$jawapan->id}}/user" style="color: white; text-decoration:none;">
-                              Tindakan
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
-              </tbody>
-            </table>
-          </form>
+          {{-- senarai borang --}}
+          <table class="table table-bordered table-striped w-100 Arial">
+            <thead class="text-white bg-primary w-100" style="text-align: center;">
+              <tr>
+                  <th scope="col" class="Arial">Bil.</th>
+                  <th scope="col" class="Arial">Nama Pemohon</th>
+                  <th scope="col" class="Arial">Status</th>
+                  <th scope="col" class="Arial">Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="myTable">
+              @foreach ($jawapans as $jawapan)
+                  <tr>
+                      <td class="text-center Arial">{{$loop->iteration}}</td>
+                      <td class="text-center Arial">{{$jawapan->user->nama}}</td>
+                      <td class="text-center Arial" style="width: 25%">{{$jawapan->status}}</td>
+                      <td class="text-center">
+                          <a class="btn btn-info" href="/user/tugasan/petiMasuk/{{$jawapan->id}}/user" style="color: white; text-decoration:none;">
+                            Tindakan
+                          </a>
+                      </td>
+                  </tr>
+              @endforeach
+            </tbody>
+          </table>
         @else
           <h1 style="text-align: center; padding-bottom:5%;">Tiada Permohonan</h1>
         @endif
@@ -96,91 +55,24 @@
 </div>
 
 <script src="/js/jquery.js"></script>
-<script type="text/javascript">
-    var count = 0;
-    $("#rowAdder").click(function () {
-        count +=1;
-            newRowAdd =
-            '<tr class="frame9402-input" id="row">'+
-                '<td style="display:flex;"><span style="text-align:right;margin-right:2%;">Kategori Pengguna</span>'+
-                    '<select type="text" name="category[]" class="form-select frame9402-kotaknama">'+
-                        '@foreach($kategoriPengguna as $kategoriPengguna)'+
-                        '<option value="{{$kategoriPengguna->id}}">{{$kategoriPengguna->nama}}</option>'+
-                        '@endforeach'+
-                    '</select>'+
-                    '<button class="frame9402-rectangle828245" id="DeleteRow"><img src="/SVG/bin.svg"/></button>'+
-                '</td>'+
-            '</tr>';
-            $('#borangField').append(newRowAdd);
-            document.getElementById("count").value = count;
-            
-            var cansubmit = (count > 0);
-            document.getElementById("hantar").disabled = !cansubmit;
-        });
-     
-    $("body").on("click", "#DeleteRow", function () {
-      $(this).parents("#row").remove();
-      count -=1;
-      document.getElementById("count").value = count;
-    
-      var cansubmit = (count > 0);
-      document.getElementById("hantar").disabled = !cansubmit;
-    
-    });
-    $("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
-    </script>
 <script>
-function save(no)
-  {
-   var nama_val=document.getElementById("nama"+no).value;
-   var status_val=document.getElementById("status"+no).value;
-   document.getElementById("statusUpdate"+no).value = status_val;
-   document.getElementById("namaupdate"+no).value=nama_val;
+  function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }      
   }
-  function savetugasan(no)
-  {
-   var namatugas_val=document.getElementById("namaTugas"+no).value;
-   var jenistugas_val=document.getElementById("jenisTugas"+no).value;
-   var userKategori_val=document.getElementById("userKategori"+no).value;
-   document.getElementById("namaTugasupdate"+no).value = namatugas_val;
-   document.getElementById("jenisTugasupdate"+no).value=jenistugas_val;
-   document.getElementById("userKategoriupdate"+no).value=userKategori_val;
-  }
-</script>
-<script type="text/javascript">  
-  $(document).ready(function () {  
-
-      $('#master').on('click', function(e) {  
-       if($(this).is(':checked',true))    
-       {  
-          $(".sub_chk").prop('checked', true);    
-       } else {    
-          $(".sub_chk").prop('checked',false);    
-       }    
-      });  
-
-  });  
-</script> 
-<script>
-function openForm() {
-  document.getElementById("popupForm").style.display = "block";
 }
-function closeForm() {
-  document.getElementById("popupForm").style.display = "none";
-}
-function openFormTugas() {
-  document.getElementById("popupFormTugas").style.display = "block";
-}
-function closeFormTugas() {
-  document.getElementById("popupFormTugas").style.display = "none";
-}
-function openFormKemas() {
-  document.getElementById("popupFormKemas").style.display = "block";
-}
-function closeFormKemas() {
-  document.getElementById("popupFormKemas").style.display = "none";
-}
-
 </script>
    
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

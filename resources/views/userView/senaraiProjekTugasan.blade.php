@@ -66,66 +66,6 @@
                     @endif
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header">
-                    <table class="w-100">
-                        <tr>
-                            <td>
-                                <h5 class="card-title mb-0">Senarai Pemohonan Peserta.</h5></td>
-                            <td> 
-                                @if (!$surats->isEmpty())
-                                    <div style="display: flex; Justify-content: flex-end;">
-                                        @foreach ($surats as $surat)
-                                                <form action="/user/borang_app/surat/view" method="get" style="margin-bottom:0px;margin-right:2%;">
-                                                    <input type="hidden" name="jawapan_id" value="{{$jawapan->id}}">
-                                                    <input type="hidden" name="surat_id" value="{{$surat->id}}">
-                                                    
-                                                    <button class="btn frame9403-frame7445" style="max-width:none;">
-                                                        <div class="frame9403-frame7293">
-                                                            <span class="frame9403-text21">LIHAT SURAT {{$surat->jenis}}</span>
-                                                        </div>
-                                                    </button>
-                                                </form>
-                                        @endforeach
-                                    </div>
-                                @endif
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="card-body">
-                    <form action="/user/projek/tugasan/jawapan/update" method="post">
-                        @csrf
-                        @method('PUT')
-                        <table class="w-100">
-                            <tr>
-                                <th class="perkara"><h5 class="card-title mb-0">JENIS PERKARA</h5></th>
-                                <th class="perkara"><h5 class="card-title mb-0">PERKARA PEMOHONAN</h5></th>
-                                <th class="perkara"><h5 class="card-title mb-0">JUMLAH DI MOHON</h5></th>
-                            </tr>
-                            <tbody>
-                                @foreach($items as $item)
-                                <tr id="row">
-                                <td><input type="text" class="form-control perkara" value="{{$item->Perkara_Pemohonan->nama}}" readonly></td>
-                                <td>
-                                    <input type="text" class="form-control perkara" name="perkara[]" value="{{$item->nama}}" required>
-                                </td>
-                                <td>
-                                    <input type="Number" class="form-control perkara" name="jumlah[]" value="{{$item->jumlah}}" required>
-                                </td>
-                                <input type="hidden" name="perkara_id[]" value="{{$item->id}}">
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <button type="submit" class="frame9403-frame7445">
-                            <div class="frame9403-frame7293">
-                            <span class="frame9403-text21"><span>Kemaskini</span></span>
-                            </div>
-                        </button>
-                        <input type="hidden" name="jawapan_id" value="{{$jawapan->id}}">
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 </div>

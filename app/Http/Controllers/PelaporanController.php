@@ -40,7 +40,8 @@ class PelaporanController extends Controller
     {
         $idModul = (int)$request->route('id');
         $modul = Modul::find($idModul);
-        $proses = Proses::where('modul_id', $idModul)->orderBy("updated_at", "DESC")->get();
+        $projek = Projek::where('modul_id',$idModul)->first();
+        $proses = Proses::where('projek_id', $projek->id)->orderBy("updated_at", "DESC")->get();
         if($request->ajax()) {
             return DataTables::collection($proses)
             ->addIndexColumn()
@@ -193,6 +194,10 @@ class PelaporanController extends Controller
         else{
             $jwpnParameter = [];
         }
+
+        //for notification tugasan
+        $noti = $this->notification();
+        
         $menuModul = Modul::where('status', 'Go-live')->get();
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();

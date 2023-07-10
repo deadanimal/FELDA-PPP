@@ -37,6 +37,7 @@ use App\Models\Surat;
 use App\Models\Hantar_Surat;
 use App\Models\Tugasan;
 use App\Models\TindakanTugasan;
+use App\Models\Tindakan_progress;
 use App\Models\MedanPO;
 use App\Models\InputMedan;
 use App\Models\Projek;
@@ -553,25 +554,46 @@ class UserController extends Controller
         }else{
             $aduans = Aduan::where('user_category', Auth::user()->kategoripengguna)->where('wilayah', Auth::user()->wilayah)->where('rancangan',Auth::user()->rancangan)->get();
         }
+        
+        if(Str::contains(Auth::user()->kategori->nama, 'PEGAWAI KONTRAK')){
+            $borangs = Borang::with('jwpn')->where('status', 1)->whereRelation('jwpn','status', '=','Terima')->get();
+            $surats = Hantar_surat::whereRaw('json_contains(carbon_copy, \'["' .Auth::user()->kategoripengguna. '"]\')')->get();
+        }else{
+            $borangs = new \Illuminate\Database\Eloquent\Collection();
+            if(Str::contains(Auth::user()->kategori->nama, 'HQ')){
+                $surats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
+                    $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
+                }])->whereRaw('json_contains(carbon_copy, \'["' .Auth::user()->kategoripengguna. '"]\')')->orderBy('created_at', "DESC")->get();
+            }elseif(Str::contains(Auth::user()->kategori->nama, 'Super Admin')){
+                $surats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
+                    $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
+                }])->whereRaw('json_contains(carbon_copy, \'["' .Auth::user()->kategoripengguna. '"]\')')->orderBy('created_at', "DESC")->get();
+            }elseif(Str::contains(Auth::user()->kategori->nama, 'wilayah')|| Str::contains(Auth::user()->kategori->nama, 'WILAYAH')){
+                $surats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
+                    $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
+                }])->whereRaw('json_contains(carbon_copy, \'["' .Auth::user()->kategoripengguna. '"]\')')->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->orderBy('created_at', "DESC")->get();
+            }else{
+                $surats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
+                    $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
+                }])->whereRaw('json_contains(carbon_copy, \'["' .Auth::user()->kategoripengguna. '"]\')')->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->whereRelation('jawapan','rancangan', Auth::user()->rancangan)->orderBy('created_at', "DESC")->get();
+            }
+        }
 
-        $tugasans= Senarai_tugasan::where('user_id', $user)->get();
-        $borangs = Borang::with('jwpn')->where('status', 1)->whereRelation('jwpn','status', '=','Terima')->get();
-        // dd($borangs);
         if(Str::contains(Auth::user()->kategori->nama, 'HQ')){
             $hantarSurats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
-                $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
             }])->where('userCategory_id', Auth::user()->kategoripengguna)->orderBy('created_at', "DESC")->get();
         }elseif(Str::contains(Auth::user()->kategori->nama, 'Super Admin')){
             $hantarSurats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
-                $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
             }])->where('userCategory_id', Auth::user()->kategoripengguna)->orderBy('created_at', "DESC")->get();
         }elseif(Str::contains(Auth::user()->kategori->nama, 'wilayah')|| Str::contains(Auth::user()->kategori->nama, 'WILAYAH')){
             $hantarSurats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
-                $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
             }])->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->orderBy('created_at', "DESC")->get();
         }else{
             $hantarSurats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
-                $query->WhereRelation('medan', 'nama', 'like', "kategori");
+                $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
             }])->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->whereRelation('jawapan','rancangan', Auth::user()->rancangan)->orderBy('created_at', "DESC")->get();
         }
         
@@ -579,7 +601,7 @@ class UserController extends Controller
         $borangKelulusan = Borang::with('ProsesKelulusan')->whereHas('jwpn')->whereRelation('ProsesKelulusan.TahapKelulusan', 'user_category', Auth::user()->kategoripengguna)->get();
 
         $date = Carbon::now();
-        $tugasans_noti= Senarai_tugasan::where('user_id', $user)->where('due_date', '>=', $date->format('Y-m-d'))->count();
+        $tugasans_noti= Senarai_tugasan::where('user_id', Auth::user()->id)->where('due_date', '>=', $date->format('Y-m-d'))->count();
         $aduans_noti= Aduan::where('user_category', Auth::user()->kategoripengguna)->whereNot('status', 'Sah Selesai')->count();
         $borangs_noti = Borang::where('status', 1)->with('jwpn')->whereRelation('jwpn','status',  '=','Terima')->doesntHave('jwpn.hantarSurat')->count();
         $noti = $tugasans_noti+$aduans_noti+$borangs_noti;
@@ -588,7 +610,7 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('userView.userTugasan', compact('borangKelulusan','jawapan_rancangan','noti','borangs_noti','tugasans_noti','aduans_noti','hantarSurats','borangs','aduans','tugasans', 'menuModul', 'menuProses', 'menuProjek'));
+        return view('userView.userTugasan', compact('borangKelulusan','jawapan_rancangan','noti','borangs_noti','tugasans_noti','aduans_noti','hantarSurats','borangs','aduans','surats', 'menuModul', 'menuProses', 'menuProjek'));
          
     }
 
@@ -1278,9 +1300,15 @@ class UserController extends Controller
     { 
         $jawapan_id = (int) $request->route('jawapan_id');
 
-        $jawapans = Jawapan::find($jawapan_id);
-        $kategoriPengguna = KategoriPengguna::all();
+        $jawapans = Jawapan::with('borangs', 'borangs.proses')->where('id', $jawapan_id)->first();
+        $kategoriPenggunas = KategoriPengguna::where('id', '!=', Auth::user()->kategoripengguna)->get();
         $surats = Surat::where('borang_id', $jawapans->borangs->id)->get();
+        $items = Pemohonan_Peneroka::where('jawapan_id', $jawapan_id)->get();
+        
+        // $jenis_tugasans = Tugasan::whereRelation('Proses','projek_id', $jawapans->borangs->proses->projek_id)->whereRelation('Proses','sequence', $jawapans->borangs->proses->sequence+1)->orderBy("sequence", "ASC")->get();
+        $jenis_fasas = Tugasan::whereRelation('Proses','projek_id', $jawapans->borangs->proses->projek_id)->distinct()->get(['fasa']);
+
+        $sendSurats = Hantar_Surat::where('jawapan_id', $jawapan_id)->get();
 
         //for notification tugasan
         $noti = $this->notification();
@@ -1289,7 +1317,142 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pegawaiKontrak.oneUser', compact('surats','kategoriPengguna','jawapans','noti','menuModul', 'menuProses', 'menuProjek'));
+        return view('pegawaiKontrak.oneUser', compact('sendSurats','jenis_fasas','items','surats','kategoriPenggunas','jawapans','noti','menuModul', 'menuProses', 'menuProjek'));
+    }
+
+    public function ccSurat_view(Request $request)
+    {
+        $surat_id = (int) $request->route('surat_id');
+        $jawapan_id = (int) $request->route('jawapan_id');
+        
+        $jawapan = Jawapan::where('id', $jawapan_id)->with(['jawapanMedan' => function ($query) {
+            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
+        }])->first();
+
+        $kp = Jawapan_medan::where('jawapan_id', $jawapan_id)->whereRelation('medan','medan.nama', 'LIKE','%KAD PENGENALAN%')->first();
+        $surat = Surat::find($surat_id);
+        $hantar_surat = Hantar_Surat::where('surat_id', $surat_id)->first();
+        $carbon = new \Illuminate\Database\Eloquent\Collection();
+        $items = new \Illuminate\Database\Eloquent\Collection();
+
+        foreach (json_decode($hantar_surat->carbon_copy) as $cc){
+            $carbon->push(KategoriPengguna::find($cc));
+        }
+
+        foreach (json_decode($hantar_surat->items) as $item){
+            $items->push(Pemohonan_Peneroka::find($item));
+        }
+
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
+
+        return view('surat.viewSurat', compact('noti','hantar_surat','items','carbon','kp','jawapan','surat','menuModul', 'menuProses', 'menuProjek'));
+    }
+
+    public function sendTugas_create(Request $request)
+    {         
+        $jawapan = Jawapan::where('id', $request->jawapan_id)->with(['jawapanMedan' => function ($query) {
+            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
+        }])->first();
+
+        if($jawapan->jawapanMedan[0]->jawapan){
+            $titleSurat = "PERMOHONAN PENGURUSAN PEROLEHAN BAGI PROJEK PROGRAM PEMBANGUNAN PENEROKA (PPP) BAGI ".$jawapan->jawapanMedan[0]->jawapan." DI ".$jawapan->rancangans->nama;
+
+        }else{
+            $titleSurat = "PERMOHONAN PENGURUSAN PEROLEHAN BAGI PROJEK PROGRAM PEMBANGUNAN PENEROKA (PPP) DI ".$jawapan->rancangans->nama;
+        }
+        
+        $surat = new Surat;
+        $surat->title = $titleSurat;
+        $surat->jenis = "KONTRAK";
+        $surat->save();
+
+        if($surat->save()){
+            $send = new Hantar_Surat;
+            $send->surat_id = $surat->id;
+            $send->jawapan_id = $jawapan->id;
+            $send->userCategory_id = $request->category;
+            $send->fasa = $request->fasa;
+            $send->items = json_encode($request->perkara);
+            $send->carbon_copy = json_encode($request->cc);
+            $send->save();
+
+            Alert::success('Berjaya', 'Mencipta agihan perkara permohonan berjaya.');  
+        }else{
+            Alert::error('Ralat', 'Mencipta agihan perkara permohonan tidak berjaya.'); 
+        }
+        return back();  
+    }
+    
+    public function sendTugas_update(Request $request)
+    { 
+        $send = Hantar_Surat::find($request->send_id);
+        $send->status = "Hantar";
+        $send->save();
+
+        Alert::success('Berjaya', 'Menghantar surat serta barang permohonan telah berjaya.');  
+        return back();
+    }
+
+    public function sendTugas_delete(Request $request)
+    { 
+        $send = Hantar_Surat::find($request->send_id);
+        $send->delete();
+
+        Alert::success('Berjaya', 'Memadam surat serta barang permohonan telah berjaya.');  
+        return back();
+    }
+
+    public function tugasSurat_edit(Request $request)
+    { 
+        $send_id = (int) $request->route('send_id');
+        $send = Hantar_Surat::find($send_id);
+
+        $jawapan = Jawapan::find($send->jawapan_id);
+        $surat = Surat::find($send->surat_id);
+
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
+
+        return view('surat.editSurat', compact('noti','jawapan','surat','menuModul', 'menuProses', 'menuProjek'));
+    }
+
+    public function tugasSurat_view(Request $request)
+    { 
+        $jawapan = Jawapan::where('id', $request->jawapan_id)->with(['jawapanMedan' => function ($query) {
+            $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
+        }])->first();
+
+        $kp = Jawapan_medan::where('jawapan_id', $request->jawapan_id)->whereRelation('medan','medan.nama', 'LIKE','%KAD PENGENALAN%')->first();
+        $surat = Surat::find($request->surat_id);
+        $hantar_surat = Hantar_Surat::where('surat_id', $request->surat_id)->first();
+        $carbon = new \Illuminate\Database\Eloquent\Collection();
+        $items = new \Illuminate\Database\Eloquent\Collection();
+
+        foreach (json_decode($hantar_surat->carbon_copy) as $cc){
+            $carbon->push(KategoriPengguna::find($cc));
+        }
+
+        foreach (json_decode($hantar_surat->items) as $item){
+            $items->push(Pemohonan_Peneroka::find($item));
+        }
+
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
+
+        return view('surat.viewSurat', compact('noti','items','carbon','kp','jawapan','surat','hantar_surat','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function generate_one(Request $request)
@@ -1334,7 +1497,6 @@ class UserController extends Controller
         $jawapan = Jawapan::with('borangs', 'borangs.proses')->where('id',$jawapan_id)->first(); 
 
         $tugasans = Tugasan::where('proses_id',$jawapan->borangs->proses_id)->get();
-        $items = Pemohonan_Peneroka::where('jawapan_id', $jawapan_id)->get();
         $surats = Surat::where('borang_id', $jawapan->borang_id)->get();
 
         //for notification tugasan
@@ -1344,7 +1506,7 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('userView.senaraiProjekTugasan', compact('surats','items','jawapan','tugasans','noti','menuModul', 'menuProses', 'menuProjek'));
+        return view('userView.senaraiProjekTugasan', compact('surats','jawapan','tugasans','noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function Jawapan_update(Request $request)
@@ -1413,10 +1575,8 @@ class UserController extends Controller
         $jawapan_id = (int)$request->route('jawapan_id'); 
 
         $tugasan = Tugasan::with('Proses')->where('id',$tugasan_id)->first();
-        $tindakans = TindakanTugasan::where('tugasan_id', $tugasan_id)->where('jawapan_id', $jawapan_id)->where('user_id', Auth::user()->id)->where('tarikh_sasaran', NULL)->orderBy('created_at', 'DESC')->get();
-        
-        $tarikh = TindakanTugasan::where('tugasan_id', $tugasan_id)->where('jawapan_id', $jawapan_id)->where('user_id', Auth::user()->id)->where('tarikh_sasaran', '!=', Null)->orderBy('created_at', 'ASC')->first('tarikh_sasaran');
-
+        $tindakans = TindakanTugasan::where('tugasan_id', $tugasan_id)->where('jawapan_id', $jawapan_id)->where('user_id', Auth::user()->id)->orderBy('tarikh_sasaran', 'ASC')->get();
+        // dd($tindakans);
         //for notification tugasan
         $noti = $this->notification();
 
@@ -1424,7 +1584,7 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('userView.tindakanList', compact('jawapan_id','tarikh','tindakans','tugasan','noti','menuModul', 'menuProses', 'menuProjek'));
+        return view('userView.tindakanList', compact('jawapan_id','tindakans','tugasan','noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function TindakanText_add(Request $request)
@@ -1433,34 +1593,22 @@ class UserController extends Controller
         $jawapan_id = $request->jawapan_id;
 
         $tindakan = new TindakanTugasan;
-        $tindakan->input = $request->reply;
+        $tindakan->aktiviti = $request->aktiviti;
+        $tindakan->wajaran = $request->wajaran;
+        $tindakan->tarikh_sasaran = $request->tarikh_sasaran;
         $tindakan->tugasan_id = $tugasan_id;
         $tindakan->jawapan_id = $jawapan_id;
-        $tindakan->progress = $request->progress;
         $tindakan->user_id = Auth::user()->id;
         $tindakan->save();
 
-
-        if($tindakan->progress == "100"){
-            $permohonan = Pemohonan_Peneroka::where('jawapan_id',$jawapan_id)->get();
-            foreach($permohonan as $pemohonan){
-                $terima= new Penerimaan_bekalan;
-                $terima->pemohonan_id = $pemohonan->id;
-                $terima->save();
-            }
-            $jawapan = Jawapan::find($jawapan_id);
-            $jawapan->status = "Penerimaan";
-            $jawapan->save();
-        }
-
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Cipta Maklum Balas Pada Tugasan ".$tindakan->Tugasan->Perkara;
+        $audit->action = "Cipta Aktiviti Pada Tugasan ".$tindakan->Tugasan->Perkara;
         $audit->save();
 
-        Alert::success('Kemaskini Tugasan Berjaya.', 'Tindakan Tugasan telah berjaya disimpan.');   
+        Alert::success('Cipta Aktiviti Tugasan Berjaya.', 'Aktiviti tugasan telah berjaya dicipta.');   
 
-        return redirect('/user/projek/tugasan/'.$tugasan_id.'/'.$jawapan_id.'/list');
+        return back();
     }
 
     public function TindakanText_delete(Request $request)
@@ -1472,14 +1620,70 @@ class UserController extends Controller
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
-        $audit->action = "Padam Maklum Balas Pada Tugasan ".$tindakan->Tugasan->Perkara;
+        $audit->action = "Padam Aktiviti Pada Tugasan ".$tindakan->Tugasan->Perkara;
         $audit->save();
 
         $tindakan->delete();
 
-        Alert::success('Padam Maklum Balas Tugasan Berjaya.', 'Maklum Balas Tugasan telah berjaya dipadam.');   
+        Alert::success('Padam Aktiviti Tugasan Berjaya.', 'Aktiviti Tugasan telah berjaya dipadam.');   
 
-        return redirect('/user/projek/tugasan/'.$tugasan_id.'/'.$jawapan_id.'/list');
+        return back();
+    }
+
+    public function aktivitiProgress_list(Request $request)
+    {
+        $tindakan_id = (int)$request->route('tindakan_id'); 
+
+        $tindakan = TindakanTugasan::find($tindakan_id);
+        $kemajuans = Tindakan_progress::where('tindakan_id', $tindakan_id)->orderBy('created_at', 'ASC')->get();
+
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
+
+        return view('userView.userTugasanItem', compact('noti','kemajuans','tindakan', 'menuModul', 'menuProses', 'menuProjek'));
+    }
+
+    public function aktivitiProgress_add(Request $request)
+    {
+        $kemajuan = new Tindakan_progress;
+        $kemajuan->progress = $request->progress;
+        $kemajuan->catatan = $request->catatan;
+        if($request->file()){
+            $files = time().'.'.$request->bukti->extension();  
+            $request->bukti->move(public_path('progress'), $files);
+            $kemajuan->bukti = '/progress/' . $files;
+        }
+        $kemajuan->tindakan_id = $request->tindakan_id;
+        $kemajuan->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Kemajuan Aktiviti ".$kemajuan->TindakanTugasan->aktiviti;
+        $audit->save();
+
+        Alert::success('Berjaya','Kemaskini Kemajuan Aktiviti Berjaya.');   
+
+        return back();
+    }
+
+    public function aktivitiProgress_delete(Request $request)
+    {
+        $kemajuan = Tindakan_progress::find($request->kemajuan_id);
+        
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Padam Kemajuan Aktiviti ".$kemajuan->TindakanTugasan->aktiviti;
+        $audit->save();
+
+        $kemajuan->delete();
+
+        Alert::success('Berjaya','Padam Kemajuan Aktiviti Berjaya.');   
+
+        return back();
     }
 
     public function TindakanFile_add(Request $request)
@@ -1582,7 +1786,6 @@ class UserController extends Controller
             $tindakan->jawapan = $inputMedan;
         }
 
-        // dd($tindakan);
         //for notification tugasan
         $noti = $this->notification();
 

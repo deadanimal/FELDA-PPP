@@ -13,175 +13,80 @@
     </div>
     <div class="row">
         <div class="col-12">
+            
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Sila lengkapkan tugasan berikut sebelum tarikh yang ditetapkan.</h5>
-                </div>
-                <div class="card-body">
-                    <table class="w-50 center">
+                    <h2 class="title text-center">{{$tugasan->perkara}}</h2>
+                    <table class="w-100 center">
                         <tr>
-                            <td colspan="2"><h2 class="text-center">{{$tugasan->perkara}}</h2></td>
+                            <td><h5 class="card-title mb-0">Senarai Aktiviti</h5></td>
+                            <td>
+                                <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAdd">
+                                    <div class="frame9403-frame7293">
+                                        <span class="frame9403-text21"><span>Tambah Aktiviti</span></span>
+                                        <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                                    </div>
+                                </button>
+                            </td>
                         </tr>
-                        @if ($tarikh != null)
-                            <tr>
-                                <td><h2 class="text-right" style="margin-right:3%">Tarikh Sasaran:</h2></td>
-                                <td><h2 class="text-left">{{date('d-m-Y', strtotime($tarikh->tarikh_sasaran))}}</h2></td>
-                            </tr>
-                        @endif
                     </table>
-                </div>
-                <div class="card-footer">
-                    <button class="frame9403-frame7445" style="margin-right: auto;" data-toggle="modal" data-target="#exampleModalDate" 
-                    @if ($tarikh != null)
-                        @if (now()->toDateString() > $tarikh->tarikh_sasaran)
-                            disabled
-                        @endif 
-                    @endif
-                    >
-                        <div class="frame9403-frame7293">
-                            <span class="frame9403-text21"><span>Kemaskini Tugasan</span></span>
-                            <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                        </div>
-                    </button>
-                    <div class="modal fade" id="exampleModalDate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Kemaskini Tugasan</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form method="post" action="/user/projek/tindakan/date/add" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="modal-body">
-                                        <label for="reply" class="form-label">Tarikh Sasaran</label>
-                                        <input type="date" class="form-control" name="tarikh" min="{{now()->toDateString()}}" required>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button> 
-                                        <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
-                                        <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
-                                        <button class="btn btn-danger">KEMASKINI</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Senarai Maklum Balas</h5>
-                    <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAdd" 
-                    @if ($tarikh != null)
-                        @if (now()->toDateString() > $tarikh->tarikh_sasaran)
-                            disabled
-                        @endif
-                    @else
-                        disabled 
-                    @endif
-                    >
-                        <div class="frame9403-frame7293">
-                            <span class="frame9403-text21"><span>Lakukan Tugasan</span></span>
-                            <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
-                        </div>
-                    </button>
+
                     <div class="modal fade" id="exampleModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLabel">Lakukan Tugasan</h5>
+                                  <h5 class="modal-title" id="exampleModalLabel">Tambah Aktiviti</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                   </button>
                               </div>
-                              @if ($tugasan->jenis_input == "Text")
-                                <form method="post" action="/user/projek/tindakan/text/add">
-                                    @csrf
-                                    <div class="modal-body">
-                                        <label for="reply" class="form-label">Maklum Balas</label>
-                                        <input type="text" class="form-control" name="reply" id="reply" required oninput="this.value = this.value.toUpperCase()">
-                                        
-                                        <label for="progress" class="form-label">Kemajuan</label>
-                                        <select class="form-select" name="progress" id="progress">
-                                            <option value="10">10%</option>
-                                            <option value="20">20%</option>
-                                            <option value="30">30%</option>
-                                            <option value="40">40%</option>
-                                            <option value="50">50%</option>
-                                            <option value="60">60%</option>
-                                            <option value="70">70%</option>
-                                            <option value="80">80%</option>
-                                            <option value="90">90%</option>
-                                            <option value="100">100%</option>
-                                        </select>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button> 
-                                        <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
-                                        <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
-                                        <button class="btn btn-danger">KEMASKINI</button>
-                                    </div>
-                                </form>
-
-                              @elseif ($tugasan->jenis_input == "File")
-                                <form method="post" action="/user/projek/tindakan/file/add" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="modal-body">
-                                        <label for="reply" class="form-label">Maklum Balas</label>
-                                        <input type="file" class="form-control" name="reply" required>
-                                        <br>
-                                        <label for="progress" class="form-label">Kemajuan</label>
-                                        <select class="form-select" name="progress" id="progress">
-                                            <option value="10">10%</option>
-                                            <option value="20">20%</option>
-                                            <option value="30">30%</option>
-                                            <option value="40">40%</option>
-                                            <option value="50">50%</option>
-                                            <option value="60">60%</option>
-                                            <option value="70">70%</option>
-                                            <option value="80">80%</option>
-                                            <option value="90">90%</option>
-                                            <option value="100">100%</option>
-                                        </select>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button> 
-                                        <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
-                                        <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
-                                        <button class="btn btn-danger">KEMASKINI</button>
-                                    </div>
-                                </form>
-                              @endif
-                              
+                            <form method="post" action="/user/projek/tindakan/aktiviti/add">
+                                @csrf
+                                <div class="modal-body">
+                                    <label for="aktiviti" class="form-label">Aktiviti Tugasan</label>
+                                    <input type="text" class="form-control" name="aktiviti" id="aktiviti" required oninput="this.value = this.value.toUpperCase()">
+                                    <br>
+                                    <label for="wajaran" class="form-label">Wajaran</label>
+                                    <input type="number" class="form-control" name="wajaran" id="wajaran" required>
+                                    <br>
+                                    <label for="tarikh_sasaran" class="form-label">Tarikh Sasaran</label>
+                                    <input type="date" class="form-control" name="tarikh_sasaran" id="tarikh_sasaran" min="{{date('Y-m-d')}}" required>                                   
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button> 
+                                    <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
+                                    <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
+                                    <button class="btn btn-danger">TAMBAH</button>
+                                </div>
+                            </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    @if (!$tindakans->isEmpty())
+                @if (!$tindakans->isEmpty())
                     <table class="table table-bordered table-striped w-100 arial">
                         <thead class="text-white bg-primary w-100">
                         <tr class="text-center">
-                            <th scope="col" style="width: 50%;">Maklum Balas</th>
+                            <th scope="col" style="width: 40%;">Aktiviti</th>
+                            <th scope="col">Wajaran</th>
+                            <th scope="col">Tarikh Sasaran</th>
+                            <th scope="col">Tarikh Tindakan</th>
+                            <th scope="col">Hari Lewat</th>
+                            <th scope="col">Catatan</th>
                             <th scope="col">Kemajuan</th>
-                            <th scope="col">Tarikh Maklum Balas</th>
-                            <th scope="col">Tindakan</th>
+                            <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
                             @foreach ($tindakans as $tindakan)
                             <tr>
-                                <td class="text-center arial" style="text-transform: uppercase;">
-                                    @if ($tindakan->Tugasan->jenis_input == "Text")
-                                        {{$tindakan->input}}
-                                    @elseif($tindakan->Tugasan->jenis_input == "File")
-                                        <a href="{{$tindakan->file}}">Lihat Fail</a>
-                                    @endif
-                                </td>
-                                <td class="text-center arial">{{$tindakan->progress}}%</td>
-                                <td class="text-center arial">{{date('d-m-Y', strtotime($tindakan->created_at))}}</td>
+                                <td class="text-center arial" style="text-transform: uppercase;"><a href="/user/projek/tindakan/{{$tindakan->id}}/progress_list">{{$tindakan->aktiviti}}</a></td>
+                                <td class="text-center arial">{{$tindakan->wajaran}}</td>
+                                <td class="text-center arial">{{$tindakan->tarikh_sasaran}}</td>
+                                <td class="text-center arial">{{--$tindakan->tarikh_tindakan ?? ""--}}</td>
+                                <td class="text-center arial">contoh</td>
+                                <td class="text-center arial">contoh1</td>
+                                <td class="text-center arial">contoh2</td>
                                 <td class="text-center arial">
                                     <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModaldelete{{$tindakan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
         
@@ -216,17 +121,42 @@
                             </tr>
                             @endforeach 
                         </tbody>
-                    </table>
-                            
-                    @else
-                        <h1 style="text-align: center;"> Tiada Maklum Balas </h1>
-                    @endif
-                </div>
+                    </table>     
+                @else
+                    <h1 style="text-align: center;"> Tiada Maklum Balas </h1>
+                @endif
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    const fileBlocks = document.querySelectorAll('.file-block')
+    const buttons = document.querySelectorAll('.btn-select-file')
+    
+    ;[...buttons].forEach(function (btn) {
+      btn.onclick = function () {
+        btn.parentElement.querySelector('input[type="file"]').click()
+      }
+    })
+    
+    ;[...fileBlocks].forEach(function (block) {
+      block.querySelector('input[type="file"]').onchange = function () {
+        const filename = this.files[0].name
+    
+        block.querySelector('.btn-select-file').textContent = filename
+      }
+    })
+    </script>
 <style>
+
+    a{
+        color:black !important;
+        text-decoration:none;
+    }
+    a:hover{
+        color:#3b7ddd !important;
+        text-decoration:none;
+    }
     .center{
          margin-left: auto;
         margin-right: auto;

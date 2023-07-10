@@ -24,4 +24,8 @@ class TindakanTugasan extends Model
     public function InputMedan(){
         return $this->hasMany(InputMedan::class);
     }
+
+    public function Tindakan_progress(){
+        return $this->hasMany(Tindakan_progress::class);
+    }
 }

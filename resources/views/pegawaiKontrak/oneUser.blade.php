@@ -2,8 +2,11 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 @section('innercontent')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="/css/bootstrap-multiselect.css">
 
 <div class="container-fluid">
 
@@ -16,43 +19,43 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-            <h3 style="text-transform: uppercase;">PERMOHONAN {{$jawapans->borangs->namaBorang}}</h3>
+            <h3 style="text-transform: uppercase;">{{$jawapans->borangs->namaBorang}}</h3>
         </div>
         <div class="card-body">
-            <table class="w-100">
-                <tr>
-                    <td>
-                        <label for="nama" class="frame9402-text04">
-                            <strong>Nama</strong>
-                        </label>
-                    </td>
-                    <td><input type="text" class="form-control frame9402-kotaknama" id="nama" value="{{$jawapans->nama}}" readonly></td>                
-                </tr>
-                <tr> 
-                    <td>
-                        <label for="kod_projek" class="frame9402-text04">
-                            <strong>Kod Projek</strong>
-                        </label>
-                    </td>
-                    <td><input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->kod_projek}}" readonly></td> 
-                </tr>
-                <tr> 
-                    <td>
-                        <label for="kod_projek" class="frame9402-text04">
-                            <strong>Wilayah</strong>
-                        </label>
-                    </td>
-                    <td><input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->wilayahs->nama}}" readonly></td> 
-                </tr>
-                <tr> 
-                    <td>
-                        <label for="kod_projek" class="frame9402-text04">
-                            <strong>Rancangan</strong>
-                        </label>
-                    </td>
-                    <td><input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->rancangans->nama}}" readonly></td> 
-                </tr>
-            </table>
+          <table class="w-100">
+            <tr>
+              <td>
+                <label for="nama" class="frame9402-text04">
+                  <strong>Nama</strong>
+                </label>
+              </td>
+              <td><input type="text" class="form-control frame9402-kotaknama" id="nama" value="{{$jawapans->nama}}" readonly></td>                
+            </tr>
+            <tr> 
+              <td>
+                <label for="kod_projek" class="frame9402-text04">
+                  <strong>Kod Projek</strong>
+                </label>
+              </td>
+              <td><input type="text" class="form-control frame9402-kotaknama" id="kod_projek" value="{{$jawapans->kod_projek}}" readonly></td> 
+            </tr>
+            <tr> 
+              <td>
+                <label for="wilayah" class="frame9402-text04">
+                  <strong>Wilayah</strong>
+                </label>
+              </td>
+              <td><input type="text" class="form-control frame9402-kotaknama" id="wilayah" value="{{$jawapans->wilayahs->nama}}" readonly></td> 
+            </tr>
+            <tr> 
+              <td>
+                <label for="rancangan" class="frame9402-text04">
+                  <strong>Rancangan</strong>
+                </label>
+              </td>
+              <td><input type="text" class="form-control frame9402-kotaknama" id="rancangan" value="{{$jawapans->rancangans->nama}}" readonly></td> 
+            </tr>
+          </table>
         </div>
       </div>
       @if (!$surats->isEmpty())
@@ -81,72 +84,215 @@
       @endif
       <div class="card">
         <div class="card-header">
-            <button class="frame9403-frame7445"  type="button" id="rowAdder">
+          @if (!$items->isEmpty())
+            <button class="frame9403-frame7445"  data-toggle="modal" data-target="#modalAdd">
                 <div class="frame9403-frame7293">
-                    <span class="frame9403-text21"><span>Tambah Kategori Pengguna</span></span>
+                    <span class="frame9403-text21"><span>Tambah Pengguna</span></span>
                     <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
                 </div>
             </button>
-        </div>
-        <form action="/user/tugasan/send/generate_one" method="post">
-            @csrf
-            <div class="card-body">
-                <table style="overflow: scroll; max-height: 750px; width:100%;" id="borangField" class="draggable-table">
-                    <tbody class="row_drag">
-                
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-footer">
-                <input type="hidden" id="count" name="count" value="">
-                <input type="hidden" name="jawapan_id" value="{{$jawapans->id}}"> 
-                <button type="submit" class="frame9403-frame7445" id="hantar" disabled="disabled">
-                    <div class="frame9403-frame7293">
-                        <span class="frame9403-text21"><span>Hantar</span></span>
-                        <img src="/SVG/kemaskini.svg" class="frame9403-group7527">
+
+            {{-- Modal Pengguna --}}
+            <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">PILIH PENGGUNA YANG HENDAK DI HANTAR TUGAS</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </button>
+                    <form action="/user/tugasan/send/create" method="POST">
+                      @csrf
+                      <div class="modal-body">
+                        <table class="table table-borderles w-100">
+                          <tr>
+                            <td>
+                              <span style="text-align:right;margin-right:2%;">Kategori Pengguna</span>
+                            </td>
+                            <td>
+                              <select name="category" class="form-select frame9402-kotaknama">
+                                @foreach($kategoriPenggunas as $kategoriPengguna)
+                                  <option value="{{$kategoriPengguna->id}}">{{$kategoriPengguna->nama}}</option>
+                                @endforeach
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span style="text-align:right;margin-right:2%;">Jenis Fasa</span>
+                            </td>
+                            <td>
+                              <select name="fasa" class="form-select frame9402-kotaknama">
+                                @foreach($jenis_fasas as $jenis_fasa)
+                                  <option value="{{$jenis_fasa->fasa}}">{{$jenis_fasa->fasa}}</option>
+                                @endforeach
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span style="text-align:right;margin-right:2%;">Salinan Karbon</span>
+                            </td>
+                            <td>
+                              <select name="cc[]" id="cc" multiple="multiple">
+                                @foreach($kategoriPenggunas as $kategoriPengguna)
+                                  <option value="{{$kategoriPengguna->id}}">{{$kategoriPengguna->nama}}</option>
+                                @endforeach
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span style="text-align:right;margin-right:2%;">Perkara Yang Dihantar</span>
+                            </td>
+                            <td>
+                              <select name="perkara[]" id="perkara" multiple="multiple">
+                                @foreach($items as $item)
+                                  <option value="{{$item->id}}">{{$item->nama}}</option>
+                                @endforeach
+                              </select>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                          <input type="hidden" name="jawapan_id" value="{{$jawapans->id}}">
+                          <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                          <button class="btn btn-primary">Cipta</button>
+                      </div>
+                    </form> 
+                </div>  
+              </div>
             </div>
-        </form>
+          @endif
+        </div>
+        <table class="table table-bordered w-100">
+          <thead class="text-white bg-primary w-100">
+            <tr class="text-center">
+              <th>Jenis Fasa</th>
+              <th>Kategori Pengguna</th>
+              <th>Perkara Permohonan</th>
+              <th>Status</th>
+              <th>Tindakan</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (!$sendSurats->isEmpty())
+              @foreach ($sendSurats as $send)
+                <tr>
+                  <td class="text-center">{{$send->fasa}}</td>
+                  <td class="text-center">{{$send->KategoriPengguna->nama}}</td>
+                  <td>
+                    <ul style="margin-bottom: 0px;">
+                      @foreach (json_decode($send->items) as $perkara)
+                        @foreach($items as $item)
+                          @if ($perkara == $item->id)
+                            <li>{{$item->nama}}</li>
+                          @endif
+                        @endforeach
+                      @endforeach
+                    </ul>
+                  </td>
+                  <td class="text-center">{{$send->status}}</td>
+                  <td class="text-center">
+                    <a href="/user/tugasan/surat/{{$send->id}}/edit" style="padding-left:1.5%;" title="Kemaskini Surat"><i class="align-middle me-2 fas fa-fw fa-envelope" style="color: #CD352A; font-size:2em;"></i></a>
+                    
+                    <button type="button" class="frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModalSend{{$send->id}}" title="Hantar Tugasan"><i class="align-middle me-2 fas fa-fw fa-paper-plane" style="color: #CD352A; font-size:1.5em;"></i></button>
+                    
+                    {{-- modal Hantar surat serta item --}}                   
+                    <div class="modal fade" id="exampleModalSend{{$send->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Hantar Surat Serta Barang Permohonan Ini</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Anda pasti mahu hantar surat serta barang permohonan ini?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                              <form method="post" action="/user/tugasan/send/update">
+                                @csrf
+                                @method('put')                                        
+                                <input type="hidden" name="send_id" value="{{$send->id}}">
+                                <button class="btn btn-danger">YA</button>
+                              </form>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    
+                    <button type="button" class="frame9402-rectangle828246" style="margin-left: 10px; margin-top: -5px;" data-toggle="modal" data-target="#exampleModal{{$send->id}}" title="Padam"><img src="/SVG/bin.svg"></button>
+                          
+                    {{-- modal delete --}}                   
+                    <div class="modal fade" id="exampleModal{{$send->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Padam Tugasan Ini</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Anda Pasti Mahu Padam Tugasan ini?</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                              <form method="post" action="/user/tugasan/send/delete">
+                                @csrf
+                                @method('delete')                                        
+                                <input type="hidden" name="send_id" value="{{$send->id}}">
+                                <button class="btn btn-danger">YA</button>
+                              </form>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              @endforeach
+            @endif
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
-var count = 0;
-$("#rowAdder").click(function () {
-    count +=1;
-        newRowAdd =
-        '<tr class="frame9402-input" id="row">'+
-            '<td style="display:flex;"><span style="text-align:right;margin-right:2%;">Kategori Pengguna</span>'+
-                '<select type="text" name="category[]" class="form-select frame9402-kotaknama">'+
-                    '@foreach($kategoriPengguna as $kategoriPengguna)'+
-                    '<option value="{{$kategoriPengguna->id}}">{{$kategoriPengguna->nama}}</option>'+
-                    '@endforeach'+
-                '</select>'+
-                '<button class="frame9402-rectangle828245" id="DeleteRow"><img src="/SVG/bin.svg"/></button>'+
-            '</td>'+
-        '</tr>';
-        $('#borangField').append(newRowAdd);
-        document.getElementById("count").value = count;
-        
-        var cansubmit = (count > 0);
-        document.getElementById("hantar").disabled = !cansubmit;
-    });
- 
-$("body").on("click", "#DeleteRow", function () {
-  $(this).parents("#row").remove();
-  count -=1;
-  document.getElementById("count").value = count;
-
-  var cansubmit = (count > 0);
-  document.getElementById("hantar").disabled = !cansubmit;
-
+$(document).ready(function() {
+  $('#perkara').multiselect({
+    buttonWidth:'100%',
+    selectAllText:' Pilih Semua',
+    nonSelectedText: 'Tiada Pilihan',
+    nSelectedText: 'Dipilih',
+    allSelectedText: 'Semua Dipilih',
+    includeSelectAllOption: true
+  });
+  $('#cc').multiselect({
+    buttonWidth:'100%',
+    selectAllText:' Pilih Semua',
+    nonSelectedText: 'Tiada Pilihan',
+    nSelectedText: 'Dipilih',
+    allSelectedText: 'Semua Dipilih',
+    includeSelectAllOption: true
+  });
 });
-$("#borangField").scrollTop( $("#borangField").attr("scrollHeight") );
 </script>
 <style>
+  .frame9402-rectangle828246 {
+    width: 35px;
+    height: 30px;
+    padding: 0px;
+    position: relative;
+    box-sizing: border-box;
+    background-color: transparent;
+    border-color: transparent;
+  }
   .arial{
       font-family: 'Arial', sans-serif;
       text-transform: uppercase;

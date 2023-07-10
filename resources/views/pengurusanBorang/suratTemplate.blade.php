@@ -17,10 +17,12 @@
         </style>
     </head>
     <body class="c18 doc-content">
-        <div>
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/Image/header_surat.jpeg'))) }}" style="width: 110%; margin-left:-45px;">        
-        </div>
-        <hr style="background-color: #000000;">
+        @if ($surat->letter_head == 1)
+            <div>
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('/Image/header_surat.jpeg'))) }}" style="width: 110%; margin-left:-45px;">        
+            </div>
+            <hr style="background-color: #000000;">
+        @endif
         <table class="table table-borderless" style="margin-right: 0px; margin-left:auto; border: 0px;">
             <tr>
                 <td class="borderless"><span class="c7">Ruj. Tuan</span></td>

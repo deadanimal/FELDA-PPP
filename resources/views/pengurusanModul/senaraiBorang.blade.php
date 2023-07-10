@@ -202,6 +202,32 @@
                       </td>
                     </tr>
                     <tr>
+                      <td>
+                        <label for="sequence" class="frame9402-text04">
+                          <strong>Turutan</strong>
+                        </label>
+                      </td>
+                      <td>
+                        <input type="number" class="frame9402-kotaknamaBorang" id="sequence" 
+                        @if (!$tugasans->isEmpty())
+                          value="{{$tugasans->count() +1 }}"
+                        @else
+                          placeholder="Turutan Perkara"
+                        @endif
+                        name="sequence" required>                          
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="fasa" class="frame9402-text04">
+                          <strong>Fasa Tugasan</strong>
+                        </label>
+                      </td>
+                      <td>
+                        <input type="text" class="frame9402-kotaknamaBorang" id="fasa" placeholder="Fasa Tugasan" name="fasa" required oninput="this.value = this.value.toUpperCase()">                          
+                      </td>
+                    </tr>
+                    <tr>
                         <td>
                           <label for="jenis" class="frame9402-text04">
                             <strong>Jenis Input</strong>
@@ -232,14 +258,18 @@
         <table class="table table-bordered table-striped w-100 arial">
           <thead class="text-white bg-primary w-100 arial">
             <tr class="text-center">
-                <th scope="col" class="text-center">Perkara</th>
-                <th scope="col">Tindakan</th>
+                <th scope="col" class="text-center">PERKARA</th>
+                <th scope="col" class="text-center">FASA</th>
+                <th scope="col" class="text-center">TURUTAN</th>
+                <th scope="col">TINDAKAN</th>
             </tr>
           </thead>
           <tbody>
               @foreach ($tugasans as $tugasan)
               <tr>
                 <td class="text-center arial" style="width:50%">{{$tugasan->perkara}}</td>
+                <td class="text-center arial">{{$tugasan->fasa}}</td>
+                <td class="text-center arial">{{$tugasan->sequence}}</td>
                 <td class="text-center arial">
 
                     @if ($tugasan->jenis_input == "P.O")
@@ -248,7 +278,7 @@
                     <button class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Kemaskini" data-toggle="modal" data-target="#exampleModaledit{{$tugasan->id}}"><img src="/SVG/pencil.svg" title="kemaskini"/></button>
                       
                     <div class="modal fade" id="exampleModaledit{{$tugasan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
                                   <h5 class="modal-title" id="exampleModalLabel">Kemaskini Tugasan</h5>
@@ -269,6 +299,26 @@
                                         </td>
                                         <td>
                                           <input type="text" class="frame9402-kotaknamaBorang" id="perkara" value="{{$tugasan->perkara}}" name="perkara" required oninput="this.value = this.value.toUpperCase()">
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <label for="sequence" class="frame9402-text04">
+                                            <strong>Turutan</strong>
+                                          </label>
+                                        </td>
+                                        <td>
+                                          <input type="number" class="frame9402-kotaknamaBorang" id="sequence" value="{{$tugasan->sequence}}" name="sequence" required>                          
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <label for="fasa" class="frame9402-text04">
+                                            <strong>Fasa Tugasan</strong>
+                                          </label>
+                                        </td>
+                                        <td>
+                                          <input type="text" class="frame9402-kotaknamaBorang" id="fasa" value="{{$tugasan->fasa}}"  name="fasa" required oninput="this.value = this.value.toUpperCase()">                          
                                         </td>
                                       </tr>
                                       <tr>
@@ -303,29 +353,29 @@
     
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModaltugas{{$tugasan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Padam Tugasan {{$tugasan->nama}}</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Anda Pasti Mahu Padam Tugasan {{$tugasan->perkara}}?<p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
-                                <form method="post" action="/moduls/borang/tugasan/delete">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="hidden" value="{{$tugasan->Proses->id}}" name="prosesId">
-                                    <input type="hidden" value="{{$tugasan->id}}" name="tugasanID">
-                                    <button class="btn btn-danger">YA</button>
-                                </form>
-                            </div>
-                            </div>
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Padam Tugasan {{$tugasan->nama}}</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              <p>Anda Pasti Mahu Padam Tugasan {{$tugasan->perkara}}?<p>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                              <form method="post" action="/moduls/borang/tugasan/delete">
+                                  @csrf
+                                  @method('DELETE')
+                                  <input type="hidden" value="{{$tugasan->Proses->id}}" name="prosesId">
+                                  <input type="hidden" value="{{$tugasan->id}}" name="tugasanID">
+                                  <button class="btn btn-danger">YA</button>
+                              </form>
+                          </div>
                         </div>
+                      </div>
                     </div>
                 </td>
               </tr>
