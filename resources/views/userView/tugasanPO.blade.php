@@ -63,7 +63,7 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button> 
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal" disabled>BATAL</button> 
                                         <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
                                         <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
                                         <button class="btn btn-danger">CIPTA</button>
@@ -79,7 +79,7 @@
                     <h5 class="card-title mb-0">Pesanan Pembelian</h5>
                 </div>
                 <div class="card-body">
-                    @if (!$tindakans->isEmpty())
+                    {{-- @if (!$tindakans->isEmpty())
                     <table class="table table-bordered table-striped w-100 arial">
                         <thead class="text-white bg-primary w-100">
                         <tr class="text-center">
@@ -163,7 +163,7 @@
                             
                     @else
                         <h1 style="text-align: center;"> Tiada Pesanan Pembelian </h1>
-                    @endif
+                    @endif --}}
                 </div>
             </div>
         </div>

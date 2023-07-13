@@ -7,7 +7,7 @@
 
 <div class="container-fluid">
   <div class="header">
-    <a href="/user/projek/tugasan/{{$tindakan->tugasan_id}}/{{$tindakan->jawapan_id}}/list" class="btn frame9403-frame7445" style="margin-left:0px; width:15%;">
+    <a href="/user/projek/tugasan/{{$tindakan->tugasan_id}}/{{$tindakan->}}/list" class="btn frame9403-frame7445" style="margin-left:0px; width:15%;">
       <span class="frame9403-text21">Kembali</span>
     </a>
   </div>

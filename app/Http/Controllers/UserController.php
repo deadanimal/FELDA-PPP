@@ -1530,7 +1530,7 @@ class UserController extends Controller
         $hantarSurat = Hantar_surat::find($hantar_id);
         $jawapan = Jawapan::with('borangs', 'borangs.proses')->where('id',$hantarSurat->jawapan_id)->first(); 
 
-        $tugasans = Tugasan::where('proses_id',$jawapan->borangs->proses_id)->get();
+        $tugasans = Tugasan::where('proses_id',$jawapan->borangs->proses_id)->where('fasa', $hantarSurat->fasa)->get();
         $surats = Surat::where('borang_id', $jawapan->borang_id)->get();
 
         //for notification tugasan
@@ -1612,7 +1612,7 @@ class UserController extends Controller
         $tugasan = Tugasan::with('Proses')->where('id',$tugasan_id)->first();
         $tindakans = TindakanTugasan::where('tugasan_id', $tugasan_id)->where('jawapan_id', $hantarSurat->jawapan_id)->where('user_id', Auth::user()->id)
         ->with(['TindakanProgress' => function ($query) {
-            $query->orderBy('created_at', 'DESC')->first();
+            $query->latest();
         }])
         ->orderBy('tarikh_sasaran', 'ASC')->get();
         //for notification tugasan
@@ -1828,8 +1828,8 @@ class UserController extends Controller
     }
     public function TugasanPO_list(Request $request)
     {     
-        $tugasan_id = (int)$request->route('tugasan_id'); 
-        $jawapan_id = (int)$request->route('jawapan_id'); 
+        $tugasan_id = (int)$request->route('tugasan_id');
+        $jawapan_id = (int)$request->route('jawapan_id');
 
         $tugasan = Tugasan::with('Proses')->where('id',$tugasan_id)->first();
         $medanPO = MedanPO::where('tugasan_id', $tugasan_id)->get();

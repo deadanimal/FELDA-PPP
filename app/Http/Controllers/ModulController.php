@@ -986,7 +986,7 @@ class ModulController extends Controller
 
         $tugasan = Tugasan::find($request->tugasanID);
         $tugasan->perkara = $request->perkara;
-        $tugasan->phase = $request->phase;
+        $tugasan->fasa = $request->fasa;
         $tugasan->PO = $request->PO;
         $tugasan->save();
 
