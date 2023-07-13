@@ -106,7 +106,7 @@
                                     @endphp
 
                                     {{-- For enable edit tarikh sasaran button--}}
-                                    @if ($lewat != 0 && date('Y-m-d') >= $tindakan->tarikh_sasaran)
+                                    @if ($lewat != 0)
                                         <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModalUpdate{{$tindakan->id}}" title="Padam"><i class="align-middle me-2 fas fa-fw fa-pencil-alt"></i></button>
                                         
                                         <!-- Modal -->
