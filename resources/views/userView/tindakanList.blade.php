@@ -231,7 +231,7 @@
                     <h1 style="text-align: center;"> Tiada Maklum Balas </h1>
                 @endif
 
-                @if ($total_kemajuan <= $hantarSurat->PO_percent)
+                @if ($total_kemajuan >= $hantarSurat->PO_percent)
                     <div class="card-footer text-end">
                         <a class="btn btn-success" href="/user/projek/tugasan/{{$tugasan->id}}/{{$hantarSurat->jawapan_id}}/PO/list" style="color: white !important; text-decoration:none;">
                             Borang Pesanan (PO)
