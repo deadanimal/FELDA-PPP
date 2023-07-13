@@ -164,6 +164,7 @@
                             <tr class="text-center">
                                 <th scope="col">Nama Peserta</th>                                
                                 <th scope="col">Jenis Projek</th>
+                                <th scope="col" style="width:5%;">Surat</th>
                                 <th scope="col">Tindakan</th>
                             </tr>
                           </thead>
@@ -178,8 +179,11 @@
                                       @endforeach
                                     @endif
                                   </td>
+                                  <td class="text-center">
+                                    <a class="btn btn-info" href="/user/petiMasuk/{{$hantarSurat->surat_id}}/{{$hantarSurat->jawapan_id}}/view"><i class="align-middle me-2 fas fa-fw fa-envelope" style="color:white; margin:0px !important; font-size:1.5em"></i></a>
+                                  </td>
                                   <td class="text-center arial">
-                                    <a class="btn btn-success" href="/user/projek/{{$hantarSurat->jawapan_id}}/list" style="color: white; text-decoration:none;">
+                                    <a class="btn btn-success" href="/user/projek/{{$hantarSurat->id}}/list" style="color: white; text-decoration:none;">
                                       Lihat Tugasan
                                     </a>
                                   </td>

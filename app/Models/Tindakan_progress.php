@@ -9,6 +9,8 @@ class Tindakan_progress extends Model
 {
     use HasFactory;
 
+    protected $table="tindakan_progresses";
+
     public function TindakanTugasan(){
         return $this->belongsTo(TindakanTugasan::class, 'tindakan_id');
     }

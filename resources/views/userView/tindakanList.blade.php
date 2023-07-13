@@ -17,6 +17,7 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="title text-center">{{$tugasan->perkara}}</h2>
+                    
                     <table class="w-100 center">
                         <tr>
                             <td><h5 class="card-title mb-0">Senarai Aktiviti</h5></td>
@@ -55,7 +56,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button> 
                                     <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
-                                    <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
+                                    <input type="hidden" value="{{$hantarSurat->jawapan_id}}" name="jawapan_id">
                                     <button class="btn btn-danger">TAMBAH</button>
                                 </div>
                             </form>
@@ -63,6 +64,16 @@
                         </div>
                     </div>
                 </div>
+                @php
+                    $lewat=0;
+                    $total_wajaran=0;
+                    $total_kemajuan=0;
+                    if (!$tindakans->isEmpty()){
+                        foreach ($tindakans as $tindakan){
+                            $total_wajaran += $tindakan->wajaran;
+                        }
+                    }
+                @endphp
                 @if (!$tindakans->isEmpty())
                     <table class="table table-bordered table-striped w-100 arial">
                         <thead class="text-white bg-primary w-100">
@@ -80,13 +91,88 @@
                         <tbody>
                             @foreach ($tindakans as $tindakan)
                             <tr>
-                                <td class="text-center arial" style="text-transform: uppercase;"><a href="/user/projek/tindakan/{{$tindakan->id}}/progress_list">{{$tindakan->aktiviti}}</a></td>
-                                <td class="text-center arial">{{$tindakan->wajaran}}</td>
-                                <td class="text-center arial">{{$tindakan->tarikh_sasaran}}</td>
-                                <td class="text-center arial">{{--$tindakan->tarikh_tindakan ?? ""--}}</td>
-                                <td class="text-center arial">contoh</td>
-                                <td class="text-center arial">contoh1</td>
-                                <td class="text-center arial">contoh2</td>
+                                <td class="text-center arial" style="text-transform: uppercase;">
+                                    @if ($total_wajaran == 100)
+                                        <a href="/user/projek/tindakan/{{$tindakan->id}}/progress_list">{{$tindakan->aktiviti}}</a>
+                                    @else
+                                        {{$tindakan->aktiviti}}
+                                    @endif
+                                </td>
+                                <td class="text-center arial">{{$tindakan->wajaran}}%</td>
+                                <td class="text-center arial">
+                                    {{date('d-m-Y', strtotime($tindakan->tarikh_sasaran))}}
+                                    @php
+                                        $target_date = Carbon::parse($tindakan->tarikh_sasaran)
+                                    @endphp
+
+                                    {{-- For enable edit tarikh sasaran button--}}
+                                    @if ($lewat != 0 && date('Y-m-d') >= $tindakan->tarikh_sasaran)
+                                        <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModalUpdate{{$tindakan->id}}" title="Padam"><i class="align-middle me-2 fas fa-fw fa-pencil-alt"></i></button>
+                                        
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalUpdate{{$tindakan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <form method="post" action="/user/projek/tindakan/aktiviti/update">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Kemaskini Tarikh Sasaran</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <label for="tarikh_sasaran" class="form-label">Tarikh Sasaran Baru</label>
+                                                            <input type="date" class="form-control" name="tarikh_sasaran" min="{{date('Y-m-d', strtotime($tindakan->tarikh_sasaran))}}" required>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                                                            <input type="hidden" value="{{$tindakan->id}}" name="tindakanID">
+                                                            <button class="btn btn-danger">YA</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </td>
+                                <td class="text-center arial">
+                                    @if (!$tindakan->TindakanProgress->isEmpty())
+                                        @foreach ($tindakan->TindakanProgress as $TindakanProgress)
+                                            {{date('d-m-Y', strtotime($TindakanProgress->created_at))}}
+                                            @php
+                                                $date = Carbon::parse($TindakanProgress->created_at)
+                                            @endphp
+                                        @endforeach
+                                    @endif
+                                </td>
+                                <td class="text-center arial">
+                                    @if (!$tindakan->TindakanProgress->isEmpty())
+                                        {{$target_date->diffInDays($date)}}
+                                        @php
+                                            $lewat = $target_date->diffInDays($date);
+                                        @endphp
+                                    @endif
+                                </td>
+                                <td class="text-center arial">
+                                    @if (!$tindakan->TindakanProgress->isEmpty())
+                                        @foreach ($tindakan->TindakanProgress as $TindakanProgress)
+                                            {{$TindakanProgress->catatan}}
+                                        @endforeach
+                                    @endif
+                                </td>
+                                <td class="text-center arial">
+                                    @if (!$tindakan->TindakanProgress->isEmpty())
+                                        @foreach ($tindakan->TindakanProgress as $TindakanProgress)
+                                            {{$TindakanProgress->progress * $tindakan->wajaran/100}}%
+                                        
+                                            @php
+                                                $total_kemajuan += ($TindakanProgress->progress * $tindakan->wajaran/100);
+                                            @endphp
+                                        @endforeach
+                                    @endif
+                                </td>
                                 <td class="text-center arial">
                                     <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModaldelete{{$tindakan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
         
@@ -105,11 +191,10 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
-                                                    <form method="post" action="/user/projek/tindakan/text/delete">
+                                                    <form method="post" action="/user/projek/tindakan/aktiviti/delete">
                                                         @csrf
                                                         @method('DELETE')
                                                         <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
-                                                        <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
                                                         <input type="hidden" value="{{$tindakan->id}}" name="tindakanID">
                                                         <button class="btn btn-danger">YA</button>
                                                     </form>
@@ -120,10 +205,38 @@
                                 </td>
                             </tr>
                             @endforeach 
+                            <tr class="text-center" style="border-top: 2px solid black;">
+                                <td class="Arial"><b>JUMLAH</b></td>
+                                <td>{{$total_wajaran}}%</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{$total_kemajuan}}%</td>
+                                <td></td>
+                            </tr>
                         </tbody>
-                    </table>     
+                    </table>
+
+                    {{-- total_wajaran Alert--}}
+                    @php
+                        if ($total_wajaran < 100){
+                            Alert::warning('Amaran', 'Jumlah Wajaran Tidak Mencukupi.');
+                        }
+                        elseif ($total_wajaran > 100){
+                            Alert::warning('Amaran', 'Jumlah Wajaran Melebihi 100%.');
+                        }
+                    @endphp
                 @else
                     <h1 style="text-align: center;"> Tiada Maklum Balas </h1>
+                @endif
+
+                @if ($total_kemajuan <= $hantarSurat->PO_percent)
+                    <div class="card-footer text-end">
+                        <a class="btn btn-success" href="/user/projek/tugasan/{{$tugasan->id}}/{{$hantarSurat->jawapan_id}}/PO/list" style="color: white !important; text-decoration:none;">
+                            Borang Pesanan (PO)
+                        </a>                    
+                    </div>
                 @endif
             </div>
         </div>

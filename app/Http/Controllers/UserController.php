@@ -1281,7 +1281,7 @@ class UserController extends Controller
     { 
         $borang_id = (int) $request->route('borang_id');
 
-        $jawapans = Jawapan::where('borang_id', $borang_id)->where('status', 'Terima')->doesntHave('hantarSurat')->get();
+        $jawapans = Jawapan::where('borang_id', $borang_id)->where('status', 'Terima')->get();
 
         $borangs = Borang::find($borang_id);
         $kategoriPengguna = KategoriPengguna::all();
@@ -1354,7 +1354,7 @@ class UserController extends Controller
     }
 
     public function sendTugas_create(Request $request)
-    {         
+    {        
         $jawapan = Jawapan::where('id', $request->jawapan_id)->with(['jawapanMedan' => function ($query) {
             $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
         }])->first();
@@ -1365,9 +1365,12 @@ class UserController extends Controller
         }else{
             $titleSurat = "PERMOHONAN PENGURUSAN PEROLEHAN BAGI PROJEK PROGRAM PEMBANGUNAN PENEROKA (PPP) DI ".$jawapan->rancangans->nama;
         }
+        $bodies = "PERMOHONAN PENGURUSAN PEROLEHAN BAGI PROJEK PROGRAM PEMBANGUNAN PENEROKA (PPP) BAGI ".$jawapan->jawapanMedan[0]->jawapan." DI ".$jawapan->rancangans->nama;
+
         
         $surat = new Surat;
         $surat->title = $titleSurat;
+        $surat->body = '<p class="ql-align-justify"><span style="background-color: transparent; color: rgb(0, 0, 0);">Susulan daripada kelulusan tersebut, Jabatan ini ingin memohon pihak tuan untuk melaksanakan proses perolehan bagi kerja-kerja pembekalan input pertanian yang terlibat dengan anggaran kos seperti dinyatakan di dalam spesifikasi dan perincian kerja. Maklumat pembekalan input pertanian yang terlibat adalah seperti di </span><strong style="background-color: transparent; color: rgb(0, 0, 0);">Lampiran 1</strong><span style="background-color: transparent; color: rgb(0, 0, 0);">. Borang Pesanan </span><em style="background-color: transparent; color: rgb(0, 0, 0);">(Purchase Order - PO)</em><span style="background-color: transparent; color: rgb(0, 0, 0);"> perlu diserahkan </span><strong style="background-color: transparent; color: rgb(0, 0, 0);">dalam masa satu (1) bulan</strong><span style="background-color: transparent; color: rgb(0, 0, 0);"> kepada pembekal yang berkelayakan, berkemampuan dan memberi tawaran harga yang terbaik untuk setiap input bekalan yang diperlukan. </span><strong style="background-color: transparent; color: rgb(0, 0, 0);">Tempoh masa pembekalan untuk setiap PO mestilah tidak lebih daripada tiga (3) bulan dari tarikh PO dikeluarkan</strong><span style="background-color: transparent; color: rgb(0, 0, 0);">.</span></p><p class="ql-align-justify"><span style="background-color: transparent; color: rgb(0, 0, 0);"><span class="ql-cursor">﻿</span></span></p><p class="ql-align-justify"><span style="background-color: transparent; color: rgb(0, 0, 0);">Besarlah harapan pihak kami agar gerak kerja ini dapat dilaksanakan mengikut perancangan yang telah dipersetujui. Segala kerjasama dan jasa baik pihak Tuan dalam memproses permohonan ini amat dihargai dan didahului dengan ucapan terima kasih.&nbsp;</span></p><p><br></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">Sekian.</span></p><p><br></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">Saya yang menjalankan amanah,</span></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p><br></p><p><br></p>';
         $surat->jenis = "KONTRAK";
         $surat->save();
 
@@ -1376,6 +1379,7 @@ class UserController extends Controller
             $send->surat_id = $surat->id;
             $send->jawapan_id = $jawapan->id;
             $send->userCategory_id = $request->category;
+            $send->PO_percent = $request->PO_percent;
             $send->fasa = $request->fasa;
             $send->items = json_encode($request->perkara);
             $send->carbon_copy = json_encode($request->cc);
@@ -1522,8 +1526,9 @@ class UserController extends Controller
     
     public function TugasanProjek_list(Request $request)
     {        
-        $jawapan_id = (int)$request->route('jawapan_id'); 
-        $jawapan = Jawapan::with('borangs', 'borangs.proses')->where('id',$jawapan_id)->first(); 
+        $hantar_id = (int)$request->route('hantar_id'); 
+        $hantarSurat = Hantar_surat::find($hantar_id);
+        $jawapan = Jawapan::with('borangs', 'borangs.proses')->where('id',$hantarSurat->jawapan_id)->first(); 
 
         $tugasans = Tugasan::where('proses_id',$jawapan->borangs->proses_id)->get();
         $surats = Surat::where('borang_id', $jawapan->borang_id)->get();
@@ -1535,7 +1540,7 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('userView.senaraiProjekTugasan', compact('surats','jawapan','tugasans','noti','menuModul', 'menuProses', 'menuProjek'));
+        return view('userView.senaraiProjekTugasan', compact('surats','hantarSurat','jawapan','tugasans','noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function Jawapan_update(Request $request)
@@ -1601,11 +1606,15 @@ class UserController extends Controller
     public function Tugasan_list(Request $request)
     {     
         $tugasan_id = (int)$request->route('tugasan_id'); 
-        $jawapan_id = (int)$request->route('jawapan_id'); 
+        $hantar_id = (int)$request->route('hantar_id'); 
 
+        $hantarSurat = Hantar_surat::find($hantar_id);
         $tugasan = Tugasan::with('Proses')->where('id',$tugasan_id)->first();
-        $tindakans = TindakanTugasan::where('tugasan_id', $tugasan_id)->where('jawapan_id', $jawapan_id)->where('user_id', Auth::user()->id)->orderBy('tarikh_sasaran', 'ASC')->get();
-        // dd($tindakans);
+        $tindakans = TindakanTugasan::where('tugasan_id', $tugasan_id)->where('jawapan_id', $hantarSurat->jawapan_id)->where('user_id', Auth::user()->id)
+        ->with(['TindakanProgress' => function ($query) {
+            $query->orderBy('created_at', 'DESC')->first();
+        }])
+        ->orderBy('tarikh_sasaran', 'ASC')->get();
         //for notification tugasan
         $noti = $this->notification();
 
@@ -1613,7 +1622,7 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('userView.tindakanList', compact('jawapan_id','tindakans','tugasan','noti','menuModul', 'menuProses', 'menuProjek'));
+        return view('userView.tindakanList', compact('hantarSurat','tindakans','tugasan','noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function TindakanText_add(Request $request)
@@ -1640,10 +1649,26 @@ class UserController extends Controller
         return back();
     }
 
+    public function TindakanText_update(Request $request)
+    { 
+        $tindakan = TindakanTugasan::find($request->tindakanID);
+        $tindakan->tarikh_sasaran = $request->tarikh_sasaran;
+        $tindakan->save();
+
+        $audit = new Audit;
+        $audit->user_id = Auth::user()->id;
+        $audit->action = "Kemaskini Traikh Sasaran Aktiviti Pada Tugasan ".$tindakan->Tugasan->Perkara;
+        $audit->save();
+
+        Alert::success('Kemaskini Aktiviti Tugasan Berjaya.', 'Traikh Sasaran Aktiviti Tugasan telah berjaya dikemaskini.');   
+
+        return back();
+        
+    }
+
     public function TindakanText_delete(Request $request)
     {     
         $tugasan_id = $request->tugasan_id; 
-        $jawapan_id = $request->jawapan_id;
 
         $tindakan = TindakanTugasan::find($request->tindakanID);
 
@@ -1678,7 +1703,6 @@ class UserController extends Controller
 
     public function aktivitiProgress_add(Request $request)
     {
-        dd($request);
         $kemajuan = new Tindakan_progress;
         $kemajuan->progress = $request->progress;
         $kemajuan->catatan = $request->catatan;

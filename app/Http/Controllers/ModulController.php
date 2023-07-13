@@ -407,7 +407,7 @@ class ModulController extends Controller
 
         $idModul = (int)$request->route('modul_id');
         $modul = Modul::find($idModul);
-        $tugasans = Tugasan::where('proses_id', $idProses)->orderBy("sequence", "ASC")->get();
+        $tugasans = Tugasan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
         $jenisTernakan = jenis_ternakan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
         
         $user_Categories = KategoriPengguna::all();
@@ -965,9 +965,8 @@ class ModulController extends Controller
 
         $tugasan = new Tugasan;
         $tugasan->perkara = $request->perkara;
-        $tugasan->sequence = $request->sequence;
         $tugasan->fasa = $request->fasa;
-        $tugasan->jenis_input = $request->jenis;
+        $tugasan->PO = $request->PO;
         $tugasan->proses_id = $request->prosesId;
         $tugasan->save();
 
@@ -987,9 +986,8 @@ class ModulController extends Controller
 
         $tugasan = Tugasan::find($request->tugasanID);
         $tugasan->perkara = $request->perkara;
-        $tugasan->sequence = $request->sequence;
         $tugasan->phase = $request->phase;
-        $tugasan->jenis_input = $request->jenis;
+        $tugasan->PO = $request->PO;
         $tugasan->save();
 
         $audit = new Audit;

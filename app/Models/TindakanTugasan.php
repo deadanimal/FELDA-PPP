@@ -9,6 +9,8 @@ class TindakanTugasan extends Model
 {
     use HasFactory;
 
+    protected $table="tindakan_tugasans";
+
     public function Tugasan(){
         return $this->belongsTo(Tugasan::class, 'tugasan_id');
     }
@@ -25,7 +27,7 @@ class TindakanTugasan extends Model
         return $this->hasMany(InputMedan::class);
     }
 
-    public function Tindakan_progress(){
-        return $this->hasMany(Tindakan_progress::class);
+    public function TindakanProgress(){
+        return $this->hasMany(Tindakan_progress::class, 'tindakan_id', 'id');
     }
 }

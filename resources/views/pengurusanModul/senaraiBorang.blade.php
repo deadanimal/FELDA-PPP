@@ -192,29 +192,13 @@
                 <div class="modal-body">
                   <table class=" w-100">
                     <tr>
-                      <td>
+                      <td style="width:35%;">
                         <label for="perkara" class="frame9402-text04">
                           <strong>Perkara</strong>
                         </label>
                       </td>
                       <td>
                         <input type="text" class="frame9402-kotaknamaBorang" id="perkara" placeholder="Perkara Tugasan" name="perkara" required oninput="this.value = this.value.toUpperCase()">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <label for="sequence" class="frame9402-text04">
-                          <strong>Turutan</strong>
-                        </label>
-                      </td>
-                      <td>
-                        <input type="number" class="frame9402-kotaknamaBorang" id="sequence" 
-                        @if (!$tugasans->isEmpty())
-                          value="{{$tugasans->count() +1 }}"
-                        @else
-                          placeholder="Turutan Perkara"
-                        @endif
-                        name="sequence" required>                          
                       </td>
                     </tr>
                     <tr>
@@ -228,19 +212,19 @@
                       </td>
                     </tr>
                     <tr>
-                        <td>
-                          <label for="jenis" class="frame9402-text04">
-                            <strong>Jenis Input</strong>
-                          </label>
-                        </td>
-                        <td>
-                            <select name="jenis" class="frame9402-kotaknamaBorang" id="jenis">
-                                <option value="Text">Text</option>
-                                <option value="File">File</option>
-                                <option value="P.O">P.O</option>
-                            </select>                            
-                        </td>
-                      </tr>
+                      <td>
+                        <label for="PO" class="frame9402-text04">
+                          <strong>Borang Pesanan</strong>
+                          <p>(Purchase Order - PO)</p>
+                        </label>
+                      </td>
+                      <td>
+                        <select name="PO" class="frame9402-kotaknamaBorang" id="PO">
+                          <option value="Ya">Ya</option>
+                          <option value="Tidak">Tidak</option>
+                        </select>                            
+                      </td>
+                    </tr>
                   </table>
                 </div>
                 <input type="hidden" value="{{$proses->id}}" name="prosesId">
@@ -258,23 +242,22 @@
         <table class="table table-bordered table-striped w-100 arial">
           <thead class="text-white bg-primary w-100 arial">
             <tr class="text-center">
-                <th scope="col" class="text-center">PERKARA</th>
-                <th scope="col" class="text-center">FASA</th>
-                <th scope="col" class="text-center">TURUTAN</th>
-                <th scope="col">TINDAKAN</th>
+              <th scope="col" class="text-center">PERKARA</th>
+              <th scope="col" class="text-center">FASA</th>
+              <th scope="col">TINDAKAN</th>
             </tr>
           </thead>
           <tbody>
-              @foreach ($tugasans as $tugasan)
+            @foreach ($tugasans as $tugasan)
               <tr>
                 <td class="text-center arial" style="width:50%">{{$tugasan->perkara}}</td>
                 <td class="text-center arial">{{$tugasan->fasa}}</td>
-                <td class="text-center arial">{{$tugasan->sequence}}</td>
                 <td class="text-center arial">
 
-                    @if ($tugasan->jenis_input == "P.O")
-                        <a href="/moduls/medanPO/{{$tugasan->id}}/List"><i class="align-middle me-2 fas fa-fw fa-file-invoice-dollar" style="color: #CD352A; font-size:27px;" title="PESANAN PEMBELIAN"></i></a>
+                    @if ($tugasan->PO == "Ya")
+                      <a href="/moduls/medanPO/{{$tugasan->id}}/List"><i class="align-middle me-2 fas fa-fw fa-file-invoice-dollar" style="color: #CD352A; font-size:27px;" title="PESANAN PEMBELIAN"></i></a>
                     @endif
+                    
                     <button class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Kemaskini" data-toggle="modal" data-target="#exampleModaledit{{$tugasan->id}}"><img src="/SVG/pencil.svg" title="kemaskini"/></button>
                       
                     <div class="modal fade" id="exampleModaledit{{$tugasan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -292,23 +275,13 @@
                                 <div class="modal-body">
                                     <table class="table table-borderless w-100">
                                       <tr>
-                                        <td>
+                                        <td style="width:40%;">
                                           <label for="perkara" class="frame9402-text04">
                                             <strong>Perkara</strong>
                                           </label>
                                         </td>
                                         <td>
                                           <input type="text" class="frame9402-kotaknamaBorang" id="perkara" value="{{$tugasan->perkara}}" name="perkara" required oninput="this.value = this.value.toUpperCase()">
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td>
-                                          <label for="sequence" class="frame9402-text04">
-                                            <strong>Turutan</strong>
-                                          </label>
-                                        </td>
-                                        <td>
-                                          <input type="number" class="frame9402-kotaknamaBorang" id="sequence" value="{{$tugasan->sequence}}" name="sequence" required>                          
                                         </td>
                                       </tr>
                                       <tr>
@@ -322,20 +295,24 @@
                                         </td>
                                       </tr>
                                       <tr>
-                                          <td>
-                                            <label for="jenis" class="frame9402-text04">
-                                              <strong>Jenis Input</strong>
-                                            </label>
-                                          </td>
-                                          <td>
-                                              <select name="jenis" class="frame9402-kotaknamaBorang" id="jenis">
-                                                  <option value="{{$tugasan->jenis_input}}" selected>{{$tugasan->jenis_input}}</option>
-                                                  <option value="Text">Text</option>
-                                                  <option value="File">File</option>
-                                                  <option value="P.O">P.O</option>
-                                              </select>                            
-                                          </td>
-                                        </tr>
+                                        <td>
+                                          <label for="PO" class="frame9402-text04">
+                                            <strong>Borang Pesanan</strong>
+                                            <p>(Purchase Order - PO)</p>
+                                          </label>
+                                        </td>
+                                        <td>
+                                          <select name="PO" class="frame9402-kotaknamaBorang" id="PO">
+                                            @if ($tugasan->PO == 'Ya')
+                                              <option value="Ya" selected>Ya</option>
+                                              <option value="Tidak">Tidak</option>
+                                            @else
+                                              <option value="Ya">Ya</option>
+                                              <option value="Tidak" selected>Tidak</option>
+                                            @endif
+                                          </select>                            
+                                        </td>
+                                      </tr>
                                     </table>
                                 </div>
                                 <input type="hidden" value="{{$tugasan->id}}" name="tugasanID">
@@ -379,7 +356,7 @@
                     </div>
                 </td>
               </tr>
-              @endforeach 
+            @endforeach 
           </tbody>
         </table>
         @else

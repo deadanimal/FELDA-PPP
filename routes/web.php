@@ -309,12 +309,13 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/moduls/borang/tugasan/update', [ModulController::class, 'Tugas_update']);
     Route::delete('/moduls/borang/tugasan/delete', [ModulController::class, 'Tugas_delete']);
 
-    Route::get('/user/projek/{jawapan_id}/list', [UserController::class, 'TugasanProjek_list']);
+    Route::get('/user/projek/{hantar_id}/list', [UserController::class, 'TugasanProjek_list']);
 
     Route::put('/user/projek/tugasan/jawapan/update', [UserController::class, 'Jawapan_update']);
 
-    Route::get('/user/projek/tugasan/{tugasan_id}/{jawapan_id}/list', [UserController::class, 'Tugasan_list']);
+    Route::get('/user/projek/tugasan/{tugasan_id}/{hantar_id}/list', [UserController::class, 'Tugasan_list']);
     Route::post('/user/projek/tindakan/aktiviti/add', [UserController::class, 'TindakanText_add']);
+    Route::put('/user/projek/tindakan/aktiviti/update', [UserController::class, 'TindakanText_update']);
     Route::delete('/user/projek/tindakan/aktiviti/delete', [UserController::class, 'TindakanText_delete']);
 
     Route::get('/user/projek/tindakan/{tindakan_id}/progress_list', [UserController::class, 'aktivitiProgress_list']);

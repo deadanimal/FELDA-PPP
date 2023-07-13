@@ -46,15 +46,9 @@
                             <tr>
                                 <td class="text-center arial" style="text-transform: uppercase;">{{$tugasan->perkara}}</td>
                                 <td class="text-center arial">
-                                    @if ($tugasan->jenis_input == "P.O")
-                                        <a class="btn btn-success" href="/user/projek/tugasan/{{$tugasan->id}}/{{$jawapan->id}}/PO/list" style="color: white; text-decoration:none;">
-                                         Semak Tugasan
-                                        </a>
-                                    @else
-                                        <a class="btn btn-success" href="/user/projek/tugasan/{{$tugasan->id}}/{{$jawapan->id}}/list" style="color: white; text-decoration:none;">
-                                            Semak Tugasan
-                                        </a>
-                                    @endif
+                                    <a class="btn btn-success" href="/user/projek/tugasan/{{$tugasan->id}}/{{$hantarSurat->id}}/list" style="color: white; text-decoration:none;">
+                                        Semak Tugasan
+                                    </a>
                                 </td>
                             </tr>
                             @endforeach 

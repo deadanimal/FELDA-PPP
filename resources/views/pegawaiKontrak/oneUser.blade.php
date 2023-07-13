@@ -97,7 +97,7 @@
               <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">PILIH PENGGUNA YANG HENDAK DI HANTAR TUGAS</h2>
+                        <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">PILIH PENGGUNA YANG DITUGASKAN</h2>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -105,7 +105,7 @@
                     <form action="/user/tugasan/send/create" method="POST">
                       @csrf
                       <div class="modal-body">
-                        <table class="table table-borderles w-100">
+                        <table class="table table-borderless w-100">
                           <tr>
                             <td>
                               <span style="text-align:right;margin-right:2%;">Kategori Pengguna</span>
@@ -132,6 +132,26 @@
                           </tr>
                           <tr>
                             <td>
+                              <span style="text-align:right;margin-right:2%;">Peratus Muat Naik Borang Pesanan (PO)</span>
+                            </td>
+                            <td>
+                              <select name="PO_percent" class="form-select frame9402-kotaknama">
+                                  <option value="" default>Pilih Peratus</option>
+                                  <option value="10">10%</option>
+                                  <option value="20">20%</option>
+                                  <option value="30">30%</option>
+                                  <option value="40">40%</option>
+                                  <option value="50">50%</option>
+                                  <option value="60">60%</option>
+                                  <option value="70">70%</option>
+                                  <option value="80">80%</option>
+                                  <option value="90">90%</option>
+                                  <option value="100">100%</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
                               <span style="text-align:right;margin-right:2%;">Salinan Karbon</span>
                             </td>
                             <td>
@@ -142,17 +162,47 @@
                               </select>
                             </td>
                           </tr>
-                          <tr>
-                            <td>
-                              <span style="text-align:right;margin-right:2%;">Perkara Yang Dihantar</span>
+                          <tr style="border:none; height:10%">
+                            <td colspan="2" style="border:none">
+                              <br>
+                              <span style="text-align:right;margin-right:2%;">Perkara Yang Ingin Dihantar</span>
                             </td>
-                            <td>
-                              <select name="perkara[]" id="perkara" multiple="multiple">
-                                @foreach($items as $item)
-                                  <option value="{{$item->id}}">{{$item->nama}}</option>
-                                @endforeach
-                              </select>
-                            </td>
+                          </tr>
+                          <tr style="border:none">
+                            <td colspan="2" style="border:none">
+                              @if (!$items->isEmpty())
+                                <table class="table table-bordered w-100">
+                                  <tr class="text-white bg-primary text-center">
+                                    <th></th>
+                                    <th class="text-start">Perkara Pemohonan</th>
+                                    <th>Jumlah dimohon</th>
+                                    <th>Harga (RM)</th>
+                                  </tr>
+                                  @foreach($items as $item)
+                                    <tr class="text-center">
+                                      <td>
+                                        <input type="checkbox" name="perkara[]" value="{{$item->id}}">
+                                      </td>
+                                      <td class="text-start">{{$item->nama}}</td>
+                                      <td>
+                                        @if ($item->jumlah_akhir != null)
+                                          {{$item->jumlah_akhir}}
+                                        @else
+                                          {{$item->jumlah}}
+                                        @endif
+                                      </td>
+                                      <td>
+                                        @if ($item->harga_akhir != null)
+                                          {{$item->harga_akhir}}
+                                        @else
+                                          {{$item->harga}}
+                                        @endif
+                                      </td>
+                                    </tr>
+                                  @endforeach
+                                </table> 
+                              @endif
+                            </td> 
                           </tr>
                         </table>
                       </div>
@@ -170,11 +220,14 @@
         <table class="table table-bordered w-100">
           <thead class="text-white bg-primary w-100">
             <tr class="text-center">
-              <th>Jenis Fasa</th>
-              <th>Kategori Pengguna</th>
-              <th>Perkara Permohonan</th>
-              <th>Status</th>
-              <th>Tindakan</th>
+              <th class="align-middle">Jenis Fasa</th>
+              <th class="align-middle" style="width:15%">Peratus Muat Naik 
+                <br>Borang Pesanan (PO)
+              </th>
+              <th class="align-middle">Kategori Pengguna</th>
+              <th class="align-middle">Perkara Permohonan</th>
+              <th class="align-middle">Status</th>
+              <th class="align-middle">Tindakan</th>
             </tr>
           </thead>
           <tbody>
@@ -182,6 +235,11 @@
               @foreach ($sendSurats as $send)
                 <tr>
                   <td class="text-center">{{$send->fasa}}</td>
+                  <td class="text-center">
+                    @if ($send->PO_percent != null)
+                      {{$send->PO_percent}}%
+                    @endif
+                  </td>
                   <td class="text-center">{{$send->KategoriPengguna->nama}}</td>
                   <td>
                     <ul style="margin-bottom: 0px;">
