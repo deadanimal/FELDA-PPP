@@ -1330,7 +1330,7 @@ class UserController extends Controller
             $query->latest();
         }])
         ->orderBy('tarikh_sasaran', 'ASC')->get(); 
-
+dd($tindakans);
         //for notification tugasan
         $noti = $this->notification();
 

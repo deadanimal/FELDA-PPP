@@ -128,7 +128,7 @@
 
                 @if ($total_kemajuan == 100)
                     <div class="card-footer text-end">
-                        <a class="btn btn-success" href="/user/projek/tugasan/{{$tugasan->id}}/{{$hantarSurat->jawapan_id}}/PO/list" style="color: white !important; text-decoration:none;">
+                        <a class="btn btn-success" href="/user/projek/tugasan/{{$tindakans[0]->tugasan_id}}/{{$hantarSurat->jawapan_id}}/PO/list" style="color: white !important; text-decoration:none;">
                             Borang Pesanan (PO)
                         </a>                    
                     </div>
