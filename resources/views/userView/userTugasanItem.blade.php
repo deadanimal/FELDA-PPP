@@ -7,7 +7,7 @@
 
 <div class="container-fluid">
   <div class="header">
-    <a href="/user/projek/tugasan/{{$tindakan->tugasan_id}}/{{$tindakan->jawapan_id}}/list" class="btn frame9403-frame7445" style="margin-left:0px; width:15%;">
+    <a href="/user/projek/tugasan/{{$tindakan->tugasan_id}}/{{$hantar_id}}/list" class="btn frame9403-frame7445" style="margin-left:0px; width:15%;">
       <span class="frame9403-text21">Kembali</span>
     </a>
   </div>
@@ -32,7 +32,7 @@
           </table>
           <button type="button" class="btn frame9403-frame7445" data-toggle="modal" data-target="#exampleModalAdd">
             <div class="frame9403-frame7293">
-                <span class="frame9403-text21">Tambah Perkara Tugasan</span>
+                <span class="frame9403-text21">Kemaskini Kemajuan Aktiviti</span>
                 <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
             </div>
           </button>
@@ -84,10 +84,10 @@
                             <label class="form-label"><strong>Bukti Kemajuan</strong></label>
                           </td>
                           <td>
-                            <div class="file-block">
-                                <button class="btn btn-info btn-select-file" type="button">Muat Naik</button>
-                                <input type="file" name="upload" style="display:none" required>
-                            </div> 
+                            <input type="file" id="upload" name="upload[]" style="display: none;" multiple required>
+                            <label for="upload" class="btn btn-success">
+                                <i class="align-middle me-2 fas fa-fw fa-file-upload"></i>Muat Naik
+                            </label>
                           </td>
                         </tr>
                     </table>
@@ -120,7 +120,9 @@
                     <td class="text-center Arial">{{$kemajuan->catatan ?? ""}}</td>
                     <td class="text-center Arial">{{date('d-m-Y', strtotime($kemajuan->updated_at))}}</td>
                     <td class="text-center Arial">
-                      <a href="{{$kemajuan->bukti}}">Bukti Gambar</a>
+                      @foreach (json_decode($kemajuan->bukti) as $bukti)
+                       <a href="{{$bukti}}">Bukti Kemajuan {{$loop->iteration}}</a><br>
+                      @endforeach
                     </td>
                     <td>
                       <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModaldelete{{$kemajuan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
@@ -162,24 +164,6 @@
   </div>
 </div>
 <script src="/js/jquery.js"></script>
-<script type="text/javascript">
-  const fileBlocks = document.querySelectorAll('.file-block')
-  const buttons = document.querySelectorAll('.btn-select-file')
-  
-  ;[...buttons].forEach(function (btn) {
-    btn.onclick = function () {
-      btn.parentElement.querySelector('input[type="file"]').click()
-    }
-  })
-  
-  ;[...fileBlocks].forEach(function (block) {
-    block.querySelector('input[type="file"]').onchange = function () {
-      const filename = this.files[0].name
-  
-      block.querySelector('.btn-select-file').textContent = filename
-    }
-  })
-  </script>
 <style>
   .Arial{
     font-family: 'Arial', sans-serif;

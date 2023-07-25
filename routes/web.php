@@ -283,7 +283,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user/tugasan/petiMasuk/{borang_id}/list', [UserController::class, 'kontrak_userList']);
     Route::get('/user/tugasan/petiMasuk/{jawapan_id}/user', [UserController::class, 'kontrak_user']);
-    
+
+    Route::get('/user/tugasan/petiMasuk/{send_id}', [UserController::class, 'tugasanProgress_view']);
+
     Route::get('/user/petiMasuk/{surat_id}/{jawapan_id}/view', [UserController::class, 'ccSurat_view']);
     
     Route::post('/user/tugasan/send/generate_one', [UserController::class, 'generate_one']);
@@ -318,7 +320,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/user/projek/tindakan/aktiviti/update', [UserController::class, 'TindakanText_update']);
     Route::delete('/user/projek/tindakan/aktiviti/delete', [UserController::class, 'TindakanText_delete']);
 
-    Route::get('/user/projek/tindakan/{tindakan_id}/progress_list', [UserController::class, 'aktivitiProgress_list']);
+    Route::get('/user/projek/tindakan/{hantar_id}/{tindakan_id}/progress_list', [UserController::class, 'aktivitiProgress_list']);
     Route::post('/user/tugasan/tindakan/progress/add', [UserController::class, 'aktivitiProgress_add']);
     Route::delete('/user/tugasan/tindakan/progress/delete', [UserController::class, 'aktivitiProgress_delete']);
 

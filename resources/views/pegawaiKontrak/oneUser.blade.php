@@ -132,10 +132,10 @@
                           </tr>
                           <tr>
                             <td>
-                              <span style="text-align:right;margin-right:2%;">Peratus Muat Naik Borang Pesanan (PO)</span>
+                              <span style="text-align:right;margin-right:2%;">Peratus Notifikasi Pegawai Kontrak</span>
                             </td>
                             <td>
-                              <select name="PO_percent" class="form-select frame9402-kotaknama">
+                              <select name="noti_percent" class="form-select frame9402-kotaknama">
                                   <option value="" default>Pilih Peratus</option>
                                   <option value="10">10%</option>
                                   <option value="20">20%</option>
@@ -147,6 +147,17 @@
                                   <option value="80">80%</option>
                                   <option value="90">90%</option>
                                   <option value="100">100%</option>
+                              </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <span style="text-align:right;margin-right:2%;">Beserta Surat?</span>
+                            </td>
+                            <td>
+                              <select name="surat" class="form-select frame9402-kotaknama">
+                                  <option value="Ya" default>Ya</option>
+                                  <option value="Tidak">Tidak</option>
                               </select>
                             </td>
                           </tr>
@@ -176,12 +187,21 @@
                                     <th></th>
                                     <th class="text-start">Perkara Pemohonan</th>
                                     <th>Jumlah dimohon</th>
-                                    <th>Harga (RM)</th>
+                                    <th>Jumlah Harga (RM)</th>
                                   </tr>
                                   @foreach($items as $item)
                                     <tr class="text-center">
                                       <td>
-                                        <input type="checkbox" name="perkara[]" value="{{$item->id}}">
+                                        <input type="checkbox" name="perkara[][]" 
+                                          value="[{{$item->id}}]
+                                            [
+                                              @if($item->jumlah_akhir != null)
+                                                {{$item->jumlah_akhir}}
+                                              @else
+                                                {{$item->jumlah}}
+                                              @endif
+                                            ]"
+                                          >
                                       </td>
                                       <td class="text-start">{{$item->nama}}</td>
                                       <td>
@@ -220,9 +240,9 @@
         <table class="table table-bordered w-100">
           <thead class="text-white bg-primary w-100">
             <tr class="text-center">
-              <th class="align-middle">Jenis Fasa</th>
-              <th class="align-middle" style="width:15%">Peratus Muat Naik 
-                <br>Borang Pesanan (PO)
+              <th class="align-middle arial">Jenis Fasa</th>
+              <th class="align-middle" style="width:15%">Peratus Notifikasi
+                <br>Pegawai Kontrak
               </th>
               <th class="align-middle">Kategori Pengguna</th>
               <th class="align-middle">Perkara Permohonan</th>
@@ -234,10 +254,10 @@
             @if (!$sendSurats->isEmpty())
               @foreach ($sendSurats as $send)
                 <tr>
-                  <td class="text-center">{{$send->fasa}}</td>
+                  <td class="text-center"><a href="/user/tugasan/petiMasuk/{{$send->id}}">{{$send->fasa}}</a></td>
                   <td class="text-center">
-                    @if ($send->PO_percent != null)
-                      {{$send->PO_percent}}%
+                    @if ($send->noti_percent != null)
+                      {{$send->noti_percent}}%
                     @endif
                   </td>
                   <td class="text-center">{{$send->KategoriPengguna->nama}}</td>
@@ -269,7 +289,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                              <p>Anda pasti mahu hantar surat serta barang permohonan ini?</p>
+                              <p>Anda pasti mahu hantar surat pengurusan perolehan ini?</p>
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
@@ -317,6 +337,7 @@
             @endif
           </tbody>
         </table>
+        <div class="card-footer"></div>
       </div>
     </div>
   </div>

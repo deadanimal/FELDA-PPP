@@ -1320,6 +1320,27 @@ class UserController extends Controller
         return view('pegawaiKontrak.oneUser', compact('sendSurats','jenis_fasas','items','surats','kategoriPenggunas','jawapans','noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
+    public function tugasanProgress_view(Request $request)
+    { 
+        $send_id = (int) $request->route('send_id');
+        
+        $sendSurats = Hantar_Surat::find($send_id);
+        $tindakans = TindakanTugasan::whereRelation('Tugasan','fasa', $sendSurats->fasa)->where('jawapan_id', $sendSurats->jawapan_id)
+        ->with(['TindakanProgress' => function ($query) {
+            $query->latest();
+        }])
+        ->orderBy('tarikh_sasaran', 'ASC')->get(); 
+
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
+
+        return view('pegawaiKontrak.tugasanProgress', compact('sendSurats','tindakans', 'noti','menuModul', 'menuProses', 'menuProjek'));
+    }
+
     public function ccSurat_view(Request $request)
     {
         $surat_id = (int) $request->route('surat_id');
@@ -1359,36 +1380,55 @@ class UserController extends Controller
             $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
         }])->first();
 
-        if($jawapan->jawapanMedan[0]->jawapan){
-            $titleSurat = "PERMOHONAN PENGURUSAN PEROLEHAN BAGI PROJEK PROGRAM PEMBANGUNAN PENEROKA (PPP) BAGI ".$jawapan->jawapanMedan[0]->jawapan." DI ".$jawapan->rancangans->nama;
+        if($request->surat == "Ya"){
+            if($jawapan->jawapanMedan[0]->jawapan){
+                $titleSurat = "PERMOHONAN PENGURUSAN PEROLEHAN BAGI PROJEK PROGRAM PEMBANGUNAN PENEROKA (PPP) BAGI ".$jawapan->jawapanMedan[0]->jawapan." DI ".$jawapan->rancangans->nama;
 
+            }else{
+                $titleSurat = "PERMOHONAN PENGURUSAN PEROLEHAN BAGI PROJEK PROGRAM PEMBANGUNAN PENEROKA (PPP) DI ".$jawapan->rancangans->nama;
+            }
+
+            
+            $surat = new Surat;
+            $surat->title = $titleSurat;
+            $surat->body = '<p class="ql-align-justify"><span style="background-color: transparent; color: rgb(0, 0, 0);">Susulan daripada kelulusan tersebut, Jabatan ini ingin memohon pihak tuan untuk melaksanakan proses perolehan bagi kerja-kerja pembekalan input pertanian yang terlibat dengan anggaran kos seperti dinyatakan di dalam spesifikasi dan perincian kerja. Maklumat pembekalan input pertanian yang terlibat adalah seperti di </span><strong style="background-color: transparent; color: rgb(0, 0, 0);">Lampiran 1</strong><span style="background-color: transparent; color: rgb(0, 0, 0);">. Borang Pesanan </span><em style="background-color: transparent; color: rgb(0, 0, 0);">(Purchase Order - PO)</em><span style="background-color: transparent; color: rgb(0, 0, 0);"> perlu diserahkan </span><strong style="background-color: transparent; color: rgb(0, 0, 0);">dalam masa satu (1) bulan</strong><span style="background-color: transparent; color: rgb(0, 0, 0);"> kepada pembekal yang berkelayakan, berkemampuan dan memberi tawaran harga yang terbaik untuk setiap input bekalan yang diperlukan. </span><strong style="background-color: transparent; color: rgb(0, 0, 0);">Tempoh masa pembekalan untuk setiap PO mestilah tidak lebih daripada tiga (3) bulan dari tarikh PO dikeluarkan</strong><span style="background-color: transparent; color: rgb(0, 0, 0);">.</span></p><p class="ql-align-justify"><span style="background-color: transparent; color: rgb(0, 0, 0);"><span class="ql-cursor">﻿</span></span></p><p class="ql-align-justify"><span style="background-color: transparent; color: rgb(0, 0, 0);">Besarlah harapan pihak kami agar gerak kerja ini dapat dilaksanakan mengikut perancangan yang telah dipersetujui. Segala kerjasama dan jasa baik pihak Tuan dalam memproses permohonan ini amat dihargai dan didahului dengan ucapan terima kasih.&nbsp;</span></p><p><br></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">Sekian.</span></p><p><br></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">Saya yang menjalankan amanah,</span></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p><br></p><p><br></p>';
+            $surat->jenis = "KONTRAK";
+            $surat->save();
+
+            if($surat->save()){
+                $send = new Hantar_Surat;
+                $send->surat_id = $surat->id;
+                $send->jawapan_id = $jawapan->id;
+                $send->userCategory_id = $request->category;
+                $send->noti_percent = $request->noti_percent;
+                $send->fasa = $request->fasa;
+                $send->items = json_encode($request->perkara);
+                $send->carbon_copy = json_encode($request->cc);
+                $send->save();
+
+                Alert::success('Berjaya', 'Mencipta agihan perkara permohonan berjaya.');  
+            }else{
+                Alert::error('Ralat', 'Mencipta agihan perkara permohonan tidak berjaya.'); 
+            }
+            
         }else{
-            $titleSurat = "PERMOHONAN PENGURUSAN PEROLEHAN BAGI PROJEK PROGRAM PEMBANGUNAN PENEROKA (PPP) DI ".$jawapan->rancangans->nama;
-        }
-        $bodies = "PERMOHONAN PENGURUSAN PEROLEHAN BAGI PROJEK PROGRAM PEMBANGUNAN PENEROKA (PPP) BAGI ".$jawapan->jawapanMedan[0]->jawapan." DI ".$jawapan->rancangans->nama;
-
-        
-        $surat = new Surat;
-        $surat->title = $titleSurat;
-        $surat->body = '<p class="ql-align-justify"><span style="background-color: transparent; color: rgb(0, 0, 0);">Susulan daripada kelulusan tersebut, Jabatan ini ingin memohon pihak tuan untuk melaksanakan proses perolehan bagi kerja-kerja pembekalan input pertanian yang terlibat dengan anggaran kos seperti dinyatakan di dalam spesifikasi dan perincian kerja. Maklumat pembekalan input pertanian yang terlibat adalah seperti di </span><strong style="background-color: transparent; color: rgb(0, 0, 0);">Lampiran 1</strong><span style="background-color: transparent; color: rgb(0, 0, 0);">. Borang Pesanan </span><em style="background-color: transparent; color: rgb(0, 0, 0);">(Purchase Order - PO)</em><span style="background-color: transparent; color: rgb(0, 0, 0);"> perlu diserahkan </span><strong style="background-color: transparent; color: rgb(0, 0, 0);">dalam masa satu (1) bulan</strong><span style="background-color: transparent; color: rgb(0, 0, 0);"> kepada pembekal yang berkelayakan, berkemampuan dan memberi tawaran harga yang terbaik untuk setiap input bekalan yang diperlukan. </span><strong style="background-color: transparent; color: rgb(0, 0, 0);">Tempoh masa pembekalan untuk setiap PO mestilah tidak lebih daripada tiga (3) bulan dari tarikh PO dikeluarkan</strong><span style="background-color: transparent; color: rgb(0, 0, 0);">.</span></p><p class="ql-align-justify"><span style="background-color: transparent; color: rgb(0, 0, 0);"><span class="ql-cursor">﻿</span></span></p><p class="ql-align-justify"><span style="background-color: transparent; color: rgb(0, 0, 0);">Besarlah harapan pihak kami agar gerak kerja ini dapat dilaksanakan mengikut perancangan yang telah dipersetujui. Segala kerjasama dan jasa baik pihak Tuan dalam memproses permohonan ini amat dihargai dan didahului dengan ucapan terima kasih.&nbsp;</span></p><p><br></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">Sekian.</span></p><p><br></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">Saya yang menjalankan amanah,</span></p><p class="ql-align-justify"><br></p><p class="ql-align-justify"><br></p><p><br></p><p><br></p>';
-        $surat->jenis = "KONTRAK";
-        $surat->save();
-
-        if($surat->save()){
             $send = new Hantar_Surat;
-            $send->surat_id = $surat->id;
             $send->jawapan_id = $jawapan->id;
             $send->userCategory_id = $request->category;
-            $send->PO_percent = $request->PO_percent;
+            $send->noti_percent = $request->noti_percent;
             $send->fasa = $request->fasa;
             $send->items = json_encode($request->perkara);
             $send->carbon_copy = json_encode($request->cc);
             $send->save();
-
-            Alert::success('Berjaya', 'Mencipta agihan perkara permohonan berjaya.');  
-        }else{
-            Alert::error('Ralat', 'Mencipta agihan perkara permohonan tidak berjaya.'); 
+            if($send->save()){
+                Alert::success('Berjaya', 'Mencipta agihan perkara permohonan berjaya.');  
+            }else{
+                Alert::error('Ralat', 'Mencipta agihan perkara permohonan tidak berjaya.'); 
+            }
         }
+
+        $json_decode($send->items);
+
         return back();  
     }
     
@@ -1687,7 +1727,8 @@ class UserController extends Controller
     public function aktivitiProgress_list(Request $request)
     {
         $tindakan_id = (int)$request->route('tindakan_id'); 
-
+        $hantar_id = (int)$request->route('hantar_id'); 
+        
         $tindakan = TindakanTugasan::find($tindakan_id);
         $kemajuans = Tindakan_progress::where('tindakan_id', $tindakan_id)->orderBy('created_at', 'ASC')->get();
 
@@ -1698,18 +1739,24 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('userView.userTugasanItem', compact('noti','kemajuans','tindakan', 'menuModul', 'menuProses', 'menuProjek'));
+        return view('userView.userTugasanItem', compact('noti','hantar_id','kemajuans','tindakan', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function aktivitiProgress_add(Request $request)
     {
+
         $kemajuan = new Tindakan_progress;
         $kemajuan->progress = $request->progress;
         $kemajuan->catatan = $request->catatan;
         if($request->file()){
-            $files = time().'.'.$request->upload->extension();  
-            $request->upload->move(public_path('progress'), $files);
-            $kemajuan->bukti = '/progress/' . $files;
+            $uploads = $request->upload;
+            foreach($uploads as $key => $upload){
+                $extension=$upload->extension();
+                $fileName = time().'('.$key.').'.$extension;  
+                $upload->move(public_path('progress'), $fileName);
+                $files[] = '/progress/' . $fileName;
+            }
+            $kemajuan->bukti = json_encode($files);
         }
         $kemajuan->tindakan_id = $request->tindakan_id;
         $kemajuan->save();
@@ -1826,6 +1873,7 @@ class UserController extends Controller
 
         return redirect('/user/projek/tugasan/'.$tugasan_id.'/'.$jawapan_id.'/list');
     }
+
     public function TugasanPO_list(Request $request)
     {     
         $tugasan_id = (int)$request->route('tugasan_id');

@@ -93,7 +93,7 @@
                             <tr>
                                 <td class="text-center arial" style="text-transform: uppercase;">
                                     @if ($total_wajaran == 100)
-                                        <a href="/user/projek/tindakan/{{$tindakan->id}}/progress_list">{{$tindakan->aktiviti}}</a>
+                                        <a href="/user/projek/tindakan/{{$hantarSurat->id}}/{{$tindakan->id}}/progress_list">{{$tindakan->aktiviti}}</a>
                                     @else
                                         {{$tindakan->aktiviti}}
                                     @endif
@@ -139,11 +139,12 @@
                                 </td>
                                 <td class="text-center arial">
                                     @if (!$tindakan->TindakanProgress->isEmpty())
-                                        @foreach ($tindakan->TindakanProgress as $TindakanProgress)
-                                            {{date('d-m-Y', strtotime($TindakanProgress->created_at))}}
+                                        @foreach ($tindakan->TindakanProgress as $TinProgress)
+                                            {{date('d-m-Y', strtotime($TinProgress->created_at))}}
                                             @php
-                                                $date = Carbon::parse($TindakanProgress->created_at)
+                                                $date = Carbon::parse($TinProgress->created_at)
                                             @endphp
+                                            @break
                                         @endforeach
                                     @endif
                                 </td>
@@ -153,23 +154,29 @@
                                         @php
                                             $lewat = $target_date->diffInDays($date);
                                         @endphp
+                                    @else
+                                        @php
+                                            $lewat = 0;
+                                        @endphp
                                     @endif
                                 </td>
                                 <td class="text-center arial">
                                     @if (!$tindakan->TindakanProgress->isEmpty())
-                                        @foreach ($tindakan->TindakanProgress as $TindakanProgress)
-                                            {{$TindakanProgress->catatan}}
+                                        @foreach ($tindakan->TindakanProgress as $TinProgress)
+                                            {{$TinProgress->catatan}}
+                                            @break
                                         @endforeach
                                     @endif
                                 </td>
                                 <td class="text-center arial">
                                     @if (!$tindakan->TindakanProgress->isEmpty())
-                                        @foreach ($tindakan->TindakanProgress as $TindakanProgress)
-                                            {{$TindakanProgress->progress * $tindakan->wajaran/100}}%
+                                        @foreach ($tindakan->TindakanProgress as $TinProgress)
+                                            {{$TinProgress->progress * $tindakan->wajaran/100}}%
                                         
                                             @php
-                                                $total_kemajuan += ($TindakanProgress->progress * $tindakan->wajaran/100);
+                                                $total_kemajuan += ($TinProgress->progress * $tindakan->wajaran/100);
                                             @endphp
+                                            @break
                                         @endforeach
                                     @endif
                                 </td>
@@ -231,7 +238,7 @@
                     <h1 style="text-align: center;"> Tiada Maklum Balas </h1>
                 @endif
 
-                @if ($total_kemajuan >= $hantarSurat->PO_percent)
+                @if ($total_kemajuan == 100)
                     <div class="card-footer text-end">
                         <a class="btn btn-success" href="/user/projek/tugasan/{{$tugasan->id}}/{{$hantarSurat->jawapan_id}}/PO/list" style="color: white !important; text-decoration:none;">
                             Borang Pesanan (PO)
