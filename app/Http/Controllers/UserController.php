@@ -1427,7 +1427,7 @@ class UserController extends Controller
             }
         }
 
-        $json_decode($send->items);
+        // $json_decode($send->items);
 
         return back();  
     }
