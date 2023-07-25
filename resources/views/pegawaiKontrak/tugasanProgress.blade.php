@@ -126,7 +126,7 @@
                     <h1 style="text-align: center;"> Tiada Maklum Balas </h1>
                 @endif
 
-                @if ($total_kemajuan == 100)
+                @if ($total_kemajuan == 100 && !$tindakans->isEmpty())
                     <div class="card-footer text-end">
                         <a class="btn btn-success" href="/user/projek/tugasan/{{$tindakans[0]->tugasan_id}}/{{$hantarSurat->jawapan_id}}/PO/list" style="color: white !important; text-decoration:none;">
                             Borang Pesanan (PO)
