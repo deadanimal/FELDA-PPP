@@ -30,7 +30,13 @@
               </td>
             </tr>
           </table>
-          <button type="button" class="btn frame9403-frame7445" data-toggle="modal" data-target="#exampleModalAdd">
+          <button type="button" class="btn frame9403-frame7445" data-toggle="modal" data-target="#exampleModalAdd"
+          @if (!$kemajuans->isEmpty())
+            @if ($kemajuans->last()->progress == "100")
+                disabled
+            @endif
+          @endif
+          >
             <div class="frame9403-frame7293">
                 <span class="frame9403-text21">Kemaskini Kemajuan Aktiviti</span>
                 <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
@@ -84,7 +90,7 @@
                             <label class="form-label"><strong>Bukti Kemajuan</strong></label>
                           </td>
                           <td>
-                            <input type="file" id="upload" name="upload[]" style="display: none;" multiple required>
+                            <input type="file" id="upload" name="upload[]" style="display: none;" multiple>
                             <label for="upload" class="btn btn-success">
                                 <i class="align-middle me-2 fas fa-fw fa-file-upload"></i>Muat Naik
                             </label>
@@ -120,9 +126,12 @@
                     <td class="text-center Arial">{{$kemajuan->catatan ?? ""}}</td>
                     <td class="text-center Arial">{{date('d-m-Y', strtotime($kemajuan->updated_at))}}</td>
                     <td class="text-center Arial">
-                      @foreach (json_decode($kemajuan->bukti) as $bukti)
-                       <a href="{{$bukti}}">Bukti Kemajuan {{$loop->iteration}}</a><br>
-                      @endforeach
+                      @if ($kemajuan->bukti != null)
+                        @foreach (json_decode($kemajuan->bukti) as $bukti)
+                          <a href="{{$bukti}}">Bukti Kemajuan {{$loop->iteration}}</a><br>
+                        @endforeach
+                      @endif
+                      
                     </td>
                     <td>
                       <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModaldelete{{$kemajuan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>

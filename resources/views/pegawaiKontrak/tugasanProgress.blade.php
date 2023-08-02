@@ -16,7 +16,7 @@
             
             <div class="card">
                 <div class="card-header">
-                    <a href="/user/tugasan/petiMasuk/{{$sendSurats->jawapan_id}}/user" class="btn frame7445 align-middle" style="margin-left:0px;">
+                    <a href="/user/tugasan/petiMasuk/{{$sendSurats->id}}" class="btn frame7445 align-middle" style="margin-left:0px;">
                           <span class="frame9403-text21 align-middle"><span>Kembali</span></span>
                     </a>
                 </div>
@@ -112,28 +112,65 @@
                             </tr>
                         </tbody>
                     </table>
-
-                    {{-- total_wajaran Alert--}}
-                    @php
-                        if ($total_wajaran < 100){
-                            Alert::warning('Amaran', 'Jumlah Wajaran Tidak Mencukupi.');
-                        }
-                        elseif ($total_wajaran > 100){
-                            Alert::warning('Amaran', 'Jumlah Wajaran Melebihi 100%.');
-                        }
-                    @endphp
                 @else
-                    <h1 style="text-align: center;"> Tiada Maklum Balas </h1>
-                @endif
-
-                @if ($total_kemajuan == 100 && !$tindakans->isEmpty())
-                    <div class="card-footer text-end">
-                        <a class="btn btn-success" href="/user/projek/tugasan/{{$tindakans[0]->tugasan_id}}/{{$sendSurats->jawapan_id}}/PO/list" style="color: white !important; text-decoration:none;">
-                            Borang Pesanan (PO)
-                        </a>                    
-                    </div>
+                    <h1 style="text-align: center;"> Tiada Maklum Balas Dari Pengguna </h1>
                 @endif
             </div>
+            
+            @if (!$PurchaseOrders->isEmpty())
+                <div class="card">
+                    <table class="table table-bordered table-striped w-100 arial">
+                        <thead class="text-white bg-primary w-100">
+                        <tr class="text-center">
+                            <th scope="col" style="width: 50%;">Pesanan Pembelian</th>
+                            <th scope="col">Tarikh Maklum Balas</th>
+                            <th scope="col">Tindakan</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($PurchaseOrders as $PO)
+                            <tr>
+                                <td class="text-center arial" style="text-transform: uppercase;">
+                                    <a href="{{$PO->file}}">Lihat Pesanan Pembelian</a>
+                                </td>
+                                <td class="text-center arial">{{date('d-m-Y', strtotime($PO->created_at))}}</td>
+                                <td class="text-center arial">
+                                    <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModalView{{$PO->id}}" title="Lihat"><i class="align-middle me-2 fas fa-fw fa-search-plus" style="font-size: x-large;color: #CD352A;"></i></button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalView{{$PO->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Padam Pesanan Pembelian</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @if ($PO->InputMedan != null)
+                                                        @foreach ($PO->InputMedan as $items)
+                                                            <br>
+                                                            <label for="medan{{$items->id}}" class="form-label">{{$items->MedanPO->nama}}</label>
+                                                            <input class="form-control" id="medan{{$items->id}}" value="{{$items->value}}" readonly>
+                                                        @endforeach
+                                                    @endif
+                                                    
+                                                </div>
+                                                <div class="modal-body">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">TUTUP</button>      
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+            
         </div>
     </div>
 </div>
@@ -174,10 +211,18 @@
       cursor: default;
   }
     .frame7445 {
-    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25) ;
+    width: 20%;
+    height: 50px;
+    display: flex;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.25);
     box-sizing: border-box;
+    padding-top: 0px;
     border-color: transparent;
+    padding-left: 20px;
     border-radius: 8.598855018615723px;
+    padding-right: 20px;
+    flex-direction: column;
+    justify-content: center;
     background-color: #A2335D;
     cursor: pointer;
   }

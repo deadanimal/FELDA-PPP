@@ -6,7 +6,7 @@
 
   <div class="header">
     <h1 class="header-title">
-      SELAMAT DATANG, {{Auth::user()->nama}}!
+      SELAMAT DATANG, <span style="text-transform: uppercase">{{Auth::user()->nama}}</span>!
     </h1>
   </div>
   <div class="row">

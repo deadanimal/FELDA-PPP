@@ -192,15 +192,8 @@
                                   @foreach($items as $item)
                                     <tr class="text-center">
                                       <td>
-                                        <input type="checkbox" name="perkara[][]" 
-                                          value="[{{$item->id}}]
-                                            [
-                                              @if($item->jumlah_akhir != null)
-                                                {{$item->jumlah_akhir}}
-                                              @else
-                                                {{$item->jumlah}}
-                                              @endif
-                                            ]"
+                                        <input type="checkbox" name="perkara[]" 
+                                          value="{{$item->id}}"
                                           >
                                       </td>
                                       <td class="text-start">{{$item->nama}}</td>
@@ -274,7 +267,9 @@
                   </td>
                   <td class="text-center">{{$send->status}}</td>
                   <td class="text-center">
-                    <a href="/user/tugasan/surat/{{$send->id}}/edit" style="padding-left:1.5%;" title="Kemaskini Surat"><i class="align-middle me-2 fas fa-fw fa-envelope" style="color: #CD352A; font-size:2em;"></i></a>
+                    @if ($send->surat_id != null)
+                      <a href="/user/tugasan/surat/{{$send->id}}/edit" style="padding-left:1.5%;" title="Kemaskini Surat"><i class="align-middle me-2 fas fa-fw fa-envelope" style="color: #CD352A; font-size:2em;"></i></a>
+                    @endif
                     
                     <button type="button" class="frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModalSend{{$send->id}}" title="Hantar Tugasan"><i class="align-middle me-2 fas fa-fw fa-paper-plane" style="color: #CD352A; font-size:1.5em;"></i></button>
                     

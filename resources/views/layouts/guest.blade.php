@@ -31,7 +31,7 @@
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item dropdown ms-lg-2">
                                 <a class="nav-link dropdown-toggle position-relative" href="#" id="userDropdown" data-bs-toggle="dropdown">
-                                    <i class="align-middle fas fa-cog"></i>
+                                    <i class="align-middle fas fa-cog" style="color:#FFFF !important;"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" href="/users/info"><i class="align-middle me-1 fas fa-fw fa-user"></i>Kemaskini Profil</a>

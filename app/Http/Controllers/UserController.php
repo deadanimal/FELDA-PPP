@@ -1320,16 +1320,12 @@ class UserController extends Controller
         return view('pegawaiKontrak.oneUser', compact('sendSurats','jenis_fasas','items','surats','kategoriPenggunas','jawapans','noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
-    public function tugasanProgress_view(Request $request)
+    public function tugasanUser_view(Request $request)
     { 
         $send_id = (int) $request->route('send_id');
-        
+
         $sendSurats = Hantar_Surat::find($send_id);
-        $tindakans = TindakanTugasan::whereRelation('Tugasan','fasa', $sendSurats->fasa)->where('jawapan_id', $sendSurats->jawapan_id)
-        ->with(['TindakanProgress' => function ($query) {
-            $query->latest();
-        }])
-        ->orderBy('tarikh_sasaran', 'ASC')->get(); 
+        $users  = User::where('kategoripengguna', $sendSurats->userCategory_id)->where('status', 1)->get();
 
         //for notification tugasan
         $noti = $this->notification();
@@ -1338,7 +1334,31 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pegawaiKontrak.tugasanProgress', compact('sendSurats','tindakans', 'noti','menuModul', 'menuProses', 'menuProjek'));
+        return view('pegawaiKontrak.tugasanUserList', compact('sendSurats','users', 'noti','menuModul', 'menuProses', 'menuProjek'));
+    }
+
+    public function progress_view(Request $request)
+    { 
+        $surat_id = $request->surat_id;
+        $user_id = $request->user_id;
+
+        $sendSurats = Hantar_Surat::find($surat_id);
+        $tindakans = TindakanTugasan::whereNot('aktiviti', 'PO')->whereRelation('Tugasan','fasa', $sendSurats->fasa)->where('jawapan_id', $sendSurats->jawapan_id)->where('user_id', $user_id)
+        ->with(['TindakanProgress' => function ($query) {
+            $query->latest();
+        }])
+        ->orderBy('tarikh_sasaran', 'ASC')->get(); 
+
+        $PurchaseOrders = TindakanTugasan::with('InputMedan', 'InputMedan.MedanPO')->where('aktiviti', 'PO')->where('jawapan_id', $sendSurats->jawapan_id)->where('user_id', $user_id)->orderBy('tarikh_sasaran', 'ASC')->get();
+        
+        //for notification tugasan
+        $noti = $this->notification();
+
+        $menuModul = Modul::where('status', 'Go-live')->get();
+        $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
+        $menuProjek = Projek::where('status', "Aktif")->get();
+
+        return view('pegawaiKontrak.tugasanProgress', compact('PurchaseOrders','sendSurats','tindakans', 'noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function ccSurat_view(Request $request)
@@ -1406,9 +1426,9 @@ class UserController extends Controller
                 $send->carbon_copy = json_encode($request->cc);
                 $send->save();
 
-                Alert::success('Berjaya', 'Mencipta agihan perkara permohonan berjaya.');  
+                Alert::success('Berjaya', 'Mencipta tugasan berjaya.');  
             }else{
-                Alert::error('Ralat', 'Mencipta agihan perkara permohonan tidak berjaya.'); 
+                Alert::error('Ralat', 'Mencipta tugasan tidak berjaya.'); 
             }
             
         }else{
@@ -1421,9 +1441,9 @@ class UserController extends Controller
             $send->carbon_copy = json_encode($request->cc);
             $send->save();
             if($send->save()){
-                Alert::success('Berjaya', 'Mencipta agihan perkara permohonan berjaya.');  
+                Alert::success('Berjaya', 'Mencipta tugasan berjaya.');  
             }else{
-                Alert::error('Ralat', 'Mencipta agihan perkara permohonan tidak berjaya.'); 
+                Alert::error('Ralat', 'Mencipta tugasan tidak berjaya.'); 
             }
         }
 
@@ -1447,7 +1467,7 @@ class UserController extends Controller
         $send = Hantar_Surat::find($request->send_id);
         $send->delete();
 
-        Alert::success('Berjaya', 'Memadam surat serta barang permohonan telah berjaya.');  
+        Alert::success('Berjaya', 'Memadam tugasan telah berjaya.');  
         return back();
     }
 
@@ -1650,7 +1670,7 @@ class UserController extends Controller
 
         $hantarSurat = Hantar_surat::find($hantar_id);
         $tugasan = Tugasan::with('Proses')->where('id',$tugasan_id)->first();
-        $tindakans = TindakanTugasan::where('tugasan_id', $tugasan_id)->where('jawapan_id', $hantarSurat->jawapan_id)->where('user_id', Auth::user()->id)
+        $tindakans = TindakanTugasan::whereNot('aktiviti', 'PO')->where('tugasan_id', $tugasan_id)->where('jawapan_id', $hantarSurat->jawapan_id)->where('user_id', Auth::user()->id)
         ->with(['TindakanProgress' => function ($query) {
             $query->latest();
         }])
@@ -1881,7 +1901,8 @@ class UserController extends Controller
 
         $tugasan = Tugasan::with('Proses')->where('id',$tugasan_id)->first();
         $medanPO = MedanPO::where('tugasan_id', $tugasan_id)->get();
-        $tindakans = TindakanTugasan::where('tugasan_id', $tugasan_id)->where('jawapan_id', $jawapan_id)->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+
+        $tindakans = TindakanTugasan::where('aktiviti', 'PO')->where('tugasan_id', $tugasan_id)->where('jawapan_id', $jawapan_id)->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
 
         foreach($tindakans as $tindakan){
             $inputMedan = InputMedan:: where('tindakanTugasan_id', $tindakan->id)->get();
@@ -1904,6 +1925,7 @@ class UserController extends Controller
         $jawapan_id = $request->jawapan_id;
 
         $tindakan = new TindakanTugasan;
+        $tindakan->aktiviti = "PO";
         if($request->file()) {
             $files = time().'.'.$request->PO->extension();  
             $request->PO->move(public_path('PO'), $files);
@@ -1912,7 +1934,6 @@ class UserController extends Controller
         $tindakan->tugasan_id = $tugasan_id;
         $tindakan->user_id = Auth::user()->id;
         $tindakan->jawapan_id = $jawapan_id;
-        $tindakan->progress = 100;
         $tindakan->save();
 
         $medanId = $request->medanId;
@@ -1933,7 +1954,7 @@ class UserController extends Controller
 
         Alert::success('Kemaskini Pesanan Pembelian Berjaya.', 'Pesanan Pembelian telah berjaya disimpan.');   
 
-        return redirect('/user/projek/tugasan/'.$tugasan_id.'/'.$jawapan_id.'/PO/list');
+        return back();
     }
 
     public function TugasanPO_delete(Request $request)
@@ -1951,7 +1972,7 @@ class UserController extends Controller
 
         Alert::success('Padam Pesanan Pembelian Berjaya.', 'Pesanan Pembelian telah berjaya dipadam.');   
 
-        return redirect('/user/projek/tugasan/'.$tugasan_id.'/'.$jawapan_id.'/PO/list');
+        return back();
     }
 
     public function SuratTugasan_view(Request $request)

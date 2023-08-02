@@ -24,7 +24,7 @@ class TindakanTugasan extends Model
     }
 
     public function InputMedan(){
-        return $this->hasMany(InputMedan::class);
+        return $this->hasMany(InputMedan::class, 'tindakanTugasan_id', 'id');
     }
 
     public function TindakanProgress(){

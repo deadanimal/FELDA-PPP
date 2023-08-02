@@ -79,7 +79,7 @@
                     <h5 class="card-title mb-0">Pesanan Pembelian</h5>
                 </div>
                 <div class="card-body">
-                    {{-- @if (!$tindakans->isEmpty())
+                    @if (!$tindakans->isEmpty())
                     <table class="table table-bordered table-striped w-100 arial">
                         <thead class="text-white bg-primary w-100">
                         <tr class="text-center">
@@ -125,8 +125,9 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModaldelete{{$tindakan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                                    @if (Auth::user()->id == $tindakan->user_id)
+                                        <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModaldelete{{$tindakan->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                                    @endif
         
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModaldelete{{$tindakan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -163,7 +164,7 @@
                             
                     @else
                         <h1 style="text-align: center;"> Tiada Pesanan Pembelian </h1>
-                    @endif --}}
+                    @endif
                 </div>
             </div>
         </div>

@@ -10,7 +10,7 @@ class InputMedan extends Model
     use HasFactory;
 
     public function MedanPO(){
-        return $this->belongsTo(MedanPO::class, 'MedanPO_id');
+        return $this->belongsTo(MedanPO::class, 'medanPO_id');
     }
 
     public function TindakanTugasan(){

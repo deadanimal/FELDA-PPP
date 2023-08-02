@@ -284,7 +284,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/tugasan/petiMasuk/{borang_id}/list', [UserController::class, 'kontrak_userList']);
     Route::get('/user/tugasan/petiMasuk/{jawapan_id}/user', [UserController::class, 'kontrak_user']);
 
-    Route::get('/user/tugasan/petiMasuk/{send_id}', [UserController::class, 'tugasanProgress_view']);
+    Route::get('/user/tugasan/petiMasuk/{send_id}', [UserController::class, 'tugasanUser_view']);
+    Route::get('/user/tugasan/tindakan/list', [UserController::class, 'progress_view']);
 
     Route::get('/user/petiMasuk/{surat_id}/{jawapan_id}/view', [UserController::class, 'ccSurat_view']);
     
