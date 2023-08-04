@@ -138,8 +138,8 @@
                                     <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModalView{{$PO->id}}" title="Lihat"><i class="align-middle me-2 fas fa-fw fa-search-plus" style="font-size: x-large;color: #CD352A;"></i></button>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="exampleModalView{{$PO->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal fade bd-example-modal-lg" id="exampleModalView{{$PO->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Padam Pesanan Pembelian</h5>
@@ -155,7 +155,41 @@
                                                             <input class="form-control" id="medan{{$items->id}}" value="{{$items->value}}" readonly>
                                                         @endforeach
                                                     @endif
-                                                    
+                                                    <br>
+                                                    @if (!$itemPeneroka->isEmpty())
+                                                        <table class="table table-bordered w-100">
+                                                            <tr class="text-white bg-primary text-center">
+                                                                <th style="width: 50%">Perkara Pemohonan</th>
+                                                                <th>Jumlah Dimohon</th>
+                                                                <th>Jumlah Harga (RM)</th>
+                                                                <th>Jumlah Harga Kontrak (RM)</th>
+                                                            </tr>
+                                                            @foreach ($itemPeneroka as $item)
+                                                                <tr class="text-center">
+                                                                    <td>{{$item->nama}}</td>
+                                                                    <td>
+                                                                        @if ($item->jumlah_akhir != null)
+                                                                        {{$item->jumlah_akhir}}
+                                                                        @else
+                                                                        {{$item->jumlah}}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($item->harga_akhir != null)
+                                                                        {{$item->harga_akhir}}
+                                                                        @else
+                                                                        {{$item->harga}}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($item->harga_kontrak != null)
+                                                                        {{$item->harga_kontrak}}
+                                                                        @endif
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </table>
+                                                    @endif
                                                 </div>
                                                 <div class="modal-body">
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">TUTUP</button>      

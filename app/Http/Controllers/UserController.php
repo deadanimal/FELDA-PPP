@@ -587,7 +587,7 @@ class UserController extends Controller
             $hantarSurats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
                 $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
             }])->where('userCategory_id', Auth::user()->kategoripengguna)->orderBy('created_at', "DESC")->get();
-        }elseif(Str::contains(Auth::user()->kategori->nama, 'wilayah')|| Str::contains(Auth::user()->kategori->nama, 'WILAYAH')){
+        }elseif(Str::contains(Auth::user()->kategori->nama, 'wilayah') || Str::contains(Auth::user()->kategori->nama, 'WILAYAH')){
             $hantarSurats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
                 $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
             }])->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->orderBy('created_at', "DESC")->get();
@@ -1350,7 +1350,14 @@ class UserController extends Controller
         ->orderBy('tarikh_sasaran', 'ASC')->get(); 
 
         $PurchaseOrders = TindakanTugasan::with('InputMedan', 'InputMedan.MedanPO')->where('aktiviti', 'PO')->where('jawapan_id', $sendSurats->jawapan_id)->where('user_id', $user_id)->orderBy('tarikh_sasaran', 'ASC')->get();
-        
+        $item_id = json_decode($sendSurats->items);
+        $itemPeneroka = new \Illuminate\Database\Eloquent\Collection();
+
+        foreach($item_id as $key=>$item_id){
+            $item = Pemohonan_Peneroka::find($item_id);
+            $itemPeneroka = $itemPeneroka->push($item);
+        }
+
         //for notification tugasan
         $noti = $this->notification();
 
@@ -1358,7 +1365,7 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pegawaiKontrak.tugasanProgress', compact('PurchaseOrders','sendSurats','tindakans', 'noti','menuModul', 'menuProses', 'menuProjek'));
+        return view('pegawaiKontrak.tugasanProgress', compact('itemPeneroka','PurchaseOrders','sendSurats','tindakans', 'noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function ccSurat_view(Request $request)
@@ -1395,7 +1402,8 @@ class UserController extends Controller
     }
 
     public function sendTugas_create(Request $request)
-    {        
+    {   
+        dd($request->fasa);
         $jawapan = Jawapan::where('id', $request->jawapan_id)->with(['jawapanMedan' => function ($query) {
             $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
         }])->first();
@@ -1446,6 +1454,24 @@ class UserController extends Controller
                 Alert::error('Ralat', 'Mencipta tugasan tidak berjaya.'); 
             }
         }
+
+        if ($request->fasa == "PEMBINAAN") {
+            $perkara = $request->perkara;
+            $jwpn = Jawapan::with('borangs.proses')->where('id',$jawapan->id)->first();
+            $tugasan = Tugasan::whereRelation('Proses', 'id', $jwpn->borangs->proses->id)->where('fasa', 'PEMBINAAN')->first();
+            
+            foreach($perkara as $key => $item){
+                $itemPermohonan = Pemohonan_Peneroka::find($item);
+                $tindakan = new TindakanTugasan;
+                $tindakan->aktiviti = $itemPermohonan->nama;
+                $tindakan->nilai_kontrak = $itemPermohonan->harga_kontrak;
+                $tindakan->jawapan_id = $jawapan->id;
+                $tindakan->tugasan_id = $tugasan->id;
+                $tindakan->save();
+            }
+            
+        }
+        
 
         // $json_decode($send->items);
 
@@ -1675,6 +1701,7 @@ class UserController extends Controller
             $query->latest();
         }])
         ->orderBy('tarikh_sasaran', 'ASC')->get();
+        
         //for notification tugasan
         $noti = $this->notification();
 
@@ -1902,7 +1929,17 @@ class UserController extends Controller
         $tugasan = Tugasan::with('Proses')->where('id',$tugasan_id)->first();
         $medanPO = MedanPO::where('tugasan_id', $tugasan_id)->get();
 
+        $jawapan = Jawapan::with('Pemohonan_Peneroka')->where('id',$jawapan_id)->first();
         $tindakans = TindakanTugasan::where('aktiviti', 'PO')->where('tugasan_id', $tugasan_id)->where('jawapan_id', $jawapan_id)->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+        
+        $hantar_surat = Hantar_Surat::where('jawapan_id', $jawapan_id)->where('userCategory_id', Auth::user()->kategoripengguna)->first();
+        $item_id = json_decode($hantar_surat->items);
+        $itemPeneroka = new \Illuminate\Database\Eloquent\Collection();
+
+        foreach($item_id as $key=>$item_id){
+            $item = Pemohonan_Peneroka::find($item_id);
+            $itemPeneroka = $itemPeneroka->push($item);
+        }
 
         foreach($tindakans as $tindakan){
             $inputMedan = InputMedan:: where('tindakanTugasan_id', $tindakan->id)->get();
@@ -1916,7 +1953,7 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('userView.tugasanPO', compact('jawapan_id','tindakans','medanPO','tugasan','noti','menuModul', 'menuProses', 'menuProjek'));
+        return view('userView.tugasanPO', compact('itemPeneroka','jawapan','tindakans','medanPO','tugasan','noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function TugasanPO_add(Request $request)
@@ -1945,6 +1982,15 @@ class UserController extends Controller
             $inputMedan->medanPO_id = $medanId[$x];
             $inputMedan->tindakanTugasan_id = $tindakan->id;
             $inputMedan->save();
+        }
+
+        $item_id = $request->item_id;
+        $hargaKontrak = $request->hargaKontrak;
+
+        foreach($item_id as $key=>$item_id){
+            $item = Pemohonan_Peneroka::find($item_id);
+            $item->harga_kontrak = $hargaKontrak[$key];
+            $item->save();
         }
 
         $audit = new Audit;

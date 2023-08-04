@@ -25,14 +25,18 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAdd">
+                    <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAdd" 
+                    {{-- @if (!$tindakans->isEmpty())
+                       disabled
+                    @endif --}}
+                    >
                         <div class="frame9403-frame7293">
-                            <span class="frame9403-text21"><span>Kemaskini</span></span>
+                            <span class="frame9403-text21"><span>Muat Naik PO</span></span>
                             <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
                         </div>
                     </button>
-                    <div class="modal fade" id="exampleModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal fade bd-example-modal-lg" id="exampleModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Kemaskini Tugasan</h5>
@@ -60,12 +64,46 @@
                                             class="form-control" name="jawapan[]" id="medan{{$medan->id}}" required oninput="this.value = this.value.toUpperCase()">
                                             <input type="hidden" value="{{$medan->id}}" name="medanId[]">
                                         @endforeach
+                                        <br>
+                                        @if (!$itemPeneroka->isEmpty())
+                                            <table class="table table-bordered w-100">
+                                                <tr class="text-white bg-primary text-center">
+                                                    <th style="width: 50%">Perkara Pemohonan</th>
+                                                    <th>Jumlah Dimohon</th>
+                                                    <th>Jumlah Harga (RM)</th>
+                                                    <th>Jumlah Harga Kontrak (RM)</th>
+                                                </tr>
+                                                @foreach ($itemPeneroka as $item)
+                                                    <tr class="text-center">
+                                                        <td>{{$item->nama}}</td>
+                                                        <td>
+                                                            @if ($item->jumlah_akhir != null)
+                                                            {{$item->jumlah_akhir}}
+                                                            @else
+                                                            {{$item->jumlah}}
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @if ($item->harga_akhir != null)
+                                                            {{$item->harga_akhir}}
+                                                            @else
+                                                            {{$item->harga}}
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="hargaKontrak[]" min="1" step="any" required/>
+                                                            <input type="hidden" name="item_id[]" value="{{$item->id}}">
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </table>
+                                        @endif
 
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary" data-dismiss="modal" disabled>BATAL</button> 
                                         <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
-                                        <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
+                                        <input type="hidden" value="{{$jawapan->id}}" name="jawapan_id">
                                         <button class="btn btn-danger">CIPTA</button>
                                     </div>
                                 </form>
@@ -99,8 +137,8 @@
                                     <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModalView{{$tindakan->id}}" title="Lihat"><i class="align-middle me-2 fas fa-fw fa-search-plus" style="font-size: x-large;color: #CD352A;"></i></button>
 
                                     <!-- Modal -->
-                                    <div class="modal fade" id="exampleModalView{{$tindakan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal fade bd-example-modal-lg" id="exampleModalView{{$tindakan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Padam Pesanan Pembelian</h5>
@@ -118,6 +156,41 @@
                                                             @endif
                                                         @endforeach
                                                     @endforeach
+                                                    <br>
+                                                    @if (!$itemPeneroka->isEmpty())
+                                                        <table class="table table-bordered w-100">
+                                                            <tr class="text-white bg-primary text-center">
+                                                                <th style="width: 50%">Perkara Pemohonan</th>
+                                                                <th>Jumlah Dimohon</th>
+                                                                <th>Jumlah Harga (RM)</th>
+                                                                <th>Jumlah Harga Kontrak (RM)</th>
+                                                            </tr>
+                                                            @foreach ($itemPeneroka as $item)
+                                                                <tr class="text-center">
+                                                                    <td>{{$item->nama}}</td>
+                                                                    <td>
+                                                                        @if ($item->jumlah_akhir != null)
+                                                                        {{$item->jumlah_akhir}}
+                                                                        @else
+                                                                        {{$item->jumlah}}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($item->harga_akhir != null)
+                                                                        {{$item->harga_akhir}}
+                                                                        @else
+                                                                        {{$item->harga}}
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($item->harga_kontrak != null)
+                                                                        {{$item->harga_kontrak}}
+                                                                        @endif
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </table>
+                                                    @endif
                                                 </div>
                                                 <div class="modal-body">
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">TUTUP</button>      
@@ -149,7 +222,7 @@
                                                         @method('DELETE')
                                                         <input type="hidden" value="{{$tugasan->id}}" name="tugasan_id">
                                                         <input type="hidden" value="{{$tindakan->id}}" name="tindakanID">
-                                                        <input type="hidden" value="{{$jawapan_id}}" name="jawapan_id">
+                                                        <input type="hidden" value="{{$jawapan->id}}" name="jawapan_id">
                                                         <button class="btn btn-danger">YA</button>
                                                     </form>
                                                 </div>

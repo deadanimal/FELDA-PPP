@@ -101,11 +101,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/home/doc/update',  [WebController::class, 'doc_update']);
     Route::delete('/home/doc/delete',  [WebController::class, 'doc_delete']);
 
-
     Route::post('/home/document/add',  [WebController::class, 'documentAdd']);
     Route::put('/home/document/update',  [WebController::class, 'documentUpdate']);
     Route::delete('/home/document/delete',  [WebController::class, 'documentDelete']);
-
 
     Route::get('/users/info',  [UserController::class, 'user_info']);
     Route::put('/users/update',  [UserController::class, 'user_info_update']);
@@ -123,7 +121,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/audit', [UserController::class, 'user_audit']);
     Route::post('/user_auditFilter', [UserController::class, 'user_auditFilter']);
-
 
     Route::get('/moduls', [ModulController::class, 'modul_list']);
     Route::get('/modul/add', [ModulController::class, 'modul_add_page']);

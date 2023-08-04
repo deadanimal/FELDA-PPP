@@ -188,6 +188,7 @@
                                     <th class="text-start">Perkara Pemohonan</th>
                                     <th>Jumlah dimohon</th>
                                     <th>Jumlah Harga (RM)</th>
+                                    <th>Jumlah Harga Kontrak (RM)</th>
                                   </tr>
                                   @foreach($items as $item)
                                     <tr class="text-center">
@@ -209,6 +210,11 @@
                                           {{$item->harga_akhir}}
                                         @else
                                           {{$item->harga}}
+                                        @endif
+                                      </td>
+                                      <td>
+                                        @if ($item->harga_kontrak != null)
+                                          {{$item->harga_kontrak}}
                                         @endif
                                       </td>
                                     </tr>

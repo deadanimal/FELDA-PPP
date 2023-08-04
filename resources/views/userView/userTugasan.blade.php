@@ -149,7 +149,7 @@
                         
                                       
                       @else
-                          <h1 style="text-align: center;"> Tiada Tugasan </h1>
+                          <h1 style="text-align: center;"> Tiada pengesahan penerimaan bekalan </h1>
                       @endif
                   </div>
                 </div>
@@ -164,6 +164,7 @@
                             <tr class="text-center">
                                 <th scope="col">Nama Peserta</th>                                
                                 <th scope="col">Jenis Projek</th>
+                                <th scope="col">Fasa</th>
                                 <th scope="col" style="width:5%;">Surat</th>
                                 <th scope="col">Tindakan</th>
                             </tr>
@@ -179,6 +180,7 @@
                                       @endforeach
                                     @endif
                                   </td>
+                                  <td class="text-center arial" style="text-transform: uppercase;">{{$hantarSurat->fasa}}</td>
                                   <td class="text-center">
                                     <a class="btn btn-info" href="/user/petiMasuk/{{$hantarSurat->surat_id}}/{{$hantarSurat->jawapan_id}}/view"><i class="align-middle me-2 fas fa-fw fa-envelope" style="color:white; margin:0px !important; font-size:1.5em"></i></a>
                                   </td>
