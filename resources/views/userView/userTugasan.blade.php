@@ -72,24 +72,28 @@
                       </span>
                   </a>   
                 </li>
-                <li class="nav-item" style="background-color: rgb(210 210 210);">
-                  <a 
-                  @if (Request::is('user/pengurus/*'))
-                    class="nav-link active"
-                  @else
-                    class="nav-link" 
-                  @endif
-                  
-                  data-bs-toggle="tab" href="#tab-8" style="height: 100%;">
-                      <span class="arial-N" style="display: flex;white-space: nowrap;">PENGURUS RANCANGAN
-                        {{-- @if ($borangs_noti != 0)
-                          <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin-left:2%;">
-                            {{$borangs_noti}}
-                          </div>
-                        @endif --}}
-                      </span>
-                  </a>   
-                </li>
+
+                @if (Str::contains(Auth::user()->kategori->nama, 'Pengurus Rancangan') || Str::contains(Auth::user()->kategori->nama, 'PENGURUS RANCANGAN'))
+                  <li class="nav-item" style="background-color: rgb(210 210 210);">
+                    <a 
+                    @if (Request::is('user/pengurus/*'))
+                      class="nav-link active"
+                    @else
+                      class="nav-link" 
+                    @endif
+                    
+                    data-bs-toggle="tab" href="#tab-8" style="height: 100%;">
+                        <span class="arial-N" style="display: flex;white-space: nowrap;">PENGURUS RANCANGAN
+                          {{-- @if ($borangs_noti != 0)
+                            <div class="alert alert-danger" role="alert" style="padding: 0 5%;margin-left:2%;">
+                              {{$borangs_noti}}
+                            </div>
+                          @endif --}}
+                        </span>
+                    </a>   
+                  </li>
+                @endif
+                
 
                 <li class="nav-item" style="background-color: rgb(210 210 210);">
                   <a 

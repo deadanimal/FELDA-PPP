@@ -596,8 +596,9 @@ class UserController extends Controller
                 $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
             }])->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->whereRelation('jawapan','rancangan', Auth::user()->rancangan)->orderBy('created_at', "DESC")->get();
         }
-        
-        $jawapan_rancangan = Jawapan::where('status','Terima')->where('fasa', 'PEMBEKALAN')->where('rancangan', Auth::user()->rancangan)->get();
+
+        $jawapan_rancangan = Jawapan::where('status','Terima')->where('fasa', 'PEMBEKALAN')->where('rancangan', Auth::user()->rancangan)->has('Pemohonan_Peneroka')->get();
+        // $jawapan_rancangan = Jawapan::where('status','Penerimaan')->where('fasa', 'PEMBINAAN')->where('rancangan', Auth::user()->rancangan)->has('hantarSurat')->get();
 
         $borangKelulusan = Borang::with('ProsesKelulusan')->whereHas('jwpn')->whereRelation('ProsesKelulusan.TahapKelulusan', 'user_category', Auth::user()->kategoripengguna)->get();
 
@@ -1682,7 +1683,7 @@ class UserController extends Controller
         $hantarSurat = Hantar_surat::find($hantar_id);
         $tugasan = Tugasan::with('Proses')->where('id',$tugasan_id)->first();
 
-        if($hantarSurat->fasa == "PEMBINAAN"){
+        if($hantarSurat->fasa != "PEROLEHAN"){
             $tindakans = TindakanTugasan::whereNot('aktiviti', 'PO')->where('tugasan_id', $tugasan_id)->where('jawapan_id', $hantarSurat->jawapan_id)->where('user_id', Auth::user()->id)
             ->with(['TindakanProgress' => function ($query) {
                 $query->latest();
@@ -1708,6 +1709,25 @@ class UserController extends Controller
                     $tindakan->tugasan_id = $tugasan->id;
                     $tindakan->user_id = Auth::user()->id;
                     $tindakan->save();
+                }
+
+                if($hantarSurat->fasa == "PEMBEKALAN"){
+                    if (!$tindakans->TindakanProgress->isEmpty()){
+                        $total_dituntut = 0;
+                        $total_kontrak = 0;
+                        foreach ($tindakans->TindakanProgress as $TinProgress){
+                            $total_dituntut += ($TinProgress->progress);
+                        }
+                        foreach($tindakans as $tindakan){
+                            $total_kontrak += ($tindakan->nilai_kontrak);
+                        }
+
+                        if($total_kontrak == $total_dituntut){
+                            $jawapan = Jawapan::find($hantarSurat->jawapan_id);
+                            $jawapan->fasa = $hantarSurat->fasa;
+                            $jawapan->save();
+                        }
+                    }
                 }
             }
         }
