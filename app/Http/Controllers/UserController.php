@@ -2173,7 +2173,24 @@ class UserController extends Controller
         $jawapan_id = (int)$request->route('jawapan_id');
 
         $jawapan = Jawapan::find($jawapan_id);
-        $penerimaan= Penerimaan_bekalan::with('Pemohonan_Peneroka')->whereRelation('Pemohonan_Peneroka', 'jawapan_id', $jawapan_id)->get();
+        
+        $itemPermohonan = Pemohonan_Peneroka::with(['Penerimaan_bekalan' => function ($query) {
+            $query->latest();
+        }])
+        ->where('jawapan_id', $jawapan_id)->get();
+
+        $num = $itemPermohonan->count();
+        $ans = 0;
+        foreach($itemPermohonan as $item){
+            if($item->Penerimaan_bekalan->pengesahan == "SAH"){
+                $ans += 1;
+            }
+        }
+
+        if($num == $ans){
+            $jawapan->fasa = "PEMANTAUAN";
+            $jawapan->save();
+        }
 
         //for notification tugasan
         $noti = $this->notification();
@@ -2182,19 +2199,19 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusRancangan.bekalanList', compact('penerimaan','jawapan','noti','menuModul', 'menuProses', 'menuProjek'));
+        return view('pengurusRancangan.bekalanList', compact('itemPermohonan','jawapan','noti','menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function Bekalan_update(Request $request)
     {     
-        $penerimaan_id = $request->penerimaan_id;
-        $jawapan_id = $request->jawapan_id;
+        $PemohonanPeneroka_id = $request->PemohonanPeneroka_id;
 
-        $penerimaan= Penerimaan_bekalan::find($penerimaan_id);
+        $penerimaan = new Penerimaan_bekalan;
         $penerimaan->pengesahan = $request->pengesahan;
         $penerimaan->kenyataan = $request->penyataan;
+        $penerimaan->permohonan_id = $PemohonanPeneroka_id;
         $penerimaan->save();
 
-        return redirect('/user/pengurus/item/'.$jawapan_id.'/list');
+        return back();
     }
 }

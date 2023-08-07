@@ -10,13 +10,17 @@
                             PROFIL PROJEK {{$jawapan->borangs->namaBorang}}
                         </h1>
                     </td>
-                    <td>
-                        <a href="/kemaskiniProjek/{{$jawapan->id}}" class="frame9403-frame7445">
-                            <div class="frame9403-frame7293">
-                            <span class="frame9403-text21"><i class="align-middle me-2 fas fa-fw fa-cogs"></i>KEMASKINI</span>
-                            </div>
-                        </a>
-                    </td>
+
+                    @if ($jawapan->fasa == "PEMANTAUAN")
+                        <td>
+                            <a href="/kemaskiniProjek/{{$jawapan->id}}" class="frame9403-frame7445">
+                                <div class="frame9403-frame7293">
+                                <span class="frame9403-text21"><i class="align-middle me-2 fas fa-fw fa-cogs"></i>KEMASKINI</span>
+                                </div>
+                            </a>
+                        </td>
+                    @endif
+                    
                     <td>
                         <a href="/tarikDiri/{{$jawapan->id}}" class="frame9403-frame7445">
                             <div class="frame9403-frame7293">

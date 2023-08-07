@@ -10,6 +10,6 @@ class Penerimaan_bekalan extends Model
     use HasFactory;
 
     public function Pemohonan_Peneroka() {
-        return $this->belongsTo(Pemohonan_Peneroka::class, 'pemohonan_id');
+        return $this->belongsTo(Pemohonan_Peneroka::class, 'permohonan_id');
     }
 }

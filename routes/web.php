@@ -339,7 +339,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/moduls/perkara/delete', [ModulController::class, 'Perkara_delete']);
     
     Route::get('/user/pengurus/item/{jawapan_id}/list', [UserController::class, 'Bekalan_List']);
-    Route::put('/user/pengurus/item/update', [UserController::class, 'Bekalan_update']);
+    Route::post('/user/pengurus/item/update', [UserController::class, 'Bekalan_update']);
 
     Route::get('/test', function () {
         return view('pengurusanBorang.TemplatePermohonanPerolehanIbuPejabatWilayah_');

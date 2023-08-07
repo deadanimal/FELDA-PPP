@@ -18,6 +18,6 @@ class Pemohonan_Peneroka extends Model
     }
 
     public function Penerimaan_bekalan(){
-        return $this->hasMany(Penerimaan_bekalan::class);
+        return $this->hasOne(Penerimaan_bekalan::class, 'permohonan_id', 'id');
     }
 }

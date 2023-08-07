@@ -22,7 +22,7 @@
         </div>
 
         {{-- senarai bekalan --}}
-        @if (!$penerimaan->isEmpty())
+        @if (!$itemPermohonan->isEmpty())
         <div class="card-body">
 
         <table class="table table-bordered table-striped w-100 aduan-datatable">
@@ -32,18 +32,18 @@
                   <th scope="col" class="text-center" style="width: 40%">Perkara</th>
                   <th scope="col" class="text-center">Jumlah</th>
                   <th scope="col" class="text-center">Pengesahan</th>
-                  <th scope="col" class="text-center" style="width: 30%">Penyataan</th>
+                  <th scope="col" class="text-center" style="width: 30%">Catatan</th>
                   <th scope="col" class="text-center">Tindakan</th>
               </tr>
             </thead>
             <tbody>
-                @foreach ($penerimaan as $item)
+                @foreach ($itemPermohonan as $item)
                     <tr>
-                        <td>{{$item->Pemohonan_Peneroka->Perkara_Pemohonan->nama}}</td>
-                        <td>{{$item->Pemohonan_Peneroka->nama}}</td>
-                        <td>{{$item->Pemohonan_Peneroka->jumlah}}</td>
-                        <td>{{$item->pengesahan ?? ""}}</td>
-                        <td>{!! nl2br(e($item->kenyataan ?? ""))  !!}</td>
+                        <td>{{$item->Perkara_Pemohonan->nama}}</td>
+                        <td>{{$item->nama}}</td>
+                        <td>{{$item->jumlah}}</td>
+                        <td>{{$item->Penerimaan_bekalan->pengesahan ?? ""}}</td>
+                        <td>{!! nl2br(e($item->Penerimaan_bekalan->kenyataan ?? ""))  !!}</td>
                         <td>
                             <button class="btn btn-success"  data-toggle="modal" data-target="#exampleModalUpdate{{$item->id}}">Kemaskini</button>
 
@@ -52,37 +52,36 @@
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA ADUAN</h2>
+                                        <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">PENGESAHAN PERKARA PERMOHONAN</h2>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <form action="/user/pengurus/item/update" method="POST">
                                     @csrf
-                                    @method('PUT')
-                                    <div class="modal-body">
-                                        <label for="pengesahan" class="frame9402-text04">
-                                            <strong>Pengesahan</strong>
-                                        </label>
-                                        <select class="form-select frame9402-kotaknamaBorang" name="pengesahan" id="pengesahan" required>
-                                          @if ($item->pengesahan != null)
-                                            <option value="{{$item->pengesahan}}" selected disabled>{{$item->pengesahan}}</option>   
-                                          @endif
-                                            <option value="CUKUP">Cukup</option>
-                                            <option value="TIDAK">Tidak</option>
-                                        </select>
-                                        
-                                        <label for="Penyataan" class="frame9402-text04">
-                                            <strong>Penyataan</strong>
-                                        </label>
-                                        <textarea class="form-control frame9403-kotaknama" name="penyataan" id="Penyataan" rows="4" oninput="this.value = this.value.toUpperCase()">{!! nl2br(e($item->kenyataan ?? ""))  !!}</textarea><br>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input type="hidden" name="penerimaan_id" value="{{$item->id}}">
-                                        <input type="hidden" name="jawapan_id" value="{{$jawapan->id}}">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                                        <button class="btn btn-primary">Cipta</button>
-                                    </div>
+                                      <div class="modal-body">
+                                          <label for="pengesahan" class="frame9402-text04">
+                                              <strong>Pengesahan</strong>
+                                          </label>
+                                          <select class="form-select frame9402-kotaknamaBorang" name="pengesahan" id="pengesahan" required>
+                                            @if ($item->pengesahan != null)
+                                              <option value="{{$item->Penerimaan_bekalan->pengesahan}}" selected disabled>{{$item->Penerimaan_bekalan->pengesahan}}</option>   
+                                            @endif
+                                              <option value="SAH">Sah</option>
+                                              <option value="TIDAK SAH">Tidak Sah</option>
+                                          </select>
+                                          
+                                          <label for="Penyataan" class="frame9402-text04">
+                                              <strong>Catatan</strong>
+                                          </label>
+                                          <br>
+                                          <textarea class="form-control frame9403-kotaknama" name="penyataan" id="Penyataan" rows="4" oninput="this.value = this.value.toUpperCase()">{!! nl2br(e($item->Penerimaan_bekalan->kenyataan ?? ""))  !!}</textarea><br>
+                                      </div>
+                                      <div class="modal-footer">
+                                          <input type="hidden" name="PemohonanPeneroka_id" value="{{$item->id}}">
+                                          <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                                          <button class="btn btn-primary">Cipta</button>
+                                      </div>
                                     </form> 
                                 </div>  
                                 </div>
