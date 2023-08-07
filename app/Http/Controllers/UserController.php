@@ -597,7 +597,8 @@ class UserController extends Controller
             }])->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->whereRelation('jawapan','rancangan', Auth::user()->rancangan)->orderBy('created_at', "DESC")->get();
         }
         
-        $jawapan_rancangan = Jawapan::where('status','Penerimaan')->where('rancangan', Auth::user()->rancangan)->has('Pemohonan_Peneroka')->has('hantarSurat')->get();
+        $jawapan_rancangan = Jawapan::where('status','Terima')->where('fasa', 'PEMBEKALAN')->where('rancangan', Auth::user()->rancangan)->get();
+
         $borangKelulusan = Borang::with('ProsesKelulusan')->whereHas('jwpn')->whereRelation('ProsesKelulusan.TahapKelulusan', 'user_category', Auth::user()->kategoripengguna)->get();
 
         $date = Carbon::now();
@@ -1403,7 +1404,6 @@ class UserController extends Controller
 
     public function sendTugas_create(Request $request)
     {   
-        dd($request->fasa);
         $jawapan = Jawapan::where('id', $request->jawapan_id)->with(['jawapanMedan' => function ($query) {
             $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
         }])->first();
@@ -1455,23 +1455,8 @@ class UserController extends Controller
             }
         }
 
-        if ($request->fasa == "PEMBINAAN") {
-            $perkara = $request->perkara;
-            $jwpn = Jawapan::with('borangs.proses')->where('id',$jawapan->id)->first();
-            $tugasan = Tugasan::whereRelation('Proses', 'id', $jwpn->borangs->proses->id)->where('fasa', 'PEMBINAAN')->first();
-            
-            foreach($perkara as $key => $item){
-                $itemPermohonan = Pemohonan_Peneroka::find($item);
-                $tindakan = new TindakanTugasan;
-                $tindakan->aktiviti = $itemPermohonan->nama;
-                $tindakan->nilai_kontrak = $itemPermohonan->harga_kontrak;
-                $tindakan->jawapan_id = $jawapan->id;
-                $tindakan->tugasan_id = $tugasan->id;
-                $tindakan->save();
-            }
-            
-        }
-        
+        $jawapan->fasa = $request->fasa;
+        $jawapan->save();
 
         // $json_decode($send->items);
 
@@ -1696,12 +1681,43 @@ class UserController extends Controller
 
         $hantarSurat = Hantar_surat::find($hantar_id);
         $tugasan = Tugasan::with('Proses')->where('id',$tugasan_id)->first();
+
+        if($hantarSurat->fasa == "PEMBINAAN"){
+            $tindakans = TindakanTugasan::whereNot('aktiviti', 'PO')->where('tugasan_id', $tugasan_id)->where('jawapan_id', $hantarSurat->jawapan_id)->where('user_id', Auth::user()->id)
+            ->with(['TindakanProgress' => function ($query) {
+                $query->latest();
+            }])->orderBy('tarikh_sasaran', 'ASC')->get();
+
+            if ($tindakans->isEmpty()) {
+                $items = json_decode($hantarSurat->items);
+
+                foreach($items as $key => $item){
+                    $itemPermohonan = Pemohonan_Peneroka::find($item);
+                    $tindakan = new TindakanTugasan;
+                    $tindakan->aktiviti = $itemPermohonan->nama;
+
+                    if ($itemPermohonan->harga_kontrak != null) {
+                        $tindakan->nilai_kontrak = $itemPermohonan->harga_kontrak;
+                    }elseif($itemPermohonan->harga_akhir != null){
+                        $tindakan->nilai_kontrak = $itemPermohonan->harga_kontrak;
+                    }else{
+                        $tindakan->harga = $itemPermohonan->harga;
+                    }
+
+                    $tindakan->jawapan_id = $hantarSurat->jawapan_id;
+                    $tindakan->tugasan_id = $tugasan->id;
+                    $tindakan->user_id = Auth::user()->id;
+                    $tindakan->save();
+                }
+            }
+        }
+
         $tindakans = TindakanTugasan::whereNot('aktiviti', 'PO')->where('tugasan_id', $tugasan_id)->where('jawapan_id', $hantarSurat->jawapan_id)->where('user_id', Auth::user()->id)
         ->with(['TindakanProgress' => function ($query) {
             $query->latest();
         }])
         ->orderBy('tarikh_sasaran', 'ASC')->get();
-        
+        // dd($tindakans);
         //for notification tugasan
         $noti = $this->notification();
 
@@ -1776,6 +1792,7 @@ class UserController extends Controller
         $tindakan_id = (int)$request->route('tindakan_id'); 
         $hantar_id = (int)$request->route('hantar_id'); 
         
+        $hantarSurat = Hantar_surat::find($hantar_id);
         $tindakan = TindakanTugasan::find($tindakan_id);
         $kemajuans = Tindakan_progress::where('tindakan_id', $tindakan_id)->orderBy('created_at', 'ASC')->get();
 
@@ -1786,27 +1803,53 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('userView.userTugasanItem', compact('noti','hantar_id','kemajuans','tindakan', 'menuModul', 'menuProses', 'menuProjek'));
+        return view('userView.userTugasanItem', compact('noti','hantarSurat','kemajuans','tindakan', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function aktivitiProgress_add(Request $request)
     {
-
-        $kemajuan = new Tindakan_progress;
-        $kemajuan->progress = $request->progress;
-        $kemajuan->catatan = $request->catatan;
-        if($request->file()){
-            $uploads = $request->upload;
-            foreach($uploads as $key => $upload){
-                $extension=$upload->extension();
-                $fileName = time().'('.$key.').'.$extension;  
-                $upload->move(public_path('progress'), $fileName);
-                $files[] = '/progress/' . $fileName;
+        $tindakan = TindakanTugasan::with('Tugasan')->where('id', $request->tindakan_id)->first();
+        if($tindakan->Tugasan->fasa != "PEROLEHAN"){
+            $tindProgress = Tindakan_progress::where('tindakan_id', $tindakan->id)->orderBy('created_at', 'DESC')->first();
+            if($tindProgress != null){
+                $nilai_tuntutan = (int) $tindProgress->progress + $request->progress;
+            }else{
+                $nilai_tuntutan = (int) $request->progress;
             }
-            $kemajuan->bukti = json_encode($files);
+            
+            $kemajuan = new Tindakan_progress;
+            $kemajuan->progress = $nilai_tuntutan;
+            $kemajuan->catatan = $request->catatan;
+            if($request->file()){
+                $uploads = $request->upload;
+                foreach($uploads as $key => $upload){
+                    $extension=$upload->extension();
+                    $fileName = time().'('.$key.').'.$extension;  
+                    $upload->move(public_path('progress'), $fileName);
+                    $files[] = '/progress/' . $fileName;
+                }
+                $kemajuan->bukti = json_encode($files);
+            }
+            $kemajuan->tindakan_id = $tindakan->id;
+            $kemajuan->save();
+
+        }else {
+            $kemajuan = new Tindakan_progress;
+            $kemajuan->progress = $request->progress;
+            $kemajuan->catatan = $request->catatan;
+            if($request->file()){
+                $uploads = $request->upload;
+                foreach($uploads as $key => $upload){
+                    $extension=$upload->extension();
+                    $fileName = time().'('.$key.').'.$extension;  
+                    $upload->move(public_path('progress'), $fileName);
+                    $files[] = '/progress/' . $fileName;
+                }
+                $kemajuan->bukti = json_encode($files);
+            }
+            $kemajuan->tindakan_id = $tindakan->id;
+            $kemajuan->save();
         }
-        $kemajuan->tindakan_id = $request->tindakan_id;
-        $kemajuan->save();
 
         $audit = new Audit;
         $audit->user_id = Auth::user()->id;
