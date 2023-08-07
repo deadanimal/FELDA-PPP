@@ -232,17 +232,17 @@ display: flex;
           <select name="status" class="frame9403-kotaknama3">
             @if ($modul->status == "Pending"){
               <option value="Pending" selected>Pending</option>
-              <option value="Active">Active</option>
+              {{-- <option value="Active">Active</option> --}}
               <option value="Go-live">Go-live</option>
             }  
-            @elseif($modul->status == "Active"){
+            {{-- @elseif($modul->status == "Active"){
               <option value="Pending">Pending</option>
               <option value="Active" selected>Active</option>
               <option value="Go-live">Go-live</option>
-            }
+            } --}}
             @else
               <option value="Pending">Pending</option>
-              <option value="Active">Active</option>
+              {{-- <option value="Active">Active</option> --}}
               <option value="Go-live"selected>Go-live</option>
             @endif
           </select>
