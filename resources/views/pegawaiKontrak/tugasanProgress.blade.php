@@ -20,100 +20,172 @@
                           <span class="frame9403-text21 align-middle"><span>Kembali</span></span>
                     </a>
                 </div>
-                @php
-                    $lewat=0;
-                    $total_wajaran=0;
-                    $total_kemajuan=0;
-                    if (!$tindakans->isEmpty()){
-                        foreach ($tindakans as $tindakan){
-                            $total_wajaran += $tindakan->wajaran;
+                @if ($sendSurats->fasa == "PEROLEHAN")
+                    @php
+                        $lewat=0;
+                        $total_wajaran=0;
+                        $total_kemajuan=0;
+                        if (!$tindakans->isEmpty()){
+                            foreach ($tindakans as $tindakan){
+                                $total_wajaran += $tindakan->wajaran;
+                            }
                         }
-                    }
-                @endphp
-                @if (!$tindakans->isEmpty())
-                    <table class="table table-bordered table-striped w-100 arial">
-                        <thead class="text-white bg-primary w-100">
-                        <tr class="text-center">
-                            <th scope="col" style="width: 40%;">Aktiviti</th>
-                            <th scope="col">Wajaran</th>
-                            <th scope="col">Tarikh Sasaran</th>
-                            <th scope="col">Tarikh Tindakan</th>
-                            <th scope="col">Hari Lewat</th>
-                            <th scope="col">Catatan</th>
-                            <th scope="col">Kemajuan</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($tindakans as $tindakan)
-                            <tr>
-                                <td class="text-center arial" style="text-transform: uppercase;">
-                                        {{$tindakan->aktiviti}}
-                                </td>
-                                <td class="text-center arial">{{$tindakan->wajaran}}%</td>
-                                <td class="text-center arial">
-                                    {{date('d-m-Y', strtotime($tindakan->tarikh_sasaran))}}
-                                    @php
-                                        $target_date = Carbon::parse($tindakan->tarikh_sasaran)
-                                    @endphp
-                                </td>
-                                <td class="text-center arial">
-                                    @if (!$tindakan->TindakanProgress->isEmpty())
-                                        @foreach ($tindakan->TindakanProgress as $TinProgress)
-                                            {{date('d-m-Y', strtotime($TinProgress->created_at))}}
-                                            @php
-                                                $date = Carbon::parse($TinProgress->created_at)
-                                            @endphp
-                                            @break
-                                        @endforeach
-                                    @endif
-                                </td>
-                                <td class="text-center arial">
-                                    @if (!$tindakan->TindakanProgress->isEmpty())
-                                        {{$target_date->diffInDays($date)}}
-                                        @php
-                                            $lewat = $target_date->diffInDays($date);
-                                        @endphp
-                                    @else
-                                        @php
-                                            $lewat = 0;
-                                        @endphp
-                                    @endif
-                                </td>
-                                <td class="text-center arial">
-                                    @if (!$tindakan->TindakanProgress->isEmpty())
-                                        @foreach ($tindakan->TindakanProgress as $TinProgress)
-                                            {{$TinProgress->catatan}}
-                                            @break
-                                        @endforeach
-                                    @endif
-                                </td>
-                                <td class="text-center arial">
-                                    @if (!$tindakan->TindakanProgress->isEmpty())
-                                        @foreach ($tindakan->TindakanProgress as $TinProgress)
-                                            {{$TinProgress->progress * $tindakan->wajaran/100}}%
-                                        
-                                            @php
-                                                $total_kemajuan += ($TinProgress->progress * $tindakan->wajaran/100);
-                                            @endphp
-                                            @break
-                                        @endforeach
-                                    @endif
-                                </td>
+                    @endphp
+                    @if (!$tindakans->isEmpty())
+                        <table class="table table-bordered table-striped w-100 arial">
+                            <thead class="text-white bg-primary w-100">
+                            <tr class="text-center">
+                                <th scope="col" style="width: 40%;">Aktiviti</th>
+                                <th scope="col">Wajaran</th>
+                                <th scope="col">Tarikh Sasaran</th>
+                                <th scope="col">Tarikh Tindakan</th>
+                                <th scope="col">Hari Lewat</th>
+                                <th scope="col">Catatan</th>
+                                <th scope="col">Kemajuan</th>
                             </tr>
-                            @endforeach 
-                            <tr class="text-center" style="border-top: 2px solid black;">
-                                <td class="Arial"><b>JUMLAH</b></td>
-                                <td>{{$total_wajaran}}%</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>{{$total_kemajuan}}%</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($tindakans as $tindakan)
+                                <tr>
+                                    <td class="text-center arial" style="text-transform: uppercase;">
+                                            {{$tindakan->aktiviti}}
+                                    </td>
+                                    <td class="text-center arial">{{$tindakan->wajaran}}%</td>
+                                    <td class="text-center arial">
+                                        {{date('d-m-Y', strtotime($tindakan->tarikh_sasaran))}}
+                                        @php
+                                            $target_date = Carbon::parse($tindakan->tarikh_sasaran)
+                                        @endphp
+                                    </td>
+                                    <td class="text-center arial">
+                                        @if (!$tindakan->TindakanProgress->isEmpty())
+                                            @foreach ($tindakan->TindakanProgress as $TinProgress)
+                                                {{date('d-m-Y', strtotime($TinProgress->created_at))}}
+                                                @php
+                                                    $date = Carbon::parse($TinProgress->created_at)
+                                                @endphp
+                                                @break
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                    <td class="text-center arial">
+                                        @if (!$tindakan->TindakanProgress->isEmpty())
+                                            {{$target_date->diffInDays($date)}}
+                                            @php
+                                                $lewat = $target_date->diffInDays($date);
+                                            @endphp
+                                        @else
+                                            @php
+                                                $lewat = 0;
+                                            @endphp
+                                        @endif
+                                    </td>
+                                    <td class="text-center arial">
+                                        @if (!$tindakan->TindakanProgress->isEmpty())
+                                            @foreach ($tindakan->TindakanProgress as $TinProgress)
+                                                {{$TinProgress->catatan}}
+                                                @break
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                    <td class="text-center arial">
+                                        @if (!$tindakan->TindakanProgress->isEmpty())
+                                            @foreach ($tindakan->TindakanProgress as $TinProgress)
+                                                {{$TinProgress->progress * $tindakan->wajaran/100}}%
+                                            
+                                                @php
+                                                    $total_kemajuan += ($TinProgress->progress * $tindakan->wajaran/100);
+                                                @endphp
+                                                @break
+                                            @endforeach
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach 
+                                <tr class="text-center" style="border-top: 2px solid black;">
+                                    <td class="Arial"><b>JUMLAH</b></td>
+                                    <td>{{$total_wajaran}}%</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{$total_kemajuan}}%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    @else
+                        <h1 style="text-align: center;"> Tiada Maklum Balas Dari Pengguna </h1>
+                    @endif
                 @else
-                    <h1 style="text-align: center;"> Tiada Maklum Balas Dari Pengguna </h1>
+                    @php
+                        $total_kontrak=0;
+                        $total_dituntut=0;
+                        $total_baki=0;
+                    @endphp
+                    @if (!$tindakans->isEmpty())
+                        <table class="table table-bordered table-striped w-100 arial">
+                            <thead class="text-white bg-primary w-100">
+                                <tr class="text-center">
+                                    <th style="width:50%">Aktiviti</th>
+                                    <th>Nilai Kontrak (RM)</th>
+                                    <th>Jumlah Telah Dituntut (RM)</th>
+                                    <th>Baki Belum Dituntut (RM)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($tindakans as $tindakan)
+                                    <tr class="text-center">
+                                        <td>{{$tindakan->aktiviti}}</td>
+                                        <td>
+                                            {{$tindakan->nilai_kontrak}}
+                                            @php
+                                                $total_kontrak += ($tindakan->nilai_kontrak);
+                                            @endphp
+                                        </td>
+                                        <td>
+                                            @if (!$tindakan->TindakanProgress->isEmpty())
+                                                @foreach ($tindakan->TindakanProgress as $TinProgress)
+                                                    {{$TinProgress->progress}}
+                                                        @php
+                                                            $total_dituntut += ($TinProgress->progress);
+                                                        @endphp
+                                                    @break
+                                                @endforeach
+                                            @else
+                                                @php
+                                                    $total_dituntut += 0;
+                                                @endphp
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if (!$tindakan->TindakanProgress->isEmpty())
+                                                @foreach ($tindakan->TindakanProgress as $TinProgress)
+                                                    {{$tindakan->nilai_kontrak - ($TinProgress->progress)}}
+                                                    
+                                                    @php
+                                                        $total_baki += ($tindakan->nilai_kontrak - ($TinProgress->progress));
+                                                    @endphp
+                                                    @break
+                                                @endforeach
+                                            @else
+                                                @php
+                                                    $total_baki += 0;
+                                                @endphp
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                <tr class="text-center" style="border-top: 2px solid black;">
+                                    <td class="Arial"><b>JUMLAH</b></td>
+                                    <td>{{$total_kontrak}}</td>
+                                    <td>{{$total_dituntut}}</td>
+                                    <td>{{(int)$total_kontrak - $total_dituntut}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    @else
+                        <h1 style="text-align: center;"> Tiada Aktiviti </h1>
+                    @endif
                 @endif
             </div>
             

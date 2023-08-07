@@ -640,7 +640,7 @@ display: flex;
                 <input type="hidden" value="{{$modul->id}}" name="modulId">
                 <input type="hidden" value="{{$borang->id}}" name="borangId">
                 <div class="frame9403-frame7293">
-                <span class="frame9403-text21"><span>Proses Kelulusan</span></span>
+                  <span class="frame9403-text21"><span>Proses Kelulusan</span></span>
                 </div>
               </button>
             </form>

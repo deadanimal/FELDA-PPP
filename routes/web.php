@@ -348,3 +348,5 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Route::post('/Borang/uploadBorang',  [BorangController::class, 'uploadBorang']);
+
+// min="1" step="any"

@@ -77,6 +77,7 @@ class UserController extends Controller
         return view('dashboard', compact('noti','menuModul', 'menuProses', 'menuProjek'));
 
     }
+    
     public function user_add_page()
     {
         $wilayah = Wilayah::orderBy('nama', 'ASC')->pluck('nama','id');
@@ -783,9 +784,9 @@ class UserController extends Controller
         $jawapanId = (int) $request->route('jawapan_id');
 
         $jawapan = Jawapan::find($jawapanId);
-        $borang = Borang::find($jawapan->borang_id);
-        
-        $jenisTernakan = jenis_ternakan::where('proses_id', $borang->proses_id)->get();
+        $borang = Borang::with('proses')->where('id',$jawapan->borang_id)->first();
+
+        $jenisTernakan = jenis_ternakan::whereRelation('proses', 'projek_id',$borang->proses->projek_id)->get();
 
         //for notification tugasan
         $noti = $this->notification();
@@ -1351,7 +1352,7 @@ class UserController extends Controller
         }])
         ->orderBy('tarikh_sasaran', 'ASC')->get(); 
 
-        $PurchaseOrders = TindakanTugasan::with('InputMedan', 'InputMedan.MedanPO')->where('aktiviti', 'PO')->where('jawapan_id', $sendSurats->jawapan_id)->where('user_id', $user_id)->orderBy('tarikh_sasaran', 'ASC')->get();
+        $PurchaseOrders = TindakanTugasan::with('InputMedan', 'InputMedan.MedanPO')->whereRelation('Tugasan','fasa', $sendSurats->fasa)->where('aktiviti', 'PO')->where('jawapan_id', $sendSurats->jawapan_id)->where('user_id', $user_id)->orderBy('tarikh_sasaran', 'ASC')->get();
         $item_id = json_decode($sendSurats->items);
         $itemPeneroka = new \Illuminate\Database\Eloquent\Collection();
 

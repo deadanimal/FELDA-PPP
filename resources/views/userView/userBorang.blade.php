@@ -161,10 +161,10 @@
                                                 <input type="text" class="form-control border2" name="perkara[]" required oninput="this.value = this.value.toUpperCase()">
                                             </td>
                                             <td>
-                                                <input type="Number" class="form-control border2" name="jumlah[]"required>
+                                                <input type="Number" class="form-control border2" name="jumlah[]" required>
                                             </td>
                                             <td>
-                                                <input type="Number" class="form-control border2" name="kos[]"required>
+                                                <input type="Number" class="form-control border2" name="kos[]" min="1" step="any" required>
                                             </td>
                                             <td style=" text-align:end;"></td>
                                         </tr>
