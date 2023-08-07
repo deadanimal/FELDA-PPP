@@ -115,7 +115,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/{id}/delete',  [UserController::class, 'user_delete']);
 
     Route::get('/user-categories',[UserController::class, 'category_list']);
-    Route::post('/user-categories',[UserController::class, 'category_add']);
+    Route::post('/user-categories/add',[UserController::class, 'category_add']);
     Route::put('/user-categories/update',[UserController::class, 'category_update']);
     Route::get('/user-categories/{id}/delete',[UserController::class, 'category_delete']);
 

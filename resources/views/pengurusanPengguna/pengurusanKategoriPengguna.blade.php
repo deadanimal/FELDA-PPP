@@ -38,18 +38,18 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form action="/user-categories" method="POST" >
-                @csrf
-                  <label for="namaKategori" class="frame9402-text04">
-                    <strong>Nama Kategori Pengguna</strong>
-                  </label>
-                  <input type="text" class="frame9402-kotaknamaProses" id="namaKategori" placeholder="Sila Masuk Kategori Pengguna" name="namaKategoriPengguna" required oninput="this.value = this.value.toUpperCase()">
+                <form action="/user-categories/add" method="POST" >
+                  @csrf
+                      <label for="namaKategori" class="frame9402-text04">
+                        <strong>Nama Kategori Pengguna</strong>
+                      </label>
+                      <input type="text" class="frame9402-kotaknamaProses" id="namaKategori" placeholder="Sila Masuk Kategori Pengguna" name="namaKategoriPengguna" required oninput="this.value = this.value.toUpperCase()">
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-primary">Kemaskini</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                  </div>
                 </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-                <button class="btn btn-primary">Kemaskini</button>
-              </div>
             </div>
           </div>
         </div>
