@@ -34,7 +34,7 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA PROJEK</h2>
+                <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA KATEGORI</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -43,7 +43,7 @@
                 @csrf
                 <div class="modal-body">
                   <label for="nama" class="frame9402-text04">
-                    <strong>Nama Projek</strong>
+                    <strong>Nama Kategori</strong>
                   </label>
                   <input type="text" class="frame9402-kotaknamaProses" id="nama" placeholder="Nama Projek" name="nama" required oninput="this.value = this.value.toUpperCase()">
                   <input type="hidden" value="{{$modul->id}}" name="modulId">
@@ -67,11 +67,11 @@
             @else
               <tr class="frame9402-input" style="background-color: rgba(162, 50, 93, 0.08);"> 
             @endif
-                <td class="frame9402-text30">Nama Projek:</td>
+                <td class="frame9402-text30">Nama Kategori:</td>
                 <td class="frame9402-text31"><input type="text" id="nama{{$loop->iteration}}" class="frame9402-kotaknama" value="{{$projek->nama}}" oninput="this.value = this.value.toUpperCase()"></td>
 
                 <td class="frame9402-text32">
-                    Status Projek:
+                    Status Kategori:
                     <select name="status" id="status{{$loop->iteration}}" class="frame9403-kotaknama3">
                         <option value="{{$projek->status}}" selected hidden>{{$projek->status}}</option>
                         <option value="Aktif">Aktif</option>
@@ -103,13 +103,13 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Padam Projek {{$projek->nama}}</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Padam Kategori {{$projek->nama}}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <p>Anda Pasti Mahu Padam Projek {{$projek->nama}}?<p>
+                            <p>Anda Pasti Mahu Padam Kategori {{$projek->nama}}?<p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>
