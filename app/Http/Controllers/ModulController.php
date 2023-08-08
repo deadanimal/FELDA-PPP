@@ -1114,7 +1114,7 @@ class ModulController extends Controller
 
         Alert::success('Cipta Perkara Pemohonan Berjaya.', 'Perkara pemohonan telah berjaya dicipta.');
     
-        return redirect('/moduls/perkara/'.$request->borangId.'/list');
+        return back();
     }
     public function Perkara_update(Request $request)
     { 
@@ -1131,7 +1131,7 @@ class ModulController extends Controller
 
         Alert::success('Kemaskini Perkara Pemohonan Berjaya.', 'Perkara pemohonan telah berjaya dikemaskini.');
 
-        return redirect('/moduls/perkara/'.$request->borangId.'/list');
+        return back();
     }
 
     public function Perkara_delete(Request $request)
@@ -1147,6 +1147,6 @@ class ModulController extends Controller
 
         Alert::success('Padam Perkara Pemohonan Berjaya.', 'Perkara pemohonan telah berjaya dipadam.');
 
-        return redirect('/moduls/perkara/'.$request->borangId.'/list');
+        return back();
     }
 }

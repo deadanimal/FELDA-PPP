@@ -63,6 +63,9 @@ class BorangController extends Controller
         $proses = Proses::find($idProses);
 
         $medans = Medan::where('borang_id', $idBorang)->orderBy("sequence", "ASC")->get();
+        $lampirans = Lampiran::where('borang_id', $idBorang)->get();
+        $perkaras = Perkara_Pemohonan::where('borang_id', $idBorang)->get();
+        $acceptance = Acceptance::where('borang_id', $idBorang)->orderBy("updated_at", "DESC")->get();
 
         //for notification tugasan
         $noti = $this->notification();
@@ -71,7 +74,7 @@ class BorangController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
         
-        return view('pengurusanModul.borang', compact('noti','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuProjek'));
+        return view('pengurusanModul.borang', compact('noti','acceptance','perkaras','lampirans','borang', 'proses', 'modul', 'medans', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function uploadBorang(Request $request)
@@ -1796,7 +1799,7 @@ class BorangController extends Controller
 
         $borang = Borang::with('proses')->where('id',$request->borang_id)->first();
 
-        return redirect('moduls/borang/acceptance?borangId='.$borang->id.'&modulId='.$borang->proses->modul_id.'&prosesId='.$borang->proses_id.'');
+        return back();
     }
 
     public function acceptance_edit(Request $request)
@@ -1815,7 +1818,7 @@ class BorangController extends Controller
 
         $borang = Borang::with('proses')->where('id', $request->borang_id)->first();
 
-        return redirect('moduls/borang/acceptance?borangId='.$borang->id.'&modulId='.$borang->proses->modul_id.'&prosesId='.$borang->proses_id.'');
+        return back();
     }
 
     public function acceptance_delete(Request $request)
@@ -1833,6 +1836,6 @@ class BorangController extends Controller
 
         $borang = Borang::with('proses')->where('id',$request->borang_id)->first();
 
-        return redirect('moduls/borang/acceptance?borangId='.$borang->id.'&modulId='.$borang->proses->modul_id.'&prosesId='.$borang->proses_id.'');
+        return back();
     }
 }

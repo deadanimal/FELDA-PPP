@@ -571,13 +571,6 @@ display: flex;
       <table style="width:100%;">
         <tr>
           <td>
-            <a href="/moduls/lampiran/{{$borang->id}}/list" class="btn frame9403-frame7445" style="width:fit-content; margin-right:auto; margin-left:auto;">
-              <div class="frame9403-frame7293">
-              <span class="frame9403-text21">Lampiran</span>
-              </div>
-            </a>
-          </td>
-          <td>
             <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;" data-toggle="modal" data-target="#exampleModaladdRujukan">
               <div class="frame9403-frame7293">
               <span class="frame9403-text21">No Rujukan</span>
@@ -614,49 +607,7 @@ display: flex;
               </div>
             </div>
           </td>
-          <td>
-              <a href="/moduls/perkara/{{$borang->id}}/list" class="btn frame9403-frame7445" style="width:fit-content; margin-right:auto; margin-left:auto;">
-                <div class="frame9403-frame7293">
-                <span class="frame9403-text21">Perkara Pemohonan</span>
-                </div>
-              </a>
-          </td>
-          <td>
-            <form action="/moduls/borang/viewBorang" method="GET">
-              <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;">
-                <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                <input type="hidden" value="{{$modul->id}}" name="modulId">
-                <input type="hidden" value="{{$borang->id}}" name="borangId">
-                <div class="frame9403-frame7293">
-                <span class="frame9403-text21"><span>Papar Borang</span></span>
-                </div>
-              </button>
-            </form>
-          </td>
-          <td>
-            <form action="/moduls/borang/kelulusan" method="GET">
-              <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;">
-                <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                <input type="hidden" value="{{$modul->id}}" name="modulId">
-                <input type="hidden" value="{{$borang->id}}" name="borangId">
-                <div class="frame9403-frame7293">
-                  <span class="frame9403-text21"><span>Proses Kelulusan</span></span>
-                </div>
-              </button>
-            </form>
-          </td>
-          <td>
-            <form action="/moduls/borang/acceptance" method="GET">
-              <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;">
-                <input type="hidden" value="{{$proses->id}}" name="prosesId">
-                <input type="hidden" value="{{$modul->id}}" name="modulId">
-                <input type="hidden" value="{{$borang->id}}" name="borangId">
-                <div class="frame9403-frame7293">
-                <span class="frame9403-text21"><span>Penerimaan Tawaran</span></span>
-                </div>
-              </button>
-            </form>
-          </td>
+          
           <td>
             <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;" data-toggle="modal" data-target="#exampleModaladdConsent">
               <div class="frame9403-frame7293">
@@ -696,6 +647,32 @@ display: flex;
                   </div>
               </div>
             </div>
+          </td>
+
+          <td>
+            <form action="/moduls/borang/kelulusan" method="GET">
+              <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;">
+                <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                <input type="hidden" value="{{$modul->id}}" name="modulId">
+                <input type="hidden" value="{{$borang->id}}" name="borangId">
+                <div class="frame9403-frame7293">
+                  <span class="frame9403-text21"><span>Proses Kelulusan</span></span>
+                </div>
+              </button>
+            </form>
+          </td>
+          
+          <td>
+            <form action="/moduls/borang/viewBorang" method="GET">
+              <button type="submit" class="frame9403-frame7445" style="margin-left: auto; margin-right:auto;">
+                <input type="hidden" value="{{$proses->id}}" name="prosesId">
+                <input type="hidden" value="{{$modul->id}}" name="modulId">
+                <input type="hidden" value="{{$borang->id}}" name="borangId">
+                <div class="frame9403-frame7293">
+                <span class="frame9403-text21"><span>Papar Borang</span></span>
+                </div>
+              </button>
+            </form>
           </td>
         </tr>
       </table>
@@ -905,6 +882,396 @@ display: flex;
           @endif
         </table>
       </div>
+      <div class="card mb-3" style="padding-left: 0px; padding-right: 0px;">
+        <div class="card-header">
+            <h1 class="card-title mb-0">Senarai Perkara Pemohonan</h1>
+            <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModaladdPerkara">
+                <div class="frame9403-frame7293">
+                <span class="frame9403-text21">Tambah Perkara</span>
+                <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                </div>
+            </button>
+        </div>
+        
+        {{-- Modal Tambah Medan --}}
+        <div class="modal fade" id="exampleModaladdPerkara" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA BAHAGIAN PERKARA PEMOHONAN</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/moduls/perkara/add" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                    <table class="table table-borderless w-100">
+                        <tr>
+                            <td class="frame9402-text04" style="width: 30%"><p class="text-xs-center" style="margin: auto;">Nama Bahagian Perkara Pemohonan</p></td>
+                            <td><input type="text" class="frame9402-kotaknama" placeholder="Perkara Pemohonan" name="nama" required oninput="this.value = this.value.toUpperCase()"></td>
+                        </tr>
+                        <tr>
+                            <td class="frame9402-text04" style="width: 30%"><p class="text-xs-center" style="margin: auto;">Jumlah Input</p></td>
+                            <td><input type="number" class="frame9402-kotaknama" placeholder="Jumlah Input" name="total" required></td>
+                        </tr>
+                    </table>
+                    <input type="hidden" value="{{$borang->id}}" name="borangId">        
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                    <button class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+
+        <table style="overflow: scroll; max-height: 750px; width:100%;">
+            @if (!$perkaras->isEmpty())
+            <tbody>
+                @foreach($perkaras as $perkara)
+                <tr class="frame9402-input">          
+                    <form action="/moduls/perkara/update" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <td class="frame9402-text31">Nama Bahagian Perkara Pemohonan:<input type="text" name="nama" class="frame9402-kotaknama" value="{{$perkara->nama}}" oninput="this.value = this.value.toUpperCase()"></td>
+                    <td class="frame9402-text33">Jumlah Input: <input type="number" name="total" class="frame9403-kotaknama3" value="{{$perkara->total}}"></td>
+                    <input type="hidden" name="perkaraID" value="{{$perkara->id}}">
+                    <input type="hidden" value="{{$borang->id}}" name="borangId">
+                    <td class="frame9402-frame8727" id="tindakan">
+                        <button class="frame9402-rectangle828246" style="height: auto;" title="Simpan"><svg xmlns="http://www.w3.org/2000/svg" style="fill: #CD352A;margin-top: 5px;" viewBox="0 0 530 512" width="31px"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 416c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z"></path></svg></button>
+                    </td>
+                    </form>
+                    <td class="frame9402-frame8727">
+                    <button type="button" class="frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModalPerkara{{$perkara->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                    </td>
+                    
+                    <div class="modal fade" id="exampleModalPerkara{{$perkara->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog  modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Padam Bahagian Perkara Pemohonan {{$perkara->nama}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Anda Pasti Mahu Padam Bahagian Perkara Pemohonan {{$perkara->nama}}?<p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                                <form method="post" action="/moduls/perkara/delete">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" value="{{$borang->id}}" name="borangId">
+                                <input type="hidden" name="perkaraID" value="{{$perkara->id}}">
+                                <button class="btn btn-danger">YA</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </tr>
+                @endforeach
+            </tbody>
+            @else
+                <tr class="frame9402-input" style="background-color: #FFFFFF; justify-content:center;"><td><h2 class="frame9402-text01" style="color:black;"> Tiada Perkara Pemohonan </h2></td></tr>
+            @endif
+        </table>
+    </div>
+    
+    <div class="card">
+      <div class="card-header">
+        <table style="width: 100%">
+          <tr>
+            <td><h1 class="card-title mb-0">Senarai Lampiran Borang</h1></td>
+            <td>
+              <button class="frame9403-frame7445"  data-toggle="modal" data-target="#exampleModalAddTugasan">
+                <div class="frame9403-frame7293">
+                <span class="frame9403-text21"><span>Cipta Lampiran</span></span>
+                <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+                </div>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      {{-- ModalTambah Lampiran --}}
+      <div class="modal fade" id="exampleModalAddTugasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content" style="min-width: fit-content;">
+            <div class="modal-header">
+              <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA LAMPIRAN</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form action="/moduls/lampiran/add" method="POST">
+              @csrf
+              <div class="modal-body">
+                <table class="w-100">
+                  <tr>
+                    <td>
+                      <label for="nama" class="frame9402-text04">
+                        <strong>Nama Lampiran</strong>
+                      </label>
+                    </td>
+                    <td>
+                      <input type="text" class="frame9402-kotaknamaBorang" id="nama" placeholder="Nama Lampiran" name="nama" required oninput="this.value = this.value.toUpperCase()">
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <input type="hidden" value="{{$borang->id}}" name="borangId">
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                  <button class="btn btn-primary">Cipta</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      {{-- senarai lampiran --}}
+      @if (!$lampirans->isEmpty())
+        <table class="table table-bordered table-striped w-100 arial">
+        <thead class="text-white bg-primary w-100 arial">
+            <tr class="text-center">
+                <th scope="col" class="text-center">Nama Lampiran</th>
+                <th scope="col">Tindakan</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($lampirans as $lampiran)
+            <tr>
+                <td class="text-center arial" style="width:50%">{{$lampiran->nama}}</td>
+                <td class="text-center arial">
+
+                    <button class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Kemaskini" data-toggle="modal" data-target="#exampleModaledit{{$lampiran->id}}"><img src="/SVG/pencil.svg" title="kemaskini"/></button>
+                    
+                    <div class="modal fade" id="exampleModaledit{{$lampiran->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Kemaskini Lampiran</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="/moduls/lampiran/update" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <div class="modal-body">
+                                    <table class="table table-borderless" style="border:0px">
+                                        <tr style="background-color:#FFFFFF;border:0px;">
+                                            <td style="border:0px">
+                                            <label for="nama" class="frame9402-text04">
+                                                <strong>Nama Lampiran</strong>
+                                            </label>
+                                            </td>
+                                            <td style="border:0px">
+                                            <input type="text" class="frame9402-kotaknamaBorang" id="nama" value="{{$lampiran->nama}}" name="nama" required oninput="this.value = this.value.toUpperCase()">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <input type="hidden" value="{{$lampiran->id}}" name="lampiranID">
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button>   
+                                    <button class="btn btn-danger">KEMASKINI</button>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModaltugas{{$lampiran->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+    
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModaltugas{{$lampiran->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Padam Lampiran {{$lampiran->nama}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Anda Pasti Mahu Padam Lampiran {{$lampiran->nama}}?<p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                                <form method="post" action="/moduls/lampiran/delete">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" value="{{$lampiran->id}}" name="lampiranID">
+                                    <button class="btn btn-danger">YA</button>
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            @endforeach 
+        </tbody>
+        </table>
+      @else
+        <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Lampiran </h2>
+      @endif
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h1 class="card-title mb-0">Penerimaan Tawaran Borang</h1>
+          <button class="frame9403-frame7445"  
+          @if ($acceptance->count() >= 2)
+              disabled style="opacity: 0.5; cursor: none;"
+          @endif
+          data-toggle="modal" data-target="#exampleModaladdPilihan">
+              <div class="frame9403-frame7293">
+              <span class="frame9403-text21"><span>Tambah Pilihan</span></span>
+              <img src="/SVG/daftar.svg" class="frame9403-group7527"/>
+              </div>
+          </button>
+
+            {{-- Modal Tambah Pilihan --}}
+          <div class="modal fade" id="exampleModaladdPilihan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h2 class="modal-title frame9402-text01" style="margin-top: 0px;">CIPTA PILIHAN PENERIMAAN TAWARAN</h2>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <form action="/moduls/borang/acceptance/add" method="POST">
+                      @csrf
+                          <div class="modal-body">
+                              <table class="table table-borderless">
+                                  <tr>
+                                      <td colspan="2"><textarea name="name" class="form-control frame9402-kotaknama" id="name" cols="30" rows="7"></textarea></td>
+                                  </tr>
+                                  <tr>
+                                      <td class="frame9402-text04"><p class="text-xs-center">Jenis Pilihan</p></td>
+                                      <td>
+                                      <select name="datatype" class="frame9403-kotaknama3">
+                                          <option value="Terima">Terima</option>
+                                          <option value="Menolak">Menolak</option>
+                                      </select>
+                                      </td>
+                                  </tr>
+                              </table>
+                              <input type="hidden" value="{{$borang->id}}" name="borang_id">        
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>
+                              <button class="btn btn-primary">TAMBAH</button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+      @if (!$acceptance->isEmpty())
+        <table class="table table-bordered table-striped w-100 arial">
+            <thead class="text-white bg-primary w-100">
+            <tr class="text-center">
+                <th scope="col" style="width: 60%;"></th>
+                <th scope="col">Jenis Pilihan</th>
+                <th scope="col" style="width: 20%">Tindakan</th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach ($acceptance as $accept)
+                <tr>
+                    <td class="text-center arial" style="text-transform: uppercase;">{!!nl2br(e($accept->name))!!}</td>
+                    <td class="text-center arial">{{$accept->types}}</td>
+                    <td class="text-center arial">
+                        <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#exampleModalAccept{{$accept->id}}" title="Kemaskini"><img src="/SVG/pencil.svg"/></button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalAccept{{$accept->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Kemaskini Penerimaan Tawaran</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="/moduls/borang/acceptance/edit" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                        <div class="modal-body">
+                                            <table class="table table-borderless">
+                                                <tr>
+                                                    <td colspan="2"><textarea name="name" class="form-control frame9402-kotaknama" id="name" cols="30" rows="7">{{$accept->name}}</textarea></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="frame9402-text04"><p class="text-xs-center">Jenis Pilihan</p></td>
+                                                    <td>
+                                                    <select name="datatype" class="frame9403-kotaknama3">
+                                                        <option value="{{$accept->types}}">{{$accept->types}}</option>
+                                                        <option value="Terima">Terima</option>
+                                                        <option value="Menolak">Menolak</option>
+                                                    </select>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <input type="hidden" value="{{$accept->id}}" name="accept_id">                                        
+                                        <input type="hidden" value="{{$borang->id}}" name="borang_id">        
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>      
+                                            <button class="btn btn-primary">KEMASKINI</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn frame9402-rectangle828246" data-toggle="modal" data-target="#ModalDeleteAccept{{$accept->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="ModalDeleteAccept{{$accept->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Padam Penerimaan Tawaran</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Anda Pasti Mahu Padam Penerimaan Tawaran Ini?<p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                                        <form method="post" action="/moduls/borang/acceptance/delete">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" value="{{$accept->id}}" name="accept_id">
+                                            <input type="hidden" value="{{$borang->id}}" name="borang_id">
+                                            <button class="btn btn-danger">YA</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach 
+            </tbody>
+        </table>
+                
+      @else
+          <h1 style="text-align: center;"> Tiada Penerimaan Tawaran </h1>
+      @endif
+  </div>
     {{-- upload Borang --}}
     {{-- <div class="borangPopup">
       <div class="formPopup" id="popupForm">
