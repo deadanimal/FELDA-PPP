@@ -73,7 +73,7 @@
                   </a>   
                 </li>
 
-                {{-- @if (Str::contains(Auth::user()->kategori->nama, 'Pengurus Rancangan') || Str::contains(Auth::user()->kategori->nama, 'PENGURUS RANCANGAN')) --}}
+                @if (Str::contains(Auth::user()->kategori->nama, 'Pengurus Rancangan') || Str::contains(Auth::user()->kategori->nama, 'PENGURUS RANCANGAN'))
                   <li class="nav-item" style="background-color: rgb(210 210 210);">
                     <a 
                     @if (Request::is('user/pengurus/*'))
@@ -92,7 +92,7 @@
                         </span>
                     </a>   
                   </li>
-                {{-- @endif --}}
+                @endif
                 
 
                 <li class="nav-item" style="background-color: rgb(210 210 210);">

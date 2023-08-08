@@ -16,7 +16,7 @@
       <div class="card">
         <div class="card-header">
           <div class="frame9402-frame9281">
-            <span class="frame9402-text"><span>{{$bilangan}}</span></span>
+            <span class="frame9402-text"><span>{{$user->count()}}</span></span>
             <span class="frame9402-text02"><span>JUMLAH PENGGUNA</span></span>
           </div>
           <a href="/users/add" class="btn float-end frame9402-frame7445">
@@ -196,9 +196,6 @@
                   "zeroRecords": "Carian tidak dijumpai",
                   "infoEmpty": "Tiada maklumat",
                   "infoFiltered": "(carian dari _MAX_ jumlah rekod)"
-
-
-
               },
               ajax: "/users",
               columns: [{

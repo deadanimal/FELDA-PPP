@@ -246,8 +246,6 @@ class UserController extends Controller
                 ->make(true);
             }
 
-        $bilangan = count($user);
-
         //for notification tugasan
         $noti = $this->notification();
 
@@ -255,7 +253,7 @@ class UserController extends Controller
         $menuProses = Proses::where('status', 1)->orderBy("sequence", "ASC")->get();
         $menuProjek = Projek::where('status', "Aktif")->get();
 
-        return view('pengurusanPengguna.senaraiPengguna', compact('noti','user', 'bilangan', 'menuModul', 'menuProses', 'menuProjek'));
+        return view('pengurusanPengguna.senaraiPengguna', compact('noti','user', 'menuModul', 'menuProses', 'menuProjek'));
     }
 
     public function user_delete(Request $request)
