@@ -329,38 +329,80 @@
                   <div class="card-header">
                       <h5 class="card-title mb-0">Senarai Surat Peserta.</h5>
                   </div>
-                  @if (!$surats->isEmpty())
-                    <table class="table table-bordered table-striped w-100 arial">
-                      <thead class="text-white bg-primary w-100">
-                        <tr class="text-center">
-                          <th scope="col">Nama Peserta</th>                                
-                          <th scope="col">Jenis Projek</th>
-                          <th scope="col">Tindakan</th>
+                  @if (Str::contains(Auth::user()->kategori->nama, 'Peserta'))
+                    @if (!$borangs->isEmpty())
+                    {{-- senarai borang --}}
+                    <table class="table table-bordered table-striped w-100">
+                      <thead class="text-white bg-primary w-100" style="text-align: center;">
+                        <tr>
+                            <th scope="col" class="arial">Nama Borang</th>
+                            <th scope="col" class="arial">Status</th>
+                            <th scope="col" class="arial">Ulasan</th>
+                            <th scope="col" class="arial">Tindakan</th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach ($surats as $surat)
+                        @foreach ($borangs as $borangJwpn)
                           <tr>
-                            <td class="text-center arial" style="text-transform: uppercase;">{{$surat->jawapan->nama}}</td>
-                            <td class="text-center arial" style="text-transform: uppercase;">
-                              @if (!$surat->jawapan->jawapanMedan->isEmpty())
-                                @foreach($surat->jawapan->jawapanMedan as $medan)
-                                  {{$medan->jawapan ?? ""}}
-                                @endforeach
-                              @endif
-                            </td>
+                            <td class="text-center arial">{{$borangJwpn->borangs->namaBorang}}</td>
+                            @if ($borangJwpn->status != null || $borangJwpn->status == "Lulus"|| $borangJwpn->status == "Menolak")
+                              <td class="text-center arial">{{$borangJwpn->status}}</td>
+                              <td class="text-center arial"></td>    
+                            @else
+                              <td class="text-center arial">Sedang di Proses</td>
+                              <td class="text-center arial"></td>
+                            @endif
                             <td class="text-center arial">
-                              <a class="btn btn-success" href="/user/petiMasuk/{{$surat->surat_id}}/{{$surat->jawapan_id}}/view" style="color: white; text-decoration:none;">
-                                Lihat Surat
-                              </a>
+                                @if ($borangJwpn->status == "Lulus")
+                                    <a href="/user/sub_borang/{{$borangJwpn->id}}/tindakan" type="button" class="btn btn-success">Tindakan</a>
+                                @else
+                                    <a class="btn btn-info" href="/user/sub_borang/{{$borangJwpn->id}}/view" style="color: white; text-decoration:none;">
+                                        Papar Borang Permohon
+                                    </a>
+                                @endif
                             </td>
                           </tr>
-                        @endforeach 
+                        @endforeach
                       </tbody>
                     </table>
+                    @else
+                    <h1 style="text-align: center; padding-bottom:5%;">Tiada Permohonan</h1>
+                    @endif
                   @else
-                    <h1 style="text-align: center;"> Tiada Tugasan </h1>
+                        @if (!$surats->isEmpty())
+                      <table class="table table-bordered table-striped w-100 arial">
+                        <thead class="text-white bg-primary w-100">
+                          <tr class="text-center">
+                            <th scope="col">Nama Peserta</th>                                
+                            <th scope="col">Jenis Projek</th>
+                            <th scope="col">Tindakan</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach ($surats as $surat)
+                            <tr>
+                              <td class="text-center arial" style="text-transform: uppercase;">{{$surat->jawapan->nama}}</td>
+                              <td class="text-center arial" style="text-transform: uppercase;">
+                                @if (!$surat->jawapan->jawapanMedan->isEmpty())
+                                  @foreach($surat->jawapan->jawapanMedan as $medan)
+                                    {{$medan->jawapan ?? ""}}
+                                  @endforeach
+                                @endif
+                              </td>
+                              <td class="text-center arial">
+                                <a class="btn btn-success" href="/user/petiMasuk/{{$surat->surat_id}}/{{$surat->jawapan_id}}/view" style="color: white; text-decoration:none;">
+                                  Lihat Surat
+                                </a>
+                              </td>
+                            </tr>
+                          @endforeach 
+                        </tbody>
+                      </table>
+                    @else
+                      <h1 style="text-align: center;"> Tiada Tugasan </h1>
+                    @endif
                   @endif
+                  
                 </div>
             </div>
         </div>

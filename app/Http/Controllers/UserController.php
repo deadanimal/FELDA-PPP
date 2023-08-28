@@ -553,11 +553,20 @@ class UserController extends Controller
         }else{
             $aduans = Aduan::where('user_category', Auth::user()->kategoripengguna)->where('wilayah', Auth::user()->wilayah)->where('rancangan',Auth::user()->rancangan)->get();
         }
-        
+
         if(Str::contains(Auth::user()->kategori->nama, 'PEGAWAI KONTRAK')){
             $borangs = Borang::with('jwpn')->where('status', 1)->whereRelation('jwpn','status', '=','Terima')->get();
             $surats = Hantar_surat::whereRaw('json_contains(carbon_copy, \'["' .Auth::user()->kategoripengguna. '"]\')')->get();
-        }else{
+        }elseif(Str::contains(Auth::user()->kategori->nama, 'Peserta')){
+            $borangs = Jawapan::where('user_id', Auth::user()->id)
+            ->where(function ($query) {
+                $query->where('status', '!=', 'Terima')
+                    ->orWhere('status','Menolak')
+                    ->orWhere('status', NULL);
+            })->get();
+            $surats = new \Illuminate\Database\Eloquent\Collection();
+        }
+        else{
             $borangs = new \Illuminate\Database\Eloquent\Collection();
             if(Str::contains(Auth::user()->kategori->nama, 'HQ')){
                 $surats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
@@ -577,7 +586,7 @@ class UserController extends Controller
                 }])->whereRaw('json_contains(carbon_copy, \'["' .Auth::user()->kategoripengguna. '"]\')')->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->whereRelation('jawapan','rancangan', Auth::user()->rancangan)->orderBy('created_at', "DESC")->get();
             }
         }
-
+        
         if(Str::contains(Auth::user()->kategori->nama, 'HQ')){
             $hantarSurats = Hantar_surat::with('jawapan')->with(['jawapan.jawapanMedan' => function ($query) {
                 $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
