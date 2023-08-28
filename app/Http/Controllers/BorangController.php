@@ -902,7 +902,13 @@ class BorangController extends Controller
                 $this->kp = $jawapan_kp->jawapan;
                 $this->alamat = $jawapan_alamat->jawapan;
                 $this->projek = $jawapan_jenis->jawapan;
-    
+
+                if ($borangJwpn->signature != null) {
+                    $this->signature = '<div class="c32"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('.$borangJwpn->signature.'))) }}"  style="width: 20%;"></div>';
+                }else{
+                    $this->signature = "";
+                }
+
                 $text = $surat->body;
                 $surat->body = preg_replace_callback('~\{(.*?)\}~',
                 function($key)
@@ -912,6 +918,7 @@ class BorangController extends Controller
                     $variable['no_kp'] = $this->kp;
                     $variable['projek'] = $this->projek;
                     $variable['status'] = $this->status;
+                    $variable['signature'] = $this->signature;
 
                     return $variable[$key[1]];      
                 },
@@ -924,7 +931,13 @@ class BorangController extends Controller
                 $this->nama = $borangJwpn->nama;
                 $this->kp = $jawapan_kp->jawapan;
                 $this->alamat = $jawapan_alamat->jawapan;
-    
+
+                if ($borangJwpn->signature != null) {
+                    $this->signature = '<div class="c32"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('.$borangJwpn->signature.'))) }}" style="width: 20%;"></div>';
+                }else{
+                    $this->signature = "";
+                }
+
                 $text = $surat->body;
                 $surat->body = preg_replace_callback('~\{(.*?)\}~',
                 function($key)
@@ -932,6 +945,7 @@ class BorangController extends Controller
                     $variable['nama'] = $this->nama;
                     $variable['alamat'] = $this->alamat;
                     $variable['no_kp'] = $this->kp;
+                    $variable['signature'] = $this->signature;
 
                     return $variable[$key[1]];      
                 },
