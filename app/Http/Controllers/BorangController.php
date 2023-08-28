@@ -1298,8 +1298,8 @@ class BorangController extends Controller
             $this->alamat = $jawapan_alamat->jawapan;
             $this->kp = $jawapan_kp->jawapan;
 
-            if ($borangJwpn->signature != null) {
-                $this->signature = '<div class="c32"><img src="'.$borangJwpn->signature.'"  style="width: 40%;"></div>';
+            if ($borangJwpns->signature != null) {
+                $this->signature = '<div class="c32"><img src="'.$borangJwpns->signature.'"  style="width: 40%;"></div>';
             }else{
                 $this->signature = "";
             }
@@ -1328,8 +1328,8 @@ class BorangController extends Controller
                 }
 
                 $this->projek = $jawapan_jenis->jawapan;
-                if ($borangJwpn->signature != null) {
-                    $this->signature = '<div class="c32"><img src="'.$borangJwpn->signature.'"  style="width: 40%;"></div>';
+                if ($borangJwpns->signature != null) {
+                    $this->signature = '<div class="c32"><img src="'.$borangJwpns->signature.'"  style="width: 40%;"></div>';
                 }else{
                     $this->signature = "";
                 }
