@@ -67,39 +67,82 @@
               <tbody id="myTable">
                 @foreach ($borangJwpns as $borangJwpn)
                   <tr class="bolder"
-                  @if (!$lulusBorangs->isEmpty())
-                    @foreach ($lulusBorangs as $result)
-                      @if ($borangJwpn->id == $result->jawapan_id && $result->tahap_kelulusan->user_category == Auth::user()->kategoripengguna)
-                        style="text-shadow: none !important;"
-                      @endif
-                    @endforeach
-                  @endif
+                    @if (!$noLulusBorang->isEmpty())
+                      @foreach ($noLulusBorang as $result)
+                        @if(!$result->isEmpty())
+                          @foreach ($result as $result)
+                            @if ($borangJwpn->id == $result->jawapan_id && $result->tahap_kelulusan->user_category == Auth::user()->kategoripengguna)
+                              style="text-shadow: none !important;"
+                            @endif
+                          @endforeach
+                        @endif
+                      @endforeach
+                    @endif
                   >
                     <td style="vertical-align: top; width:5%" class="text-center">  
-                      <input class="form-check-input text-center sub_chk" type="checkbox" value="{{$borangJwpn->id}}" name="LulusList[]" id="LulusList">
+                      <input class="form-check-input text-center sub_chk" type="checkbox" value="{{$borangJwpn->id}}" name="LulusList[]" 
+                        @if (!$noLulusBorang->isEmpty())
+                          @foreach ($noLulusBorang as $result)
+                            @if(!$result->isEmpty())
+                              @foreach ($result as $result)
+                                @if ($borangJwpn->id == $result->jawapan_id && $result->tahap_kelulusan->user_category == Auth::user()->kategoripengguna)
+                                  id="none"
+                                  disabled
+                                @else
+                                  id="LulusList"
+                                @endif
+                              @endforeach
+                            @endif
+                          @endforeach
+                        @endif
+                      >
                     </td>
                     <td class="text-center Arial">{{$borangJwpn->user->nama}}</td>
                     <td class="text-center Arial">{{$borangJwpn->jawapanMedan[0]->jawapan ?? ""}}</td>
                     <td class="text-center Arial">{{$borangJwpn->wilayahs->nama}}</td>
                     <td class="text-center Arial">{{$borangJwpn->rancangans->nama}}</td>
-                    <td class="text-center Arial" style="width: 25%">
+                    <td class="text-center Arial" style="width: 25%; padding:15px 0px;" >
                     {{-- @if (!$borangJwpn->kelulusanBorang->isEmpty())
                       @foreach($borangJwpn->kelulusanBorang as $lulusBorang)
                           {{$lulusBorang->keputusan}} Oleh {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}<br>
                         @break
                       @endforeach
                     @endif --}}
-                    @if (!$lulusBorangs->isEmpty())
+                    {{-- @if (!$lulusBorangs->isEmpty())
                       @foreach ($lulusBorangs as $lulusBorang)
                         @if ($borangJwpn->id == $lulusBorang->jawapan_id)
                           {{$lulusBorang->keputusan}} Oleh {{$lulusBorang->tahap_kelulusan->kategoriPengguna->nama}}<br>
                         @endif
                       @endforeach
+                    @endif --}}
+                    @if (!$noLulusBorang->isEmpty())
+                      @foreach ($noLulusBorang as $result)
+                          @if(!$result->isEmpty())
+                          <table class="w-100" style="border:1px !important; border-color:black; margin:auto;">
+                              @foreach ($result as $result)
+                                @if ($borangJwpn->id == $result->jawapan_id)
+                                  <tr>
+                                    <td style="border-color:black; text-align:right;">{{$result->tahap_kelulusan->kategoriPengguna->nama}}</td>
+                                    <td style="border-color:black; text-align:left;">
+                                      @if ($result->keputusan == "Lulus")
+                                        <i class="bi bi-check-square-fill" style="color:green; font-size:16pt"></i>
+                                      @elseif($result->keputusan == "Gagal")
+                                        <i class="bi bi-x-square-fill" style="color:red; font-size:16pt"></i>
+                                      @else
+                                        -
+                                      @endif
+                                    </td>
+                                  </tr>
+                                @endif
+                              @endforeach
+                          </table>
+                          @endif
+                      @endforeach
                     @endif
                     </td>
                     <td class="text-center">
                       <a class="btn btn-info" href="/user/borang_app/{{$oneBorang->id}}/{{$borangJwpn->id}}/view/{{$tahapLulus}}" style="color: white; text-decoration:none;text-shadow: 0px 0px, 0px 0px, 0px 0px !important;">
-                        Papar Borang Pemohon
+                        Papar
                       </a>
                     </td>
                   </tr>
@@ -144,26 +187,25 @@ $('.pemohonan-datatable').DataTable({
   }
 }
 </script>
-<script type="text/javascript">
+{{-- <script type="text/javascript">
  var checkBoxes = $('tbody .sub_chk');
-checkBoxes.change(function () {
-    $('#lulus').prop('disabled', checkBoxes.filter(':checked').length < 1);
-});
-checkBoxes.change();
-</script>
+    checkBoxes.change(function () {
+        $('#lulus').prop('disabled', checkBoxes.filter(':checked').length < 1);
+    });
+    checkBoxes.change();
+</script> --}}
 <script type="text/javascript">  
   $(document).ready(function () {  
 
-      $('#master').on('click', function(e) {  
-       if($(this).is(':checked',true))    
-       {  
-          $(".sub_chk").prop('checked', true); 
-          $('#lulus').prop('disabled', false);   
-       } else {    
-          $(".sub_chk").prop('checked',false); 
-          $('#lulus').prop('disabled', true);   
-       }    
-      });  
+    $('#master').on('click', function(e) {  
+      if($(this).is(':checked',true)){ 
+        $("#LulusList").prop('checked', true); 
+        $('#lulus').prop('disabled', false);   
+      } else {  
+        $("#LulusList").prop('checked',false);
+        $('#lulus').prop('disabled', true);   
+      }    
+    });  
 
   });  
 </script>

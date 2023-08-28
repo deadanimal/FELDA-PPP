@@ -81,87 +81,86 @@
             {{-- senarai Tugasan --}}
             @if (!$lampirans->isEmpty())
             <table class="table table-bordered table-striped w-100 arial">
-            <thead class="text-white bg-primary w-100 arial">
-                <tr class="text-center">
-                    <th scope="col" class="text-center">Nama Lampiran</th>
-                    <th scope="col">Tindakan</th>
-                </tr>
-            </thead>
-            <tbody>
+              <thead class="text-white bg-primary w-100 arial">
+                  <tr class="text-center">
+                      <th scope="col" class="text-center">Nama Lampiran</th>
+                      <th scope="col">Tindakan</th>
+                  </tr>
+              </thead>
+              <tbody>
                 @foreach ($lampirans as $lampiran)
-                <tr>
+                  <tr>
                     <td class="text-center arial" style="width:50%">{{$lampiran->nama}}</td>
                     <td class="text-center arial">
-
-                        <button class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Kemaskini" data-toggle="modal" data-target="#exampleModaledit{{$lampiran->id}}"><img src="/SVG/pencil.svg" title="kemaskini"/></button>
+                      <button class=" btn frame9402-rectangle828246" style="margin-left: 0px;" title="Kemaskini" data-toggle="modal" data-target="#exampleModaledit{{$lampiran->id}}"><img src="/SVG/pencil.svg" title="kemaskini"/></button>
                         
-                        <div class="modal fade" id="exampleModaledit{{$lampiran->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Kemaskini Lampiran</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form action="/moduls/lampiran/update" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="modal-body">
-                                        <table class="table table-borderless" style="border:0px">
-                                            <tr style="background-color:#FFFFFF;border:0px;">
-                                                <td style="border:0px">
-                                                <label for="nama" class="frame9402-text04">
-                                                    <strong>Nama Lampiran</strong>
-                                                </label>
-                                                </td>
-                                                <td style="border:0px">
-                                                <input type="text" class="frame9402-kotaknamaBorang" id="nama" value="{{$lampiran->nama}}" name="nama" required oninput="this.value = this.value.toUpperCase()">
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <input type="hidden" value="{{$lampiran->id}}" name="lampiranID">
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button>   
-                                        <button class="btn btn-danger">KEMASKINI</button>
-                                    </div>
-                                </form>
-                                </div>
+                      <div class="modal fade" id="exampleModaledit{{$lampiran->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Kemaskini Lampiran</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
                             </div>
+                            <form action="/moduls/lampiran/update" method="POST">
+                              @csrf
+                              @method('PUT')
+                              <div class="modal-body">
+                                  <table class="table table-borderless" style="border:0px">
+                                      <tr style="background-color:#FFFFFF;border:0px;">
+                                          <td style="border:0px">
+                                          <label for="nama" class="frame9402-text04">
+                                              <strong>Nama Lampiran</strong>
+                                          </label>
+                                          </td>
+                                          <td style="border:0px">
+                                          <input type="text" class="frame9402-kotaknamaBorang" id="nama" value="{{$lampiran->nama}}" name="nama" required oninput="this.value = this.value.toUpperCase()">
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </div>
+                              <input type="hidden" value="{{$lampiran->id}}" name="lampiranID">
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">BATAL</button>   
+                                <button class="btn btn-danger">KEMASKINI</button>
+                              </div>
+                            </form>
+                          </div>
                         </div>
+                      </div>
                     
-                        <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModaltugas{{$lampiran->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
+                      <button type="button" class="btn frame9402-rectangle828246" style="margin-left: 10px" data-toggle="modal" data-target="#exampleModaltugas{{$lampiran->id}}" title="Padam"><img src="/SVG/bin.svg"/></button>
         
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModaltugas{{$lampiran->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Padam Lampiran {{$lampiran->nama}}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Anda Pasti Mahu Padam Lampiran {{$lampiran->nama}}?<p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
-                                    <form method="post" action="/moduls/lampiran/delete">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="hidden" value="{{$lampiran->id}}" name="lampiranID">
-                                        <button class="btn btn-danger">YA</button>
-                                    </form>
-                                </div>
-                                </div>
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModaltugas{{$lampiran->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Padam Lampiran {{$lampiran->nama}}</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
                             </div>
+                            <div class="modal-body">
+                                <p>Anda Pasti Mahu Padam Lampiran {{$lampiran->nama}}?<p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-primary" data-dismiss="modal">TIDAK</button>      
+                              <form method="post" action="/moduls/lampiran/delete">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" value="{{$lampiran->id}}" name="lampiranID">
+                                <button class="btn btn-danger">YA</button>
+                              </form>
+                            </div>
+                          </div>
                         </div>
+                      </div>
                     </td>
-                </tr>
+                  </tr>
                 @endforeach 
-            </tbody>
+              </tbody>
             </table>
             @else
             <h2 class="frame9402-text01" style="color:black; padding-bottom: 5%;"> Tiada Lampiran </h2>

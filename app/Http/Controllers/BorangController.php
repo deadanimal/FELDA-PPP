@@ -500,7 +500,7 @@ class BorangController extends Controller
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
                             foreach($borangJwpns as $jawapan){
-                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->orderBy('created_at', 'DESC')->get());
+                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->whereRelation('tahap_kelulusan', 'sequence', $tahapKelulusan[$x]->sequence)->orderBy('created_at', 'DESC')->get());
                             }
                         }
                     }
@@ -512,7 +512,7 @@ class BorangController extends Controller
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
                             foreach($borangJwpns as $jawapan){
-                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->orderBy('created_at', 'DESC')->get());
+                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->whereRelation('tahap_kelulusan', 'sequence', $tahapKelulusan[$x]->sequence)->orderBy('created_at', 'DESC')->get());
                             }
                         }
                     }
@@ -524,7 +524,7 @@ class BorangController extends Controller
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
                             foreach($borangJwpns as $jawapan){
-                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->orderBy('created_at', 'DESC')->get());
+                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->whereRelation('tahap_kelulusan', 'sequence', $tahapKelulusan[$x]->sequence)->orderBy('created_at', 'DESC')->get());
                             }
                         }
                     }
@@ -538,7 +538,7 @@ class BorangController extends Controller
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
                             foreach($borangJwpns as $jawapan){
-                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->orderBy('created_at', 'DESC')->get());
+                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->whereRelation('tahap_kelulusan', 'sequence', $tahapKelulusan[$x]->sequence)->orderBy('created_at', 'DESC')->get());
                             }
                         }
                     }
@@ -551,12 +551,12 @@ class BorangController extends Controller
                         }])->whereHas('kelulusanBorang', function ($q) use ($tahapKelulusan, $z) {
                             $q->where('tahapKelulusan_id', $tahapKelulusan[$z]->id)->where('keputusan', 'Lulus');
                         })
-                        ->whereRelation('kelulusanBorang.tahap_kelulusan','sequence', $tahapKelulusan[$z]->sequence)->orderBy('created_at', 'DESC')->get();
+                        ->whereRelation('kelulusanBorang.tahap_kelulusan','sequence', $tahapKelulusan[$z]->sequence)->where('status', 'Lulus')->orderBy('created_at', 'DESC')->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
                             foreach($borangJwpns as $jawapan){
-                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->orderBy('created_at', 'DESC')->get());
+                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->whereRelation('tahap_kelulusan', 'sequence', $tahapKelulusan[$x]->sequence)->orderBy('created_at', 'DESC')->get());
                             }
                         }
                     }
@@ -566,19 +566,19 @@ class BorangController extends Controller
                         }])->whereHas('kelulusanBorang', function ($q) {
                             $q->latest()->where('keputusan', 'Lulus');
                         })
-                        ->where('borang_id', $borangId)->orderBy('created_at', 'DESC')->get();
+                        ->where('borang_id', $borangId)->where('status', 'Lulus')->orderBy('created_at', 'DESC')->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
                             foreach($borangJwpns as $jawapan){
-                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->orderBy('created_at', 'DESC')->get());
+                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->whereRelation('tahap_kelulusan', 'sequence', $tahapKelulusan[$x]->sequence)->orderBy('created_at', 'DESC')->get());
                             }
                         }
                     }
                     elseif(Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Jawatankuasa Pelulus') && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $y){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
                             $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
-                        }])->where('borang_id', $borangId)
+                        }])->where('borang_id', $borangId)->where('status', 'Lulus')
                         ->whereHas('kelulusanBorang', function ($q) use ($tahapKelulusan, $z) {
                             $q->where('tahapKelulusan_id', $tahapKelulusan[$z]->id)->where('keputusan', 'Lulus');
                         })
@@ -587,7 +587,7 @@ class BorangController extends Controller
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
                             foreach($borangJwpns as $jawapan){
-                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->orderBy('created_at', 'DESC')->get());
+                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->whereRelation('tahap_kelulusan', 'sequence', $tahapKelulusan[$x]->sequence)->orderBy('created_at', 'DESC')->get());
                             }
                         }
                     }
@@ -597,12 +597,12 @@ class BorangController extends Controller
                         }])->whereHas('kelulusanBorang', function ($query) {
                             $query->latest()->where('keputusan', 'Lulus');
                         })
-                        ->where('borang_id', $borangId)->orderBy('created_at', 'DESC')->get();
+                        ->where('borang_id', $borangId)->where('status', 'Lulus')->orderBy('created_at', 'DESC')->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
                             foreach($borangJwpns as $jawapan){
-                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->orderBy('created_at', 'DESC')->get());
+                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->WhereRelation('$tahapKelulusan[$x]->sequence')->orderBy('created_at', 'DESC')->get());
                             }
                         }
                     }
@@ -612,13 +612,13 @@ class BorangController extends Controller
                         }])->where('borang_id', $borangId)
                         ->whereHas('kelulusanBorang', function ($q) use ($tahapKelulusan, $z) {
                             $q->where('tahapKelulusan_id', $tahapKelulusan[$z]->id)->where('keputusan', 'Lulus');
-                        })
+                        })->where('status', 'Lulus')
                         ->whereRelation('kelulusanBorang.tahap_kelulusan','sequence', $tahapKelulusan[$z]->sequence)->orderBy('created_at', 'DESC')->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
                             foreach($borangJwpns as $jawapan){
-                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->orderBy('created_at', 'DESC')->get());
+                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->whereRelation('tahap_kelulusan', 'sequence', $tahapKelulusan[$x]->sequence)->orderBy('created_at', 'DESC')->get());
                             }
                         }
                     }
@@ -627,13 +627,13 @@ class BorangController extends Controller
                             $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->whereHas('kelulusanBorang', function ($query) {
                             $query->latest()->where('keputusan', 'Lulus');
-                        })
+                        })->where('status', 'Lulus')
                         ->where('borang_id', $borangId)->orderBy('created_at', 'DESC')->get();
                         $tahapLulus = $tahapKelulusan[$x]->id;
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
                             foreach($borangJwpns as $jawapan){
-                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->orderBy('created_at', 'DESC')->get());
+                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->whereRelation('tahap_kelulusan', 'sequence', $tahapKelulusan[$x]->sequence)->orderBy('created_at', 'DESC')->get());
                             }
                         }
                         
@@ -643,7 +643,7 @@ class BorangController extends Controller
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
                             $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
                         }])->where('borang_id', $borangId)
-                        ->where('wilayah', Auth::user()->wilayah)
+                        ->where('wilayah', Auth::user()->wilayah)->where('status', 'Lulus')
                         ->whereHas('kelulusanBorang', function ($query) {
                             $query->latest()->where('keputusan', 'Lulus');
                         })->orderBy('created_at', 'DESC')->get();
@@ -659,7 +659,7 @@ class BorangController extends Controller
                     elseif((Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'Wilayah') || Str::contains($tahapKelulusan[$x]->kategoriPengguna->nama, 'WILAYAH')) && $tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $y){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
                             $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
-                        }])->where('borang_id', $borangId)
+                        }])->where('borang_id', $borangId)->where('status', 'Lulus')
                         ->where('wilayah', Auth::user()->wilayah)
                         ->whereHas('kelulusanBorang', function ($q) use ($tahapKelulusan, $z) {
                             $q->where('tahapKelulusan_id', $tahapKelulusan[$z]->id)->where('keputusan', 'Lulus');
@@ -669,7 +669,7 @@ class BorangController extends Controller
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
                             foreach($borangJwpns as $jawapan){
-                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->orderBy('created_at', 'DESC')->get());
+                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->whereRelation('tahap_kelulusan', 'sequence', $tahapKelulusan[$x]->sequence)->orderBy('created_at', 'DESC')->get());
                             }
                         }
                     }
@@ -677,7 +677,7 @@ class BorangController extends Controller
                     elseif($tahapKelulusan[$x]->user_category == Auth::user()->kategoripengguna && $tahapKelulusan[$x]->sequence == $tahapKelulusan[$z]->sequence){
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
                             $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
-                        }])->where('borang_id', $borangId)
+                        }])->where('borang_id', $borangId)->where('status', 'Lulus')
                         ->whereHas('kelulusanBorang', function ($q) use ($tahapKelulusan, $y) {
                             $q->where('tahapKelulusan_id', $tahapKelulusan[$y]->id)->where('keputusan', 'Lulus');
                         })
@@ -687,7 +687,7 @@ class BorangController extends Controller
                         $noLulusBorang = new \Illuminate\Database\Eloquent\Collection();
                         if(!$borangJwpns->isEmpty()){
                             foreach($borangJwpns as $jawapan){
-                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->orderBy('created_at', 'DESC')->get());
+                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->whereRelation('tahap_kelulusan', 'sequence', $tahapKelulusan[$x]->sequence)->orderBy('created_at', 'DESC')->get());
                             }
                         }
                     }
@@ -695,7 +695,7 @@ class BorangController extends Controller
                         
                         $borangJwpns = Jawapan::with('kelulusanBorang', 'kelulusanBorang.tahap_kelulusan')->with(['jawapanMedan' => function ($query) {
                             $query->WhereRelation('medan', 'nama', 'like', "JENIS PROJEK");
-                        }])->where('borang_id', $borangId)
+                        }])->where('borang_id', $borangId)->where('status', 'Lulus')
                         ->where('wilayah', Auth::user()->wilayah )->where('rancangan',  Auth::user()->rancangan)
                         ->whereHas('kelulusanBorang', function ($q) use ($tahapKelulusan, $z) {
                             $q->where('tahapKelulusan_id', $tahapKelulusan[$z]->id)->where('keputusan', 'Lulus');
@@ -717,10 +717,9 @@ class BorangController extends Controller
 
                         if(!$borangJwpns->isEmpty()){
                             foreach($borangJwpns as $jawapan){
-                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->orderBy('created_at', 'DESC')->get());
+                                $noLulusBorang->push(Kelulusan_borang::where('jawapan_id', $jawapan->id)->whereRelation('tahap_kelulusan', 'sequence', $tahapKelulusan[$x]->sequence)->orderBy('created_at', 'DESC')->get());
                             }
                         }
-
                     }
                 }
             }
@@ -731,7 +730,7 @@ class BorangController extends Controller
             //         $tahapLulus = $tKelulusan->id;
             //     }
             // }
-
+// dd($noLulusBorang);
             //for notification tugasan
             $noti = $this->notification();
 
@@ -972,6 +971,10 @@ class BorangController extends Controller
                 $lulusBorang->ulasan = $request->ulasan;
             }
             $lulusBorang->save();
+
+            $jawapan = Jawapan::find($jawapanID);
+            $jawapan->status = $request->status;
+            $jawapan->save();
         }
 
         // check kelulusan borang that if its final go into if condition
@@ -994,6 +997,7 @@ class BorangController extends Controller
 
     public function borangApp_all(Request $request)
     {
+        // dd($request->LulusList);
         $jawapanID = $request->LulusList;
         $borangId = $request->borangID;
         $tahapLulusID = $request->tahapLulusID;
@@ -1005,6 +1009,10 @@ class BorangController extends Controller
                 $lulusBorang->jawapan_id = $jawapanID[$x];
                 $lulusBorang->keputusan = 'Lulus';
                 $lulusBorang->save();
+
+                $jawapan = Jawapan::find($jawapanID[$x]);
+                $jawapan->status = "Lulus";
+                $jawapan->save();
             }
 
             // check amount kelulusan borang that if its final go into if condition
@@ -1013,6 +1021,7 @@ class BorangController extends Controller
             if($tahapLulusID == $final->id){
                 $jawapan = Jawapan::find($jawapanID[$x]);
                 $jawapan->status = "Lulus";
+                $jawapan->fasa = "PERMOHONAN";
                 $jawapan->save();
             }
         }
