@@ -1633,7 +1633,7 @@ class UserController extends Controller
                 $item->jumlah = $jumlah[$y];
                 $item->jumlah_akhir = $jumlah[$y];
                 $item->harga = $kos[$y];
-                $items->harga_akhir = $harga_akhir[$y];
+                $item->harga_akhir = $kos[$y];
                 $item->perkara_id = $jenis[$y];
                 $item->jawapan_id = $jawapan_id;
                 $item->save();
