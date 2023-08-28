@@ -904,7 +904,7 @@ class BorangController extends Controller
                 $this->projek = $jawapan_jenis->jawapan;
 
                 if ($borangJwpn->signature != null) {
-                    $this->signature = '<div class="c32"><img src="'.$borangJwpn->signature.'"  style="width: 20%;"></div>';
+                    $this->signature = '<div class="c32"><img src="'.$borangJwpn->signature.'"  style="width: 40%;"></div>';
                 }else{
                     $this->signature = "";
                 }
@@ -933,7 +933,7 @@ class BorangController extends Controller
                 $this->alamat = $jawapan_alamat->jawapan;
 
                 if ($borangJwpn->signature != null) {
-                    $this->signature = '<div class="c32"><img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('.$borangJwpn->signature.'))) }}" style="width: 20%;"></div>';
+                    $this->signature = '<div class="c32"><img src="'.$borangJwpn->signature.'"  style="width: 40%;"></div>';
                 }else{
                     $this->signature = "";
                 }
