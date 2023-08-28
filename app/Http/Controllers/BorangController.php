@@ -1298,6 +1298,12 @@ class BorangController extends Controller
             $this->alamat = $jawapan_alamat->jawapan;
             $this->kp = $jawapan_kp->jawapan;
 
+            if ($borangJwpn->signature != null) {
+                $this->signature = '<div class="c32"><img src="'.$borangJwpn->signature.'"  style="width: 40%;"></div>';
+            }else{
+                $this->signature = "";
+            }
+
             $text = $surat_janji->body;
             $surat_janji->body = preg_replace_callback('~\{(.*?)\}~',
             function($key)
@@ -1305,6 +1311,7 @@ class BorangController extends Controller
                 $variable['nama'] = $this->nama;
                 $variable['no_kp'] = $this->kp;
                 $variable['alamat'] = $this->alamat;
+                $variable['signature'] = $this->signature;
 
                 return $variable[$key[1]];      
             },
@@ -1321,7 +1328,12 @@ class BorangController extends Controller
                 }
 
                 $this->projek = $jawapan_jenis->jawapan;
-    
+                if ($borangJwpn->signature != null) {
+                    $this->signature = '<div class="c32"><img src="'.$borangJwpn->signature.'"  style="width: 40%;"></div>';
+                }else{
+                    $this->signature = "";
+                }
+                
                 $text2 = $surat_penerimaan->body;
                 $surat_penerimaan->body = preg_replace_callback('~\{(.*?)\}~',
                 function($key)
@@ -1331,6 +1343,7 @@ class BorangController extends Controller
                     $variable['no_kp'] = $this->kp;
                     $variable['projek'] = $this->projek;
                     $variable['status'] = $this->status;
+                    $variable['signature'] = $this->signature;
 
                     return $variable[$key[1]];      
                 },
