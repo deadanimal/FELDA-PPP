@@ -1739,7 +1739,7 @@ class UserController extends Controller
                 }
             }
         }
-
+        dd($tindakans);
         $tindakans = TindakanTugasan::whereNot('aktiviti', 'PO')->where('tugasan_id', $tugasan_id)->where('jawapan_id', $hantarSurat->jawapan_id)->where('user_id', Auth::user()->id)
         ->with(['TindakanProgress' => function ($query) {
             $query->latest();
@@ -2189,8 +2189,10 @@ class UserController extends Controller
         $num = $itemPermohonan->count();
         $ans = 0;
         foreach($itemPermohonan as $item){
-            if($item->Penerimaan_bekalan->pengesahan == "SAH"){
-                $ans += 1;
+            if($item->Penerimaan_bekalan != null){
+                if($item->Penerimaan_bekalan->pengesahan == "SAH"){
+                    $ans += 1;
+                }
             }
         }
 
