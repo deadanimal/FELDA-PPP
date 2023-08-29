@@ -48,7 +48,12 @@
                             <td class="text-center arial-N"></td>
                         </tr>
                         @php
-                        $totalInc += $jwpn->value;
+                            if (str_contains($jwpn->value, 'RM') ){
+                                $token = "RM";
+                                $index = strpos($jwpn->value, $token);
+                                $jwpn->value = substr($jwpn->value, $index + strlen($token));
+                            } 
+                            $totalInc += (double) $jwpn->value;
                         @endphp
                     @endforeach
 
@@ -79,7 +84,12 @@
                             <td class="text-center arial-N">{{$jwpn->value}}</td>
                         </tr>
                         @php
-                        $totalExp += $jwpn->value;
+                            if (str_contains($jwpn->value, 'RM') ){
+                                $token = "RM";
+                                $index = strpos($jwpn->value, $token);
+                                $jwpn->value = substr($jwpn->value, $index + strlen($token));
+                            } 
+                            $totalExp += (double) $jwpn->value;
                         @endphp
                     @endforeach
                     <tr style="background-color: #99FFFF">
