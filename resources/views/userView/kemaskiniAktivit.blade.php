@@ -26,7 +26,13 @@
                                 <td>
                                     <select name="aktiviti" class="form-control">
                                         @foreach ($aktivitis as $aktiviti)
-                                            <option value="{{$aktiviti->id}}">{{$aktiviti->nama}}</option>
+                                            <option value="{{$aktiviti->id}}" 
+                                                @if(!$params->isEmpty())
+                                                    @if ($params[0]->aktiviti == $aktiviti->id)
+                                                        selected
+                                                    @endif
+                                                @endif
+                                                >{{$aktiviti->nama}}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -66,7 +72,7 @@
                                     <div class="mb-3 col-md-6">
                                         <label for="param{{$param->id}}" class="labeltext">{{$param->nama}} ({{$param->unit}})
                                             @if ($param->category == "Pendapatan")
-                                            (Sasaran: {{$param->sasaran??""}})
+                                            (Sasaran: {{$param->sasaran ?? ""}})
                                             @endif
                                         </label>
                                         <table class="w-100">
