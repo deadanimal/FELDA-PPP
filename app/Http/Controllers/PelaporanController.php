@@ -69,6 +69,7 @@ class PelaporanController extends Controller
     {
         $idProses = (int)$request->route('proses_id');
         $proses = Proses::find($idProses);
+        
         $jenisTernakan = jenis_ternakan::where('proses_id', $idProses)->orderBy("updated_at", "DESC")->get();
         if($request->ajax()) {
             return DataTables::collection($jenisTernakan)
