@@ -10,7 +10,7 @@
 
   <div class="header">
     <h1 class="header-title">
-        PEMOHONAN {{$jawapan->user->nama}}
+        PERMOHONAN {{$jawapan->user->nama}}
     </h1>
   </div>
   
@@ -18,7 +18,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-            <h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Senarai Pemohonan Bekalan</h1>
+            <h1 style="font-family: 'Arial', sans-serif; font-size:23px;">Senarai Permohonan Bekalan</h1>
         </div>
 
         {{-- senarai bekalan --}}
