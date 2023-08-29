@@ -605,7 +605,7 @@ class UserController extends Controller
             }])->where('userCategory_id', Auth::user()->kategoripengguna)->whereRelation('jawapan','wilayah', Auth::user()->wilayah)->whereRelation('jawapan','rancangan', Auth::user()->rancangan)->orderBy('created_at', "DESC")->get();
         }
 
-        $jawapan_rancangan = Jawapan::where('status','Terima')->where('fasa', 'PEMBEKALAN')->where('rancangan', Auth::user()->rancangan)->has('Pemohonan_Peneroka')->get();
+        $jawapan_rancangan = Jawapan::where('status','Terima')->where('fasa', 'PEMBEKALAN')->orWhere('fasa', 'PEMANTAUAN')->where('rancangan', Auth::user()->rancangan)->has('Pemohonan_Peneroka')->get();
         // $jawapan_rancangan = Jawapan::where('status','Penerimaan')->where('fasa', 'PEMBINAAN')->where('rancangan', Auth::user()->rancangan)->has('hantarSurat')->get();
 
         $borangKelulusan = Borang::with('ProsesKelulusan')->whereHas('jwpn')->whereRelation('ProsesKelulusan.TahapKelulusan', 'user_category', Auth::user()->kategoripengguna)->get();
