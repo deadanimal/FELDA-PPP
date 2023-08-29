@@ -47,7 +47,12 @@
                                 <td class="text-center arial-N">{{$jwpn->value}}</td>
                             </tr>
                             @php
-                            $totalInc += $jwpn->value;
+                            if (str_contains($jwpn->value, 'RM') ){
+                                $token = "RM";
+                                $index = strpos($jwpn->value, $token);
+                                $jwpn->value = substr($jwpn->value, $index + strlen($token));
+                            } 
+                            $totalInc += (double) $jwpn->value;
                             @endphp
                         @endforeach
 
